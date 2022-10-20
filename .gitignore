@@ -12,3 +12,5 @@ LockstepServer/ProjectSettings/
 LockstepClient/.vs/
 LockstepClient/obj/
 LockstepClient/.vscode/
+LockstepServer/.vsconfig
+LockstepServer/
