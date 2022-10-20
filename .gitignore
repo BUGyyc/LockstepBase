@@ -1,0 +1,8 @@
+LockstepClient/Library/
+LockstepClient/Temp/
+LockstepClient/Logs/
+LockstepClient/UserSettings/
+LockstepClient/.vsconfig
+LockstepClient/Assembly-CSharp.csproj
+LockstepClient/Assembly-CSharp-Editor.csproj
+LockstepClient/LockstepClient.sln
