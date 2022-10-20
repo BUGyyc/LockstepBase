@@ -98,7 +98,7 @@ public class LockstepServer : MonoBehaviour, INetEventListener, INetLogger
 
     public void OnConnectionRequest(ConnectionRequest request)
     {
-        request.AcceptIfKey("sample_app");
+        request.AcceptIfKey("SomeConnectionKey");
     }
 
     public void OnPeerDisconnected(NetPeer peer, DisconnectInfo disconnectInfo)

@@ -112,7 +112,7 @@ public class LockstepClient : MonoBehaviour, INetEventListener
             {
                 case NetID.ServerArgeeConnectClient:
                     //服务器同意链接，那么客户端发起链接
-                    _netClient.Connect(remoteEndPoint, "sample_app");
+                    _netClient.Connect(remoteEndPoint, "SomeConnectionKey");
                     break;
                 default:
                     break;
