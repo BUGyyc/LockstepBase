@@ -18,7 +18,7 @@ public class LiteNetLibClient : INetwork
         {
             DataReceived?.Invoke(dataReader.GetRemainingBytes());
 
-            ClientMsgHandler.MsgRespone(fromPeer, dataReader, channlNumber, deliveryMethod);
+            //ClientMsgHandler.MsgRespone(fromPeer, dataReader, channlNumber, deliveryMethod);
 
             dataReader.Recycle();
         };

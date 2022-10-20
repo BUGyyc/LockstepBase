@@ -23,4 +23,17 @@ public static class NetID
     /// 服务器广播协议
     /// </summary>
     public const int ServerBroadcast = 10004;
+
+
+
+
+    public const byte InitStart = 0;
+
+    public const byte KeyFrame = 2;
+
+    public const byte Disconnect = 3;
+
+
+
+
 }

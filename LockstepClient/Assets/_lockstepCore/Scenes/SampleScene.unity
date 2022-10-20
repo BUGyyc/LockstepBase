@@ -734,7 +734,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &904096880
 RectTransform:
   m_ObjectHideFlags: 0
@@ -962,7 +962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ServerIp: 192.168.12.159
-  ServerPort: 5000
+  ServerPort: 9050
   EntityDatabase: {fileID: 11400000, guid: a0d4789ca6cc5ab42a1264102206ac3f, type: 2}
 --- !u!114 &1524441392
 MonoBehaviour:
@@ -1265,7 +1265,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1923207267
 RectTransform:
   m_ObjectHideFlags: 0

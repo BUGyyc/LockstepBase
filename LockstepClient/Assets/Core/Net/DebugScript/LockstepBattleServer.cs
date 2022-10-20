@@ -52,6 +52,29 @@ public class LockstepBattleServer : MonoBehaviour, INetEventListener, INetLogger
     {
         Debug.Log("[SERVER] We have new peer " + peer.EndPoint);
         _ourPeer = peer;
+
+        //通知客户端初始化游戏世界
+        NetDataWriter data = new NetDataWriter();
+        data.Put(NetID.InitStart);
+        _netServer.SendUnconnectedMessage(data, peer.EndPoint);
+
+        //Serializer serializer = new Serializer();
+        //int seed = new Random().Next(int.MinValue, int.MaxValue);
+        //this.Starting?.Invoke(this, new StartedEventArgs(20, _actorIds.Values.ToArray()));
+        //foreach (KeyValuePair<int, byte> actorId in _actorIds)
+        //{
+        //    serializer.Reset();
+        //    serializer.Put((byte)0);
+        //    Init init = new Init();
+        //    init.Seed = seed;
+        //    init.ActorID = actorId.Value;
+        //    init.AllActors = _actorIds.Values.ToArray();
+        //    init.SimulationSpeed = 20;
+        //    init.Serialize(serializer);
+        //    _server.Send(actorId.Key, Compressor.Compress(serializer));
+        //}
+        //this.Started?.Invoke(this, new StartedEventArgs(20, _actorIds.Values.ToArray()));
+
     }
 
     public void OnNetworkError(IPEndPoint endPoint, SocketError socketErrorCode)
@@ -121,6 +144,10 @@ public class LockstepBattleServer : MonoBehaviour, INetEventListener, INetLogger
     {
         //throw new NotImplementedException();
 
-        Debug.Log("[SERVER]  服务器收到    " + peer.EndPoint);
+
+
+        var eid = reader.GetInt();
+
+        Debug.Log($"[SERVER]  服务器收到    peer.EndPoint {peer.EndPoint}   eid {eid} ");
     }
 }

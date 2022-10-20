@@ -35,11 +35,11 @@ public class ServerCore : MonoBehaviour
 
         server = new LiteNetLibServer();
 
-        var room = new Room(server, roomSize);
+        var room = new Lockstep.Network.Server.Room(server, roomSize);
 
         room.Open(9050);
 
-       
+
     }
 
     // Update is called once per frame
