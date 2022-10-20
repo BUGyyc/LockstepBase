@@ -6,3 +6,6 @@ LockstepClient/.vsconfig
 LockstepClient/Assembly-CSharp.csproj
 LockstepClient/Assembly-CSharp-Editor.csproj
 LockstepClient/LockstepClient.sln
+LockstepServer/Assets/
+LockstepServer/Packages/
+LockstepServer/ProjectSettings/
