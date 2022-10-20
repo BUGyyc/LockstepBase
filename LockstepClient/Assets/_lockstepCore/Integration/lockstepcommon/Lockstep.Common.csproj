@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Lockstep.Common</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>Preview</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="FixMath.NET">
+      <HintPath>F:\github\LockstepBase\LockstepServer\Assets\_lockstepCore\Integration\FixMath.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="BEPUutilities">
+      <HintPath>F:\github\LockstepBase\LockstepServer\Assets\_lockstepCore\Integration\BEPUutilities.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
