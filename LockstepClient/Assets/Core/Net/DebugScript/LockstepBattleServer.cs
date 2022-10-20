@@ -120,5 +120,7 @@ public class LockstepBattleServer : MonoBehaviour, INetEventListener, INetLogger
     public void OnNetworkReceive(NetPeer peer, NetPacketReader reader, byte channelNumber, DeliveryMethod deliveryMethod)
     {
         //throw new NotImplementedException();
+
+        Debug.Log("[SERVER]  服务器收到    " + peer.EndPoint);
     }
 }

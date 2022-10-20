@@ -20,7 +20,7 @@ namespace Lockstep.Game {
         }
 
         public override void OnTakeDamage(int amount, LVector3 hitPoint){
-            uiFloatBar.UpdateHp(entity.curHealth, entity.maxHealth);
+            uiFloatBar?.UpdateHp(entity.curHealth, entity.maxHealth);
             FloatTextManager.CreateFloatText(hitPoint.ToVector3(), -amount);
         }
 

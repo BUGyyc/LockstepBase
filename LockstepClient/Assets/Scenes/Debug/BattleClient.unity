@@ -465,7 +465,7 @@ MonoBehaviour:
       frames: []
     JumpToTick: 1
   MaxEnemyCount: 3
-  IsClientMode: 1
+  IsClientMode: 0
   IsRunVideo: 0
   IsVideoMode: 0
   RecordFilePath: Recorder/0.byte
