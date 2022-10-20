@@ -14,9 +14,12 @@ public class LiteNetLibClient : INetwork
 
     public void Start()
     {
-        _listener.NetworkReceiveEvent += (fromPeer, dataReader,channlNumber, deliveryMethod) =>
+        _listener.NetworkReceiveEvent += (fromPeer, dataReader, channlNumber, deliveryMethod) =>
         {
             DataReceived?.Invoke(dataReader.GetRemainingBytes());
+
+            ClientMsgHandler.MsgRespone(fromPeer, dataReader, channlNumber, deliveryMethod);
+
             dataReader.Recycle();
         };
 
