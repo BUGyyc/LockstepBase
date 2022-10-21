@@ -1,17 +1,17 @@
-﻿using Lockstep.Game.Commands;       
+﻿using Lockstep.Game.Commands;
 using UnityEngine;
 using Vector2 = BEPUutilities.Vector2;
 
 public class RTSEntitySpawner : MonoBehaviour
 {
-    public int Count;             
+    public int Count;
     public GameObject Prefab;
 
 
     public RTSEntityDatabase EntityDatabase;
 
     private void Start()
-    {  
+    {
         if (EntityDatabase.Entities.IndexOf(Prefab) < 0)
         {
             Debug.LogError("Prefabs have to be added to the database in order to be spawnable");
@@ -19,12 +19,26 @@ public class RTSEntitySpawner : MonoBehaviour
     }
 
     public void Spawn(Vector2 position)
-    {                        
+    {
         for (int j = 0; j < Count; j++)
         {
             RTSNetworkedSimulation.Instance.Execute(new SpawnCommand
             {
                 EntityConfigId = EntityDatabase.Entities.IndexOf(Prefab),
+                Position = position
+            });
+        }
+
+    }
+
+
+    public void Spawn2(Vector2 position, GameObject obj)
+    {
+        for (int j = 0; j < Count; j++)
+        {
+            RTSNetworkedSimulation.Instance.Execute(new SpawnCommand
+            {
+                EntityConfigId = EntityDatabase.Entities.IndexOf(obj),
                 Position = position
             });
         }

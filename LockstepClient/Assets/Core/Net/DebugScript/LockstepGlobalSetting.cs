@@ -1,4 +1,4 @@
-
+using UnityEngine;
 
 public static class NetID
 {
@@ -46,4 +46,17 @@ public static class GameSetting
     public static int ServerPort = 9050;
 
     public static string ServerIp = "";
+}
+
+
+public static class DebugSetting
+{
+
+    public static string Debug_Battle_Scene = "TPS";
+}
+
+
+public static class GameDataSetting
+{
+    public static GameObject HeroObj;
 }

@@ -31,6 +31,11 @@ public class TPSWorld : MonoBehaviour
     private NetworkCommandQueue _commandQueue;
     private readonly LiteNetLibClient _client = new LiteNetLibClient();
 
+    //[HideInInspector]
+    public GameObject heroPrefab;
+    //[HideInInspector]
+    public GameObject enemyPrefab;
+
     private void Awake()
     {
         Instance = this;
@@ -45,9 +50,12 @@ public class TPSWorld : MonoBehaviour
         };
         _commandQueue.InitReceived += OnInitReceived;
 
-        
+
 
         Simulation = new Simulation(Contexts.sharedInstance, _commandQueue, new UnityGameService(EntityDatabase));
+
+
+        GameDataSetting.HeroObj = heroPrefab;
     }
 
     public void OnInitReceived(object sender, Init msg)

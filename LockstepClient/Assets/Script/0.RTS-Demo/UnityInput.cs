@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class UnityInput : MonoBehaviour
 {
+
+
     public static BEPUutilities.Vector2 GetWorldPos(Vector2 screenPos)
     {
         var ray = Camera.main.ScreenPointToRay(screenPos);
@@ -19,6 +21,10 @@ public class UnityInput : MonoBehaviour
 
     void Update()
     {
+
+
+
+
         if (Input.GetMouseButton(1))
         {
             //创建多个Entity
@@ -42,5 +48,7 @@ public class UnityInput : MonoBehaviour
                 Selection = e
             });
         }
+
+
     }
 }

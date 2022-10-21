@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleServer.unity
     guid: a6acfeca88490af438084a065394c6ad
+  - enabled: 1
+    path: Assets/Scenes/Debug/1.battle/TPS.unity
+    guid: ab1fce31beff1e14a9e8783d244ba61a
   m_configObjects: {}
