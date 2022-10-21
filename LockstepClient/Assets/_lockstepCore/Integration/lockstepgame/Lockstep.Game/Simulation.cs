@@ -26,9 +26,12 @@ namespace Lockstep.Game
 
         public Contexts Contexts { get; }
 
+        /// <summary>
+        /// 整局游戏的操作记录，方便做录像
+        /// </summary>
         public GameLog GameLog { get; } = new GameLog();
 
-
+        //本地客户端ID
         public byte LocalActorId { get; private set; }
 
         public bool Running { get; private set; }
@@ -91,6 +94,7 @@ namespace Lockstep.Game
             }
         }
 
+
         public void DumpGameLog(Stream outputStream, bool closeStream = true)
         {
             Serializer serializer = new Serializer();
@@ -104,6 +108,9 @@ namespace Lockstep.Game
             }
         }
 
+        /// <summary>
+        /// 处理输入帧
+        /// </summary>
         private void ProcessInputQueue()
         {
             List<Input> list = _commandQueue.Dequeue();
@@ -134,9 +141,11 @@ namespace Lockstep.Game
             if (num < _world.Tick)
             {
                 uint tick = _world.Tick;
+                //回滚到准确的帧号
                 _world.RevertToTick(num);
                 while (_world.Tick <= num2 && _world.Tick < tick)
                 {
+                    //帧号准确，那么就可以执行输入
                     _world.Simulate();
                 }
                 while (_world.Tick < tick)

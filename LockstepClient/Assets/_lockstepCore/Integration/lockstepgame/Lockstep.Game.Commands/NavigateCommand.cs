@@ -16,6 +16,7 @@ namespace Lockstep.Game.Commands
 
         public ushort Tag => 1;
 
+        //TODO:InputEntity
         public void Execute(InputEntity e)
         {
             e.AddSelection(Selection);
