@@ -1,11 +1,11 @@
-﻿using System.Linq;       
+﻿using System.Linq;
 using Entitas;
 using FixMath.NET;
-using Lockstep.Game.Commands;          
-using UnityEngine;                      
+using Lockstep.Game.Commands;
+using UnityEngine;
 
 public class UnityInput : MonoBehaviour
-{                              
+{
     public static BEPUutilities.Vector2 GetWorldPos(Vector2 screenPos)
     {
         var ray = Camera.main.ScreenPointToRay(screenPos);
@@ -20,18 +20,22 @@ public class UnityInput : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButton(1))
-        {   
+        {
+            //创建多个Entity
             var pos = GetWorldPos(Input.mousePosition);
             FindObjectOfType<RTSEntitySpawner>().Spawn(pos);
         }
 
         if (Input.GetKeyDown(KeyCode.X))
         {
+            //筛选Entity
             var e = Contexts.sharedInstance.game
                 .GetEntities(GameMatcher.LocalId)
                 .Where(entity => entity.actorId.value == RTSNetworkedSimulation.Instance.Simulation.LocalActorId)
-                .Select(entity => entity.id.value).ToArray();      
+                .Select(entity => entity.id.value).ToArray();
 
+
+            //把筛选的Entity执行寻路命令
             RTSNetworkedSimulation.Instance.Execute(new NavigateCommand
             {
                 Destination = GetWorldPos(Input.mousePosition),

@@ -64,7 +64,7 @@ public class RTSNetworkedSimulation : MonoBehaviour
         Simulation.DumpGameLog(new FileStream(@"C:\Log\" + Math.Abs(Contexts.sharedInstance.gameState.hashCode.value) + ".bin", FileMode.Create, FileAccess.Write));
     }
 
-    public void Execute(Lockstep.Core.Logic.Interfaces.ICommand command)
+    public void Execute(ICommand command)
     {
         Simulation.Execute(command);
     }
@@ -85,12 +85,12 @@ public class RTSNetworkedSimulation : MonoBehaviour
         _client.Update();
         Simulation.Update(Time.deltaTime * 1000);
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            //AllActorIds = init.AllActors;
-            Debug.Log($"Starting simulation. Total actors:-------------------------------------");
-            Simulation.Start(30, 1, new byte[] { 1 });
-        }
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    //AllActorIds = init.AllActors;
+        //    Debug.Log($"Starting simulation. Total actors:-------------------------------------");
+        //    Simulation.Start(30, 1, new byte[] { 1 });
+        //}
     }
 
     public IEnumerator AutoConnect()
