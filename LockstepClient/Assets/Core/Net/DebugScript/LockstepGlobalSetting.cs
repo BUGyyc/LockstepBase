@@ -52,7 +52,7 @@ public static class GameSetting
 public static class DebugSetting
 {
 
-    public static string Debug_Battle_Scene = "TPS";
+    public static string Debug_Battle_Scene = "SampleScene";//"TPS";
 }
 
 

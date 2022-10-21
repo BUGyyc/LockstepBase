@@ -22,6 +22,13 @@ public class UnityInput : MonoBehaviour
     void Update()
     {
 
+        if (Input.GetMouseButton(0))
+        {
+            //创建多个Entity
+            var pos = GetWorldPos(Input.mousePosition);
+            FindObjectOfType<RTSEntitySpawner>().Spawn2(pos, GameDataSetting.HeroObj);
+        }
+
 
 
 

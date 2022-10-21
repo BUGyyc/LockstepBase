@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 97464391}
   - component: {fileID: 97464390}
   - component: {fileID: 97464394}
+  - component: {fileID: 97464395}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -473,6 +474,18 @@ MonoBehaviour:
   AgentCountText: {fileID: 1690724853}
   ConnectedText: {fileID: 1549690250}
   CurrentTickText: {fileID: 855587570}
+--- !u!114 &97464395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97464389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb7926d2e77da0458c1009f9aefdebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,7 +1016,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1524441390}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cb7926d2e77da0458c1009f9aefdebb, type: 3}
+  m_Script: {fileID: 11500000, guid: 385f478e7631c064fa265533d5648947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1549690249
