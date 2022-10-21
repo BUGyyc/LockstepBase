@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Lockstep.Core.Logic.Serialization;
@@ -38,6 +38,13 @@ namespace Lockstep.Network.Server
         {
             _server = server;
             _size = size;
+        }
+
+        public int OnLivePlayerCount()
+        {
+            if (_actorIds == null) return 0;
+
+            return _actorIds.Count > _size ? _size : _actorIds.Count;
         }
 
         public void Open(int port)

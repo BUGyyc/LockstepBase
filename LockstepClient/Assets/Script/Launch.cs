@@ -1,8 +1,10 @@
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-
-public class DebugLockStepBattleLaunch : MonoBehaviour
+public class Launch : MonoBehaviour
 {
     public Toggle serverTg;
     public Toggle clientTg;
@@ -10,19 +12,20 @@ public class DebugLockStepBattleLaunch : MonoBehaviour
     public Text IpText;
     public InputField portIF;
     public InputField ipIF;
-
     public Button startBtn;
 
     public Image uiParent;
 
     public DebugLockStepMode mode = DebugLockStepMode.Server;
 
+    public int port = 9050;
 
-    public GameObject GameManagerObj;
+    // [HideInInspector]
+    // public GameObject GameManagerObj;
 
     private string localIpAddress;
 
-    private GameObject containerObj;
+    // private GameObject containerObj;
 
     public string SetGet_str_ipAddress
     {
@@ -45,7 +48,6 @@ public class DebugLockStepBattleLaunch : MonoBehaviour
         UpdateView();
 
         ShowLocalIP();
-
     }
 
     private void initView()
@@ -95,7 +97,7 @@ public class DebugLockStepBattleLaunch : MonoBehaviour
                 break;
         }
 
-        this.portIF.text = "5000";
+        this.portIF.text = port.ToString();
     }
 
 
@@ -103,7 +105,7 @@ public class DebugLockStepBattleLaunch : MonoBehaviour
     private void ShowLocalIP()
     {
 
-        this.IpText.text = "����IP��" + SetGet_str_ipAddress;
+        this.IpText.text = "当前IP：" + SetGet_str_ipAddress;
     }
 
     private void OnClick()
@@ -127,52 +129,33 @@ public class DebugLockStepBattleLaunch : MonoBehaviour
 
     private void StartServer()
     {
-        int port = int.Parse(portIF.text);
+        port = int.Parse(portIF.text);
 
         if (port < 0 || port > 65535) return;
 
-        if (containerObj != null) return;
-        else containerObj = new GameObject("ServerContainer");
-        if (containerObj.GetComponent<LockstepBattleServer>() != null) return;
+        SceneManager.LoadScene("SampleServer");
 
+        GameSetting.ServerIp = SetGet_str_ipAddress;
+        GameSetting.ServerPort = port;
 
-        var gs = containerObj.AddComponent<LockstepBattleServer>();
-        //gs._serverBall = serverObj;
+        Debug.Log($"启动Server  IP {SetGet_str_ipAddress} Port {port}  ");
 
-        Debug.Log($"����Server  IP {SetGet_str_ipAddress} Port {port}  ");
+        // gs.StartServer(port);
 
-        gs.StartServer(port);
-
-        uiParent.gameObject.SetActive(false);
+        // uiParent.gameObject.SetActive(false);
     }
 
     private void StartClient()
     {
-        int port = int.Parse(portIF.text);
+        port = int.Parse(portIF.text);
+        var ip = ipIF.text;
 
-        string targetIp = ipIF.text;
+        GameSetting.ServerIp = ip;
+        GameSetting.ServerPort = port;
 
-        if (port < 0 || port > 65535) return;
+        Debug.Log($"开始连接Server IP {GameSetting.ServerIp} Port {GameSetting.ServerPort}  ");
 
-        if (containerObj != null) return;
-        else containerObj = new GameObject("ClientContainer");
-        if (containerObj.GetComponent<LockstepBattleClient>() != null) return;
-
-
-        var gc = containerObj.AddComponent<LockstepBattleClient>();
-
-        //gc._clientBall = clientObj;
-        //gc._clientBallInterpolated = clientIntObj;
-
-        Debug.Log($"����client  �ͻ���IP {SetGet_str_ipAddress} ");
-
-        Debug.Log($"client ��������  IP {targetIp} Port {port}  ");
-
-        gc.StartClient(port);
-
-        uiParent.gameObject.SetActive(false);
-
-        GameManagerObj.SetActive(true);
+        SceneManager.LoadScene("SampleScene");
     }
 
 
@@ -183,7 +166,5 @@ public class DebugLockStepBattleLaunch : MonoBehaviour
         Server,
         Client
     }
-
-
 
 }

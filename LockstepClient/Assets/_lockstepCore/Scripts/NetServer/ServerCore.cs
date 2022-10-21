@@ -1,12 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Server.LiteNetLib;
 using UnityEngine;
-using System.Threading;
-using Lockstep.Network.Server;
-using Server.LiteNetLib;
-using System;
-using System.Diagnostics;
-
+using UnityEngine.SceneManagement;
 
 
 public class ServerCore : MonoBehaviour
@@ -17,6 +11,8 @@ public class ServerCore : MonoBehaviour
     public int Port = 9050;
 
     private string _ip;
+    LiteNetLibServer server;
+    Lockstep.Network.Server.Room room;
 
     [HideInInspector]
     public string SetGet_str_ipAddress
@@ -29,19 +25,23 @@ public class ServerCore : MonoBehaviour
         }
     }
 
-    LiteNetLibServer server;
+    private void Awake()
+    {
+        GameObject.DontDestroyOnLoad(this);
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
-        //int roomSize = 2;
-
+        Port = GameSetting.ServerPort;
         server = new LiteNetLibServer();
 
-        var room = new Lockstep.Network.Server.Room(server, RoomPlayerNumber);
+        room = new Lockstep.Network.Server.Room(server, RoomPlayerNumber);
 
         room.Open(Port);
 
-
+        SceneManager.LoadScene("SampleScene");
     }
 
     // Update is called once per frame
@@ -57,6 +57,6 @@ public class ServerCore : MonoBehaviour
         GUI.Label(new Rect(0, 60, 300, 100), $"RoomPlayer:{RoomPlayerNumber} ");
 
 
-        GUI.Label(new Rect(0, 90, 300, 100), $"ReadyPlayer:{RoomPlayerNumber} ");
+        if (room != null) GUI.Label(new Rect(0, 90, 300, 100), $"ReadyPlayer:{room.OnLivePlayerCount()} ");
     }
 }

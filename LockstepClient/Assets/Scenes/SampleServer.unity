@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd54d0268a940e14abe22953794bcaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoomPlayerNumber: 1
+  RoomPlayerNumber: 2
   Port: 9050
 --- !u!1 &1430671370
 GameObject:

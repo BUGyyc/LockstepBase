@@ -35,6 +35,10 @@ public class RTSNetworkedSimulation : MonoBehaviour
     {
         Instance = this;
 
+        ServerIp = GameSetting.ServerIp;
+        ServerPort = GameSetting.ServerPort;
+
+
         Log.OnMessage += (sender, args) => Debug.Log(args.Message);
 
         _commandQueue = new NetworkCommandQueue(_client)
