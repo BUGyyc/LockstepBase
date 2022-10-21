@@ -30,18 +30,4 @@ public class RTSEntitySpawner : MonoBehaviour
         }
 
     }
-
-
-    public void Spawn2(Vector2 position, GameObject obj)
-    {
-        for (int j = 0; j < Count; j++)
-        {
-            RTSNetworkedSimulation.Instance.Execute(new SpawnCommand
-            {
-                EntityConfigId = EntityDatabase.Entities.IndexOf(obj),
-                Position = position
-            });
-        }
-
-    }
 }

@@ -32,22 +32,22 @@ public class UnityInput : MonoBehaviour
             FindObjectOfType<RTSEntitySpawner>().Spawn(pos);
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            //筛选Entity
-            var e = Contexts.sharedInstance.game
-                .GetEntities(GameMatcher.LocalId)
-                .Where(entity => entity.actorId.value == RTSNetworkedSimulation.Instance.Simulation.LocalActorId)
-                .Select(entity => entity.id.value).ToArray();
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    //筛选Entity
+        //    var e = Contexts.sharedInstance.game
+        //        .GetEntities(GameMatcher.LocalId)
+        //        .Where(entity => entity.actorId.value == RTSNetworkedSimulation.Instance.Simulation.LocalActorId)
+        //        .Select(entity => entity.id.value).ToArray();
 
 
-            //把筛选的Entity执行寻路命令
-            RTSNetworkedSimulation.Instance.Execute(new NavigateCommand
-            {
-                Destination = GetWorldPos(Input.mousePosition),
-                Selection = e
-            });
-        }
+        //    //把筛选的Entity执行寻路命令
+        //    RTSNetworkedSimulation.Instance.Execute(new NavigateCommand
+        //    {
+        //        Destination = GetWorldPos(Input.mousePosition),
+        //        Selection = e
+        //    });
+        //}
 
 
     }

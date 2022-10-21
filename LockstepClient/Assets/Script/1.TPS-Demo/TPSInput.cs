@@ -29,12 +29,12 @@ public class TPSInput : MonoBehaviour
 
 
 
-        if (Input.GetMouseButton(1))
-        {
-            //创建多个Entity
-            var pos = GetWorldPos(Input.mousePosition);
-            FindObjectOfType<RTSEntitySpawner>().Spawn(pos);
-        }
+        //if (Input.GetMouseButton(1))
+        //{
+        //    //创建多个Entity
+        //    var pos = GetWorldPos(Input.mousePosition);
+        //    FindObjectOfType<RTSEntitySpawner>().Spawn(pos);
+        //}
 
         //if (Input.GetKeyDown(KeyCode.X))
         //{
