@@ -18,5 +18,31 @@
 ![](Doc/pic.res/20221021114904.png)  
 
 
+---
+
+## 参考
+
+
+UnityLockstep
+<https://github.com/proepkes/UnityLockstep>
+
+Inspired by LockstepFramework, in memory of SnpM:
+<https://github.com/SnpM/LockstepFramework>
+
+Uses a fork of BEPUPhysics for deterministic physics:
+<https://github.com/sam-vdp/bepuphysics1int>
+
+Uses FixedMath.Net for deterministic fp-calculations:
+<https://github.com/asik/FixedMath.Net>
+
+Uses Entitas as ECS Framework:
+<https://github.com/sschmid/Entitas-CSharp>
+
+The project includes an implementation example using LiteNetLib:
+<https://github.com/RevenantX/LiteNetLib>
+
+Initial commit was targeting the following protocol: https://www.reddit.com/r/Unity3D/comments/aewepu/rts_networking_simulate_on_serverbeat/.  The project has shifted to an architecture you see above.
+
+
 
 
