@@ -9,10 +9,11 @@ using System.Collections;
 using System.IO;
 using UnityEngine;
 
-public class RTSNetworkedSimulation : MonoBehaviour
-{
+using Lockstep.Core.Logic;
 
-    public static RTSNetworkedSimulation Instance;
+public class TPSWorld : MonoBehaviour
+{
+    public static TPSWorld Instance;
 
     public string ServerIp = "127.0.0.1";
     public int ServerPort = 9050;
@@ -37,14 +38,14 @@ public class RTSNetworkedSimulation : MonoBehaviour
         ServerIp = GameSetting.ServerIp;
         ServerPort = GameSetting.ServerPort;
 
-
         Log.OnMessage += (sender, args) => Debug.Log(args.Message);
-
         _commandQueue = new NetworkCommandQueue(_client)
         {
             LagCompensation = 10
         };
         _commandQueue.InitReceived += OnInitReceived;
+
+        
 
         Simulation = new Simulation(Contexts.sharedInstance, _commandQueue, new UnityGameService(EntityDatabase));
     }
