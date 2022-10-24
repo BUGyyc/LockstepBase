@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/_lockstepCore/Scenes/SampleScene.unity
     guid: 23a02aa3248dcf54a8f54efe4d3518b2
   - enabled: 1
-    path: Assets/Scenes/SampleServer.unity
+    path: Assets/Scenes/Debug/server/SampleServer.unity
     guid: a6acfeca88490af438084a065394c6ad
   m_configObjects: {}
