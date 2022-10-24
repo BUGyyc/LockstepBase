@@ -1,4 +1,4 @@
-using System.Net;
+ï»¿using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
 using LiteNetLib;
@@ -40,8 +40,8 @@ public class LockstepBattleClient : MonoBehaviour, INetEventListener
         }
         else
         {
-            //Ö»ÒªÃ»ÓĞÁ´½Ó³É¹¦£¬ÕâÀï»áÒ»Ö±·¢ÆğÁ´½ÓµÄÇëÇó
-            Debug.Log($"¿Í»§¶Ë·¢ÆğÁ´½Ó  _port {_port} ");
+            //åªè¦æ²¡æœ‰é“¾æ¥æˆåŠŸï¼Œè¿™é‡Œä¼šä¸€ç›´å‘èµ·é“¾æ¥çš„è¯·æ±‚
+            Debug.Log($"å®¢æˆ·ç«¯å‘èµ·é“¾æ¥  _port {_port} ");
 
             NetDataWriter writer = new NetDataWriter();
 
@@ -50,7 +50,7 @@ public class LockstepBattleClient : MonoBehaviour, INetEventListener
             writer.Put(1);
 
 
-            //ÕâÀïÖ¸¶¨ÁË¶Ë¿Ú
+            //è¿™é‡ŒæŒ‡å®šäº†ç«¯å£
             _netClient.SendBroadcast(writer, _port);
         }
 
@@ -73,7 +73,7 @@ public class LockstepBattleClient : MonoBehaviour, INetEventListener
 
             writer.Put("Client Send Code:A");
 
-            Debug.Log($"¿Í»§¶ËÖ÷¶¯·¢ËÍCode  A ");
+            Debug.Log($"å®¢æˆ·ç«¯ä¸»åŠ¨å‘é€Code  A ");
             _netClient.SendBroadcast(writer, _port);
         }
 
@@ -103,12 +103,12 @@ public class LockstepBattleClient : MonoBehaviour, INetEventListener
         {
             var netId = reader.GetInt();
 
-            //·şÎñÆ÷Í¨Öª¿Í»§¶Ë£¬IP¡¢¶Ë¿Ú
-            Debug.Log($"[CLIENT] ¿Í»§¶ËÊÕµ½¶Ô·½Êı¾İ Connecting to: {remoteEndPoint}  Ğ­ÒéºÅ {netId}  ");
+            //æœåŠ¡å™¨é€šçŸ¥å®¢æˆ·ç«¯ï¼ŒIPã€ç«¯å£
+            Debug.Log($"[CLIENT] å®¢æˆ·ç«¯æ”¶åˆ°å¯¹æ–¹æ•°æ® Connecting to: {remoteEndPoint}  åè®®å· {netId}  ");
             switch (netId)
             {
                 case NetID.ServerArgeeConnectClient:
-                    //·şÎñÆ÷Í¬ÒâÁ´½Ó£¬ÄÇÃ´¿Í»§¶Ë·¢ÆğÁ´½Ó
+                    //æœåŠ¡å™¨åŒæ„é“¾æ¥ï¼Œé‚£ä¹ˆå®¢æˆ·ç«¯å‘èµ·é“¾æ¥
                     _netClient.Connect(remoteEndPoint, "sample_app");
                     break;
                 default:
@@ -135,7 +135,7 @@ public class LockstepBattleClient : MonoBehaviour, INetEventListener
 
 
     /// <summary>
-    /// ÕâÀï½ÓÊÕ·şÎñÆ÷Êı¾İ£¬²¢ÇÒ°ÑÒÆ¶¯Êı¾İĞ´Èë
+    /// è¿™é‡Œæ¥æ”¶æœåŠ¡å™¨æ•°æ®ï¼Œå¹¶ä¸”æŠŠç§»åŠ¨æ•°æ®å†™å…¥
     /// </summary>
     /// <param name="peer"></param>
     /// <param name="reader"></param>

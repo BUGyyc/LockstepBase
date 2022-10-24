@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Net;
 
-using LiteNetLib;
+//using LiteNetLib;
 using System.Net.Sockets;
 using System.Net.NetworkInformation;
 using System;
@@ -110,7 +110,7 @@ public class DebugLockStepNetLaunch : MonoBehaviour
     private void ShowLocalIP()
     {
 
-        this.IpText.text = "±¾»úIP£º" + SetGet_str_ipAddress;
+        this.IpText.text = "æœ¬æœºIPï¼š" + SetGet_str_ipAddress;
     }
 
     private void OnClick()
@@ -146,7 +146,7 @@ public class DebugLockStepNetLaunch : MonoBehaviour
         var gs = containerObj.AddComponent<LockstepServer>();
         gs._serverBall = serverObj;
 
-        Debug.Log($"Æô¶¯Server  IP {SetGet_str_ipAddress} Port {port}  ");
+        Debug.Log($"å¯åŠ¨Server  IP {SetGet_str_ipAddress} Port {port}  ");
 
         gs.StartServer(port);
 
@@ -171,9 +171,9 @@ public class DebugLockStepNetLaunch : MonoBehaviour
         gc._clientBall = clientObj;
         gc._clientBallInterpolated = clientIntObj;
 
-        Debug.Log($"Æô¶¯client  ¿Í»§¶ËIP {SetGet_str_ipAddress} ");
+        Debug.Log($"å¯åŠ¨client  å®¢æˆ·ç«¯IP {SetGet_str_ipAddress} ");
 
-        Debug.Log($"client ·¢ÆğÁ´½Ó  IP {targetIp} Port {port}  ");
+        Debug.Log($"client å‘èµ·é“¾æ¥  IP {targetIp} Port {port}  ");
 
         gc.StartClient(port);
 
@@ -195,9 +195,9 @@ public class DebugLockStepNetLaunch : MonoBehaviour
         IPv4, IPv6
     }
     /// <summary>
-    /// »ñÈ¡±¾»úIP
+    /// è·å–æœ¬æœºIP
     /// </summary>
-    /// <param name="Addfam">Òª»ñÈ¡µÄIPÀàĞÍ</param>
+    /// <param name="Addfam">è¦è·å–çš„IPç±»å‹</param>
     /// <returns></returns>
     public string IP(address fam)
     {

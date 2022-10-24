@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using Entitas;
-using FixMath.NET;
-using Lockstep.Game.Commands;
+﻿using FixMath.NET;
 using UnityEngine;
 
 public class UnityInput : MonoBehaviour
