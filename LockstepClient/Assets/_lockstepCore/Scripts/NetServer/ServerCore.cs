@@ -41,7 +41,7 @@ public class ServerCore : MonoBehaviour
 
         room.Open(Port);
 
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(GameSceneSetting.BattleTestScene);
     }
 
     // Update is called once per frame

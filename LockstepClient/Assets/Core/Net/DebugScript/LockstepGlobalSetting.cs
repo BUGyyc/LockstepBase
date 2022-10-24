@@ -47,3 +47,13 @@ public static class GameSetting
 
     public static string ServerIp = "";
 }
+
+
+
+public static class GameSceneSetting
+{
+    public static string RTS_SCENE = "RTS";
+    public static string TPS_SCENE = "TPS";
+
+    public static string BattleTestScene = TPS_SCENE;
+}

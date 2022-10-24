@@ -155,7 +155,7 @@ public class Launch : MonoBehaviour
 
         Debug.Log($"开始连接Server IP {GameSetting.ServerIp} Port {GameSetting.ServerPort}  ");
 
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(GameSceneSetting.BattleTestScene);
     }
 
 
