@@ -54,7 +54,7 @@ public class LockstepClient : MonoBehaviour, INetEventListener
 
 
             //这里指定了端口
-            _netClient.SendBroadcast(writer, _port);
+            //_netClient.SendBroadcast(writer, _port);
         }
 
         ClientInput();
@@ -77,11 +77,8 @@ public class LockstepClient : MonoBehaviour, INetEventListener
             writer.Put("Client Send Code:A");
 
             Debug.Log($"客户端主动发送Code  A ");
-            _netClient.SendBroadcast(writer, _port);
+            //_netClient.SendBroadcast(writer, _port);
         }
-
-
-
     }
 
     void OnDestroy()
@@ -102,7 +99,7 @@ public class LockstepClient : MonoBehaviour, INetEventListener
 
     public void OnNetworkReceiveUnconnected(IPEndPoint remoteEndPoint, NetPacketReader reader, UnconnectedMessageType messageType)
     {
-        if (messageType == UnconnectedMessageType.BasicMessage && _netClient.ConnectedPeersCount == 0)
+        if (messageType == UnconnectedMessageType.BasicMessage /*&& _netClient.ConnectedPeersCount == 0*/)
         {
             var netId = reader.GetInt();
 
@@ -144,7 +141,7 @@ public class LockstepClient : MonoBehaviour, INetEventListener
     /// <param name="reader"></param>
     /// <param name="channelNumber"></param>
     /// <param name="deliveryMethod"></param>
-    public void OnNetworkReceive(NetPeer peer, NetPacketReader reader, byte channelNumber, DeliveryMethod deliveryMethod)
+    public void OnNetworkReceive(NetPeer peer, NetPacketReader reader,  DeliveryMethod deliveryMethod)
     {
         _newBallPosX = reader.GetFloat();
 

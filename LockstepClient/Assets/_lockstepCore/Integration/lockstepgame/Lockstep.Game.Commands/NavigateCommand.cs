@@ -8,7 +8,7 @@ namespace Lockstep.Game.Commands
 {
 
     [Serializable]
-    public class NavigateCommand : ICommand, ISerializable
+    public class NavigateCommand : Lockstep.Core.Logic.Interfaces.ICommand, ISerializable
     {
         public uint[] Selection;
 

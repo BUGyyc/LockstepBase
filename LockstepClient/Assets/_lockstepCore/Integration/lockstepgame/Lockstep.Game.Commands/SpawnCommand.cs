@@ -9,7 +9,7 @@ namespace Lockstep.Game.Commands
 
 
     [Serializable]
-    public class SpawnCommand : ICommand, ISerializable
+    public class SpawnCommand : Lockstep.Core.Logic.Interfaces.ICommand, ISerializable
     {
         public int EntityConfigId;
 

@@ -20,7 +20,7 @@ public class LockstepBattleServer : MonoBehaviour, INetEventListener, INetLogger
         _netServer = new NetManager(this);
         //指定端口号
         _netServer.Start(port);
-        _netServer.BroadcastReceiveEnabled = true;
+        //_netServer.BroadcastReceiveEnabled = true;
         _netServer.UpdateTime = 15;
     }
 
@@ -84,7 +84,7 @@ public class LockstepBattleServer : MonoBehaviour, INetEventListener, INetLogger
     public void OnNetworkReceiveUnconnected(IPEndPoint remoteEndPoint, NetPacketReader reader,
         UnconnectedMessageType messageType)
     {
-        if (messageType == UnconnectedMessageType.Broadcast)
+        //if (messageType == UnconnectedMessageType.Broadcast)
         {
             var NetId = reader.GetInt();
             switch (NetId)

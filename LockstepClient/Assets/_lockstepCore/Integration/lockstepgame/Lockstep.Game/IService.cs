@@ -1,7 +1,7 @@
 namespace Lockstep.Game
 {
 
-    //public interface IService
-    //{
-    //}
+    public interface IService
+    {
+    }
 }

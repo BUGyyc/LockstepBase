@@ -2,7 +2,7 @@ using Lockstep.Game.Interfaces;
 
 namespace Lockstep.Game.DefaultServices
 {
-    public class DefaultViewService : IViewService, IService
+    public class DefaultViewService : Lockstep.Game.Interfaces.IViewService, IService
     {
         public void LoadView(GameEntity entity, int configId)
         {
