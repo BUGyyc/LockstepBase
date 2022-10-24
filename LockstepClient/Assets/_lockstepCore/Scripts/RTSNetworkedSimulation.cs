@@ -8,15 +8,20 @@ using Lockstep.Core.Logic.Serialization.Utils;
 using Lockstep.Game;
 using Lockstep.Network.Client;
 using UnityEngine;
+using Lockstep.Network.Messages;
 
 public class RTSNetworkedSimulation : MonoBehaviour
 {
+
     public static RTSNetworkedSimulation Instance;
 
     public string ServerIp = "127.0.0.1";
     public int ServerPort = 9050;
 
+    //世界模拟器
     public Simulation Simulation;
+
+    //为了拿到所有Entity
     public RTSEntityDatabase EntityDatabase;
 
     public bool Connected => _client.Connected;
@@ -30,20 +35,27 @@ public class RTSNetworkedSimulation : MonoBehaviour
     {
         Instance = this;
 
+        ServerIp = GameSetting.ServerIp;
+        ServerPort = GameSetting.ServerPort;
+
+
         Log.OnMessage += (sender, args) => Debug.Log(args.Message);
 
         _commandQueue = new NetworkCommandQueue(_client)
         {
             LagCompensation = 10
         };
-        _commandQueue.InitReceived += (sender, init) =>
-        {
-            AllActorIds = init.AllActors;
-            Debug.Log($"Starting simulation. Total actors: {init.AllActors.Length}. Local ActorID: {init.ActorID}");
-            Simulation.Start(init.SimulationSpeed, init.ActorID, init.AllActors);
-        };
+        _commandQueue.InitReceived += OnInitReceived;
 
         Simulation = new Simulation(Contexts.sharedInstance, _commandQueue, new UnityGameService(EntityDatabase));
+    }
+
+    public void OnInitReceived(object sender, Init msg)
+    {
+        //全部玩家数据
+        AllActorIds = msg.AllActors;
+        Debug.Log($"Starting simulation. Total actors: {msg.AllActors.Length}. Local ActorID: {msg.ActorID}");
+        Simulation.Start(msg.SimulationSpeed, msg.ActorID, msg.AllActors);
     }
 
 
@@ -77,7 +89,7 @@ public class RTSNetworkedSimulation : MonoBehaviour
         {
             //AllActorIds = init.AllActors;
             Debug.Log($"Starting simulation. Total actors:-------------------------------------");
-            Simulation.Start(1, 1, new byte[] { 1 });
+            Simulation.Start(30, 1, new byte[] { 1 });
         }
     }
 

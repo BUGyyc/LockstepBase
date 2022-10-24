@@ -10,4 +10,3 @@ namespace Lockstep.Network.Client
     }
 }
 
-

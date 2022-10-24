@@ -44,6 +44,7 @@ namespace Server.LiteNetLib
         {
             _listener.ConnectionRequestEvent += request =>
             {
+                //确认链接
                 request.AcceptIfKey(ClientKey);
             };
 

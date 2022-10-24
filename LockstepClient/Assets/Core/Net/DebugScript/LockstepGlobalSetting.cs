@@ -3,24 +3,62 @@
 public static class NetID
 {
     /// <summary>
-    /// ¿Í»§¶Ë·¢ÆðÁ´½Ó·þÎñÆ÷
+    /// ï¿½Í»ï¿½ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public const int ClientConnectReq = 10001;
 
     /// <summary>
-    /// ·þÎñÆ÷ÏìÓ¦£¬Í¬ÒâÁ´½Ó¿Í»§¶Ë
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿Í»ï¿½ï¿½ï¿½
     /// </summary>
     public const int ServerArgeeConnectClient = 10002;
 
 
     /// <summary>
-    /// ¿Í»§¶ËÏò·þÎñÆ÷·¢ËÍÐ­Òé
+    /// ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½
     /// </summary>
     public const int ClientSend2ServerStringMsg = 10003;
 
 
     /// <summary>
-    /// ·þÎñÆ÷¹ã²¥Ð­Òé
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã²¥Ð­ï¿½ï¿½
     /// </summary>
     public const int ServerBroadcast = 10004;
+
+
+
+
+    public const byte InitStart = 0;
+
+    public const byte KeyFrame = 2;
+
+    public const byte Disconnect = 3;
+
+
+
+
+
+
+
+}
+
+public static class GameSetting
+{
+    public static int ServerPort = 9050;
+
+    public static string ServerIp = "";
+}
+
+
+
+public static class GameSceneSetting
+{
+    public static string RTS_SCENE = "RTS";
+    public static string TPS_SCENE = "TPS";
+
+    public static string BattleTestScene = TPS_SCENE;
+
+    public static string LaunchClient = "LaunchClient";
+    public static string LaunchClientPath = "Assets/Scenes/Debug/0.launch/LaunchClient.unity";
+    public static string LaunchServer = "LaunchServer";
+    public static string LaunchServerPath = "Assets/Scenes/Debug/0.launch/LaunchServer.unity";
 }

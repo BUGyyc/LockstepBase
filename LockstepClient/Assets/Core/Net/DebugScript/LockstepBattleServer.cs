@@ -1,9 +1,8 @@
-using System;
+ï»¿using LiteNetLib;
+using LiteNetLib.Utils;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
-using LiteNetLib;
-using LiteNetLib.Utils;
 
 public class LockstepBattleServer : MonoBehaviour, INetEventListener, INetLogger
 {
@@ -19,7 +18,7 @@ public class LockstepBattleServer : MonoBehaviour, INetEventListener, INetLogger
         NetDebug.Logger = this;
         _dataWriter = new NetDataWriter();
         _netServer = new NetManager(this);
-        //Ö¸¶¨¶Ë¿ÚºÅ
+        //æŒ‡å®šç«¯å£å·
         _netServer.Start(port);
         _netServer.BroadcastReceiveEnabled = true;
         _netServer.UpdateTime = 15;
@@ -52,6 +51,29 @@ public class LockstepBattleServer : MonoBehaviour, INetEventListener, INetLogger
     {
         Debug.Log("[SERVER] We have new peer " + peer.EndPoint);
         _ourPeer = peer;
+
+        //é€šçŸ¥å®¢æˆ·ç«¯åˆå§‹åŒ–æ¸¸æˆä¸–ç•Œ
+        NetDataWriter data = new NetDataWriter();
+        data.Put(NetID.InitStart);
+        _netServer.SendUnconnectedMessage(data, peer.EndPoint);
+
+        //Serializer serializer = new Serializer();
+        //int seed = new Random().Next(int.MinValue, int.MaxValue);
+        //this.Starting?.Invoke(this, new StartedEventArgs(20, _actorIds.Values.ToArray()));
+        //foreach (KeyValuePair<int, byte> actorId in _actorIds)
+        //{
+        //    serializer.Reset();
+        //    serializer.Put((byte)0);
+        //    Init init = new Init();
+        //    init.Seed = seed;
+        //    init.ActorID = actorId.Value;
+        //    init.AllActors = _actorIds.Values.ToArray();
+        //    init.SimulationSpeed = 20;
+        //    init.Serialize(serializer);
+        //    _server.Send(actorId.Key, Compressor.Compress(serializer));
+        //}
+        //this.Started?.Invoke(this, new StartedEventArgs(20, _actorIds.Values.ToArray()));
+
     }
 
     public void OnNetworkError(IPEndPoint endPoint, SocketError socketErrorCode)
@@ -69,16 +91,16 @@ public class LockstepBattleServer : MonoBehaviour, INetEventListener, INetLogger
             {
                 case NetID.ClientSend2ServerStringMsg:
                     var msg = reader.GetString();
-                    Debug.Log($"[SERVER] ·şÎñÆ÷½ÓÊÕµ½¿Í»§¶ËÊı¾İ     ¶Ë¿Ú£º{remoteEndPoint}   Ğ­ÒéID: {NetId}   msg :{msg} ");
+                    Debug.Log($"[SERVER] æœåŠ¡å™¨æ¥æ”¶åˆ°å®¢æˆ·ç«¯æ•°æ®     ç«¯å£ï¼š{remoteEndPoint}   åè®®ID: {NetId}   msg :{msg} ");
                     break;
                 case NetID.ClientConnectReq:
 
-                    Debug.Log($"[SERVER] ·şÎñÆ÷½ÓÊÕÁ´½ÓÇëÇó    ¶Ë¿Ú£º{remoteEndPoint}   Ğ­ÒéID: {NetId}   ");
-                    //·şÎñÆ÷Í¬ÒâÁ´½Ó
+                    Debug.Log($"[SERVER] æœåŠ¡å™¨æ¥æ”¶é“¾æ¥è¯·æ±‚    ç«¯å£ï¼š{remoteEndPoint}   åè®®ID: {NetId}   ");
+                    //æœåŠ¡å™¨åŒæ„é“¾æ¥
                     NetDataWriter resp = new NetDataWriter();
                     resp.Put(NetID.ServerArgeeConnectClient);
                     resp.Put(1);
-                    //·¢ËÍÎŞÁ´½ÓÏÂµÄ°ü³öÈ¥
+                    //å‘é€æ— é“¾æ¥ä¸‹çš„åŒ…å‡ºå»
                     _netServer.SendUnconnectedMessage(resp, remoteEndPoint);
                     break;
 
@@ -121,6 +143,10 @@ public class LockstepBattleServer : MonoBehaviour, INetEventListener, INetLogger
     {
         //throw new NotImplementedException();
 
-        Debug.Log("[SERVER]  ·şÎñÆ÷ÊÕµ½    " + peer.EndPoint);
+
+
+        var eid = reader.GetInt();
+
+        Debug.Log($"[SERVER]  æœåŠ¡å™¨æ”¶åˆ°    peer.EndPoint {peer.EndPoint}   eid {eid} ");
     }
 }

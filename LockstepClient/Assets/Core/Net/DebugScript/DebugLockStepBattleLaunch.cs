@@ -1,13 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Net;
 
-using LiteNetLib;
-using System.Net.Sockets;
-using System.Net.NetworkInformation;
-using System;
 
 public class DebugLockStepBattleLaunch : MonoBehaviour
 {
@@ -36,7 +29,7 @@ public class DebugLockStepBattleLaunch : MonoBehaviour
         set { localIpAddress = value; }
         get
         {
-            localIpAddress = IP(address.IPv4);
+            localIpAddress = NetTool.IP(address.IPv4);
             return localIpAddress;
         }
     }
@@ -52,6 +45,7 @@ public class DebugLockStepBattleLaunch : MonoBehaviour
         UpdateView();
 
         ShowLocalIP();
+
     }
 
     private void initView()
@@ -109,7 +103,7 @@ public class DebugLockStepBattleLaunch : MonoBehaviour
     private void ShowLocalIP()
     {
 
-        this.IpText.text = "±¾»úIP£º" + SetGet_str_ipAddress;
+        this.IpText.text = "ï¿½ï¿½ï¿½ï¿½IPï¿½ï¿½" + SetGet_str_ipAddress;
     }
 
     private void OnClick()
@@ -145,7 +139,7 @@ public class DebugLockStepBattleLaunch : MonoBehaviour
         var gs = containerObj.AddComponent<LockstepBattleServer>();
         //gs._serverBall = serverObj;
 
-        Debug.Log($"Æô¶¯Server  IP {SetGet_str_ipAddress} Port {port}  ");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½Server  IP {SetGet_str_ipAddress} Port {port}  ");
 
         gs.StartServer(port);
 
@@ -170,9 +164,9 @@ public class DebugLockStepBattleLaunch : MonoBehaviour
         //gc._clientBall = clientObj;
         //gc._clientBallInterpolated = clientIntObj;
 
-        Debug.Log($"Æô¶¯client  ¿Í»§¶ËIP {SetGet_str_ipAddress} ");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½client  ï¿½Í»ï¿½ï¿½ï¿½IP {SetGet_str_ipAddress} ");
 
-        Debug.Log($"client ·¢ÆðÁ´½Ó  IP {targetIp} Port {port}  ");
+        Debug.Log($"client ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  IP {targetIp} Port {port}  ");
 
         gc.StartClient(port);
 
@@ -191,48 +185,5 @@ public class DebugLockStepBattleLaunch : MonoBehaviour
     }
 
 
-    public enum address
-    {
-        IPv4, IPv6
-    }
-    /// <summary>
-    /// »ñÈ¡±¾»úIP
-    /// </summary>
-    /// <param name="Addfam">Òª»ñÈ¡µÄIPÀàÐÍ</param>
-    /// <returns></returns>
-    public string IP(address fam)
-    {
-        if (fam == address.IPv6 && !Socket.OSSupportsIPv6)
-        {
-            return null;
-        }
-        string output = "";
-        foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
-        {
-            NetworkInterfaceType _type1 = NetworkInterfaceType.Wireless80211;
-            NetworkInterfaceType _type2 = NetworkInterfaceType.Ethernet;
 
-            if ((item.NetworkInterfaceType == _type1 || item.NetworkInterfaceType == _type2) && item.OperationalStatus == OperationalStatus.Up)
-            {
-                foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
-                {
-                    if (fam == address.IPv4)
-                    {
-                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                        {
-                            output = ip.Address.ToString();
-                        }
-                    }
-                    else if (fam == address.IPv6)
-                    {
-                        if (ip.Address.AddressFamily == AddressFamily.InterNetworkV6)
-                        {
-                            output = ip.Address.ToString();
-                        }
-                    }
-                }
-            }
-        }
-        return output;
-    }
 }
