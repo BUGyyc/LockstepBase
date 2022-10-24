@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Entitas.VisualDebugging.CodeGeneration.Plugins</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <TargetFramework>net35</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>Preview</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="DesperateDevs.CodeGeneration" />
+    <Reference Include="System.Core" />
+    <Reference Include="Entitas.CodeGeneration.Plugins">
+      <HintPath>F:\github\LocalLockstepBase\LockstepClient\Assets\_lockstepCore\Integration\Entitas\Editor\Plugins\Entitas.CodeGeneration.Plugins.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Utils" />
+  </ItemGroup>
+</Project>

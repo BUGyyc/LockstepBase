@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Entitas.VisualDebugging.Unity.Editor</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <TargetFramework>net35</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>Preview</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="System.Core" />
+    <Reference Include="Entitas.VisualDebugging.Unity" />
+    <Reference Include="UnityEditor" />
+    <Reference Include="Entitas" />
+    <Reference Include="UnityEngine" />
+    <Reference Include="DesperateDevs.Unity.Editor" />
+    <Reference Include="Entitas.Unity" />
+    <Reference Include="Entitas.CodeGeneration.Attributes" />
+    <Reference Include="DesperateDevs.Utils" />
+    <Reference Include="DesperateDevs.Serialization" />
+  </ItemGroup>
+</Project>

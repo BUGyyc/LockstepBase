@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Entitas.CodeGeneration.Plugins</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <TargetFramework>net35</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>Preview</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="System.Core" />
+    <Reference Include="DesperateDevs.CodeGeneration" />
+    <Reference Include="DesperateDevs.Serialization" />
+    <Reference Include="DesperateDevs.CodeGeneration.CodeGenerator" />
+    <Reference Include="Entitas.CodeGeneration.Attributes" />
+    <Reference Include="DesperateDevs.Utils" />
+    <Reference Include="DesperateDevs.Analytics" />
+    <Reference Include="Entitas" />
+  </ItemGroup>
+</Project>

@@ -303,6 +303,10 @@ namespace Entitas
             List<IGroup<TEntity>> list = _groupsForIndex[index];
             if (list != null)
             {
+
+                //List<GroupChanged<TEntity>> val = _groupChangedListPool.Get();
+
+
                 List<GroupChanged<TEntity>> list2 = ((ObjectPool<List<GroupChanged<List<GroupChanged<TEntity>>>>>)(object)_groupChangedListPool).Get();
                 TEntity entity2 = (TEntity)entity;
                 for (int i = 0; i < list.Count; i++)
