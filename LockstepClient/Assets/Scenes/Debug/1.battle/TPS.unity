@@ -800,7 +800,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1524441391}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: DumpGameLog
         m_Mode: 1
@@ -939,9 +939,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1524441394}
-  - component: {fileID: 1524441391}
-  - component: {fileID: 1524441392}
   - component: {fileID: 1524441393}
+  - component: {fileID: 1524441395}
+  - component: {fileID: 1524441396}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -949,36 +949,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1524441391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1524441390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fcb7be03dda3f642b1a24576215f536, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ServerIp: 192.168.12.159
-  ServerPort: 9050
-  EntityDatabase: {fileID: 11400000, guid: a0d4789ca6cc5ab42a1264102206ac3f, type: 2}
---- !u!114 &1524441392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1524441390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82bb3ef0134d2f548ba53ebe3e38d0eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Count: 1
-  Prefab: {fileID: 6983145694885263932, guid: 24e2acaaa3c159748824ae994e0c01a3, type: 3}
-  EntityDatabase: {fileID: 11400000, guid: a0d4789ca6cc5ab42a1264102206ac3f, type: 2}
 --- !u!114 &1524441393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,6 +976,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1524441395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524441390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55544ee7812ace9418ba34403f843d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ServerIp: 127.0.0.1
+  ServerPort: 9050
+  EntityDatabase: {fileID: 11400000, guid: a0d4789ca6cc5ab42a1264102206ac3f, type: 2}
+--- !u!114 &1524441396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524441390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4931639ff1d134dad0783f530301dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Count: 1
+  Prefab: {fileID: 4600130916727093585, guid: e3aea81af71168043affd75ce42dee4a, type: 3}
+  EntityDatabase: {fileID: 11400000, guid: a0d4789ca6cc5ab42a1264102206ac3f, type: 2}
 --- !u!1 &1549690249
 GameObject:
   m_ObjectHideFlags: 0

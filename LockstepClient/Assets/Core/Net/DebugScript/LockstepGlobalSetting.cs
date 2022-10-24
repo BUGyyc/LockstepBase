@@ -56,4 +56,9 @@ public static class GameSceneSetting
     public static string TPS_SCENE = "TPS";
 
     public static string BattleTestScene = TPS_SCENE;
+
+    public static string LaunchClient = "LaunchClient";
+    public static string LaunchClientPath = "Assets/Scenes/Debug/0.launch/LaunchClient.unity";
+    public static string LaunchServer = "LaunchServer";
+    public static string LaunchServerPath = "Assets/Scenes/Debug/0.launch/LaunchServer.unity";
 }

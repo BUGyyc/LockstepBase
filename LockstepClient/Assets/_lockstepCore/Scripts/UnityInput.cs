@@ -1,11 +1,11 @@
-﻿using System.Linq;       
+﻿using System.Linq;
 using Entitas;
 using FixMath.NET;
-using Lockstep.Game.Commands;          
-using UnityEngine;                      
+using Lockstep.Game.Commands;
+using UnityEngine;
 
 public class UnityInput : MonoBehaviour
-{                              
+{
     public static BEPUutilities.Vector2 GetWorldPos(Vector2 screenPos)
     {
         var ray = Camera.main.ScreenPointToRay(screenPos);
@@ -20,23 +20,25 @@ public class UnityInput : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButton(1))
-        {   
-            var pos = GetWorldPos(Input.mousePosition);
-            FindObjectOfType<RTSEntitySpawner>().Spawn(pos);
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
         {
-            var e = Contexts.sharedInstance.game
-                .GetEntities(GameMatcher.LocalId)
-                .Where(entity => entity.actorId.value == RTSNetworkedSimulation.Instance.Simulation.LocalActorId)
-                .Select(entity => entity.id.value).ToArray();      
+            var pos = GetWorldPos(Input.mousePosition);
+            //FindObjectOfType<RTSEntitySpawner>()?.Spawn(pos);
 
-            RTSNetworkedSimulation.Instance.Execute(new NavigateCommand
-            {
-                Destination = GetWorldPos(Input.mousePosition),
-                Selection = e
-            });
+            FindObjectOfType<EntitySpawner>()?.Spawn(pos);
         }
+
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    var e = Contexts.sharedInstance.game
+        //        .GetEntities(GameMatcher.LocalId)
+        //        .Where(entity => entity.actorId.value == TPSWorld.Instance?.Simulation.LocalActorId)
+        //        .Select(entity => entity.id.value).ToArray();
+
+        //    TPSWorld.Instance?.Execute(new NavigateCommand
+        //    {
+        //        Destination = GetWorldPos(Input.mousePosition),
+        //        Selection = e
+        //    });
+        //}
     }
 }
