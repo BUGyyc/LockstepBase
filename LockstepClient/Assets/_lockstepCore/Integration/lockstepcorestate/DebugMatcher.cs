@@ -13,8 +13,8 @@ public sealed class DebugMatcher
             if (_matcherHashCode == null)
             {
                 Matcher<DebugEntity> val = (Matcher<DebugEntity>)(object)Matcher<DebugEntity>.AllOf(new int[1]);
-                val.set_componentNames(DebugComponentsLookup.componentNames);
-                //val.componentNames = DebugComponentsLookup.componentNames;
+                //val.set_componentNames(DebugComponentsLookup.componentNames);
+                val.componentNames = DebugComponentsLookup.componentNames;
                 _matcherHashCode = (IMatcher<DebugEntity>)(object)val;
             }
             return _matcherHashCode;
@@ -28,7 +28,8 @@ public sealed class DebugMatcher
             if (_matcherTick == null)
             {
                 Matcher<DebugEntity> val = (Matcher<DebugEntity>)(object)Matcher<DebugEntity>.AllOf(new int[1] { 1 });
-                val.set_componentNames(DebugComponentsLookup.componentNames);
+                //val.set_componentNames(DebugComponentsLookup.componentNames);
+                val.componentNames = DebugComponentsLookup.componentNames;
                 _matcherTick = (IMatcher<DebugEntity>)(object)val;
             }
             return _matcherTick;
