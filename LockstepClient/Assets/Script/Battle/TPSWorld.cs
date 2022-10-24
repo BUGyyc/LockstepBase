@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using Entitas;
 
 public class TPSWorld : MonoBehaviour
 {
@@ -46,6 +47,21 @@ public class TPSWorld : MonoBehaviour
         _commandQueue.InitReceived += OnInitReceived;
 
         Simulation = new Simulation(Contexts.sharedInstance, _commandQueue, new UnityGameService(EntityDatabase));
+
+        //Debug.Log($"   Contexts.sharedInstance.character  {Contexts.sharedInstance.character == null} ");
+
+
+        //new Systems().Add(new CharacterSystem(Contexts.sharedInstance.character));
+
+
+        //创建了10个 Entity
+        for (var i = 0; i < 10; i++)
+        {
+            var entity = Contexts.sharedInstance.character.CreateEntity();
+
+            entity.AddCharacter(FixMath.NET.Fix64.One);
+        }
+
     }
 
     public void OnInitReceived(object sender, Init msg)
@@ -89,6 +105,11 @@ public class TPSWorld : MonoBehaviour
             Debug.Log($"Starting simulation. Total actors:-------------------------------------");
             Simulation.Start(30, 1, new byte[] { 1 });
         }
+    }
+
+    private void FixedUpdate()
+    {
+
     }
 
     public IEnumerator AutoConnect()

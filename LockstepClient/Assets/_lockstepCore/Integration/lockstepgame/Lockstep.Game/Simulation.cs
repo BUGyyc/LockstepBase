@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -54,7 +54,7 @@ namespace Lockstep.Game
             GameLog.AllActorIds = allActors;
             LocalActorId = localActorId;
             _tickDt = 1000f / (float)targetFps;
-            _world = new World(Contexts, allActors, new InputFeature(Contexts, Services), new RVONavigationFeature(Contexts, Services), new CleanupFeature(Contexts, Services));
+            _world = new World(Contexts, allActors, new InputFeature(Contexts, Services), new BattleLogicFeature(Contexts, Services), new RVONavigationFeature(Contexts, Services), new CleanupFeature(Contexts, Services));
             Running = true;
             this.Started?.Invoke(this, EventArgs.Empty);
         }

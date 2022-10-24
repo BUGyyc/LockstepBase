@@ -175,7 +175,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4600130916727093584}
-  - component: {fileID: 666752386675906399}
+  - component: {fileID: 7535111696758542281}
+  - component: {fileID: 4751770635374460643}
+  - component: {fileID: 6866357639493360305}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -200,7 +202,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &666752386675906399
+--- !u!114 &7535111696758542281
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,142 +211,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 4600130916727093585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 703caa0a3f530494483938d5d4bb5898, type: 3}
+  m_Script: {fileID: 11500000, guid: b263215d9fe37a7418eaaad2d2a105fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseEntity:
-    EntityId: 0
-    PrefabId: 0
-    transform:
-      pos:
-        _x: 0
-        _y: 0
-      y:
-        _val: 0
-      deg:
-        _val: 0
-  uiFloatBar: {fileID: 0}
-  entity:
-    EntityId: 0
-    PrefabId: 0
-    transform:
-      pos:
-        _x: 0
-        _y: 0
-      y:
-        _val: 0
-      deg:
-        _val: 0
-    rigidbody:
-      Speed:
-        _x: 0
-        _y: 0
-        _z: 0
-      Mass:
-        _val: 1000
-      isEnable: 1
-      isSleep: 0
-      isOnFloor: 0
-    colliderData:
-      y:
-        _val: 0
-      pos:
-        _x: 0
-        _y: 0
-      high:
-        _val: 0
-      radius:
-        _val: 0
-      size:
-        _x: 0
-        _y: 0
-      up:
-        _x: 0
-        _y: 0
-      deg:
-        _val: 0
-    animator:
-      configId: 0
-      config: {fileID: 0}
-      curAnimBindInfo:
-        name: 
-        isOnce: 0
-        isMoveByAnim: 0
-        eventPoints: []
-    skillBox:
-      configId: 0
-      isFiring: 0
-      config: {fileID: 0}
-    moveSpd:
-      _val: 5000
-    turnSpd:
-      _val: 360000
-    curHealth: 0
-    maxHealth: 100
-    damage: 10
-    isInvincible: 0
-    isFire: 0
-  Player:
-    EntityId: 0
-    PrefabId: 0
-    transform:
-      pos:
-        _x: 0
-        _y: 0
-      y:
-        _val: 0
-      deg:
-        _val: 0
-    rigidbody:
-      Speed:
-        _x: 0
-        _y: 0
-        _z: 0
-      Mass:
-        _val: 1000
-      isEnable: 1
-      isSleep: 0
-      isOnFloor: 0
-    colliderData:
-      y:
-        _val: 0
-      pos:
-        _x: 0
-        _y: 0
-      high:
-        _val: 0
-      radius:
-        _val: 0
-      size:
-        _x: 0
-        _y: 0
-      up:
-        _x: 0
-        _y: 0
-      deg:
-        _val: 0
-    animator:
-      configId: 0
-      config: {fileID: 0}
-      curAnimBindInfo:
-        name: 
-        isOnce: 0
-        isMoveByAnim: 0
-        eventPoints: []
-    skillBox:
-      configId: 0
-      isFiring: 0
-      config: {fileID: 0}
-    moveSpd:
-      _val: 5000
-    turnSpd:
-      _val: 360000
-    curHealth: 0
-    maxHealth: 100
-    damage: 10
-    isInvincible: 0
-    isFire: 0
-    localId: 0
-    mover:
-      hasReachTarget: 0
-      needMove: 1
+--- !u!114 &4751770635374460643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4600130916727093585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ba1be29e31f14a40a1216d6f6a1abe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6866357639493360305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4600130916727093585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516cdcd6b4b7da345810311630ad30c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
