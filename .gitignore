@@ -14,3 +14,9 @@ LockstepClient/obj/
 LockstepClient/.vscode/
 LockstepServer/.vsconfig
 LockstepServer/
+LockstepClient/Assets/_lockstepCore/Integration/lockstepcommon/obj/
+LockstepClient/Assets/_lockstepCore/Integration/lockstepcorelogic/obj/Debug/
+LockstepClient/Assets/_lockstepCore/Integration/lockstepnetwork/obj/
+LockstepClient/Assets/_lockstepCore/Integration/lockstepgame/obj/
+LockstepClient/Assets/_lockstepCore/Integration/lockstepcorestate/obj/
+LockstepClient/Assets/_lockstepCore/Integration/lockstepnetworkclient/obj/
