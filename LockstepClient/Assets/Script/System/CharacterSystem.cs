@@ -31,9 +31,13 @@ public class CharacterSystem : IExecuteSystem, ISystem
     //}
 
     BEPUutilities.Vector2 baseV2;
+    BEPUutilities.Vector2 bx2;
+    BEPUutilities.Vector2 by2;
     public CharacterSystem()
     {
         baseV2 = new BEPUutilities.Vector2(1, 1);
+        bx2 = new BEPUutilities.Vector2(baseV2.x, 0);
+        by2 = new BEPUutilities.Vector2(0, baseV2.y);
     }
 
 
@@ -49,16 +53,35 @@ public class CharacterSystem : IExecuteSystem, ISystem
 
             var pos = item.position;
 
+            var id = item.id.value;
 
-            var xFlag = Lockstep.Random.NextCompare(345);
-            var offset = 1;
-            var yFlag = Lockstep.Random.NextCompare(456);
+            int val = (int)id;
+            int res = val % 4;
+            switch (res)
+            {
+                case 0:
+                    pos.value += bx2;
+                    break;
+                case 1:
+                    pos.value -= bx2;
+                    break;
+                case 2:
+                    pos.value += by2;
+                    break;
+                case 3:
+                    pos.value -= by2;
+                    break;
+            }
+
+            //var xFlag = Lockstep.Random.NextCompare(345);
+            //var offset = 1;
+            //var yFlag = Lockstep.Random.NextCompare(456);
 
 
-            BEPUutilities.Vector2 bx2 = new BEPUutilities.Vector2(baseV2.x, 0);
-            BEPUutilities.Vector2 by2 = new BEPUutilities.Vector2(0, baseV2.y);
-            pos.value += (xFlag) ? offset * bx2 : (offset * bx2) * -1;
-            pos.value += (yFlag) ? offset * by2 : (offset * by2) * -1;
+            //BEPUutilities.Vector2 bx2 = new BEPUutilities.Vector2(baseV2.x, 0);
+            //BEPUutilities.Vector2 by2 = new BEPUutilities.Vector2(0, baseV2.y);
+            //pos.value += (xFlag) ? offset * bx2 : (offset * bx2) * -1;
+            //pos.value += (yFlag) ? offset * by2 : (offset * by2) * -1;
 
         }
 

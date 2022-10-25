@@ -50,6 +50,10 @@ namespace Lockstep.Core.Logic
             debugEntity.AddHashCode(Contexts.gameState.hashCode.value);
         }
 
+        /// <summary>
+        /// 回滚到指定帧
+        /// </summary>
+        /// <param name="tick"></param>
         public void RevertToTick(uint tick)
         {
             List<uint> source = (from entity in ContextExtension.GetEntities<SnapshotEntity>((IContext<SnapshotEntity>)(object)Contexts.snapshot, SnapshotMatcher.Tick)

@@ -28,6 +28,9 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
     public void OnPosition(GameEntity entity, BEPUutilities.Vector2 newPosition)
     {
         var temp = new Vector3((float)newPosition.X, 1, (float)newPosition.Y);
+
+        //transform.position = temp;
+
         target = temp.ToLVector3();
     }
 

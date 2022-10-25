@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using BEPUutilities;
 using Lockstep.Core.Logic.Interfaces;
 using Lockstep.Core.Logic.Serialization;
@@ -19,6 +19,7 @@ namespace Lockstep.Game.Commands
 
         public void Execute(InputEntity e)
         {
+            UnityEngine.Debug.Log($" Spawn  Position {Position}  ");
             e.AddCoordinate(Position);
             e.AddEntityConfigId(EntityConfigId);
         }

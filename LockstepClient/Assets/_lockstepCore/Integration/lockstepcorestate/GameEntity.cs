@@ -4,6 +4,9 @@ using Entitas;
 using FixMath.NET;
 using Lockstep.Core.State.Game;
 
+/// <summary>
+/// 游戏对象Entity
+/// </summary>
 public sealed class GameEntity : Entity
 {
     private static readonly DestroyedComponent destroyedComponent = new DestroyedComponent();
