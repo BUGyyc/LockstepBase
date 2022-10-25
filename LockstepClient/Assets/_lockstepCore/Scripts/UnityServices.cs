@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;       
+using UnityEngine;
 using Entitas.Unity;
-using Entitas.VisualDebugging.Unity;               
+using Entitas.VisualDebugging.Unity;
 using Lockstep.Game.Interfaces;
 
 public interface IEventListener
@@ -27,6 +27,14 @@ public class UnityGameService : IViewService
         _entityDatabase = entityDatabase;
     }
 
+    public void LoadView(CharacterEntity entity, int configId = 2)
+    {
+        var viewGo = UnityEngine.Object.Instantiate(_entityDatabase.Entities[configId]).gameObject;
+        if (viewGo == null) return;
+        viewGo.Link(entity);
+    }
+
+
     public void LoadView(GameEntity entity, int configId)
     {
         //TODO: pooling    
@@ -49,11 +57,11 @@ public class UnityGameService : IViewService
             }
 
             linkedEntities.Add(entity.localId.value, viewGo);
-        }      
+        }
     }
 
     public void DeleteView(uint entityId)
-    {                                            
+    {
         var viewGo = linkedEntities[entityId];
         var eventListeners = viewGo.GetComponents<IEventListener>();
         foreach (var listener in eventListeners)
@@ -63,6 +71,6 @@ public class UnityGameService : IViewService
 
         linkedEntities[entityId].Unlink();
         linkedEntities[entityId].DestroyGameObject();
-        linkedEntities.Remove(entityId);      
+        linkedEntities.Remove(entityId);
     }
-}         
+}

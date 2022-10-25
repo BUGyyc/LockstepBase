@@ -25,7 +25,7 @@ public class LiteNetLibClient : INetwork
 
         _client = new NetManager(_listener)
         {
-            DisconnectTimeout = 5000
+            DisconnectTimeout = 30000
         };
         // _client.UnconnectedMessagesEnabled = true;
         // _client.UpdateTime = 15;

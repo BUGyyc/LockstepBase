@@ -30,16 +30,36 @@ public class CharacterSystem : IExecuteSystem, ISystem
     //    //_spawnInputs = ((Context<InputEntity>)contexts.input).GetGroup((IMatcher<InputEntity>)(object)InputMatcher.AllOf(InputMatcher.EntityConfigId, InputMatcher.ActorId, InputMatcher.Coordinate, InputMatcher.Tick));
     //}
 
+    BEPUutilities.Vector2 baseV2;
+    public CharacterSystem()
+    {
+        baseV2 = new BEPUutilities.Vector2(1, 1);
+    }
+
 
     public void Execute()
     {
-        var _characters = Contexts.sharedInstance.character.GetEntities();
+        var game = Contexts.sharedInstance.game.GetEntities();
 
-        Debug.LogFormat($"Character  Count = {_characters.Length} ");
+        //Debug.LogFormat($"game  Count = {game.Length} ");
 
-        foreach (CharacterEntity item in _characters)
+        foreach (GameEntity item in game)
         {
             //Debug.LogFormat($"I am Character  speed = {item.character.speed} ");
+
+            var pos = item.position;
+
+
+            var xFlag = Lockstep.Random.NextCompare(345);
+            var offset = 1;
+            var yFlag = Lockstep.Random.NextCompare(456);
+
+
+            BEPUutilities.Vector2 bx2 = new BEPUutilities.Vector2(baseV2.x, 0);
+            BEPUutilities.Vector2 by2 = new BEPUutilities.Vector2(0, baseV2.y);
+            pos.value += (xFlag) ? offset * bx2 : (offset * bx2) * -1;
+            pos.value += (yFlag) ? offset * by2 : (offset * by2) * -1;
+
         }
 
     }

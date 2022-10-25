@@ -6,19 +6,23 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Lockstep.Core.State.Game;
 public static class CharacterComponentsLookup
 {
 
     public const int Character = 0;
+    public const int Position = 1;
 
 
-    public const int TotalComponents = 1;
+    public const int TotalComponents = 2;
 
     public static readonly string[] componentNames = {
-        "Character"
+        "Character",
+        "Position"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(CharacterComponent)
+        typeof(CharacterComponent),
+        typeof(PositionComponent)
     };
 }

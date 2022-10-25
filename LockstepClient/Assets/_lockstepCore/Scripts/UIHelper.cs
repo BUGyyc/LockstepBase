@@ -13,14 +13,16 @@ public class UIHelper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (RTSNetworkedSimulation.Instance.Simulation.Running)
-        //{
-        //    HashCodeText.text = "HashCode: " + Contexts.sharedInstance.gameState.hashCode.value;
-        //    CurrentTickText.text = "CurrentTick: " + Contexts.sharedInstance.gameState.tick.value;
-        //    AgentCountText.text = "Agents: " + Contexts.sharedInstance.game.GetEntities(GameMatcher.LocalId).Length;
-        //}
+        if (TPSWorld.Instance == null) return;
+
+        if (TPSWorld.Instance.Simulation.Running)
+        {
+            HashCodeText.text = "HashCode: " + Contexts.sharedInstance.gameState.hashCode.value;
+            CurrentTickText.text = "CurrentTick: " + Contexts.sharedInstance.gameState.tick.value;
+            AgentCountText.text = "Agents: " + Contexts.sharedInstance.game.GetEntities(GameMatcher.LocalId).Length;
+        }
 
 
-        //ConnectedText.text = "Connected: " + RTSNetworkedSimulation.Instance.Connected;
+        ConnectedText.text = "Connected: " + TPSWorld.Instance.Connected;
     }
 }

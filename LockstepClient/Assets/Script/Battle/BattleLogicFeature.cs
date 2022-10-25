@@ -13,8 +13,8 @@ namespace Lockstep.Game.Features
 
 
             //这里的顺序很关键， 是影响代码时序的地方
-            ((Systems)this).Add((ISystem)(object)new CharacterSystem());
-
+            this.Add(new CharacterSystem());
+            this.Add(new MoveSystem());
         }
     }
 }
