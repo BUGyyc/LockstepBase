@@ -56,27 +56,27 @@
     <Analyzer Include="E:\vs2022\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Core\Math\LUT\LUTAsin.cs" />
     <Compile Include="Assets\Core\Math\BaseType\LQuaternion.cs" />
     <Compile Include="Assets\Core\Math\PrimerLUT.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LVector2.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LVector2Int.cs" />
-    <Compile Include="Assets\Core\Math\HashCodeExtension.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LAxis2D.cs" />
-    <Compile Include="Assets\Core\Math\LockStepMath.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LVector3Int.cs" />
     <Compile Include="Assets\Core\Math\BaseType\LMatrix33.cs" />
-    <Compile Include="Assets\Core\Math\LUT\LUTSinCos.cs" />
-    <Compile Include="Assets\Core\Math\LMath.cs" />
+    <Compile Include="Assets\Core\Math\BaseType\LVector2Int.cs" />
+    <Compile Include="Assets\Core\Math\BaseType\LVector3Int.cs" />
     <Compile Include="Assets\Core\Math\BaseType\LFloat.cs" />
-    <Compile Include="Assets\Core\Math\LMath_Vector.cs" />
-    <Compile Include="Assets\Core\Math\LUT\LUTAcos.cs" />
-    <Compile Include="Assets\Core\Math\LUT\LUTAsin.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LAxis3D.cs" />
-    <Compile Include="Assets\Core\Math\LMathExtension2.cs" />
-    <Compile Include="Assets\Core\Math\LRandom.cs" />
+    <Compile Include="Assets\Core\Math\LUT\LUTSinCos.cs" />
     <Compile Include="Assets\Core\Math\BaseType\LVector3.cs" />
-    <Compile Include="Assets\Core\Math\LUT\LUTAtan2.cs" />
+    <Compile Include="Assets\Core\Math\LMath.cs" />
+    <Compile Include="Assets\Core\Math\HashCodeExtension.cs" />
+    <Compile Include="Assets\Core\Math\LUT\LUTAcos.cs" />
+    <Compile Include="Assets\Core\Math\LMath_Vector.cs" />
     <Compile Include="Assets\Core\Math\BaseType\LRect.cs" />
+    <Compile Include="Assets\Core\Math\LockStepMath.cs" />
+    <Compile Include="Assets\Core\Math\BaseType\LVector2.cs" />
+    <Compile Include="Assets\Core\Math\LRandom.cs" />
+    <Compile Include="Assets\Core\Math\LMathExtension2.cs" />
+    <Compile Include="Assets\Core\Math\BaseType\LAxis2D.cs" />
+    <Compile Include="Assets\Core\Math\BaseType\LAxis3D.cs" />
+    <Compile Include="Assets\Core\Math\LUT\LUTAtan2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Core\Math\AIMath.asmdef" />

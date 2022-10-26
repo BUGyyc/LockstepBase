@@ -7,153 +7,153 @@ using Lockstep.Core.State.Input;
 /// </summary>
 public sealed class InputEntity : Entity
 {
-    public ActorIdComponent actorId => (ActorIdComponent)(object)((Entity)this).GetComponent(0);
+    public ActorIdComponent actorId => (ActorIdComponent)GetComponent(0);
 
-    public bool hasActorId => ((Entity)this).HasComponent(0);
+    public bool hasActorId => HasComponent(0);
 
-    public CoordinateComponent coordinate => (CoordinateComponent)(object)((Entity)this).GetComponent(1);
+    public CoordinateComponent coordinate => (CoordinateComponent)GetComponent(1);
 
-    public bool hasCoordinate => ((Entity)this).HasComponent(1);
+    public bool hasCoordinate => HasComponent(1);
 
-    public EntityConfigIdComponent entityConfigId => (EntityConfigIdComponent)(object)((Entity)this).GetComponent(2);
+    public EntityConfigIdComponent entityConfigId => (EntityConfigIdComponent)GetComponent(2);
 
-    public bool hasEntityConfigId => ((Entity)this).HasComponent(2);
+    public bool hasEntityConfigId => HasComponent(2);
 
-    public SelectionComponent selection => (SelectionComponent)(object)((Entity)this).GetComponent(3);
+    public SelectionComponent selection => (SelectionComponent)GetComponent(3);
 
-    public bool hasSelection => ((Entity)this).HasComponent(3);
+    public bool hasSelection => HasComponent(3);
 
-    public TargetActorIdComponent targetActorId => (TargetActorIdComponent)(object)((Entity)this).GetComponent(4);
+    public TargetActorIdComponent targetActorId => (TargetActorIdComponent)GetComponent(4);
 
-    public bool hasTargetActorId => ((Entity)this).HasComponent(4);
+    public bool hasTargetActorId => HasComponent(4);
 
-    public TickComponent tick => (TickComponent)(object)((Entity)this).GetComponent(5);
+    public TickComponent tick => (TickComponent)GetComponent(5);
 
-    public bool hasTick => ((Entity)this).HasComponent(5);
+    public bool hasTick => HasComponent(5);
 
     public void AddActorId(byte newValue)
     {
         int num = 0;
-        ActorIdComponent actorIdComponent = (ActorIdComponent)(object)((Entity)this).CreateComponent(num, typeof(ActorIdComponent));
+        ActorIdComponent actorIdComponent = (ActorIdComponent)CreateComponent(num, typeof(ActorIdComponent));
         actorIdComponent.value = newValue;
-        ((Entity)this).AddComponent(num, (IComponent)(object)actorIdComponent);
+        AddComponent(num, actorIdComponent);
     }
 
     public void ReplaceActorId(byte newValue)
     {
         int num = 0;
-        ActorIdComponent actorIdComponent = (ActorIdComponent)(object)((Entity)this).CreateComponent(num, typeof(ActorIdComponent));
+        ActorIdComponent actorIdComponent = (ActorIdComponent)CreateComponent(num, typeof(ActorIdComponent));
         actorIdComponent.value = newValue;
-        ((Entity)this).ReplaceComponent(num, (IComponent)(object)actorIdComponent);
+        ReplaceComponent(num, (IComponent)actorIdComponent);
     }
 
     public void RemoveActorId()
     {
-        ((Entity)this).RemoveComponent(0);
+        RemoveComponent(0);
     }
 
     public void AddCoordinate(Vector2 newValue)
     {
         int num = 1;
-        CoordinateComponent coordinateComponent = (CoordinateComponent)(object)((Entity)this).CreateComponent(num, typeof(CoordinateComponent));
+        CoordinateComponent coordinateComponent = (CoordinateComponent)CreateComponent(num, typeof(CoordinateComponent));
         coordinateComponent.value = newValue;
-        ((Entity)this).AddComponent(num, (IComponent)(object)coordinateComponent);
+        AddComponent(num, coordinateComponent);
     }
 
     public void ReplaceCoordinate(Vector2 newValue)
     {
         int num = 1;
-        CoordinateComponent coordinateComponent = (CoordinateComponent)(object)((Entity)this).CreateComponent(num, typeof(CoordinateComponent));
+        CoordinateComponent coordinateComponent = (CoordinateComponent)CreateComponent(num, typeof(CoordinateComponent));
         coordinateComponent.value = newValue;
-        ((Entity)this).ReplaceComponent(num, (IComponent)(object)coordinateComponent);
+        ReplaceComponent(num, (IComponent)coordinateComponent);
     }
 
     public void RemoveCoordinate()
     {
-        ((Entity)this).RemoveComponent(1);
+        RemoveComponent(1);
     }
 
     public void AddEntityConfigId(int newValue)
     {
         int num = 2;
-        EntityConfigIdComponent entityConfigIdComponent = (EntityConfigIdComponent)(object)((Entity)this).CreateComponent(num, typeof(EntityConfigIdComponent));
+        EntityConfigIdComponent entityConfigIdComponent = (EntityConfigIdComponent)CreateComponent(num, typeof(EntityConfigIdComponent));
         entityConfigIdComponent.value = newValue;
-        ((Entity)this).AddComponent(num, (IComponent)(object)entityConfigIdComponent);
+        AddComponent(num, (IComponent)entityConfigIdComponent);
     }
 
     public void ReplaceEntityConfigId(int newValue)
     {
         int num = 2;
-        EntityConfigIdComponent entityConfigIdComponent = (EntityConfigIdComponent)(object)((Entity)this).CreateComponent(num, typeof(EntityConfigIdComponent));
+        EntityConfigIdComponent entityConfigIdComponent = (EntityConfigIdComponent)CreateComponent(num, typeof(EntityConfigIdComponent));
         entityConfigIdComponent.value = newValue;
-        ((Entity)this).ReplaceComponent(num, (IComponent)(object)entityConfigIdComponent);
+        ReplaceComponent(num, (IComponent)entityConfigIdComponent);
     }
 
     public void RemoveEntityConfigId()
     {
-        ((Entity)this).RemoveComponent(2);
+        RemoveComponent(2);
     }
 
     public void AddSelection(uint[] newEntityIds)
     {
         int num = 3;
-        SelectionComponent selectionComponent = (SelectionComponent)(object)((Entity)this).CreateComponent(num, typeof(SelectionComponent));
+        SelectionComponent selectionComponent = (SelectionComponent)CreateComponent(num, typeof(SelectionComponent));
         selectionComponent.entityIds = newEntityIds;
-        ((Entity)this).AddComponent(num, (IComponent)(object)selectionComponent);
+        AddComponent(num, (IComponent)selectionComponent);
     }
 
     public void ReplaceSelection(uint[] newEntityIds)
     {
         int num = 3;
-        SelectionComponent selectionComponent = (SelectionComponent)(object)((Entity)this).CreateComponent(num, typeof(SelectionComponent));
+        SelectionComponent selectionComponent = (SelectionComponent)CreateComponent(num, typeof(SelectionComponent));
         selectionComponent.entityIds = newEntityIds;
-        ((Entity)this).ReplaceComponent(num, (IComponent)(object)selectionComponent);
+        ReplaceComponent(num, (IComponent)selectionComponent);
     }
 
     public void RemoveSelection()
     {
-        ((Entity)this).RemoveComponent(3);
+        RemoveComponent(3);
     }
 
     public void AddTargetActorId(byte newValue)
     {
         int num = 4;
-        TargetActorIdComponent targetActorIdComponent = (TargetActorIdComponent)(object)((Entity)this).CreateComponent(num, typeof(TargetActorIdComponent));
+        TargetActorIdComponent targetActorIdComponent = (TargetActorIdComponent)CreateComponent(num, typeof(TargetActorIdComponent));
         targetActorIdComponent.value = newValue;
-        ((Entity)this).AddComponent(num, (IComponent)(object)targetActorIdComponent);
+        AddComponent(num, (IComponent)targetActorIdComponent);
     }
 
     public void ReplaceTargetActorId(byte newValue)
     {
         int num = 4;
-        TargetActorIdComponent targetActorIdComponent = (TargetActorIdComponent)(object)((Entity)this).CreateComponent(num, typeof(TargetActorIdComponent));
+        TargetActorIdComponent targetActorIdComponent = (TargetActorIdComponent)CreateComponent(num, typeof(TargetActorIdComponent));
         targetActorIdComponent.value = newValue;
-        ((Entity)this).ReplaceComponent(num, (IComponent)(object)targetActorIdComponent);
+        ReplaceComponent(num, (IComponent)targetActorIdComponent);
     }
 
     public void RemoveTargetActorId()
     {
-        ((Entity)this).RemoveComponent(4);
+        RemoveComponent(4);
     }
 
     public void AddTick(uint newValue)
     {
         int num = 5;
-        TickComponent tickComponent = (TickComponent)(object)((Entity)this).CreateComponent(num, typeof(TickComponent));
+        TickComponent tickComponent = (TickComponent)CreateComponent(num, typeof(TickComponent));
         tickComponent.value = newValue;
-        ((Entity)this).AddComponent(num, (IComponent)(object)tickComponent);
+        AddComponent(num, (IComponent)tickComponent);
     }
 
     public void ReplaceTick(uint newValue)
     {
         int num = 5;
-        TickComponent tickComponent = (TickComponent)(object)((Entity)this).CreateComponent(num, typeof(TickComponent));
+        TickComponent tickComponent = (TickComponent)CreateComponent(num, typeof(TickComponent));
         tickComponent.value = newValue;
-        ((Entity)this).ReplaceComponent(num, (IComponent)(object)tickComponent);
+        ReplaceComponent(num, (IComponent)tickComponent);
     }
 
     public void RemoveTick()
     {
-        ((Entity)this).RemoveComponent(5);
+        RemoveComponent(5);
     }
 }

@@ -75,6 +75,8 @@ public class Contexts : IContexts
 
         character = new CharacterContext();
 
+
+        //通过反射 特性标记，获取函数
         IEnumerable<MethodInfo> enumerable = from method in GetType().GetMethods()
                                              where Attribute.IsDefined(method, typeof(PostConstructorAttribute))
                                              select method;
@@ -93,11 +95,14 @@ public class Contexts : IContexts
         }
     }
 
+    /// <summary>
+    /// 相关初始化
+    /// </summary>
     [PostConstructor]
     public void InitializeEntityIndices()
     {
-        ((Context<ActorEntity>)actor).AddEntityIndex((IEntityIndex)(object)new PrimaryEntityIndex<ActorEntity, byte>("Id", ((Context<ActorEntity>)actor).GetGroup(ActorMatcher.Id), (Func<ActorEntity, IComponent, byte>)((ActorEntity e, IComponent c) => ((Lockstep.Core.State.Actor.IdComponent)(object)c).value)));
-        ((Context<GameEntity>)game).AddEntityIndex((IEntityIndex)(object)new PrimaryEntityIndex<GameEntity, uint>("LocalId", ((Context<GameEntity>)game).GetGroup(GameMatcher.LocalId), (Func<GameEntity, IComponent, uint>)((GameEntity e, IComponent c) => ((LocalIdComponent)(object)c).value)));
-        ((Context<SnapshotEntity>)snapshot).AddEntityIndex((IEntityIndex)(object)new PrimaryEntityIndex<SnapshotEntity, uint>("Tick", ((Context<SnapshotEntity>)snapshot).GetGroup(SnapshotMatcher.Tick), (Func<SnapshotEntity, IComponent, uint>)((SnapshotEntity e, IComponent c) => ((TickComponent)(object)c).value)));
+        actor.AddEntityIndex(new PrimaryEntityIndex<ActorEntity, byte>("Id", actor.GetGroup(ActorMatcher.Id), ((ActorEntity e, IComponent c) => ((Lockstep.Core.State.Actor.IdComponent)c).value)));
+        game.AddEntityIndex(new PrimaryEntityIndex<GameEntity, uint>("LocalId", (game).GetGroup(GameMatcher.LocalId), ((GameEntity e, IComponent c) => ((LocalIdComponent)c).value)));
+        snapshot.AddEntityIndex(new PrimaryEntityIndex<SnapshotEntity, uint>("Tick", (snapshot).GetGroup(SnapshotMatcher.Tick), ((SnapshotEntity e, IComponent c) => ((TickComponent)c).value)));
     }
 }

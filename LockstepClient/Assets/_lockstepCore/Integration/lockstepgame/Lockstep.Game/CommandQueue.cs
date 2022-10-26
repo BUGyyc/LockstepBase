@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Lockstep.Core.Logic;
 using Lockstep.Core.Logic.Interfaces;
@@ -8,6 +8,9 @@ namespace Lockstep.Game
 
     public class CommandQueue : ICommandQueue
     {
+        /// <summary>
+        /// 存储每一帧的命令队列
+        /// </summary>
         public Dictionary<uint, List<Input>> Buffer { get; } = new Dictionary<uint, List<Input>>(5000);
 
 

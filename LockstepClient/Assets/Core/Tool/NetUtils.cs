@@ -1,6 +1,5 @@
-﻿using System.Net.Sockets;
-using System.Net.NetworkInformation;
-using System;
+﻿using System.Net.NetworkInformation;
+using System.Net.Sockets;
 public static class NetTool
 {
     public static string IP(address fam)

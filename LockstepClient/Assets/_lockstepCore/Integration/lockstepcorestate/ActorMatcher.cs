@@ -17,7 +17,7 @@ public sealed class ActorMatcher
                 Matcher<ActorEntity> val = (Matcher<ActorEntity>)(object)Matcher<ActorEntity>.AllOf(new int[1]);
                 //val.set_componentNames(ActorComponentsLookup.componentNames);
                 val.componentNames = ActorComponentsLookup.componentNames;
-                _matcherBackup = (IMatcher<ActorEntity>)(object)val;
+                _matcherBackup = val;
             }
             return _matcherBackup;
         }
@@ -32,7 +32,7 @@ public sealed class ActorMatcher
                 Matcher<ActorEntity> val = (Matcher<ActorEntity>)(object)Matcher<ActorEntity>.AllOf(new int[1] { 1 });
                 //val.set_componentNames(ActorComponentsLookup.componentNames);
                 val.componentNames = ActorComponentsLookup.componentNames;
-                _matcherEntityCount = (IMatcher<ActorEntity>)(object)val;
+                _matcherEntityCount = val;
             }
             return _matcherEntityCount;
         }
@@ -46,7 +46,7 @@ public sealed class ActorMatcher
             {
                 Matcher<ActorEntity> val = (Matcher<ActorEntity>)(object)Matcher<ActorEntity>.AllOf(new int[1] { 2 });
                 val.componentNames = (ActorComponentsLookup.componentNames);
-                _matcherId = (IMatcher<ActorEntity>)(object)val;
+                _matcherId = val;
             }
             return _matcherId;
         }

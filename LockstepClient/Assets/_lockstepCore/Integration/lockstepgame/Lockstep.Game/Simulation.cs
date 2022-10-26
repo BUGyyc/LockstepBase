@@ -11,7 +11,9 @@ using Lockstep.Game.Features;
 
 namespace Lockstep.Game
 {
-
+    /// <summary>
+    /// 模拟器，驱动帧执行
+    /// </summary>
     public class Simulation
     {
         private float _tickDt;
@@ -37,6 +39,14 @@ namespace Lockstep.Game
 
         public event EventHandler Started;
 
+#if UNITY_EDITOR
+        public World GetWorld()
+        {
+            return _world;
+        }
+#endif
+
+
         public Simulation(Contexts contexts, ICommandQueue commandQueue, params IService[] services)
         {
             _commandQueue = commandQueue;
@@ -48,6 +58,12 @@ namespace Lockstep.Game
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetFps">指定帧号</param>
+        /// <param name="localActorId">本地玩家 ID</param>
+        /// <param name="allActors">房间内所有玩家ID</param>
         public void Start(int targetFps, byte localActorId, byte[] allActors)
         {
             GameLog.LocalActorId = localActorId;

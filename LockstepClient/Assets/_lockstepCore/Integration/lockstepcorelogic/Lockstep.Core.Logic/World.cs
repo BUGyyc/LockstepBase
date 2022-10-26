@@ -25,6 +25,9 @@ namespace Lockstep.Core.Logic
             (_systems).Initialize();
         }
 
+        /// <summary>
+        /// 预测
+        /// </summary>
         public void Predict()
         {
             if (!Contexts.gameState.isPredicting)
@@ -36,6 +39,10 @@ namespace Lockstep.Core.Logic
             (_systems).Cleanup();
         }
 
+
+        /// <summary>
+        /// 模拟
+        /// </summary>
         public void Simulate()
         {
             if (Contexts.gameState.isPredicting)

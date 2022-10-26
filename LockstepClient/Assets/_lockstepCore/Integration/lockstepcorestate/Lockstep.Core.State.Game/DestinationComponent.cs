@@ -1,4 +1,4 @@
-using BEPUutilities;
+﻿using BEPUutilities;
 using Entitas;
 using Entitas.CodeGeneration.Attributes;
 

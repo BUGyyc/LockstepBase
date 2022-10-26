@@ -19,7 +19,7 @@ namespace Lockstep.Game.Commands
 
         public void Execute(InputEntity e)
         {
-            UnityEngine.Debug.Log($" Spawn  Position {Position}  ");
+            //UnityEngine.Debug.Log($" Spawn  Position {Position}  ");
             e.AddCoordinate(Position);
             e.AddEntityConfigId(EntityConfigId);
         }

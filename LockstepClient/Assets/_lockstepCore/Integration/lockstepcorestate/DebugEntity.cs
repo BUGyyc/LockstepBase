@@ -6,18 +6,18 @@ using Lockstep.Core.State.Debug;
 /// </summary>
 public sealed class DebugEntity : Entity
 {
-    public HashCodeComponent hashCode => (HashCodeComponent)(object)((Entity)this).GetComponent(0);
+    public HashCodeComponent hashCode => (HashCodeComponent)GetComponent(0);
 
-    public bool hasHashCode => ((Entity)this).HasComponent(0);
+    public bool hasHashCode => HasComponent(0);
 
-    public TickComponent tick => (TickComponent)(object)((Entity)this).GetComponent(1);
+    public TickComponent tick => (TickComponent)GetComponent(1);
 
-    public bool hasTick => ((Entity)this).HasComponent(1);
+    public bool hasTick => HasComponent(1);
 
     public void AddHashCode(long newValue)
     {
         int num = 0;
-        HashCodeComponent hashCodeComponent = (HashCodeComponent)(object)((Entity)this).CreateComponent(num, typeof(HashCodeComponent));
+        HashCodeComponent hashCodeComponent = (HashCodeComponent)CreateComponent(num, typeof(HashCodeComponent));
         hashCodeComponent.value = newValue;
         ((Entity)this).AddComponent(num, (IComponent)(object)hashCodeComponent);
     }
@@ -25,34 +25,34 @@ public sealed class DebugEntity : Entity
     public void ReplaceHashCode(long newValue)
     {
         int num = 0;
-        HashCodeComponent hashCodeComponent = (HashCodeComponent)(object)((Entity)this).CreateComponent(num, typeof(HashCodeComponent));
+        HashCodeComponent hashCodeComponent = (HashCodeComponent)CreateComponent(num, typeof(HashCodeComponent));
         hashCodeComponent.value = newValue;
-        ((Entity)this).ReplaceComponent(num, (IComponent)(object)hashCodeComponent);
+        ReplaceComponent(num, (IComponent)(object)hashCodeComponent);
     }
 
     public void RemoveHashCode()
     {
-        ((Entity)this).RemoveComponent(0);
+        RemoveComponent(0);
     }
 
     public void AddTick(uint newValue)
     {
         int num = 1;
-        TickComponent tickComponent = (TickComponent)(object)((Entity)this).CreateComponent(num, typeof(TickComponent));
+        TickComponent tickComponent = (TickComponent)CreateComponent(num, typeof(TickComponent));
         tickComponent.value = newValue;
-        ((Entity)this).AddComponent(num, (IComponent)(object)tickComponent);
+        AddComponent(num, tickComponent);
     }
 
     public void ReplaceTick(uint newValue)
     {
         int num = 1;
-        TickComponent tickComponent = (TickComponent)(object)((Entity)this).CreateComponent(num, typeof(TickComponent));
+        TickComponent tickComponent = (TickComponent)CreateComponent(num, typeof(TickComponent));
         tickComponent.value = newValue;
-        ((Entity)this).ReplaceComponent(num, (IComponent)(object)tickComponent);
+        ReplaceComponent(num, tickComponent);
     }
 
     public void RemoveTick()
     {
-        ((Entity)this).RemoveComponent(1);
+        RemoveComponent(1);
     }
 }

@@ -1,4 +1,4 @@
-using Entitas;
+﻿using Entitas;
 
 namespace Lockstep.Core.Logic.Systems.Actor
 {
@@ -13,7 +13,7 @@ namespace Lockstep.Core.Logic.Systems.Actor
 
         public void Initialize()
         {
-            ActorEntity[] entities = ((Context<ActorEntity>)_actorContext).GetEntities();
+            ActorEntity[] entities = (_actorContext).GetEntities();
             foreach (ActorEntity actorEntity in entities)
             {
                 actorEntity.AddEntityCount(0u);

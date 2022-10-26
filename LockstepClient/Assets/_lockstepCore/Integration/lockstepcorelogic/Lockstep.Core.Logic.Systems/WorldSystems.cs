@@ -8,16 +8,16 @@ namespace Lockstep.Core.Logic.Systems
     {
         public WorldSystems(Contexts contexts, params Feature[] features)
         {
-            (this).Add((ISystem)(object)new InitializeEntityCount(contexts));
-            (this).Add((ISystem)(object)new OnNewPredictionCreateSnapshot(contexts));
+            Add(new InitializeEntityCount(contexts));
+            Add(new OnNewPredictionCreateSnapshot(contexts));
             foreach (Feature feature in features)
             {
-                (this).Add((ISystem)(object)feature);
+                Add(feature);
             }
-            (this).Add((ISystem)(object)new GameEventSystems(contexts));
-            (this).Add((ISystem)(object)new CalculateHashCode(contexts));
-            (this).Add((ISystem)(object)new DestroyDestroyedGameSystem(contexts));
-            (this).Add((ISystem)(object)new IncrementTick(contexts));
+            Add(new GameEventSystems(contexts));
+            Add(new CalculateHashCode(contexts));
+            Add(new DestroyDestroyedGameSystem(contexts));
+            Add(new IncrementTick(contexts));
         }
     }
 }

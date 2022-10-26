@@ -19,8 +19,8 @@ public class TPSWorld : MonoBehaviour
 
     //世界模拟器
     public Simulation Simulation;
-    [HideInInspector]
-    public FixMath.NET.Fix64Random FixRandom;
+    //[HideInInspector]
+    //public FixMath.NET.Fix64Random FixRandom;
 
     //为了拿到所有Entity
     public RTSEntityDatabase EntityDatabase;
@@ -49,44 +49,6 @@ public class TPSWorld : MonoBehaviour
         _commandQueue.InitReceived += OnInitReceived;
 
         Simulation = new Simulation(Contexts.sharedInstance, _commandQueue, new UnityGameService(EntityDatabase));
-
-
-        FixRandom = new FixMath.NET.Fix64Random(1000);
-
-        //Debug.Log($"   Contexts.sharedInstance.character  {Contexts.sharedInstance.character == null} ");
-
-
-        //new Systems().Add(new CharacterSystem(Contexts.sharedInstance.character));
-
-
-        //创建了10个 Entity
-        //for (var i = 0; i < 10; i++)
-        //{
-        //    var entity = Contexts.sharedInstance.character.CreateEntity();
-
-        //    entity.AddCharacter(FixMath.NET.Fix64.One);
-        //    var x = new FixMath.NET.Fix64(15);
-        //    var z = new FixMath.NET.Fix64(34);
-        //    entity.InitPosition(new BEPUutilities.Vector2(x, z));
-        //    entity.BindView(Simulation.Services);
-
-        //}
-
-
-        //for (var i = 0; i < 10; i++)
-        //{
-        //    var entity = Contexts.sharedInstance.game.CreateEntity();
-
-        //    //entity.AddCharacter(FixMath.NET.Fix64.One);
-        //    var x = new FixMath.NET.Fix64(15);
-        //    var z = new FixMath.NET.Fix64(34);
-        //    //entity.InitPosition(new BEPUutilities.Vector2(x, z));
-        //    //entity.BindView(Simulation.Services);
-
-        //    entity.AddPosition(new BEPUutilities.Vector2(x, z));
-
-        //}
-
     }
 
     public void OnInitReceived(object sender, Init msg)
