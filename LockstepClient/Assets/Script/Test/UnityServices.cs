@@ -27,14 +27,6 @@ public class UnityGameService : IViewService
         _entityDatabase = entityDatabase;
     }
 
-    public void LoadView(CharacterEntity entity, int configId = 2)
-    {
-        var viewGo = UnityEngine.Object.Instantiate(_entityDatabase.Entities[configId]).gameObject;
-        if (viewGo == null) return;
-        viewGo.Link(entity);
-    }
-
-
     public void LoadView(GameEntity entity, int configId)
     {
         //TODO: pooling    

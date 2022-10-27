@@ -48,9 +48,9 @@ public class Contexts : IContexts
 
     public SnapshotContext snapshot { get; set; }
 
-    public CharacterContext character { get; set; }
+    //public CharacterContext character { get; set; }
 
-    public IContext[] allContexts => (IContext[])(object)new IContext[8]
+    public IContext[] allContexts => (IContext[])(object)new IContext[7]
     {
         (IContext)actor,
         (IContext)config,
@@ -58,9 +58,9 @@ public class Contexts : IContexts
         (IContext)game,
         (IContext)gameState,
         (IContext)input,
-        (IContext)snapshot,
+        (IContext)snapshot
 
-        (IContext)character
+        //(IContext)character
     };
 
     public Contexts()
@@ -73,7 +73,7 @@ public class Contexts : IContexts
         input = new InputContext();
         snapshot = new SnapshotContext();
 
-        character = new CharacterContext();
+        //character = new CharacterContext();
 
 
         //通过反射 特性标记，获取函数
