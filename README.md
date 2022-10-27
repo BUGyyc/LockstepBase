@@ -8,6 +8,7 @@
   - [压缩通讯包](#压缩通讯包)
 - [关于Debug](#关于debug)
   - [LiteLibNet 网络环境设置](#litelibnet-网络环境设置)
+  - [Link.bat 生成同源代码工程](#linkbat-生成同源代码工程)
 - [参考](#参考)
 
 # Start
@@ -33,6 +34,8 @@
 # 回滚与追帧
 
 
+有实现，但未做大量验证，后续补充
+
 
 ![](Doc/pic.res/lockstep.gif)
 
@@ -40,15 +43,16 @@
 
 可预测执行，防止延迟等待
 
-TODO:
-
 # 定点数
 
-FixMath 
+可以考虑用上可靠物理库<https://github.com/Kimbatt/unity-deterministic-physics>
 
-TODO:
+这样可以把碰撞等一系列问题一起解决。
+
 
 # LiteNetLib
+
+需要验证外网环境，测试性能
 
 ## 可靠UDP
 
@@ -56,6 +60,7 @@ LiteNetLib 可靠 UDP 的实现
 
 ## 压缩通讯包
 
+压缩、解压 Byte
 
 # 关于Debug
 
@@ -70,6 +75,16 @@ LiteNetLib 可靠 UDP 的实现
 后续可以拓展到UnityEditor下，提供这个可视化设置的窗口。。
 
 ![](Doc/pic.res/20221027165306.png)  
+
+## Link.bat 生成同源代码工程
+
+我们通过执行路径下的 Link.bat，在同一个root 路径下，生成Server的链接工程，相当于Server工程链接Client的硬盘文件，Server本身没有真正的内容，这样方便Unity 开两个工程，验证PVP。
+
+如下，Server 链接：
+
+![](Doc/pic.res/20221027170004.png)  
+
+
 
 ---
 
