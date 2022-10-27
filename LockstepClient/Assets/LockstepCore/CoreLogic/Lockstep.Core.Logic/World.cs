@@ -53,6 +53,8 @@ namespace Lockstep.Core.Logic
             (_systems).Execute();
             (_systems).Cleanup();
 
+
+            //创建了一个 DebugEntity，并且把计算所得 HashCode 给 DebugEntity
             DebugEntity debugEntity = Contexts.debug.CreateEntity();
             debugEntity.AddTick(Tick);
             debugEntity.AddHashCode(Contexts.gameState.hashCode.value);
@@ -64,58 +66,84 @@ namespace Lockstep.Core.Logic
         /// <param name="tick"></param>
         public void RevertToTick(uint tick)
         {
-            List<uint> source = (from entity in ContextExtension.GetEntities<SnapshotEntity>((IContext<SnapshotEntity>)(object)Contexts.snapshot, SnapshotMatcher.Tick)
+            List<uint> source = (from entity in ContextExtension.GetEntities((IContext<SnapshotEntity>)(object)Contexts.snapshot, SnapshotMatcher.Tick)
                                  where entity.tick.value <= tick
                                  select entity.tick.value).ToList();
-            uint resultTick = (source.Any() ? source.Max() : 0u);
+
+            //把快照中的最大帧号取出来，其实就是找最近一次的帧号
+            uint resultTick = source.Any() ? source.Max() : 0u;
+
             Log.Info(this, "Rolling back from " + resultTick + " to " + Contexts.gameState.tick.value);
-            IEnumerable<ActorEntity> enumerable = from e in ContextExtension.GetEntities<ActorEntity>((IContext<ActorEntity>)(object)Contexts.actor, ActorMatcher.Backup)
+
+            //通过本地的备份数据，找目标帧号的 ActorEntity 数据
+            IEnumerable<ActorEntity> enumerable = from e in ContextExtension.GetEntities((IContext<ActorEntity>)(object)Contexts.actor, ActorMatcher.Backup)
                                                   where e.backup.tick == resultTick
                                                   select e;
+
+
             foreach (ActorEntity item in enumerable)
             {
                 ActorEntity entityWithId = Contexts.actor.GetEntityWithId(item.backup.actorId);
-                IEnumerable<int> enumerable2 = ((Entity)entityWithId).GetComponentIndices().Except(((Entity)item).GetComponentIndices().Except(new int[1]).Concat(new int[1] { 2 }));
+                IEnumerable<int> enumerable2 = (entityWithId).GetComponentIndices().Except((item).GetComponentIndices().Except(new int[1]).Concat(new int[1] { ActorComponentsLookup.Id/*2 */}));
+                //先清理所有Component ???
                 foreach (int item2 in enumerable2)
                 {
-                    ((Entity)entityWithId).RemoveComponent(item2);
+                    (entityWithId).RemoveComponent(item2);
                 }
-                PublicMemberInfoEntityExtension.CopyTo((IEntity)(object)item, (IEntity)(object)entityWithId, true, ((Entity)item).GetComponentIndices().Except(new int[1]).ToArray());
+
+                PublicMemberInfoEntityExtension.CopyTo((IEntity)(object)item, (IEntity)(object)entityWithId, true, (item).GetComponentIndices().Except(new int[1]).ToArray());
             }
-            GameEntity[] entities = ContextExtension.GetEntities<GameEntity>((IContext<GameEntity>)(object)Contexts.game, GameMatcher.LocalId);
-            List<GameEntity> list = (from e in ContextExtension.GetEntities<GameEntity>((IContext<GameEntity>)(object)Contexts.game, GameMatcher.Backup)
+
+
+
+            GameEntity[] entities = ContextExtension.GetEntities((IContext<GameEntity>)(object)Contexts.game, GameMatcher.LocalId);
+            //目标帧号的备份 GameEntity
+            List<GameEntity> list = (from e in ContextExtension.GetEntities((IContext<GameEntity>)(object)Contexts.game, GameMatcher.Backup)
                                      where e.backup.tick == resultTick
                                      select e).ToList();
+
             IEnumerable<uint> backupEntityIds = list.Select((GameEntity entity) => entity.backup.localEntityId);
             List<GameEntity> list2 = entities.Where((GameEntity entity) => !backupEntityIds.Contains(entity.localId.value)).ToList();
+
+            //标记销毁多余的GameEntity
             foreach (GameEntity item3 in list2)
             {
                 item3.isDestroyed = true;
             }
-            foreach (GameEntity item4 in from e in ContextExtension.GetEntities<GameEntity>((IContext<GameEntity>)(object)Contexts.game, GameMatcher.Backup)
+
+            //备份帧号大于目标帧号的GameEntity 也是不需要的直接销毁
+            foreach (GameEntity item4 in from e in ContextExtension.GetEntities((IContext<GameEntity>)(object)Contexts.game, GameMatcher.Backup)
                                          where e.backup.tick > resultTick
                                          select e)
             {
-                ((Entity)item4).Destroy();
+                (item4).Destroy();
             }
-            foreach (SnapshotEntity item5 in from e in ContextExtension.GetEntities<SnapshotEntity>((IContext<SnapshotEntity>)(object)Contexts.snapshot, SnapshotMatcher.Tick)
+
+            //然后要把大于目标帧号的历史备份都销毁
+            foreach (SnapshotEntity item5 in from e in ContextExtension.GetEntities((IContext<SnapshotEntity>)(object)Contexts.snapshot, SnapshotMatcher.Tick)
                                              where e.tick.value > resultTick
                                              select e)
             {
-                ((Entity)item5).Destroy();
+                (item5).Destroy();
             }
+
+            //最后把GameEntity 内的 Component 数据调整到目标状态
             foreach (GameEntity item6 in list)
             {
                 GameEntity entityWithLocalId = Contexts.game.GetEntityWithLocalId(item6.backup.localEntityId);
-                IEnumerable<int> enumerable3 = ((Entity)entityWithLocalId).GetComponentIndices().Except(((Entity)item6).GetComponentIndices().Except(new int[1] { 3 }).Concat(new int[1] { 10 }));
+                IEnumerable<int> enumerable3 = (entityWithLocalId).GetComponentIndices().Except((item6).GetComponentIndices().Except(new int[1] { 3 }).Concat(new int[1] { GameComponentsLookup.LocalId/*10*/ }));
+
+                //移除多余的Component
                 foreach (int item7 in enumerable3)
                 {
-                    ((Entity)entityWithLocalId).RemoveComponent(item7);
+                    (entityWithLocalId).RemoveComponent(item7);
                 }
-                PublicMemberInfoEntityExtension.CopyTo((IEntity)(object)item6, (IEntity)(object)entityWithLocalId, true, ((Entity)item6).GetComponentIndices().Except(new int[1] { 3 }).ToArray());
+                PublicMemberInfoEntityExtension.CopyTo((IEntity)(object)item6, (IEntity)(object)entityWithLocalId, true, (item6).GetComponentIndices().Except(new int[1] { 3 }).ToArray());
             }
             (_systems).Cleanup();
             Contexts.gameState.ReplaceTick(resultTick);
+
+            //追到目标帧号
             while (Tick <= tick)
             {
                 Simulate();
