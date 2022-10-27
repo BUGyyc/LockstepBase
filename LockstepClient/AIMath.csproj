@@ -80,30 +80,30 @@
     <Analyzer Include="F:\github\LocalLockstepBase\LockstepClient\Assets\LockstepCore\Plugins\Entitas\Editor\Entitas.Migration.Unity.Editor.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Core\Math\LUT\LUTAsin.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LQuaternion.cs" />
-    <Compile Include="Assets\Core\Math\PrimerLUT.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LMatrix33.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LVector2Int.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LVector3Int.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LFloat.cs" />
-    <Compile Include="Assets\Core\Math\LUT\LUTSinCos.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LVector3.cs" />
-    <Compile Include="Assets\Core\Math\LMath.cs" />
-    <Compile Include="Assets\Core\Math\HashCodeExtension.cs" />
-    <Compile Include="Assets\Core\Math\LUT\LUTAcos.cs" />
-    <Compile Include="Assets\Core\Math\LMath_Vector.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LRect.cs" />
-    <Compile Include="Assets\Core\Math\LockStepMath.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LVector2.cs" />
-    <Compile Include="Assets\Core\Math\LRandom.cs" />
-    <Compile Include="Assets\Core\Math\LMathExtension2.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LAxis2D.cs" />
-    <Compile Include="Assets\Core\Math\BaseType\LAxis3D.cs" />
-    <Compile Include="Assets\Core\Math\LUT\LUTAtan2.cs" />
+    <Compile Include="Assets\LockstepCore\Math\LUT\LUTAsin.cs" />
+    <Compile Include="Assets\LockstepCore\Math\BaseType\LQuaternion.cs" />
+    <Compile Include="Assets\LockstepCore\Math\PrimerLUT.cs" />
+    <Compile Include="Assets\LockstepCore\Math\BaseType\LMatrix33.cs" />
+    <Compile Include="Assets\LockstepCore\Math\BaseType\LVector2Int.cs" />
+    <Compile Include="Assets\LockstepCore\Math\BaseType\LVector3Int.cs" />
+    <Compile Include="Assets\LockstepCore\Math\BaseType\LFloat.cs" />
+    <Compile Include="Assets\LockstepCore\Math\LUT\LUTSinCos.cs" />
+    <Compile Include="Assets\LockstepCore\Math\BaseType\LVector3.cs" />
+    <Compile Include="Assets\LockstepCore\Math\LMath.cs" />
+    <Compile Include="Assets\LockstepCore\Math\HashCodeExtension.cs" />
+    <Compile Include="Assets\LockstepCore\Math\LUT\LUTAcos.cs" />
+    <Compile Include="Assets\LockstepCore\Math\LMath_Vector.cs" />
+    <Compile Include="Assets\LockstepCore\Math\BaseType\LRect.cs" />
+    <Compile Include="Assets\LockstepCore\Math\LockStepMath.cs" />
+    <Compile Include="Assets\LockstepCore\Math\BaseType\LVector2.cs" />
+    <Compile Include="Assets\LockstepCore\Math\LRandom.cs" />
+    <Compile Include="Assets\LockstepCore\Math\LMathExtension2.cs" />
+    <Compile Include="Assets\LockstepCore\Math\BaseType\LAxis2D.cs" />
+    <Compile Include="Assets\LockstepCore\Math\BaseType\LAxis3D.cs" />
+    <Compile Include="Assets\LockstepCore\Math\LUT\LUTAtan2.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Core\Math\AIMath.asmdef" />
+    <None Include="Assets\LockstepCore\Math\AIMath.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
