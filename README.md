@@ -1,5 +1,11 @@
 
 - [Start](#start)
+- [回滚与追帧](#回滚与追帧)
+- [预测](#预测)
+- [定点数](#定点数)
+- [LiteNetLib](#litenetlib)
+  - [可靠UDP](#可靠udp)
+  - [压缩通讯包](#压缩通讯包)
 - [参考](#参考)
 
 # Start
@@ -19,6 +25,33 @@
 - 设定好IP、端口后，进行链接，进入游戏
 
 ![](Doc/pic.res/20221021114904.png)  
+
+
+
+# 回滚与追帧
+
+
+![](Doc/pic.res/lockstep.gif)
+
+# 预测
+
+可预测执行，防止延迟等待
+
+TODO:
+
+# 定点数
+
+FixMath 
+
+TODO:
+
+# LiteNetLib
+
+## 可靠UDP
+
+LiteNetLib 可靠 UDP 的实现
+
+## 压缩通讯包
 
 
 ---
