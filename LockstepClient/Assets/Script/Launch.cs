@@ -20,6 +20,8 @@ public class Launch : MonoBehaviour
 
     public int port = 9050;
 
+    public uint PlayerNumber = 4;
+
     // [HideInInspector]
     // public GameObject GameManagerObj;
 
@@ -138,9 +140,11 @@ public class Launch : MonoBehaviour
         GameSetting.ServerIp = SetGet_str_ipAddress;
         GameSetting.ServerPort = port;
 
+        GameSetting.PlayerNumber = PlayerNumber;
+
         Debug.Log($"启动Server  IP {SetGet_str_ipAddress} Port {port}  ");
 
-        // gs.StartServer(port);
+        //gs.StartServer(port);
 
         // uiParent.gameObject.SetActive(false);
     }
