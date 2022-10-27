@@ -2,7 +2,7 @@
 - [Start](#start)
 - [回滚与追帧](#回滚与追帧)
 - [预测](#预测)
-- [定点数](#定点数)
+- [定点数与确定性物理](#定点数与确定性物理)
 - [LiteNetLib](#litenetlib)
   - [可靠UDP](#可靠udp)
   - [压缩通讯包](#压缩通讯包)
@@ -43,7 +43,9 @@
 
 可预测执行，防止延迟等待
 
-# 定点数
+# 定点数与确定性物理
+
+定点数有FixMath，但是没有 Vector3 方面的实现。
 
 可以考虑用上可靠物理库<https://github.com/Kimbatt/unity-deterministic-physics>
 
