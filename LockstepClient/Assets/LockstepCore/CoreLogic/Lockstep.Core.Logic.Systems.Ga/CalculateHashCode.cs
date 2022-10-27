@@ -9,6 +9,10 @@ namespace Lockstep.Core.Logic.Systems.GameState
 
         private readonly GameStateContext _gameStateContext;
 
+        /// <summary>
+        /// 通过位置、速度、目标点来计算HashCode。这个可以作为同步的判断标准之一
+        /// </summary>
+        /// <param name="contexts"></param>
         public CalculateHashCode(Contexts contexts)
         {
             _gameStateContext = contexts.gameState;

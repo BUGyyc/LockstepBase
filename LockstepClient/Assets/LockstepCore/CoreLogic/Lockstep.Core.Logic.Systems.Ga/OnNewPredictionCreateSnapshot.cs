@@ -7,6 +7,11 @@ using Lockstep.Common.Logging;
 namespace Lockstep.Core.Logic.Systems.GameState
 {
 
+    /// <summary>
+    /// ?? 预测 生成快照
+    /// 
+    /// ReactiveSystem 比 system 特别，通过重写 GetTrigger、Filter ,确保 Execute 执行的有变化的 Entity
+    /// </summary>
     public class OnNewPredictionCreateSnapshot : ReactiveSystem<GameStateEntity>
     {
         private readonly GameContext _gameContext;
@@ -44,6 +49,7 @@ namespace Lockstep.Core.Logic.Systems.GameState
             return gameState.isPredicting;
         }
 
+
         protected override void Execute(List<GameStateEntity> entities)
         {
             uint value = _gameStateContext.tick.value;
@@ -51,28 +57,30 @@ namespace Lockstep.Core.Logic.Systems.GameState
             foreach (GameEntity activeEntity in _activeEntities)
             {
                 GameEntity gameEntity = (_gameContext).CreateEntity();
-                foreach (int item in (activeEntity).GetComponentIndices().Except(new int[1] { 10 }))
+                foreach (int item in (activeEntity).GetComponentIndices().Except(new int[1] { GameComponentsLookup.LocalId }))//10
                 {
                     IComponent component = (activeEntity).GetComponent(item);
                     IComponent val = (gameEntity).CreateComponent(item, ((object)component).GetType());
                     PublicMemberInfoExtension.CopyPublicMemberValues((object)component, (object)val);
                     (gameEntity).AddComponent(item, val);
                 }
+                //添加一份备份数据？？
                 gameEntity.AddBackup(activeEntity.localId.value, value);
             }
             foreach (ActorEntity activeActor in _activeActors)
             {
-                ActorEntity actorEntity = ((Context<ActorEntity>)_actorContext).CreateEntity();
-                foreach (int item2 in (activeActor).GetComponentIndices().Except(new int[1] { 2 }))
+                ActorEntity actorEntity = _actorContext.CreateEntity();
+                foreach (int item2 in (activeActor).GetComponentIndices().Except(new int[1] { ActorComponentsLookup.Id }))//2
                 {
                     IComponent component2 = (activeActor).GetComponent(item2);
-                    IComponent val2 = (actorEntity).CreateComponent(item2, ((object)component2).GetType());
-                    PublicMemberInfoExtension.CopyPublicMemberValues((object)component2, (object)val2);
+                    IComponent val2 = (actorEntity).CreateComponent(item2, (component2).GetType());
+                    PublicMemberInfoExtension.CopyPublicMemberValues(component2, val2);
                     (actorEntity).AddComponent(item2, val2);
                 }
+                //玩家备份？？
                 actorEntity.AddBackup(activeActor.id.value, value);
             }
-            Log.Trace(this, "New snapshot for " + value + "(" + _activeActors.count + " actors, " + ((IGroup)_activeEntities).count + " entities)");
+            Log.Trace(this, "New snapshot for " + value + "(" + _activeActors.count + " actors, " + _activeEntities.count + " entities)");
         }
     }
 }

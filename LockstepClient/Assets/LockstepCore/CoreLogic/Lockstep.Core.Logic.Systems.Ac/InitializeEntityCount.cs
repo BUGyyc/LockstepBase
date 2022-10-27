@@ -2,6 +2,9 @@
 
 namespace Lockstep.Core.Logic.Systems.Actor
 {
+    /// <summary>
+    /// ？？初始化玩家
+    /// </summary>
     public class InitializeEntityCount : IInitializeSystem, ISystem
     {
         private readonly ActorContext _actorContext;

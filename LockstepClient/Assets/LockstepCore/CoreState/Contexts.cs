@@ -40,12 +40,19 @@ public class Contexts : IContexts
 
     public DebugContext debug { get; set; }
 
+    /// <summary>
+    /// 理论上的 Game 主逻辑上下文
+    /// </summary>
     public GameContext game { get; set; }
 
     public GameStateContext gameState { get; set; }
 
     public InputContext input { get; set; }
 
+
+    /// <summary>
+    /// 存储快照的上下文
+    /// </summary>
     public SnapshotContext snapshot { get; set; }
 
     //public CharacterContext character { get; set; }

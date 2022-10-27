@@ -19,7 +19,7 @@ namespace Lockstep.Core.Logic
             Contexts = contexts;
             foreach (byte actorId in actorIds)
             {
-                ((Context<ActorEntity>)Contexts.actor).CreateEntity().AddId(actorId);
+                (Contexts.actor).CreateEntity().AddId(actorId);
             }
             _systems = new WorldSystems(Contexts, features);
             (_systems).Initialize();
@@ -52,7 +52,8 @@ namespace Lockstep.Core.Logic
             Log.Trace(this, "Simulate " + Contexts.gameState.tick.value);
             (_systems).Execute();
             (_systems).Cleanup();
-            DebugEntity debugEntity = ((Context<DebugEntity>)Contexts.debug).CreateEntity();
+
+            DebugEntity debugEntity = Contexts.debug.CreateEntity();
             debugEntity.AddTick(Tick);
             debugEntity.AddHashCode(Contexts.gameState.hashCode.value);
         }

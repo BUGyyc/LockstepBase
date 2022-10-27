@@ -5,6 +5,9 @@ using Lockstep.Common.Logging;
 namespace Lockstep.Core.Logic.Systems.Debugging
 {
 
+    /// <summary>
+    /// ?? 核实没有备份的数据
+    /// </summary>
     public class VerifyNoDuplicateBackups : IExecuteSystem, ISystem
     {
         private readonly IGroup<GameEntity> _backups;
