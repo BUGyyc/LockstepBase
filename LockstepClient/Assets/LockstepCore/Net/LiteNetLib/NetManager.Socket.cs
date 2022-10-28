@@ -163,6 +163,11 @@ namespace LiteNetLib
             return false;
         }
 
+        /// <summary>
+        /// 手动模式接收包
+        /// </summary>
+        /// <param name="socket"></param>
+        /// <param name="bufferEndPoint"></param>
         private void ManualReceive(Socket socket, EndPoint bufferEndPoint)
         {
             //Reading data
@@ -196,6 +201,11 @@ namespace LiteNetLib
             }
         }
 
+        /// <summary>
+        /// 使用原生 Socket模式下的接收逻辑
+        /// 原生 Socket 可以提升速度，例如 Window、Linux下，但这目前还是实验性的模块
+        /// </summary>
+        /// <param name="state"></param>
         private void NativeReceiveLogic(object state)
         {
             Socket socket = (Socket)state;
@@ -234,6 +244,11 @@ namespace LiteNetLib
             }
         }
 
+
+        /// <summary>
+        /// 常规模式下的 接收数据包入口
+        /// </summary>
+        /// <param name="state"></param>
         private void ReceiveLogic(object state)
         {
             Socket socket = (Socket)state;
@@ -247,6 +262,7 @@ namespace LiteNetLib
                     if (socket.Available == 0 && !socket.Poll(ReceivePollingTime, SelectMode.SelectRead))
                         continue;
                     NetPacket packet = PoolGetPacket(NetConstants.MaxPacketSize);
+                    //从 Socket 上取出特定大小的 包，有可能填不满 packet，所以最后重设 packet.size
                     packet.Size = socket.ReceiveFrom(packet.RawData, 0, NetConstants.MaxPacketSize, SocketFlags.None,
                         ref bufferEndPoint);
 

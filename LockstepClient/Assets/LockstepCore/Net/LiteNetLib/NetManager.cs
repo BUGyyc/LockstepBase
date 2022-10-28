@@ -687,6 +687,7 @@ namespace LiteNetLib
                         peersToRemove.Clear();
                     }
 
+                    //单独为了双端时间同步的处理
                     ProcessNtpRequests(elapsed);
 
                     int sleepTime = UpdateTime - (int)stopwatch.ElapsedMilliseconds;
@@ -893,6 +894,12 @@ namespace LiteNetLib
             CreateEvent(NetEvent.EType.ConnectionRequest, connectionRequest: req);
         }
 
+
+        /// <summary>
+        /// 接收数据包
+        /// </summary>
+        /// <param name="packet"></param>
+        /// <param name="remoteEndPoint"></param>
         private void OnMessageReceived(NetPacket packet, IPEndPoint remoteEndPoint)
         {
 #if DEBUG

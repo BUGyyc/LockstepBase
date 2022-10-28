@@ -3,6 +3,9 @@ using System.Net.Sockets;
 
 namespace LiteNetLib.Utils
 {
+    /// <summary>
+    /// 时间协议的请求类
+    /// </summary>
     internal sealed class NtpRequest
     {
         private const int ResendTimer = 1000;

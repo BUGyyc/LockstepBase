@@ -233,7 +233,7 @@ namespace LiteNetLib
                 //发送本地预备好的包 send
                 for (int pendingSeq = _localWindowStart; pendingSeq != _localSeqence; pendingSeq = (pendingSeq + 1) % NetConstants.MaxSequence)
                 {
-                    //发送包、判断发送的包是否被回应接收确认 //Please note: TrySend is invoked on a mutable struct, it's important to not extract it into a variable here
+                    //发送包、判断发送的包是否被回应接收确认
                     if (_pendingPackets[pendingSeq % _windowSize].TrySend(currentTime, Peer))
                         hasPendingPackets = true;
                 }
