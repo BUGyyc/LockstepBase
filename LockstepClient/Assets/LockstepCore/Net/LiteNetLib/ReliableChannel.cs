@@ -4,6 +4,9 @@ namespace LiteNetLib
 {
     internal sealed class ReliableChannel : BaseChannel
     {
+        /// <summary>
+        /// 等待发送中的包，这里应该是保证顺序的一种方式
+        /// </summary>
         private struct PendingPacket
         {
             private NetPacket _packet;
@@ -21,6 +24,12 @@ namespace LiteNetLib
                 _isSent = false;
             }
 
+            /// <summary>
+            /// 判断包是否已经发送并在规定时间内收到了确认包
+            /// </summary>
+            /// <param name="currentTime"></param>
+            /// <param name="peer"></param>
+            /// <returns></returns>
             //Returns true if there is a pending packet inside
             public bool TrySend(long currentTime, NetPeer peer)
             {
@@ -31,12 +40,14 @@ namespace LiteNetLib
                 {
                     double resendDelay = peer.ResendDelay * TimeSpan.TicksPerMillisecond;
                     double packetHoldTime = currentTime - _timeStamp;
+                    //这里就是做时间比较，和TCP下的计时器是一样的概念，为了辨别超时的情况
                     if (packetHoldTime < resendDelay)
                         return true;
                     NetDebug.Write("[RC]Resend: {0} > {1}", (int)packetHoldTime, resendDelay);
                 }
                 _timeStamp = currentTime;
                 _isSent = true;
+                //发送包
                 peer.SendUserData(_packet);
                 return true;
             }
@@ -53,9 +64,23 @@ namespace LiteNetLib
             }
         }
 
+        /// <summary>
+        /// 确认包
+        /// </summary>
         private readonly NetPacket _outgoingAcks;            //for send acks
+        /// <summary>
+        /// 无被确认的复制包，应该是为了超时的再次发送
+        /// </summary>
         private readonly PendingPacket[] _pendingPackets;    //for unacked packets and duplicates
+
+        /// <summary>
+        /// 按顺序的接收包
+        /// </summary>
         private readonly NetPacket[] _receivedPackets;       //for order
+
+        /// <summary>
+        /// ??提前接收
+        /// </summary>
         private readonly bool[] _earlyReceived;              //for unordered
 
         private int _localSeqence;
@@ -95,9 +120,13 @@ namespace LiteNetLib
             _localSeqence = 0;
             _remoteSequence = 0;
             _remoteWindowStart = 0;
-            _outgoingAcks = new NetPacket(PacketProperty.Ack, (_windowSize - 1) / BitsInByte + 2) {ChannelId = id};
+            _outgoingAcks = new NetPacket(PacketProperty.Ack, (_windowSize - 1) / BitsInByte + 2) { ChannelId = id };
         }
 
+        /// <summary>
+        /// 回应接收包
+        /// </summary>
+        /// <param name="packet"></param>
         //ProcessAck in packet
         private void ProcessAck(NetPacket packet)
         {
@@ -171,35 +200,40 @@ namespace LiteNetLib
             {
                 _mustSendAcks = false;
                 NetDebug.Write("[RR]SendAcks");
-                lock(_outgoingAcks)
+                lock (_outgoingAcks)
                     Peer.SendUserData(_outgoingAcks);
             }
 
             long currentTime = DateTime.UtcNow.Ticks;
             bool hasPendingPackets = false;
 
+            //多线程下得加锁
             lock (_pendingPackets)
             {
                 //get packets from queue
                 while (!OutgoingQueue.IsEmpty)
                 {
+                    //已经确认的可靠包数量
                     int relate = NetUtils.RelativeSequenceNumber(_localSeqence, _localWindowStart);
+                    //大于等于滑动窗口，那么窗口能已经确认完成
                     if (relate >= _windowSize)
                         break;
-
+                    //无法取得窗口首项
                     if (!OutgoingQueue.TryDequeue(out var netPacket))
                         break;
 
-                    netPacket.Sequence = (ushort) _localSeqence;
+                    netPacket.Sequence = (ushort)_localSeqence;
                     netPacket.ChannelId = _id;
+                    //把这一项包放进待发送的数组内
                     _pendingPackets[_localSeqence % _windowSize].Init(netPacket);
+                    //这里自增一下
                     _localSeqence = (_localSeqence + 1) % NetConstants.MaxSequence;
                 }
 
-                //send
+                //发送本地预备好的包 send
                 for (int pendingSeq = _localWindowStart; pendingSeq != _localSeqence; pendingSeq = (pendingSeq + 1) % NetConstants.MaxSequence)
                 {
-                    // Please note: TrySend is invoked on a mutable struct, it's important to not extract it into a variable here
+                    //发送包、判断发送的包是否被回应接收确认 //Please note: TrySend is invoked on a mutable struct, it's important to not extract it into a variable here
                     if (_pendingPackets[pendingSeq % _windowSize].TrySend(currentTime, Peer))
                         hasPendingPackets = true;
                 }
@@ -246,6 +280,8 @@ namespace LiteNetLib
                 return false;
             }
 
+
+            //滑动窗口确认包
             //If very new - move window
             int ackIdx;
             int ackByte;
@@ -256,7 +292,7 @@ namespace LiteNetLib
                 {
                     //New window position
                     int newWindowStart = (_remoteWindowStart + relate - _windowSize + 1) % NetConstants.MaxSequence;
-                    _outgoingAcks.Sequence = (ushort) newWindowStart;
+                    _outgoingAcks.Sequence = (ushort)newWindowStart;
 
                     //Clean old data
                     while (_remoteWindowStart != newWindowStart)
@@ -264,7 +300,7 @@ namespace LiteNetLib
                         ackIdx = _remoteWindowStart % _windowSize;
                         ackByte = NetConstants.ChanneledHeaderSize + ackIdx / BitsInByte;
                         ackBit = ackIdx % BitsInByte;
-                        _outgoingAcks.RawData[ackByte] &= (byte) ~(1 << ackBit);
+                        _outgoingAcks.RawData[ackByte] &= (byte)~(1 << ackBit);
                         _remoteWindowStart = (_remoteWindowStart + 1) % NetConstants.MaxSequence;
                     }
                 }
@@ -285,7 +321,7 @@ namespace LiteNetLib
                 }
 
                 //save ack
-                _outgoingAcks.RawData[ackByte] |= (byte) (1 << ackBit);
+                _outgoingAcks.RawData[ackByte] |= (byte)(1 << ackBit);
             }
 
             AddToPeerChannelSendQueue();

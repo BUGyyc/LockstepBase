@@ -29,7 +29,7 @@ namespace LiteNetLib
 
         public static IPAddress ResolveAddress(string hostStr)
         {
-            if(hostStr == "localhost")
+            if (hostStr == "localhost")
                 return IPAddress.Loopback;
 
             if (!IPAddress.TryParse(hostStr, out var ipAddress))
@@ -103,28 +103,28 @@ namespace LiteNetLib
                     }
                 }
 
-	            //Fallback mode (unity android)
-	            if (targetList.Count == 0)
-	            {
-	                IPAddress[] addresses = Dns.GetHostEntry(Dns.GetHostName()).AddressList;
-	                foreach (IPAddress ip in addresses)
-	                {
-	                    if((ipv4 && ip.AddressFamily == AddressFamily.InterNetwork) ||
-	                       (ipv6 && ip.AddressFamily == AddressFamily.InterNetworkV6))
-	                        targetList.Add(ip.ToString());
-	                }
-	            }
+                //Fallback mode (unity android)
+                if (targetList.Count == 0)
+                {
+                    IPAddress[] addresses = Dns.GetHostEntry(Dns.GetHostName()).AddressList;
+                    foreach (IPAddress ip in addresses)
+                    {
+                        if ((ipv4 && ip.AddressFamily == AddressFamily.InterNetwork) ||
+                           (ipv6 && ip.AddressFamily == AddressFamily.InterNetworkV6))
+                            targetList.Add(ip.ToString());
+                    }
+                }
             }
             catch
             {
                 //ignored
             }
-            
+
             if (targetList.Count == 0)
             {
-                if(ipv4)
+                if (ipv4)
                     targetList.Add("127.0.0.1");
-                if(ipv6)
+                if (ipv6)
                     targetList.Add("::1");
             }
         }
@@ -132,6 +132,7 @@ namespace LiteNetLib
         private static readonly List<string> IpList = new List<string>();
         /// <summary>
         /// Get first detected local ip address
+        /// 本地IP
         /// </summary>
         /// <param name="addrType">type of address (IPv4, IPv6 or both)</param>
         /// <returns>IP address if available. Else - string.Empty</returns>
@@ -177,6 +178,12 @@ namespace LiteNetLib
             }
         }
 
+        /// <summary>
+        /// ？？可靠队列的数量
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="expected"></param>
+        /// <returns></returns>
         internal static int RelativeSequenceNumber(int number, int expected)
         {
             return (number - expected + NetConstants.MaxSequence + NetConstants.HalfMaxSequence) % NetConstants.MaxSequence - NetConstants.HalfMaxSequence;

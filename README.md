@@ -58,7 +58,12 @@
 
 ## 可靠UDP
 
-LiteNetLib 可靠 UDP 的实现
+LiteNetLib 可靠 UDP 的实现.
+
+
+在 ReliableChannel 下，管理一个发送包窗口，对每个 NetPacket 进行有限时间内的收包确认。
+
+
 
 ## 压缩通讯包
 
