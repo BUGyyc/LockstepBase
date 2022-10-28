@@ -124,7 +124,7 @@ namespace LiteNetLib
         }
 
         /// <summary>
-        /// 回应接收包
+        /// 接收方发送确认包，回应被接收的数据包
         /// </summary>
         /// <param name="packet"></param>
         //ProcessAck in packet
@@ -136,6 +136,7 @@ namespace LiteNetLib
                 return;
             }
 
+            //接收的起始位置
             ushort ackWindowStart = packet.Sequence;
             int windowRel = NetUtils.RelativeSequenceNumber(_localWindowStart, ackWindowStart);
             if (ackWindowStart >= NetConstants.MaxSequence || windowRel < 0)
@@ -152,8 +153,10 @@ namespace LiteNetLib
             }
 
             byte[] acksData = packet.RawData;
+            //多线程下加锁
             lock (_pendingPackets)
             {
+                //按顺序回应
                 for (int pendingSeq = _localWindowStart;
                     pendingSeq != _localSeqence;
                     pendingSeq = (pendingSeq + 1) % NetConstants.MaxSequence)
@@ -172,6 +175,7 @@ namespace LiteNetLib
                     {
                         if (Peer.NetManager.EnableStatistics)
                         {
+                            //统计丢包？？
                             Peer.Statistics.IncrementPacketLoss();
                             Peer.NetManager.Statistics.IncrementPacketLoss();
                         }
@@ -183,7 +187,7 @@ namespace LiteNetLib
 
                     if (pendingSeq == _localWindowStart)
                     {
-                        //Move window
+                        //滑动窗口 Move window
                         _localWindowStart = (_localWindowStart + 1) % NetConstants.MaxSequence;
                     }
 

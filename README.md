@@ -63,8 +63,59 @@ LiteNetLib 可靠 UDP 的实现.
 
 在 ReliableChannel 下，管理一个发送包窗口，对每个 NetPacket 进行有限时间内的收包确认。
 
+如下，发送方对数据包进行顺序确认接收处理。
+
 ![](Doc/pic.res/20221028141553.png)  
 
+
+如下，接收方对数据包进行逐个回应，将确认接收发送给数据的发送方
+
+```CSharp
+
+ public override bool ProcessPacket(NetPacket packet)
+ {
+    //...
+    //滑动窗口确认包
+    int ackIdx;
+    int ackByte;
+    int ackBit;
+    lock (_outgoingAcks)
+    {
+        if (relate >= _windowSize)
+        {
+            //调整滑动窗口的位置
+            int newWindowStart = (_remoteWindowStart + relate - _windowSize + 1) % NetConstants.MaxSequence;
+            _outgoingAcks.Sequence = (ushort)newWindowStart;
+
+            //清理旧数据
+            while (_remoteWindowStart != newWindowStart)
+            {
+                ackIdx = _remoteWindowStart % _windowSize;
+                ackByte = NetConstants.ChanneledHeaderSize + ackIdx / BitsInByte;
+                ackBit = ackIdx % BitsInByte;
+                _outgoingAcks.RawData[ackByte] &= (byte)~(1 << ackBit);
+                _remoteWindowStart = (_remoteWindowStart + 1) % NetConstants.MaxSequence;
+            }
+        }
+        //...
+        //...
+        //...
+        if ((_outgoingAcks.RawData[ackByte] & (1 << ackBit)) != 0)
+        {
+            //未确认的数据，放入发送队列中，进行确认接收
+            NetDebug.Write("[RR]ReliableInOrder duplicate");
+            //because _mustSendAcks == true
+            AddToPeerChannelSendQueue();
+            return false;
+        }
+
+        //写入最新状态数据
+        _outgoingAcks.RawData[ackByte] |= (byte)(1 << ackBit);
+    }
+ }
+
+
+```
 
 
 ## 压缩通讯包

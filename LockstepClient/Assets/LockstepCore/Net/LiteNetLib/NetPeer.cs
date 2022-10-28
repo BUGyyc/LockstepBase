@@ -887,6 +887,11 @@ namespace LiteNetLib
             _resendDelay = 25.0 + _avgRtt * 2.1; // 25 ms + double rtt
         }
 
+        /// <summary>
+        /// 把接收的数据写入到 可靠包内，要确保顺序
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="p"></param>
         internal void AddReliablePacket(DeliveryMethod method, NetPacket p)
         {
             if (p.IsFragmented)
