@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BEPUutilities;
 using Entitas;
@@ -40,9 +40,10 @@ namespace Lockstep.Game.Features.Input
             {
                 ActorEntity entityWithId = _actorContext.GetEntityWithId(item.actorId.value);
                 uint value = entityWithId.entityCount.value;
-                GameEntity gameEntity = ((Context<GameEntity>)_gameContext).CreateEntity();
+                GameEntity gameEntity = EntityUtil.CreateEntity();
+                //_gameContext.CreateEntity();
                 Log.Trace(this, entityWithId.id.value + " -> " + value);
-                gameEntity.AddId(value);
+                //gameEntity.AddId(value);
                 gameEntity.AddActorId(item.actorId.value);
                 gameEntity.AddLocalId(_localIdCounter);
                 gameEntity.AddVelocity(Vector2.Zero);

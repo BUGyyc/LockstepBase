@@ -221,6 +221,11 @@ public sealed class GameEntity : Entity
 
     public bool hasPositionListener => HasComponent(18);
 
+
+    public CharacterComponent character => (CharacterComponent)GetComponent(GameComponentsLookup.CharacterComponet);
+
+    public bool hasCharacter => HasComponent(GameComponentsLookup.CharacterComponet);
+
     public void AddRadius(Fix64 newValue)
     {
         int num = 14;
@@ -374,26 +379,28 @@ public sealed class GameEntity : Entity
         RemoveComponent(8);
     }
 
-    public void AddId(uint newValue)
-    {
-        int num = 9;
-        IdComponent idComponent = (IdComponent)CreateComponent(num, typeof(IdComponent));
-        idComponent.value = newValue;
-        AddComponent(num, idComponent);
-    }
 
-    public void ReplaceId(uint newValue)
-    {
-        int num = 9;
-        IdComponent idComponent = (IdComponent)CreateComponent(num, typeof(IdComponent));
-        idComponent.value = newValue;
-        ReplaceComponent(num, idComponent);
-    }
+    //ID 希望自增，且只读
+    //public void AddId(uint newValue)
+    //{
+    //    int num = 9;
+    //    IdComponent idComponent = (IdComponent)CreateComponent(num, typeof(IdComponent));
+    //    idComponent.value = newValue;
+    //    AddComponent(num, idComponent);
+    //}
 
-    public void RemoveId()
-    {
-        RemoveComponent(9);
-    }
+    //public void ReplaceId(uint newValue)
+    //{
+    //    int num = 9;
+    //    IdComponent idComponent = (IdComponent)CreateComponent(num, typeof(IdComponent));
+    //    idComponent.value = newValue;
+    //    ReplaceComponent(num, idComponent);
+    //}
+
+    //public void RemoveId()
+    //{
+    //    RemoveComponent(9);
+    //}
 
     public void AddLocalId(uint newValue)
     {

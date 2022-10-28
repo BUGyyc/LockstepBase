@@ -49,14 +49,24 @@ public class TPSWorld : MonoBehaviour
         _commandQueue.InitReceived += OnInitReceived;
 
         Simulation = new Simulation(Contexts.sharedInstance, _commandQueue, new UnityGameService(EntityDatabase));
+
+        GameWorldManager.Instance.Awake();
     }
 
+
+    /// <summary>
+    /// 服务器下发到客户端，发起初始化
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="msg"></param>
     public void OnInitReceived(object sender, Init msg)
     {
         //全部玩家数据
         AllActorIds = msg.AllActors;
         Debug.Log($"Starting simulation. Total actors: {msg.AllActors.Length}. Local ActorID: {msg.ActorID}");
         Simulation.Start(msg.SimulationSpeed, msg.ActorID, msg.AllActors);
+
+        GameWorldManager.Instance.Init();
     }
 
 
@@ -86,12 +96,7 @@ public class TPSWorld : MonoBehaviour
         _client.Update();
         Simulation.Update(Time.deltaTime * 1000);
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            //AllActorIds = init.AllActors;
-            Debug.Log($"Starting simulation. Total actors:-------------------------------------");
-            Simulation.Start(30, 1, new byte[] { 1 });
-        }
+        GameWorldManager.Instance.Update();
     }
 
     private void FixedUpdate()
