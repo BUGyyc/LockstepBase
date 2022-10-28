@@ -286,7 +286,6 @@ namespace LiteNetLib
 
 
             //滑动窗口确认包
-            //If very new - move window
             int ackIdx;
             int ackByte;
             int ackBit;
@@ -294,11 +293,11 @@ namespace LiteNetLib
             {
                 if (relate >= _windowSize)
                 {
-                    //New window position
+                    //调整滑动窗口的位置
                     int newWindowStart = (_remoteWindowStart + relate - _windowSize + 1) % NetConstants.MaxSequence;
                     _outgoingAcks.Sequence = (ushort)newWindowStart;
 
-                    //Clean old data
+                    //清理旧数据
                     while (_remoteWindowStart != newWindowStart)
                     {
                         ackIdx = _remoteWindowStart % _windowSize;
@@ -318,13 +317,14 @@ namespace LiteNetLib
                 ackBit = ackIdx % BitsInByte;
                 if ((_outgoingAcks.RawData[ackByte] & (1 << ackBit)) != 0)
                 {
+                    //未确认的数据，放入发送队列中，进行确认接收
                     NetDebug.Write("[RR]ReliableInOrder duplicate");
                     //because _mustSendAcks == true
                     AddToPeerChannelSendQueue();
                     return false;
                 }
 
-                //save ack
+                //写入最新状态数据
                 _outgoingAcks.RawData[ackByte] |= (byte)(1 << ackBit);
             }
 
