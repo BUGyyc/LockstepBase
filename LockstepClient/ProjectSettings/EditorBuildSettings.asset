@@ -17,4 +17,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Debug/1.battle/RTS.unity
     guid: 8ee95a57198521b489321ecae6bb96cd
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 09ca91241b3139640a435e65b5de6253, type: 2}
