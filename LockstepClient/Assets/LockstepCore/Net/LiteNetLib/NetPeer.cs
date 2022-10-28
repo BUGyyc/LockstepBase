@@ -1021,6 +1021,10 @@ namespace LiteNetLib
             }
         }
 
+        /// <summary>
+        /// 发送最大数据包
+        /// </summary>
+        /// <param name="deltaTime"></param>
         private void UpdateMtuLogic(int deltaTime)
         {
             if (_finishMtu)
@@ -1043,6 +1047,7 @@ namespace LiteNetLib
                 if (_mtuIdx >= NetConstants.PossibleMtu.Length - 1)
                     return;
 
+                //当前链路上能发送的最大数据包
                 //Send increased packet
                 int newMtu = NetConstants.PossibleMtu[_mtuIdx + 1] - NetManager.ExtraPacketSizeForLayer;
                 var p = NetManager.PoolGetPacket(newMtu);
@@ -1107,6 +1112,10 @@ namespace LiteNetLib
             return ConnectRequestResult.None;
         }
 
+        /// <summary>
+        /// 处理接收到的网络包
+        /// </summary>
+        /// <param name="packet"></param>
         //Process incoming packet
         internal void ProcessPacket(NetPacket packet)
         {
@@ -1135,6 +1144,7 @@ namespace LiteNetLib
             switch (packet.Property)
             {
                 case PacketProperty.Merged:
+                    //将分包合并
                     int pos = NetConstants.HeaderSize;
                     while (pos < packet.Size)
                     {

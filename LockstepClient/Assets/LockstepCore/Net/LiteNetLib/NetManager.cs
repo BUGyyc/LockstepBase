@@ -653,6 +653,7 @@ namespace LiteNetLib
         private void UpdateLogic()
         {
             var peersToRemove = new List<NetPeer>();
+            //特殊的计时处理
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -736,6 +737,8 @@ namespace LiteNetLib
             foreach (var ntpRequest in _ntpRequests)
             {
                 ntpRequest.Value.Send(_udpSocketv4, elapsedMilliseconds);
+
+                //需要被清理的 链接
                 if (ntpRequest.Value.NeedToKill)
                 {
                     if (requestsToRemove == null)
@@ -941,6 +944,7 @@ namespace LiteNetLib
                 Statistics.AddBytesReceived(originalPacketSize);
             }
 
+            //处理NTP请求的回包
             if (_ntpRequests.Count > 0)
             {
                 if (_ntpRequests.TryGetValue(remoteEndPoint, out var request))
@@ -988,12 +992,15 @@ namespace LiteNetLib
                 return;
             }
 
+            //数据包的具体目的
             switch (packet.Property)
             {
                 //special case connect request
                 case PacketProperty.ConnectRequest:
+                    //处理链接发起
                     if (NetConnectRequestPacket.GetProtocolId(packet) != NetConstants.ProtocolId)
                     {
+                        //回应发起方
                         SendRawAndRecycle(PoolGetWithProperty(PacketProperty.InvalidProtocol), remoteEndPoint);
                         return;
                     }
@@ -1010,6 +1017,7 @@ namespace LiteNetLib
                     CreateEvent(NetEvent.EType.ReceiveUnconnected, remoteEndPoint: remoteEndPoint, readerSource: packet);
                     return;
                 case PacketProperty.NatMessage:
+
                     if (NatPunchEnabled)
                         NatPunchModule.ProcessMessage(remoteEndPoint, packet);
                     return;

@@ -76,7 +76,7 @@ namespace LiteNetLib
         public byte ConnectionNumber
         {
             get => (byte)((RawData[0] & 0x60) >> 5);
-            set => RawData[0] = (byte) ((RawData[0] & 0x9F) | (value << 5));
+            set => RawData[0] = (byte)((RawData[0] & 0x9F) | (value << 5));
         }
 
         public ushort Sequence
@@ -150,12 +150,17 @@ namespace LiteNetLib
             return HeaderSizes[RawData[0] & 0x1F];
         }
 
+        /// <summary>
+        /// 核实包体大小
+        /// </summary>
+        /// <returns></returns>
         public bool Verify()
         {
             byte property = (byte)(RawData[0] & 0x1F);
             if (property >= PropertiesCount)
                 return false;
             int headerSize = HeaderSizes[property];
+            //跨段？？
             bool fragmented = (RawData[0] & 0x80) != 0;
             return Size >= headerSize && (!fragmented || Size >= headerSize + NetConstants.FragmentHeaderSize);
         }
