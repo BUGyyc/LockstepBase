@@ -21,3 +21,15 @@ LockstepClient/Assets/_lockstepCore/Integration/lockstepgame/obj/
 LockstepClient/Assets/_lockstepCore/Integration/lockstepcorestate/obj/
 LockstepClient/Assets/_lockstepCore/Integration/lockstepnetworkclient/obj/
 LockstepClient/AIMath.csproj
+LockstepCopyClient/AIMath.csproj
+LockstepCopyClient/.vsconfig
+LockstepCopyClient/Assembly-CSharp.csproj
+LockstepCopyClient/Assembly-CSharp-Editor.csproj
+LockstepCopyClient/LockstepCopyClient.sln
+LockstepCopyClient/Assets/
+LockstepCopyClient/Library/
+LockstepCopyClient/Logs/
+LockstepCopyClient/Packages/
+LockstepCopyClient/ProjectSettings/
+LockstepCopyClient/Temp/
+LockstepCopyClient/UserSettings/
