@@ -65,6 +65,7 @@ public class ServerCore : MonoBehaviour
 
     private void OnGUI()
     {
+
         GUI.Label(new Rect(0, 0, 300, 100), $"ip:{SetGet_str_ipAddress} ");
         GUI.Label(new Rect(0, 30, 300, 100), $"port:{Port} ");
         GUI.Label(new Rect(0, 60, 300, 100), $"RoomPlayer:{RoomPlayerNumber} ");

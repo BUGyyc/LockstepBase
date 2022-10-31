@@ -136,7 +136,6 @@ GameObject:
   - component: {fileID: 50771355}
   - component: {fileID: 50771354}
   - component: {fileID: 50771352}
-  - component: {fileID: 50771353}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -202,18 +201,6 @@ MonoBehaviour:
   rotateLeftKey: 122
   useMouseRotation: 0
   mouseRotationKey: 324
---- !u!114 &50771353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 50771351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cb7926d2e77da0458c1009f9aefdebb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!81 &50771354
 AudioListener:
   m_ObjectHideFlags: 0
@@ -949,8 +936,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1524441394}
   - component: {fileID: 1524441393}
-  - component: {fileID: 1524441395}
   - component: {fileID: 1524441396}
+  - component: {fileID: 1524441397}
+  - component: {fileID: 1524441398}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -985,21 +973,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1524441395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1524441390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55544ee7812ace9418ba34403f843d71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ServerIp: 127.0.0.1
-  ServerPort: 9050
-  EntityDatabase: {fileID: 11400000, guid: a0d4789ca6cc5ab42a1264102206ac3f, type: 2}
 --- !u!114 &1524441396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1014,6 +987,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Count: 1
   Prefab: {fileID: 4600130916727093585, guid: e3aea81af71168043affd75ce42dee4a, type: 3}
+  EntityDatabase: {fileID: 11400000, guid: a0d4789ca6cc5ab42a1264102206ac3f, type: 2}
+--- !u!114 &1524441397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524441390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d11cd39778ab0f48bfec7cf921664dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1524441398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524441390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 236d6a447b64b6747b7ed813503bc10b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ServerIp: 127.0.0.1
+  ServerPort: 9050
   EntityDatabase: {fileID: 11400000, guid: a0d4789ca6cc5ab42a1264102206ac3f, type: 2}
 --- !u!1 &1549690249
 GameObject:
