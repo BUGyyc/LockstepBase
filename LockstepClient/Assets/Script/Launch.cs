@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class Launch : MonoBehaviour
 {
-    public Toggle serverTg;
     public Toggle clientTg;
+    public Toggle clientAndServerTg;
+    public Toggle pureServerTag;
 
     public Text IpText;
     public InputField portIF;
@@ -16,11 +17,19 @@ public class Launch : MonoBehaviour
 
     public Image uiParent;
 
-    public DebugLockStepMode mode = DebugLockStepMode.Server;
+    public InputField playerIF;
+
+    public Text playerText;
+
+    public Text portText;
+
+    public DebugLockStepMode mode = DebugLockStepMode.Client;
 
     public int port = 9050;
 
     public uint PlayerNumber = 4;
+
+
 
     // [HideInInspector]
     // public GameObject GameManagerObj;
@@ -44,8 +53,11 @@ public class Launch : MonoBehaviour
     {
         //chooseModeGroup
         startBtn.onClick.AddListener(OnClick);
-        serverTg.onValueChanged.AddListener(OnServerTg);
+
         clientTg.onValueChanged.AddListener(OnClientTg);
+        clientAndServerTg.onValueChanged.AddListener(OnClientAndServerTg);
+        pureServerTag.onValueChanged.AddListener(OnPureServerTg);
+
         initView();
         UpdateView();
 
@@ -54,52 +66,66 @@ public class Launch : MonoBehaviour
 
     private void initView()
     {
-        switch (mode)
+        this.clientTg.isOn = DebugLockStepMode.Client == this.mode;
+        this.clientAndServerTg.isOn = DebugLockStepMode.ClientAndServer == this.mode;
+        this.pureServerTag.isOn = DebugLockStepMode.PureServer == this.mode;
+
+
+        this.portIF.text = port.ToString();
+
+        this.playerIF.text = PlayerNumber.ToString();
+    }
+
+    private void OnPureServerTg(bool val)
+    {
+        if (val)
         {
-            case DebugLockStepMode.Server:
-                this.clientTg.isOn = false;
-                this.serverTg.isOn = true;
-                break;
-            case DebugLockStepMode.Client:
-                this.clientTg.isOn = true;
-                this.serverTg.isOn = false;
-                break;
+            this.mode = DebugLockStepMode.PureServer;
+            UpdateView();
         }
     }
 
-    private void OnServerTg(bool val)
+    private void OnClientAndServerTg(bool val)
     {
-        this.mode = val ? DebugLockStepMode.Server : DebugLockStepMode.Client;
-
-        UpdateView();
+        if (val)
+        {
+            this.mode = DebugLockStepMode.ClientAndServer;
+            UpdateView();
+        }
     }
 
     private void OnClientTg(bool val)
     {
-        this.mode = val == false ? DebugLockStepMode.Server : DebugLockStepMode.Client;
-
-        UpdateView();
+        if (val)
+        {
+            this.mode = DebugLockStepMode.Client;
+            UpdateView();
+        }
     }
 
     private void UpdateView()
     {
         switch (mode)
         {
-            case DebugLockStepMode.Server:
-            default:
+            case DebugLockStepMode.PureServer:
+            case DebugLockStepMode.ClientAndServer:
                 this.IpText.gameObject.SetActive(true);
                 this.ipIF.gameObject.SetActive(false);
+                this.playerText.gameObject.SetActive(true);
+                this.playerIF.gameObject.SetActive(true);
                 break;
             case DebugLockStepMode.Client:
                 this.ipIF.gameObject.SetActive(true);
                 this.IpText.gameObject.SetActive(false);
 
                 this.ipIF.text = SetGet_str_ipAddress;
-
+                this.playerText.gameObject.SetActive(false);
+                this.playerIF.gameObject.SetActive(false);
                 break;
+
         }
 
-        this.portIF.text = port.ToString();
+
     }
 
 
@@ -119,9 +145,13 @@ public class Launch : MonoBehaviour
                 StartClient();
                 break;
 
-            case DebugLockStepMode.Server:
+            case DebugLockStepMode.ClientAndServer:
 
-                StartServer();
+                StartClientAndServer();
+                break;
+
+            case DebugLockStepMode.PureServer:
+                StartPureServer();
                 break;
 
             default:
@@ -129,24 +159,27 @@ public class Launch : MonoBehaviour
         }
     }
 
-    private void StartServer()
+    private void StartPureServer()
+    {
+
+    }
+
+    private void StartClientAndServer()
     {
         port = int.Parse(portIF.text);
 
         if (port < 0 || port > 65535) return;
 
-        SceneManager.LoadScene("SampleServer");
+        PlayerNumber = (uint)int.Parse(playerIF.text);
 
-        GameSetting.ServerIp = SetGet_str_ipAddress;
-        GameSetting.ServerPort = port;
+        SceneManager.LoadScene("ClientAndServer");
 
-        GameSetting.PlayerNumber = PlayerNumber;
+        NetSetting.ServerIp = SetGet_str_ipAddress;
+        NetSetting.ServerPort = (uint)port;
 
-        Debug.Log($"启动Server  IP {SetGet_str_ipAddress} Port {port}  ");
+        NetSetting.PlayerNumber = PlayerNumber;
 
-        //gs.StartServer(port);
-
-        // uiParent.gameObject.SetActive(false);
+        Debug.Log($"启动Server  IP {SetGet_str_ipAddress} Port {port}  PlayerNumber {PlayerNumber}  ");
     }
 
     private void StartClient()
@@ -154,10 +187,10 @@ public class Launch : MonoBehaviour
         port = int.Parse(portIF.text);
         var ip = ipIF.text;
 
-        GameSetting.ServerIp = ip;
-        GameSetting.ServerPort = port;
+        NetSetting.ServerIp = ip;
+        NetSetting.ServerPort = (uint)port;
 
-        Debug.Log($"开始连接Server IP {GameSetting.ServerIp} Port {GameSetting.ServerPort}  ");
+        Debug.Log($"开始连接Server IP {NetSetting.ServerIp} Port {NetSetting.ServerPort}  ");
 
         SceneManager.LoadScene(GameSceneSetting.BattleTestScene);
     }
@@ -167,8 +200,9 @@ public class Launch : MonoBehaviour
 
     public enum DebugLockStepMode
     {
-        Server,
-        Client
+        Client,
+        ClientAndServer,
+        PureServer
     }
 
 }

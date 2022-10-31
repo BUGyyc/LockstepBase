@@ -36,8 +36,8 @@ public class ActionWorld : MonoBehaviour
     {
         Instance = this;
 
-        ServerIp = GameSetting.ServerIp;
-        ServerPort = GameSetting.ServerPort;
+        ServerIp = NetSetting.ServerIp;
+        ServerPort = (int)NetSetting.ServerPort;
 
 
         Log.OnMessage += (sender, args) => Debug.Log(args.Message);

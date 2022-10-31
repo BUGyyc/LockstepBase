@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 public class ServerCore : MonoBehaviour
 {
     [Header("房间玩家数量")]
-    [HideInInspector]
-    public uint RoomPlayerNumber = 1;
+    //[HideInInspector]
+    public uint RoomPlayerNumber = 2;
     [Header("端口号")]
-    public int Port = 9050;
+    public uint Port = 9000;
 
     private string _ip;
     LiteNetLibServer server;
@@ -21,7 +21,7 @@ public class ServerCore : MonoBehaviour
         set { _ip = value; }
         get
         {
-            _ip = NetTool.IP(address.IPv4);
+            _ip = LiteNetLib.NetUtils.GetLocalIp(LiteNetLib.LocalAddrType.IPv4);
             return _ip;
         }
     }
@@ -32,19 +32,19 @@ public class ServerCore : MonoBehaviour
     }
 
 
-    float stepTime = 0;
-    bool hasLoad = false;
+    //float stepTime = 0;
+    //bool hasLoad = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        Port = GameSetting.ServerPort;
-        RoomPlayerNumber = GameSetting.PlayerNumber;
+        //Port = NetSetting.ServerPort;
+        //RoomPlayerNumber = NetSetting.PlayerNumber;
         server = new LiteNetLibServer();
 
         room = new Lockstep.Network.Server.Room(server, (int)RoomPlayerNumber);
 
-        room.Open(Port);
+        room.Open((int)Port);
 
         UnityEngine.Debug.Log($"房间开启 RoomPlayerNumber{RoomPlayerNumber}  port {Port}  ");
 
@@ -55,22 +55,25 @@ public class ServerCore : MonoBehaviour
     void Update()
     {
         server.PollEvents();
-        stepTime++;
-        if (stepTime >= 100 && hasLoad == false)
-        {
-            hasLoad = true;
-            SceneManager.LoadScene(GameSceneSetting.BattleTestScene);
-        }
+        //stepTime++;
+        //if (stepTime >= 100 && hasLoad == false)
+        //{
+        //    hasLoad = true;
+        //    SceneManager.LoadScene(GameSceneSetting.BattleTestScene);
+        //}
     }
 
     private void OnGUI()
     {
+        if (room == null) return;
 
         GUI.Label(new Rect(0, 0, 300, 100), $"ip:{SetGet_str_ipAddress} ");
         GUI.Label(new Rect(0, 30, 300, 100), $"port:{Port} ");
-        GUI.Label(new Rect(0, 60, 300, 100), $"RoomPlayer:{RoomPlayerNumber} ");
+        GUI.Label(new Rect(0, 60, 300, 100), $"RoomPlayer:{room.OnLivePlayerCount()} / {RoomPlayerNumber} ");
 
 
-        if (room != null) GUI.Label(new Rect(0, 90, 300, 100), $"ReadyPlayer:{room.OnLivePlayerCount()} ");
+        //GUI.Label(new Rect(0, 90, 300, 100), $"ReadyPlayer: ");
+
+
     }
 }

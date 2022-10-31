@@ -20,5 +20,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Debug/1.battle/Action.unity
     guid: b5e303eaf919a49409df6c03c425529a
+  - enabled: 1
+    path: Assets/Scenes/Debug/ClientAndServer.unity
+    guid: 86efc22a47e1e704c83420975439f67e
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 09ca91241b3139640a435e65b5de6253, type: 2}

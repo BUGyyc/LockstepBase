@@ -41,14 +41,6 @@ public static class NetID
 
 }
 
-public static class GameSetting
-{
-    public static int ServerPort = 9050;
-
-    public static string ServerIp = "";
-
-    public static uint PlayerNumber = 4;
-}
 
 
 

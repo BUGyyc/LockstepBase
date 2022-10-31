@@ -36,8 +36,8 @@ public class TPSWorld : MonoBehaviour
     {
         Instance = this;
 
-        ServerIp = GameSetting.ServerIp;
-        ServerPort = GameSetting.ServerPort;
+        ServerIp = (string.IsNullOrEmpty(NetSetting.ServerIp)) ? LiteNetLib.NetUtils.GetLocalIp(LiteNetLib.LocalAddrType.IPv4) : NetSetting.ServerIp;
+        ServerPort = (int)NetSetting.ServerPort;
 
 
         Log.OnMessage += (sender, args) => Debug.Log(args.Message);
