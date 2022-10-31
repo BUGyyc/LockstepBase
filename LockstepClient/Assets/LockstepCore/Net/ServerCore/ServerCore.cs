@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 public class ServerCore : MonoBehaviour
 {
     [Header("房间玩家数量")]
-    //[HideInInspector]
+    [HideInInspector]
     public uint RoomPlayerNumber = 2;
     [Header("端口号")]
+    [HideInInspector]
     public uint Port = 9000;
 
     private string _ip;
@@ -38,8 +39,8 @@ public class ServerCore : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Port = NetSetting.ServerPort;
-        //RoomPlayerNumber = NetSetting.PlayerNumber;
+        Port = NetSetting.ServerPort;
+        RoomPlayerNumber = NetSetting.PlayerNumber;
         server = new LiteNetLibServer();
 
         room = new Lockstep.Network.Server.Room(server, (int)RoomPlayerNumber);

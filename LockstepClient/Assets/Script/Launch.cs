@@ -161,7 +161,7 @@ public class Launch : MonoBehaviour
 
     private void StartPureServer()
     {
-
+        SceneManager.LoadScene("PureServer", LoadSceneMode.Single);
     }
 
     private void StartClientAndServer()
