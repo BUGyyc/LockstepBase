@@ -1,17 +1,41 @@
 cd /d %~dp0
+echo "Start..."
 
 cd "LockstepServer"
 
-rd /s /Q Assets
-mklink /J Assets "%~dp0/LockstepClient/Assets"
+
+SET assets=.\Assets
+SET scene=.\Assets\Scenes
 
 
-rd /s /Q Packages
-mklink /J Packages "%~dp0/LockstepClient/Packages"
 
 
-rd /s /Q ProjectSettings
-mklink /J ProjectSettings "%~dp0/LockstepClient/ProjectSettings"
+IF NOT EXIST %assets%	(
+	MD %assets%
+)
+
+IF NOT EXIST %scene%	(
+	MD %scene%
+)
+
+
+cd "%~dp0/LockstepServer/Assets"
+
+rd /s /Q ServerCore
+mklink /J ServerCore "%~dp0/LockstepClient/Assets/LockstepCore/ServerCore"
+
+	
+rd /s /Q Common
+mklink /J Common "%~dp0/LockstepClient/Assets/LockstepCore/Common"
+
+
+cd "%~dp0/LockstepServer/Assets/Scenes"
+
+
+rd /s /Q Server
+mklink /J Server "%~dp0/LockstepClient/Assets/Scenes/Server"
+
+
 
 echo "Successed..."
 
