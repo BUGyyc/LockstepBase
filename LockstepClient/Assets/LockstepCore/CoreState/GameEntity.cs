@@ -17,6 +17,14 @@ public sealed class GameEntity : Entity
 
     private static readonly NavigableComponent navigableComponent = new NavigableComponent();
 
+
+    public AnimationComponent animation => (AnimationComponent)GetComponent(GameComponentsLookup.Animation);
+    public bool hasAnimtion => HasComponent(GameComponentsLookup.Animation);
+
+
+    public ModelComponent model => (ModelComponent)GetComponent(GameComponentsLookup.Model);
+    public bool hasModel => HasComponent(GameComponentsLookup.Model);
+
     public RadiusComponent radius => (RadiusComponent)GetComponent(14);
 
     public bool hasRadius => HasComponent(14);
@@ -222,9 +230,9 @@ public sealed class GameEntity : Entity
     public bool hasPositionListener => HasComponent(18);
 
 
-    public CharacterComponent character => (CharacterComponent)GetComponent(GameComponentsLookup.CharacterComponet);
+    public CharacterComponent character => (CharacterComponent)GetComponent(GameComponentsLookup.Character);
 
-    public bool hasCharacter => HasComponent(GameComponentsLookup.CharacterComponet);
+    public bool hasCharacter => HasComponent(GameComponentsLookup.Character);
 
     public void AddRadius(Fix64 newValue)
     {
@@ -381,26 +389,32 @@ public sealed class GameEntity : Entity
 
 
     //ID 希望自增，且只读
-    //public void AddId(uint newValue)
+    public void AddId(uint newValue)
+    {
+        int num = 9;
+        IdComponent idComponent = (IdComponent)CreateComponent(num, typeof(IdComponent));
+        idComponent.value = newValue;
+        AddComponent(num, idComponent);
+    }
+
+    public void ReplaceId(uint newValue)
+    {
+        int num = 9;
+        IdComponent idComponent = (IdComponent)CreateComponent(num, typeof(IdComponent));
+        idComponent.value = newValue;
+        ReplaceComponent(num, idComponent);
+    }
+
+    public void RemoveId()
+    {
+        RemoveComponent(9);
+    }
+
+    //public void ReplaceModel(uint modelId)
     //{
-    //    int num = 9;
-    //    IdComponent idComponent = (IdComponent)CreateComponent(num, typeof(IdComponent));
-    //    idComponent.value = newValue;
-    //    AddComponent(num, idComponent);
+    //    ModelComponent model = (ModelComponent)CreateComponent()
     //}
 
-    //public void ReplaceId(uint newValue)
-    //{
-    //    int num = 9;
-    //    IdComponent idComponent = (IdComponent)CreateComponent(num, typeof(IdComponent));
-    //    idComponent.value = newValue;
-    //    ReplaceComponent(num, idComponent);
-    //}
-
-    //public void RemoveId()
-    //{
-    //    RemoveComponent(9);
-    //}
 
     public void AddLocalId(uint newValue)
     {

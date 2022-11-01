@@ -34,21 +34,23 @@ namespace Lockstep.Game.Features.Input
 
         public void Execute()
         {
+            //晒选指定帧号，生成对应的Entity
             foreach (InputEntity item in from entity in _spawnInputs.GetEntities()
                                          where entity.tick.value == _gameStateContext.tick.value
                                          select entity)
             {
                 ActorEntity entityWithId = _actorContext.GetEntityWithId(item.actorId.value);
                 uint value = entityWithId.entityCount.value;
-                GameEntity gameEntity = EntityUtil.CreateEntity();
-                //_gameContext.CreateEntity();
+                //GameEntity gameEntity = EntityUtil.CreateEntity();
+                GameEntity gameEntity = _gameContext.CreateEntity();
                 Log.Trace(this, entityWithId.id.value + " -> " + value);
-                //gameEntity.AddId(value);
+                gameEntity.AddId(value);
                 gameEntity.AddActorId(item.actorId.value);
                 gameEntity.AddLocalId(_localIdCounter);
                 gameEntity.AddVelocity(Vector2.Zero);
                 gameEntity.AddPosition(item.coordinate.value);
-                _viewService.LoadView(gameEntity, item.entityConfigId.value);
+
+                _viewService.LoadView(gameEntity, item.entityConfigId.value, item.actorId.value == ActionWorld.Instance.LocalActorId);
                 if (gameEntity.isNavigable)
                 {
                     gameEntity.AddRadius(F64.C1);

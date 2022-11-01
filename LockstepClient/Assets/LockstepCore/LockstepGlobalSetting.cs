@@ -57,6 +57,6 @@ public static class GameSceneSetting
 
 
 
-    public static string BattleTestScene = TPS_SCENE;
+    public static string BattleTestScene = ACTION_SCENE;
 
 }

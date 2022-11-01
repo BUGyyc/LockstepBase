@@ -41,10 +41,14 @@ public static class GameComponentsLookup
 
     public const int PositionListener = 18;
 
-    public const int CharacterComponet = 19;
+    public const int Character = 19;
+
+    public const int Model = 20;
+
+    public const int Animation = 21;
 
 
-    public const int TotalComponents = 20;
+    public const int TotalComponents = 22;
 
     public static readonly string[] componentNames = new string[TotalComponents]
     {
@@ -70,7 +74,10 @@ public static class GameComponentsLookup
         "Team",
         "Velocity",
         "PositionListener",
-        "Character"
+        "Character",
+
+        "Model",
+        "Animation"
     };
 
     public static readonly Type[] componentTypes = new Type[TotalComponents]
@@ -97,6 +104,9 @@ public static class GameComponentsLookup
         typeof(TeamComponent),
         typeof(VelocityComponent),
         typeof(PositionListenerComponent),
-        typeof(CharacterComponent)
+        typeof(CharacterComponent),
+
+        typeof(ModelComponent),
+        typeof(AnimationComponent)
     };
 }
