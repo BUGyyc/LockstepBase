@@ -16,13 +16,13 @@ public class UnityInput : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(1))
-        {
-            var pos = GetWorldPos(Input.mousePosition);
-            //FindObjectOfType<RTSEntitySpawner>()?.Spawn(pos);
+        //if (Input.GetMouseButton(1))
+        //{
+        //    var pos = GetWorldPos(Input.mousePosition);
+        //    //FindObjectOfType<RTSEntitySpawner>()?.Spawn(pos);
 
-            FindObjectOfType<EntitySpawner>()?.Spawn(pos);
-        }
+        //    FindObjectOfType<EntitySpawner>()?.Spawn(pos);
+        //}
 #if UNITY_EDITOR
 
 

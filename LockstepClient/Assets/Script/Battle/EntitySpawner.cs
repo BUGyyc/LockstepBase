@@ -1,6 +1,7 @@
 ﻿using Lockstep.Game.Commands;
 using UnityEngine;
-using Vector2 = BEPUutilities.Vector2;
+using Lockstep;
+//using Vector2 = BEPUutilities.Vector2;
 
 public class EntitySpawner : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class EntitySpawner : MonoBehaviour
         }
     }
 
-    public void Spawn(Vector2 position)
+    public void Spawn(LVector3 position)
     {
         for (int j = 0; j < Count; j++)
         {

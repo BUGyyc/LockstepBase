@@ -1,4 +1,4 @@
-using BEPUutilities;
+﻿using BEPUutilities;
 using Entitas;
 using FixMath.NET;
 
@@ -19,15 +19,16 @@ namespace Lockstep.Game.Features.Navigation.RVO
 
         public void Execute()
         {
-            foreach (GameEntity movingEntity in movingEntities)
-            {
-                Vector2 preferredVelocity = movingEntity.destination.value - movingEntity.position.value;
-                if (preferredVelocity.LengthSquared() > Fix64.One)
-                {
-                    preferredVelocity.Normalize();
-                }
-                movingEntity.rvoAgentSettings.preferredVelocity = preferredVelocity;
-            }
+            //TODO:
+            //foreach (GameEntity movingEntity in movingEntities)
+            //{
+            //    Vector2 preferredVelocity = movingEntity.destination.value - movingEntity.position.value;
+            //    if (preferredVelocity.LengthSquared() > Fix64.One)
+            //    {
+            //        preferredVelocity.Normalize();
+            //    }
+            //    movingEntity.rvoAgentSettings.preferredVelocity = preferredVelocity;
+            //}
         }
     }
 }

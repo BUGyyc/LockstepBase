@@ -124,8 +124,8 @@ namespace Protocol {
             "ZRISCgR0aW1lGAEgASgCUgR0aW1lEhQKBXZhbHVlGAIgASgCUgV2YWx1ZRId", 
             "Cgppbl90YW5nZW50GAMgASgCUglpblRhbmdlbnQSHwoLb3V0X3RhbmdlbnQY", 
             "BCABKAJSCm91dFRhbmdlbnQSGwoJaW5fd2VpZ2h0GAUgASgCUghpbldlaWdo", 
-            "dBIdCgpvdXRfd2VpZ2h0GAYgASgCUglvdXRXZWlnaHQigQYKCk1vdmVNb3Rp", 
-            "b24SFgoGbGVuZ3RoGAEgASgCUgZsZW5ndGgSQAoQcG9zaXRpb25feF9jdXJ2", 
+            "dBIdCgpvdXRfd2VpZ2h0GAYgASgCUglvdXRXZWlnaHQiogYKCk1vdmVNb3Rp", 
+            "b24SFgoGbGVuZ3RoGAEgASgFUgZsZW5ndGgSQAoQcG9zaXRpb25feF9jdXJ2", 
             "ZRgCIAMoCzIWLlByb3RvY29sLk1vdmVLZXlGcmFtZVIOcG9zaXRpb25YQ3Vy", 
             "dmUSQAoQcG9zaXRpb25fel9jdXJ2ZRgDIAMoCzIWLlByb3RvY29sLk1vdmVL", 
             "ZXlGcmFtZVIOcG9zaXRpb25aQ3VydmUSQAoQcm90YXRpb25feF9jdXJ2ZRgE", 
@@ -141,30 +141,32 @@ namespace Protocol {
             "S2V5RnJhbWVSC3NjYWxlWEN1cnZlEjoKDXNjYWxlX3lfY3VydmUYEyADKAsy", 
             "Fi5Qcm90b2NvbC5Nb3ZlS2V5RnJhbWVSC3NjYWxlWUN1cnZlEjoKDXNjYWxl", 
             "X3pfY3VydmUYFCADKAsyFi5Qcm90b2NvbC5Nb3ZlS2V5RnJhbWVSC3NjYWxl", 
-            "WkN1cnZlEh8KC21vdGlvbl90eXBlGBUgASgNUgptb3Rpb25UeXBlIusDCglC", 
-            "bGVuZE5vZGUSHQoKbW92ZV9zcGVlZBgBIAEoAlIJbW92ZVNwZWVkEh8KC2Fu", 
-            "Z2xlX3NwZWVkGAIgASgCUgphbmdsZVNwZWVkEhsKCXhfcG9zdGlvbhgDIAEo", 
-            "AlIIeFBvc3Rpb24SGwoJeV9wb3N0aW9uGAQgASgCUgh5UG9zdGlvbhIrCght", 
-            "b3ZlX2RpchgFIAEoCzIQLlByb3RvY29sLkZsb2F0M1IHbW92ZURpchIWCgZs", 
-            "ZW5ndGgYBiABKAJSBmxlbmd0aBIdCgppc19hZGR0aW9uGAcgASgIUglpc0Fk", 
-            "ZHRpb24SLAoGbW90aW9uGAggASgLMhQuUHJvdG9jb2wuTW92ZU1vdGlvblIG", 
-            "bW90aW9uEjMKDGJvdW5kX2NlbnRlchgJIAEoCzIQLlByb3RvY29sLkZsb2F0", 
-            "M1ILYm91bmRDZW50ZXISLwoKYm91bmRfc2l6ZRgKIAEoCzIQLlByb3RvY29s", 
-            "LkZsb2F0M1IJYm91bmRTaXplEjUKDWhlYWRfcG9zaXRpb24YCyABKAsyEC5Q", 
-            "cm90b2NvbC5GbG9hdDNSDGhlYWRQb3NpdGlvbhI1Cg1oZWFkX3JvdGF0aW9u", 
-            "GAwgASgLMhAuUHJvdG9jb2wuRmxvYXQzUgxoZWFkUm90YXRpb24ivQEKB0Js", 
-            "ZW5kZXISMgoKYmxlbmRfdHlwZRgBIAEoDjITLlByb3RvY29sLkJsZW5kVHlw", 
-            "ZVIJYmxlbmRUeXBlEjAKCW5vZGVfbGlzdBgCIAMoCzITLlByb3RvY29sLkJs", 
-            "ZW5kTm9kZVIIbm9kZUxpc3QSFgoGbGVuZ3RoGAMgASgCUgZsZW5ndGgSEgoE", 
-            "bmFtZRgEIAEoCVIEbmFtZRIgCgxpc19maXhfYW5nbGUYBSABKAhSCmlzRml4", 
-            "QW5nbGUijwIKEU1vdmVDb250cm9sbGVyQ2ZnEjsKDmV4cG9ydF9tb3Rpb25z", 
-            "GAEgAygLMhQuUHJvdG9jb2wuTW92ZU1vdGlvblINZXhwb3J0TW90aW9ucxI6", 
-            "Cg9leHBvcnRfYmxlbmRlcnMYAiADKAsyES5Qcm90b2NvbC5CbGVuZGVyUg5l", 
-            "eHBvcnRCbGVuZGVycxIfCgt3ZWFwb25fcGF0aBgDIAEoCVIKd2VhcG9uUGF0", 
-            "aBImCg9ib3VuZF9wYXRoX2xpc3QYBCADKAlSDWJvdW5kUGF0aExpc3QSGwoJ", 
-            "aGVhZF9wYXRoGAUgASgJUghoZWFkUGF0aBIbCgloZWFkX3NpemUYBiABKAJS", 
-            "CGhlYWRTaXplKkwKCUJsZW5kVHlwZRILCgdCVF9Ob25lEAASCgoGU2ltcGxl", 
-          "EAESCQoFUG9sYXIQAhINCglDYXJ0ZXNpYW4QAxIMCghTaW1wbGUxRBAE"));
+            "WkN1cnZlEh8KC21vdGlvbl90eXBlGBUgASgNUgptb3Rpb25UeXBlEh8KC2Zy", 
+            "YW1lX2NvdW50GBYgASgFUgpmcmFtZUNvdW50IowECglCbGVuZE5vZGUSHQoK", 
+            "bW92ZV9zcGVlZBgBIAEoAlIJbW92ZVNwZWVkEh8KC2FuZ2xlX3NwZWVkGAIg", 
+            "ASgCUgphbmdsZVNwZWVkEhsKCXhfcG9zdGlvbhgDIAEoAlIIeFBvc3Rpb24S", 
+            "GwoJeV9wb3N0aW9uGAQgASgCUgh5UG9zdGlvbhIrCghtb3ZlX2RpchgFIAEo", 
+            "CzIQLlByb3RvY29sLkZsb2F0M1IHbW92ZURpchIWCgZsZW5ndGgYBiABKAJS", 
+            "Bmxlbmd0aBIdCgppc19hZGR0aW9uGAcgASgIUglpc0FkZHRpb24SLAoGbW90", 
+            "aW9uGAggASgLMhQuUHJvdG9jb2wuTW92ZU1vdGlvblIGbW90aW9uEjMKDGJv", 
+            "dW5kX2NlbnRlchgJIAEoCzIQLlByb3RvY29sLkZsb2F0M1ILYm91bmRDZW50", 
+            "ZXISLwoKYm91bmRfc2l6ZRgKIAEoCzIQLlByb3RvY29sLkZsb2F0M1IJYm91", 
+            "bmRTaXplEjUKDWhlYWRfcG9zaXRpb24YCyABKAsyEC5Qcm90b2NvbC5GbG9h", 
+            "dDNSDGhlYWRQb3NpdGlvbhI1Cg1oZWFkX3JvdGF0aW9uGAwgASgLMhAuUHJv", 
+            "dG9jb2wuRmxvYXQzUgxoZWFkUm90YXRpb24SHwoLZnJhbWVfY291bnQYDSAB", 
+            "KAVSCmZyYW1lQ291bnQivQEKB0JsZW5kZXISMgoKYmxlbmRfdHlwZRgBIAEo", 
+            "DjITLlByb3RvY29sLkJsZW5kVHlwZVIJYmxlbmRUeXBlEjAKCW5vZGVfbGlz", 
+            "dBgCIAMoCzITLlByb3RvY29sLkJsZW5kTm9kZVIIbm9kZUxpc3QSFgoGbGVu", 
+            "Z3RoGAMgASgCUgZsZW5ndGgSEgoEbmFtZRgEIAEoCVIEbmFtZRIgCgxpc19m", 
+            "aXhfYW5nbGUYBSABKAhSCmlzRml4QW5nbGUijwIKEU1vdmVDb250cm9sbGVy", 
+            "Q2ZnEjsKDmV4cG9ydF9tb3Rpb25zGAEgAygLMhQuUHJvdG9jb2wuTW92ZU1v", 
+            "dGlvblINZXhwb3J0TW90aW9ucxI6Cg9leHBvcnRfYmxlbmRlcnMYAiADKAsy", 
+            "ES5Qcm90b2NvbC5CbGVuZGVyUg5leHBvcnRCbGVuZGVycxIfCgt3ZWFwb25f", 
+            "cGF0aBgDIAEoCVIKd2VhcG9uUGF0aBImCg9ib3VuZF9wYXRoX2xpc3QYBCAD", 
+            "KAlSDWJvdW5kUGF0aExpc3QSGwoJaGVhZF9wYXRoGAUgASgJUghoZWFkUGF0", 
+            "aBIbCgloZWFkX3NpemUYBiABKAJSCGhlYWRTaXplKkwKCUJsZW5kVHlwZRIL", 
+            "CgdCVF9Ob25lEAASCgoGU2ltcGxlEAESCQoFUG9sYXIQAhINCglDYXJ0ZXNp", 
+          "YW4QAxIMCghTaW1wbGUxRBAE"));
       pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
         descriptor = root;
         internal__static_Protocol_LevelCfg__Descriptor = Descriptor.MessageTypes[0];
@@ -230,11 +232,11 @@ namespace Protocol {
         internal__static_Protocol_MoveMotion__Descriptor = Descriptor.MessageTypes[15];
         internal__static_Protocol_MoveMotion__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Protocol.MoveMotion, global::Protocol.MoveMotion.Builder>(internal__static_Protocol_MoveMotion__Descriptor,
-                new string[] { "Length", "PositionXCurve", "PositionZCurve", "RotationXCurve", "RotationYCurve", "RotationZCurve", "RotationWCurve", "MotionName", "PositionYCurve", "IsLoop", "ScaleXCurve", "ScaleYCurve", "ScaleZCurve", "MotionType", });
+                new string[] { "Length", "PositionXCurve", "PositionZCurve", "RotationXCurve", "RotationYCurve", "RotationZCurve", "RotationWCurve", "MotionName", "PositionYCurve", "IsLoop", "ScaleXCurve", "ScaleYCurve", "ScaleZCurve", "MotionType", "FrameCount", });
         internal__static_Protocol_BlendNode__Descriptor = Descriptor.MessageTypes[16];
         internal__static_Protocol_BlendNode__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Protocol.BlendNode, global::Protocol.BlendNode.Builder>(internal__static_Protocol_BlendNode__Descriptor,
-                new string[] { "MoveSpeed", "AngleSpeed", "XPostion", "YPostion", "MoveDir", "Length", "IsAddtion", "Motion", "BoundCenter", "BoundSize", "HeadPosition", "HeadRotation", });
+                new string[] { "MoveSpeed", "AngleSpeed", "XPostion", "YPostion", "MoveDir", "Length", "IsAddtion", "Motion", "BoundCenter", "BoundSize", "HeadPosition", "HeadRotation", "FrameCount", });
         internal__static_Protocol_Blender__Descriptor = Descriptor.MessageTypes[17];
         internal__static_Protocol_Blender__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Protocol.Blender, global::Protocol.Blender.Builder>(internal__static_Protocol_Blender__Descriptor,
@@ -8362,8 +8364,8 @@ namespace Protocol {
   public sealed partial class MoveMotion : pb::GeneratedMessage<MoveMotion, MoveMotion.Builder> {
     public MoveMotion() { }
     private static readonly MoveMotion defaultInstance = new MoveMotion().MakeReadOnly();
-    private static readonly string[] _moveMotionFieldNames = new string[] { "is_loop", "length", "motion_name", "motion_type", "position_x_curve", "position_y_curve", "position_z_curve", "rotation_w_curve", "rotation_x_curve", "rotation_y_curve", "rotation_z_curve", "scale_x_curve", "scale_y_curve", "scale_z_curve" };
-    private static readonly uint[] _moveMotionFieldTags = new uint[] { 136, 13, 66, 168, 18, 74, 26, 58, 34, 42, 50, 146, 154, 162 };
+    private static readonly string[] _moveMotionFieldNames = new string[] { "frame_count", "is_loop", "length", "motion_name", "motion_type", "position_x_curve", "position_y_curve", "position_z_curve", "rotation_w_curve", "rotation_x_curve", "rotation_y_curve", "rotation_z_curve", "scale_x_curve", "scale_y_curve", "scale_z_curve" };
+    private static readonly uint[] _moveMotionFieldTags = new uint[] { 176, 136, 8, 66, 168, 18, 74, 26, 58, 34, 42, 50, 146, 154, 162 };
     public static MoveMotion DefaultInstance {
       get { return defaultInstance; }
     }
@@ -8387,11 +8389,11 @@ namespace Protocol {
     public const int LengthFieldNumber = 1;
     private bool hasLength;
     private bool isLengthChanged = true;
-    private float length_;
+    private int length_;
     public bool HasLength {
       get { return hasLength; }
     }
-    public float Length {
+    public int Length {
       get { return length_; }
       set { hasLength = true;
         isLengthChanged = true;
@@ -8861,6 +8863,20 @@ namespace Protocol {
         motionType_ = value;}
     }
     
+    public const int FrameCountFieldNumber = 22;
+    private bool hasFrameCount;
+    private bool isFrameCountChanged = true;
+    private int frameCount_;
+    public bool HasFrameCount {
+      get { return hasFrameCount; }
+    }
+    public int FrameCount {
+      get { return frameCount_; }
+      set { hasFrameCount = true;
+        isFrameCountChanged = true;
+        frameCount_ = value;}
+    }
+    
     public override bool IsInitialized {
       get {
         return true;
@@ -8871,46 +8887,49 @@ namespace Protocol {
       CalcSerializedSize();
       string[] field_names = _moveMotionFieldNames;
       if (hasLength) {
-        output.WriteFloat(1, field_names[1], Length);
+        output.WriteInt32(1, field_names[2], Length);
       }
       if (positionXCurve_.Count > 0) {
-        output.WriteMessageArray(2, field_names[4], positionXCurve_);
+        output.WriteMessageArray(2, field_names[5], positionXCurve_);
       }
       if (positionZCurve_.Count > 0) {
-        output.WriteMessageArray(3, field_names[6], positionZCurve_);
+        output.WriteMessageArray(3, field_names[7], positionZCurve_);
       }
       if (rotationXCurve_.Count > 0) {
-        output.WriteMessageArray(4, field_names[8], rotationXCurve_);
+        output.WriteMessageArray(4, field_names[9], rotationXCurve_);
       }
       if (rotationYCurve_.Count > 0) {
-        output.WriteMessageArray(5, field_names[9], rotationYCurve_);
+        output.WriteMessageArray(5, field_names[10], rotationYCurve_);
       }
       if (rotationZCurve_.Count > 0) {
-        output.WriteMessageArray(6, field_names[10], rotationZCurve_);
+        output.WriteMessageArray(6, field_names[11], rotationZCurve_);
       }
       if (rotationWCurve_.Count > 0) {
-        output.WriteMessageArray(7, field_names[7], rotationWCurve_);
+        output.WriteMessageArray(7, field_names[8], rotationWCurve_);
       }
       if (hasMotionName) {
-        output.WriteString(8, field_names[2], MotionName);
+        output.WriteString(8, field_names[3], MotionName);
       }
       if (positionYCurve_.Count > 0) {
-        output.WriteMessageArray(9, field_names[5], positionYCurve_);
+        output.WriteMessageArray(9, field_names[6], positionYCurve_);
       }
       if (hasIsLoop) {
-        output.WriteBool(17, field_names[0], IsLoop);
+        output.WriteBool(17, field_names[1], IsLoop);
       }
       if (scaleXCurve_.Count > 0) {
-        output.WriteMessageArray(18, field_names[11], scaleXCurve_);
+        output.WriteMessageArray(18, field_names[12], scaleXCurve_);
       }
       if (scaleYCurve_.Count > 0) {
-        output.WriteMessageArray(19, field_names[12], scaleYCurve_);
+        output.WriteMessageArray(19, field_names[13], scaleYCurve_);
       }
       if (scaleZCurve_.Count > 0) {
-        output.WriteMessageArray(20, field_names[13], scaleZCurve_);
+        output.WriteMessageArray(20, field_names[14], scaleZCurve_);
       }
       if (hasMotionType) {
-        output.WriteUInt32(21, field_names[3], MotionType);
+        output.WriteUInt32(21, field_names[4], MotionType);
+      }
+      if (hasFrameCount) {
+        output.WriteInt32(22, field_names[0], FrameCount);
       }
       UnknownFields.WriteTo(output);
     }
@@ -8925,7 +8944,7 @@ namespace Protocol {
     private int CalcSerializedSize() {
       int size = 0;
       if (hasLength) {
-        size += pb::CodedOutputStream.ComputeFloatSize(1, Length);
+        size += pb::CodedOutputStream.ComputeInt32Size(1, Length);
       }
       foreach (global::Protocol.MoveKeyFrame element in PositionXCurve) {
         size += pb::CodedOutputStream.ComputeMessageSize(2, element);
@@ -8965,6 +8984,9 @@ namespace Protocol {
       }
       if (hasMotionType) {
         size += pb::CodedOutputStream.ComputeUInt32Size(21, MotionType);
+      }
+      if (hasFrameCount) {
+        size += pb::CodedOutputStream.ComputeInt32Size(22, FrameCount);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -9014,6 +9036,11 @@ namespace Protocol {
         other.MotionType = MotionType;
         isMotionTypeChanged = false;
       }
+      if (isFrameCountChanged) {
+        isChange = true;
+        other.FrameCount = FrameCount;
+        isFrameCountChanged = false;
+      }
       return isChange?other:null;
     }
     
@@ -9050,6 +9077,9 @@ namespace Protocol {
         scaleZCurve_.Add(other.scaleZCurve_);
       if (other.HasMotionType) {
         MotionType = other.MotionType;
+      }
+      if (other.HasFrameCount) {
+        FrameCount = other.FrameCount;
       }
     }
     
@@ -9213,6 +9243,9 @@ namespace Protocol {
         if (other.HasMotionType) {
           MotionType = other.MotionType;
         }
+        if (other.HasFrameCount) {
+          FrameCount = other.FrameCount;
+        }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
       }
@@ -9256,8 +9289,8 @@ namespace Protocol {
               ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
               break;
             }
-            case 13: {
-              result.hasLength = input.ReadFloat(ref result.length_);
+            case 8: {
+              result.hasLength = input.ReadInt32(ref result.length_);
               break;
             }
             case 18: {
@@ -9312,6 +9345,10 @@ namespace Protocol {
               result.hasMotionType = input.ReadUInt32(ref result.motionType_);
               break;
             }
+            case 176: {
+              result.hasFrameCount = input.ReadInt32(ref result.frameCount_);
+              break;
+            }
           }
         }
         
@@ -9325,11 +9362,11 @@ namespace Protocol {
       public bool HasLength {
         get { return result.hasLength; }
       }
-      public float Length {
+      public int Length {
         get { return result.Length; }
         set { SetLength(value); }
       }
-      public Builder SetLength(float value) {
+      public Builder SetLength(int value) {
         PrepareBuilder();
         result.hasLength = true;
         result.length_ = value;
@@ -9338,7 +9375,7 @@ namespace Protocol {
       public Builder ClearLength() {
         PrepareBuilder();
         result.hasLength = false;
-        result.length_ = 0F;
+        result.length_ = 0;
         return this;
       }
       
@@ -9844,6 +9881,26 @@ namespace Protocol {
         result.motionType_ = 0;
         return this;
       }
+      
+      public bool HasFrameCount {
+        get { return result.hasFrameCount; }
+      }
+      public int FrameCount {
+        get { return result.FrameCount; }
+        set { SetFrameCount(value); }
+      }
+      public Builder SetFrameCount(int value) {
+        PrepareBuilder();
+        result.hasFrameCount = true;
+        result.frameCount_ = value;
+        return this;
+      }
+      public Builder ClearFrameCount() {
+        PrepareBuilder();
+        result.hasFrameCount = false;
+        result.frameCount_ = 0;
+        return this;
+      }
     }
     static MoveMotion() {
       object.ReferenceEquals(global::Protocol.ProtoEditor.Descriptor, null);
@@ -9854,8 +9911,8 @@ namespace Protocol {
   public sealed partial class BlendNode : pb::GeneratedMessage<BlendNode, BlendNode.Builder> {
     public BlendNode() { }
     private static readonly BlendNode defaultInstance = new BlendNode().MakeReadOnly();
-    private static readonly string[] _blendNodeFieldNames = new string[] { "angle_speed", "bound_center", "bound_size", "head_position", "head_rotation", "is_addtion", "length", "motion", "move_dir", "move_speed", "x_postion", "y_postion" };
-    private static readonly uint[] _blendNodeFieldTags = new uint[] { 21, 74, 82, 90, 98, 56, 53, 66, 42, 13, 29, 37 };
+    private static readonly string[] _blendNodeFieldNames = new string[] { "angle_speed", "bound_center", "bound_size", "frame_count", "head_position", "head_rotation", "is_addtion", "length", "motion", "move_dir", "move_speed", "x_postion", "y_postion" };
+    private static readonly uint[] _blendNodeFieldTags = new uint[] { 21, 74, 82, 104, 90, 98, 56, 53, 66, 42, 13, 29, 37 };
     public static BlendNode DefaultInstance {
       get { return defaultInstance; }
     }
@@ -10086,6 +10143,20 @@ namespace Protocol {
       }
     }
     
+    public const int FrameCountFieldNumber = 13;
+    private bool hasFrameCount;
+    private bool isFrameCountChanged = true;
+    private int frameCount_;
+    public bool HasFrameCount {
+      get { return hasFrameCount; }
+    }
+    public int FrameCount {
+      get { return frameCount_; }
+      set { hasFrameCount = true;
+        isFrameCountChanged = true;
+        frameCount_ = value;}
+    }
+    
     public override bool IsInitialized {
       get {
         return true;
@@ -10096,28 +10167,28 @@ namespace Protocol {
       CalcSerializedSize();
       string[] field_names = _blendNodeFieldNames;
       if (hasMoveSpeed) {
-        output.WriteFloat(1, field_names[9], MoveSpeed);
+        output.WriteFloat(1, field_names[10], MoveSpeed);
       }
       if (hasAngleSpeed) {
         output.WriteFloat(2, field_names[0], AngleSpeed);
       }
       if (hasXPostion) {
-        output.WriteFloat(3, field_names[10], XPostion);
+        output.WriteFloat(3, field_names[11], XPostion);
       }
       if (hasYPostion) {
-        output.WriteFloat(4, field_names[11], YPostion);
+        output.WriteFloat(4, field_names[12], YPostion);
       }
       if (hasMoveDir) {
-        output.WriteMessage(5, field_names[8], MoveDir);
+        output.WriteMessage(5, field_names[9], MoveDir);
       }
       if (hasLength) {
-        output.WriteFloat(6, field_names[6], Length);
+        output.WriteFloat(6, field_names[7], Length);
       }
       if (hasIsAddtion) {
-        output.WriteBool(7, field_names[5], IsAddtion);
+        output.WriteBool(7, field_names[6], IsAddtion);
       }
       if (hasMotion) {
-        output.WriteMessage(8, field_names[7], Motion);
+        output.WriteMessage(8, field_names[8], Motion);
       }
       if (hasBoundCenter) {
         output.WriteMessage(9, field_names[1], BoundCenter);
@@ -10126,10 +10197,13 @@ namespace Protocol {
         output.WriteMessage(10, field_names[2], BoundSize);
       }
       if (hasHeadPosition) {
-        output.WriteMessage(11, field_names[3], HeadPosition);
+        output.WriteMessage(11, field_names[4], HeadPosition);
       }
       if (hasHeadRotation) {
-        output.WriteMessage(12, field_names[4], HeadRotation);
+        output.WriteMessage(12, field_names[5], HeadRotation);
+      }
+      if (hasFrameCount) {
+        output.WriteInt32(13, field_names[3], FrameCount);
       }
       UnknownFields.WriteTo(output);
     }
@@ -10178,6 +10252,9 @@ namespace Protocol {
       }
       if (hasHeadRotation) {
         size += pb::CodedOutputStream.ComputeMessageSize(12, HeadRotation);
+      }
+      if (hasFrameCount) {
+        size += pb::CodedOutputStream.ComputeInt32Size(13, FrameCount);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -10259,6 +10336,11 @@ namespace Protocol {
           isChange = true;
           other.HeadRotation = HeadRotationcommit;
       }
+      if (isFrameCountChanged) {
+        isChange = true;
+        other.FrameCount = FrameCount;
+        isFrameCountChanged = false;
+      }
       return isChange?other:null;
     }
     
@@ -10311,6 +10393,9 @@ namespace Protocol {
       if (other.HasHeadRotation)
       {
         MergeHeadRotation(other.HeadRotation, isFull);
+      }
+      if (other.HasFrameCount) {
+        FrameCount = other.FrameCount;
       }
     }
     
@@ -10468,6 +10553,9 @@ namespace Protocol {
         if (other.HasHeadRotation) {
           MergeHeadRotation(other.HeadRotation);
         }
+        if (other.HasFrameCount) {
+          FrameCount = other.FrameCount;
+        }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
       }
@@ -10587,6 +10675,10 @@ namespace Protocol {
               }
               input.ReadMessage(subBuilder, extensionRegistry);
               HeadRotation = subBuilder.BuildPartial();
+              break;
+            }
+            case 104: {
+              result.hasFrameCount = input.ReadInt32(ref result.frameCount_);
               break;
             }
           }
@@ -10956,6 +11048,26 @@ namespace Protocol {
         PrepareBuilder();
         result.hasHeadRotation = false;
         result.headRotation_ = null;
+        return this;
+      }
+      
+      public bool HasFrameCount {
+        get { return result.hasFrameCount; }
+      }
+      public int FrameCount {
+        get { return result.FrameCount; }
+        set { SetFrameCount(value); }
+      }
+      public Builder SetFrameCount(int value) {
+        PrepareBuilder();
+        result.hasFrameCount = true;
+        result.frameCount_ = value;
+        return this;
+      }
+      public Builder ClearFrameCount() {
+        PrepareBuilder();
+        result.hasFrameCount = false;
+        result.frameCount_ = 0;
         return this;
       }
     }

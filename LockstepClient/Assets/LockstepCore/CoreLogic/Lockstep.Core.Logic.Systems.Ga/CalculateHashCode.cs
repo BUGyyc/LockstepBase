@@ -30,8 +30,9 @@ namespace Lockstep.Core.Logic.Systems.GameState
             num ^= (_hashableEntities).count;
             foreach (GameEntity hashableEntity in _hashableEntities)
             {
-                num ^= hashableEntity.position.value.X.RawValue;
-                num ^= hashableEntity.position.value.Y.RawValue;
+                num ^= hashableEntity.position.value._x;//X.RawValue;
+                num ^= hashableEntity.position.value._y;// Y.RawValue;
+                num ^= hashableEntity.position.value._z;
                 if (hashableEntity.hasVelocity)
                 {
                     num ^= hashableEntity.velocity.value.X.RawValue;

@@ -25,14 +25,14 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
         _entity.RemovePositionListener(this);
     }
 
-    public void OnPosition(GameEntity entity, BEPUutilities.Vector2 newPosition)
+    public void OnPosition(GameEntity entity, LVector3 newPosition)
     {
         //暂时忽略重力
-        var temp = new Vector3((float)newPosition.X, 0, (float)newPosition.Y);
+        //var temp = LVector3
 
         //transform.position = temp;
 
-        target = temp.ToLVector3();
+        target = newPosition;
     }
 
     private void FixedUpdate()
@@ -42,7 +42,6 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
 
         LFloat distance = LMath.Distance(target, lTransformPos);
 
-        //distance *= 10;
 
         LVector3 framePos = LVector3.Lerp(lTransformPos, target, distance * FrameStep);
 

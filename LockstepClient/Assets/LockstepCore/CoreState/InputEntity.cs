@@ -1,6 +1,7 @@
-﻿using BEPUutilities;
+﻿//using BEPUutilities;
 using Entitas;
 using Lockstep.Core.State.Input;
+using Lockstep;
 
 /// <summary>
 /// 包裹输入指令的Entity，输入数据的载体
@@ -52,7 +53,7 @@ public sealed class InputEntity : Entity
         RemoveComponent(0);
     }
 
-    public void AddCoordinate(Vector2 newValue)
+    public void AddCoordinate(LVector3 newValue)
     {
         int num = 1;
         CoordinateComponent coordinateComponent = (CoordinateComponent)CreateComponent(num, typeof(CoordinateComponent));
@@ -60,7 +61,7 @@ public sealed class InputEntity : Entity
         AddComponent(num, coordinateComponent);
     }
 
-    public void ReplaceCoordinate(Vector2 newValue)
+    public void ReplaceCoordinate(LVector3 newValue)
     {
         int num = 1;
         CoordinateComponent coordinateComponent = (CoordinateComponent)CreateComponent(num, typeof(CoordinateComponent));

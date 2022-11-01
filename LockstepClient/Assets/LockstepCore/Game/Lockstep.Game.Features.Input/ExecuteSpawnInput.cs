@@ -50,6 +50,15 @@ namespace Lockstep.Game.Features.Input
                 gameEntity.AddVelocity(Vector2.Zero);
                 gameEntity.AddPosition(item.coordinate.value);
 
+                AnimationComponent animation = new AnimationComponent()
+                {
+                    readyPlay = true,
+                    animationName = "Esc_BoostDash_Left_Root"
+                };
+
+                gameEntity.AddComponent(GameComponentsLookup.Animation, animation);
+
+
                 _viewService.LoadView(gameEntity, item.entityConfigId.value, item.actorId.value == ActionWorld.Instance.LocalActorId);
                 if (gameEntity.isNavigable)
                 {

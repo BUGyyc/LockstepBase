@@ -68,8 +68,8 @@ public class ActionWorld : MonoBehaviour
     {
         //全部玩家数据
         AllActorIds = msg.AllActors;
-        Debug.Log($"Starting simulation. Total actors: {msg.AllActors.Length}. Local ActorID: {msg.ActorID}");
-        Simulation.Start(msg.SimulationSpeed, msg.ActorID, msg.AllActors);
+        Debug.Log($"Starting simulation. Total actors: {msg.AllActors.Length}. Local ActorID: {msg.ActorID}  msg.SimulationSpeed {msg.SimulationSpeed} ");
+        Simulation.Start(30, msg.ActorID, msg.AllActors);
 
         LocalActorId = msg.ActorID;
 

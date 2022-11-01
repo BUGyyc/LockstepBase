@@ -33,3 +33,7 @@ LockstepCopyClient/Packages/
 LockstepCopyClient/ProjectSettings/
 LockstepCopyClient/Temp/
 LockstepCopyClient/UserSettings/
+LockstepCopyClient/obj/
+LockstepCopyClient/.vs/
+LockstepClient/Assets/CLazyRunnerActionAnimPack/
+Tools/

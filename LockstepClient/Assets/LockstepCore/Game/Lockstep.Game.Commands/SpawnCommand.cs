@@ -1,5 +1,6 @@
 ﻿using System;
-using BEPUutilities;
+//using BEPUutilities;
+using Lockstep;
 using Lockstep.Core.Logic.Interfaces;
 using Lockstep.Core.Logic.Serialization;
 using Lockstep.Core.Logic.Serialization.Utils;
@@ -13,7 +14,7 @@ namespace Lockstep.Game.Commands
     {
         public int EntityConfigId;
 
-        public Vector2 Position;
+        public LVector3 Position;
 
         public ushort Tag => 2;
 
@@ -27,15 +28,24 @@ namespace Lockstep.Game.Commands
         public void Serialize(Serializer writer)
         {
             writer.Put(EntityConfigId);
-            writer.Put(Position.X.RawValue);
-            writer.Put(Position.Y.RawValue);
+            writer.Put(Position.x);
+            writer.Put(Position.y);
+            writer.Put(Position.z);
+
+            //writer.Put(Position.X.RawValue);
+            //writer.Put(Position.Y.RawValue);
+
         }
 
         public void Deserialize(Deserializer reader)
         {
             EntityConfigId = reader.GetInt();
-            Position.X.RawValue = reader.GetLong();
-            Position.Y.RawValue = reader.GetLong();
+            Position.x = reader.GetInt();
+            Position.y = reader.GetInt();
+            Position.z = reader.GetInt();
+
+            //Position.X.RawValue = reader.GetLong();
+            //Position.Y.RawValue = reader.GetLong();
         }
     }
 }

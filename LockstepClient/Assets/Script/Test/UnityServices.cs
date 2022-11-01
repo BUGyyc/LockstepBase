@@ -24,11 +24,17 @@ public interface IComponentSetter
 public class UnityGameService : IViewService
 {
     private readonly RTSEntityDatabase _entityDatabase;
-    private Dictionary<uint, GameObject> linkedEntities = new Dictionary<uint, GameObject>();
+    private static Dictionary<uint, GameObject> linkedEntities = new Dictionary<uint, GameObject>();
 
     public UnityGameService(RTSEntityDatabase entityDatabase)
     {
         _entityDatabase = entityDatabase;
+    }
+
+    public static GameObject GetEntityGameObject(uint localId)
+    {
+        if (linkedEntities.ContainsKey(localId)) return linkedEntities[localId];
+        return null;
     }
 
     public void LoadView(GameEntity entity, int configId, bool isMaster = false)

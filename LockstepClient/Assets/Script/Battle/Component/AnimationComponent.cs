@@ -1,4 +1,6 @@
 ﻿using Entitas;
+
+
 public class AnimationComponent : IComponent
 {
     /// <summary>
@@ -33,3 +35,12 @@ public class AnimationComponent : IComponent
     public string animationName;
 }
 
+
+
+public sealed partial class GameEnttiy : Entity
+{
+    public AnimationComponent animation => (AnimationComponent)GetComponent(GameComponentsLookup.Animation);
+
+    public bool hasAnimation => HasComponent(GameComponentsLookup.Animation);
+
+}

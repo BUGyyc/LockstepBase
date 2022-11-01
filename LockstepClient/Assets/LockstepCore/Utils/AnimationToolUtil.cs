@@ -8,6 +8,8 @@ public static class AnimationToolUtil
 {
     public const float FRAME_TIME = 0.033f;
 
+    public const int SCALE_VALUE = 1000;
+
     public const uint EXPORT_POSTION = 1;
     public const uint EXPORT_ROTATION = 1 << 1;
     public const uint EXPORT_SCALE = 1 << 2;
@@ -72,11 +74,12 @@ public static class AnimationToolUtil
         return count == curves.Length;
     }
 
-    public static MoveMotion CreateMotion(string name, float speed, float length, bool isLoop, AnimationCurve[] curves, uint Type = 0 /*MoveBlender.MOTION_TYPE_DEFAULT*/)
+    public static MoveMotion CreateMotion(string name, float speed, float length, bool isLoop, AnimationCurve[] curves, uint Type = 0, int frame = 0/*MoveBlender.MOTION_TYPE_DEFAULT*/)
     {
         var moveMotion = new MoveMotion
         {
-            Length = length / speed,
+            Length = (int)((length / speed) * SCALE_VALUE),
+            FrameCount = frame,
             MotionName = name,
             IsLoop = isLoop,
             MotionType = Type

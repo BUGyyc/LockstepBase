@@ -13,6 +13,18 @@ public class ConfigManager
     public void Init()
     {
         _configsDic = new Dictionary<Type, object>();
+
+        var cfg = ConfigManager.GetMoveController("Debug_RootMotion");
+
+        foreach (var item in cfg.ExportBlenders)
+        {
+            Debug.Log("blender " + item.Name);
+        }
+
+        foreach (var item in cfg.ExportMotions)
+        {
+            Debug.Log("motion " + item.MotionName);
+        }
     }
 
 

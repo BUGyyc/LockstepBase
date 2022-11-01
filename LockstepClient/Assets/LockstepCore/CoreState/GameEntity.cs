@@ -3,11 +3,12 @@ using BEPUutilities;
 using Entitas;
 using FixMath.NET;
 using Lockstep.Core.State.Game;
+using Lockstep;
 
 /// <summary>
 /// 游戏对象Entity
 /// </summary>
-public sealed class GameEntity : Entity
+public sealed partial class GameEntity : Entity
 {
     private static readonly DestroyedComponent destroyedComponent = new DestroyedComponent();
 
@@ -16,6 +17,9 @@ public sealed class GameEntity : Entity
     private static readonly HashableComponent hashableComponent = new HashableComponent();
 
     private static readonly NavigableComponent navigableComponent = new NavigableComponent();
+
+
+
 
 
     public AnimationComponent animation => (AnimationComponent)GetComponent(GameComponentsLookup.Animation);
@@ -458,7 +462,7 @@ public sealed class GameEntity : Entity
         RemoveComponent(11);
     }
 
-    public void AddPosition(Vector2 newValue)
+    public void AddPosition(LVector3 newValue)
     {
         int num = 13;
         PositionComponent positionComponent = (PositionComponent)CreateComponent(num, typeof(PositionComponent));
@@ -466,7 +470,7 @@ public sealed class GameEntity : Entity
         AddComponent(num, positionComponent);
     }
 
-    public void ReplacePosition(Vector2 newValue)
+    public void ReplacePosition(LVector3 newValue)
     {
         int num = 13;
         PositionComponent positionComponent = (PositionComponent)CreateComponent(num, typeof(PositionComponent));
