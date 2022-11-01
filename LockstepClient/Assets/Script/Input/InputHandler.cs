@@ -23,6 +23,10 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
     public void OnLook(InputAction.CallbackContext context)
     {
         //throw new System.NotImplementedException();
+        //Debug.Log();
+
+        var look = context.ReadValue<Vector2>();
+        CharacterCameraController.Instance.UpdateCameraDir(look);
     }
 
     public void OnMiddleClick(InputAction.CallbackContext context)
@@ -33,7 +37,9 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
     public void OnMove(InputAction.CallbackContext context)
     {
         //throw new System.NotImplementedException();
-        Debug.Log(context.ToString());
+        //Debug.Log(context.ToString());
+        var move = context.ReadValue<Vector2>();
+
     }
 
     public void OnNavigate(InputAction.CallbackContext context)
@@ -71,12 +77,11 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
         //throw new System.NotImplementedException();
     }
 
-    void Start()
+    public void Init()
     {
         playerInput = new PlayerInput();
         playerInput.Player.SetCallbacks(this);
-        //playerInput.UI.SetCallbacks(this);
-        //playerInput.Enable();
+        playerInput.Enable();
     }
 
 

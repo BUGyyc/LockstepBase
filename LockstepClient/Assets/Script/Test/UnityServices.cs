@@ -17,6 +17,10 @@ public interface IComponentSetter
     void SetComponent(GameEntity entity);
 }
 
+
+/// <summary>
+/// 目标是为了生成 Entity 与 GameObject 的关联
+/// </summary>
 public class UnityGameService : IViewService
 {
     private readonly RTSEntityDatabase _entityDatabase;
@@ -27,8 +31,10 @@ public class UnityGameService : IViewService
         _entityDatabase = entityDatabase;
     }
 
-    public void LoadView(GameEntity entity, int configId)
+    public void LoadView(GameEntity entity, int configId, bool isMaster = false)
     {
+        Debug.Log($"LoadView   entity.id {entity.id.value}  configId {configId}   isMaster {isMaster}");
+
         //TODO: pooling    
         var viewGo = UnityEngine.Object.Instantiate(_entityDatabase.Entities[configId]).gameObject;
         if (viewGo != null)
@@ -49,6 +55,11 @@ public class UnityGameService : IViewService
             }
 
             linkedEntities.Add(entity.localId.value, viewGo);
+
+            if (isMaster)
+            {
+                CharacterCameraController.Instance.InitCharacterCamera(viewGo.transform);
+            }
         }
     }
 
@@ -64,5 +75,29 @@ public class UnityGameService : IViewService
         linkedEntities[entityId].Unlink();
         linkedEntities[entityId].DestroyGameObject();
         linkedEntities.Remove(entityId);
+    }
+
+    public void LoadView(GameEntity entity, uint configId)
+    {
+        var viewGo = ModelConfig.FindModel(configId);
+        if (viewGo != null)
+        {
+            viewGo.Link(entity);
+
+            var componentSetters = viewGo.GetComponents<IComponentSetter>();
+            foreach (var componentSetter in componentSetters)
+            {
+                componentSetter.SetComponent(entity);
+                UnityEngine.Object.Destroy((MonoBehaviour)componentSetter);
+            }
+
+            var eventListeners = viewGo.GetComponents<IEventListener>();
+            foreach (var listener in eventListeners)
+            {
+                listener.RegisterListeners(entity);
+            }
+
+            linkedEntities.Add(entity.localId.value, viewGo);
+        }
     }
 }

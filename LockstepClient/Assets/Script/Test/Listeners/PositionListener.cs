@@ -27,7 +27,8 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
 
     public void OnPosition(GameEntity entity, BEPUutilities.Vector2 newPosition)
     {
-        var temp = new Vector3((float)newPosition.X, 1, (float)newPosition.Y);
+        //暂时忽略重力
+        var temp = new Vector3((float)newPosition.X, 0, (float)newPosition.Y);
 
         //transform.position = temp;
 
@@ -51,38 +52,3 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
 
 }
 
-//public struct FixV3
-//{
-//    public Fix64 fixX;
-//    public Fix64 fixY;
-//    public Fix64 fixZ;
-//    public const int Mul = 10000;
-//    public FixV3(Fix64 x, Fix64 y, Fix64 z)
-//    {
-//        fixX = x;
-//        fixY = y;
-//        fixZ = z;
-//    }
-
-//    public FixV3(float x, float y, float z)
-//    {
-//        int _x = (int)(x * Mul);
-//        int _y = (int)(y * Mul);
-//        int _z = (int)(z * Mul);
-//        fixX = _x;
-//        fixY = _y;
-//        fixZ = _z;
-//    }
-
-//    public FixV3(int x, int y, int z)
-//    {
-//        fixX = x;
-//        fixY = y;
-//        fixZ = z;
-//    }
-
-//    public Fix64 Distance(FixV3 a, FixV3 b)
-//    {
-
-//    }
-//}

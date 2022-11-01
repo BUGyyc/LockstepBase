@@ -11,6 +11,11 @@ public static class EntityUtil
     //}
     public static uint AutoCreateEntityID = 1000;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public static uint LocalEntityID = 1000;
+
     public static IComponent AddComponent(this GameEntity self, int index, out bool result)
     {
         if (self.HasComponent(index))
@@ -40,6 +45,24 @@ public static class EntityUtil
 
         IdComponent idComponent = entity.AddComponent(GameComponentsLookup.Id) as IdComponent;
         idComponent.value = AutoCreateEntityID++;
+
+
+        //if (entity.HasComponent(GameComponentsLookup.LocalId) == false)
+        //{
+        //    LocalIdComponent localId = new LocalIdComponent();
+        //    localId.value = LocalEntityID++;
+        //    entity.AddComponent(GameComponentsLookup.LocalId, localId);
+        //}
+        //else
+        //{
+        //    LocalIdComponent localId = entity.GetComponent(GameComponentsLookup.LocalId) as LocalIdComponent;
+        //    localId.value = LocalEntityID++;
+        //}
+
+
+        //ActorEntity entityWithId = Contexts.sharedInstance.actor.GetEntityWithId(ActionWorld.Instance.LocalActorId);
+        //uint value = entityWithId.entityCount.value;
+        //entityWithId.ReplaceEntityCount(value + 1);
 
         return entity;
     }

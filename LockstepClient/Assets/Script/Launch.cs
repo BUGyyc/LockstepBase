@@ -179,7 +179,7 @@ public class Launch : MonoBehaviour
 
         NetSetting.PlayerNumber = PlayerNumber;
 
-        Debug.Log($"启动Server  IP {SetGet_str_ipAddress} Port {port}  PlayerNumber {PlayerNumber}  ");
+        //Debug.Log($"启动Server  IP {SetGet_str_ipAddress} Port {port}  PlayerNumber {PlayerNumber}  ");
     }
 
     private void StartClient()
@@ -190,7 +190,7 @@ public class Launch : MonoBehaviour
         NetSetting.ServerIp = ip;
         NetSetting.ServerPort = (uint)port;
 
-        Debug.Log($"开始连接Server IP {NetSetting.ServerIp} Port {NetSetting.ServerPort}  ");
+        //Debug.Log($"开始连接Server IP {NetSetting.ServerIp} Port {NetSetting.ServerPort}  ");
 
         SceneManager.LoadScene(GameSceneSetting.BattleTestScene);
     }

@@ -29,6 +29,9 @@ public class ActionWorld : MonoBehaviour
 
     public byte[] AllActorIds { get; private set; }
 
+    [HideInInspector]
+    public byte LocalActorId;
+
     private NetworkCommandQueue _commandQueue;
     private readonly LiteNetLibClient _client = new LiteNetLibClient();
 
@@ -38,6 +41,8 @@ public class ActionWorld : MonoBehaviour
 
         ServerIp = NetSetting.ServerIp;
         ServerPort = (int)NetSetting.ServerPort;
+
+        Debug.Log($"客户端发起链接请求    服务端IP：{ServerIp}   Port {ServerPort}  ");
 
 
         Log.OnMessage += (sender, args) => Debug.Log(args.Message);
@@ -65,6 +70,8 @@ public class ActionWorld : MonoBehaviour
         AllActorIds = msg.AllActors;
         Debug.Log($"Starting simulation. Total actors: {msg.AllActors.Length}. Local ActorID: {msg.ActorID}");
         Simulation.Start(msg.SimulationSpeed, msg.ActorID, msg.AllActors);
+
+        LocalActorId = msg.ActorID;
 
         GameWorldManager.Instance.Init();
     }
