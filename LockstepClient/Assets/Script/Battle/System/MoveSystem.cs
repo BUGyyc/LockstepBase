@@ -14,7 +14,7 @@ public class MoveSystem : IExecuteSystem, ISystem
     public MoveSystem(Contexts contexts)
     {
 
-        _gameEntities = ((Context<GameEntity>)contexts.game).GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.Position));
+        _gameEntities = contexts.game.GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.Position));
     }
 
 

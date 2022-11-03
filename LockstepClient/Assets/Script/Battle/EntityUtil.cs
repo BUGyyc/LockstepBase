@@ -59,7 +59,7 @@ public static class EntityUtil
         AnimationComponent animation = new AnimationComponent()
         {
             readyPlay = true,
-            animationName = "Idle_Wait_C"
+            animationName = "WalkMove"
         };
         gameEntity.AddComponent(GameComponentsLookup.Animation, animation);
         LoadEntityView(gameEntity, "Prefabs/ClazyRunner");

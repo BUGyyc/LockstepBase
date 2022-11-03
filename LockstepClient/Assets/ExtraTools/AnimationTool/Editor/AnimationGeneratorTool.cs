@@ -608,6 +608,7 @@ public partial class MoveBlendTreeTool : EditorWindow
                         }
                     }
 
+                    Debug.Log($"Blender   <color=red> Create  blender</color> {blender}");
                     cfg.AddExportBlenders(blender);
                 }
             }

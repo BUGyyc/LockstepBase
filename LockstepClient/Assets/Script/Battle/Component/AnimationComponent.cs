@@ -1,5 +1,5 @@
 ﻿using Entitas;
-
+using Lockstep;
 
 public class AnimationComponent : IComponent
 {
@@ -33,6 +33,9 @@ public class AnimationComponent : IComponent
 
 
     public string animationName;
+
+
+    public LVector3 inputParams;
 }
 
 
