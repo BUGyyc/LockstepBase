@@ -60,36 +60,50 @@ public class CharacterMoveSystem : IExecuteSystem, ISystem
 
                 if (index == cfg.FrameCount)
                 {
-                    Debug.Log($"  name  {name}  播放结束 ");
 
-                    uint sum = entity.id.value + Contexts.sharedInstance.gameState.tick.value;
-                    int type = (int)sum % 4;
+                    //RandomAnimation(entity, name, animation);
 
-                    switch (type)
-                    {
-                        case 0:
-                            animation.animationName = "Esc_BoostDash_Left_Root";
-                            break;
-                        case 1:
-                            animation.animationName = "Esc_BoostDash_Right_Root";
-                            break;
-
-                        case 2:
-                            animation.animationName = "Esc_BoostDash_Front_Root";
-                            break;
-                        case 3:
-                            animation.animationName = "Esc_BoostDash_Back_Root";
-                            break;
-
-                    }
-
-                    animation.PlaySinceStartFrameKey = Contexts.sharedInstance.gameState.tick.value;
-                    animation.readyPlay = true;
-
+                    RetureDefault(animation);
 
                 }
             }
         }
+    }
+
+    private void RetureDefault(AnimationComponent animation)
+    {
+        animation.animationName = "Idle_Wait_C";
+        animation.PlaySinceStartFrameKey = Contexts.sharedInstance.gameState.tick.value;
+        animation.readyPlay = true;
+    }
+
+    private void RandomAnimation(GameEntity entity, string name, AnimationComponent animation)
+    {
+        Debug.Log($"  name  {name}  播放结束 ");
+
+        uint sum = entity.id.value + Contexts.sharedInstance.gameState.tick.value;
+        int type = (int)sum % 4;
+
+        switch (type)
+        {
+            case 0:
+                animation.animationName = "Esc_BoostDash_Left_Root";
+                break;
+            case 1:
+                animation.animationName = "Esc_BoostDash_Right_Root";
+                break;
+
+            case 2:
+                animation.animationName = "Esc_BoostDash_Front_Root";
+                break;
+            case 3:
+                animation.animationName = "Esc_BoostDash_Back_Root";
+                break;
+
+        }
+
+        animation.PlaySinceStartFrameKey = Contexts.sharedInstance.gameState.tick.value;
+        animation.readyPlay = true;
     }
 }
 

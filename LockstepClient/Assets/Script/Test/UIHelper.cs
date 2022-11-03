@@ -13,9 +13,9 @@ public class UIHelper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (TPSWorld.Instance == null) return;
+        if (ActionWorld.Instance == null) return;
 
-        if (TPSWorld.Instance.Simulation.Running)
+        if (ActionWorld.Instance.Simulation.Running)
         {
             HashCodeText.text = "HashCode: " + Contexts.sharedInstance.gameState.hashCode.value;
             CurrentTickText.text = "CurrentTick: " + Contexts.sharedInstance.gameState.tick.value;
@@ -23,6 +23,6 @@ public class UIHelper : MonoBehaviour
         }
 
 
-        ConnectedText.text = "Connected: " + TPSWorld.Instance.Connected;
+        ConnectedText.text = "Connected: " + ActionWorld.Instance.Connected;
     }
 }

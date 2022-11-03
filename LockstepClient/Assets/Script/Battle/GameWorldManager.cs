@@ -39,13 +39,16 @@ public class GameWorldManager
 
         //生成 Entity , 后续应该改成对应 EntityType 生成 Entity ,走工厂模式
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
-            ActionWorld.Instance.Execute(new SpawnCommand
+            for (int j = 0; j < 5; j++)
             {
-                EntityConfigId = 3,
-                Position = new Lockstep.LVector3(true, -25 + i * 50, 0, -25 * i * 50)
-            });
+                ActionWorld.Instance.Execute(new SpawnCommand
+                {
+                    EntityConfigId = 3,
+                    Position = new Lockstep.LVector3(true, (-12 + i) * 2000, 0, (-12 + j) * 2000)
+                });
+            }
         }
 
 

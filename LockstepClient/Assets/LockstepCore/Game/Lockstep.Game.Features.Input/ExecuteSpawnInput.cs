@@ -53,7 +53,7 @@ namespace Lockstep.Game.Features.Input
                 AnimationComponent animation = new AnimationComponent()
                 {
                     readyPlay = true,
-                    animationName = "Esc_BoostDash_Left_Root"
+                    animationName = "Idle_Wait_C"
                 };
 
                 gameEntity.AddComponent(GameComponentsLookup.Animation, animation);

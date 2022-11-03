@@ -47,7 +47,7 @@ public class CharacterCameraController : MonoBehaviour
             {
                 value += 360;
             }
-            mPitch = Mathf.Clamp(value, -30, 70);
+            mPitch = Mathf.Clamp(value, -30, 40);
         }
         get
         {
