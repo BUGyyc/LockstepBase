@@ -1,7 +1,11 @@
 ﻿using Entitas;
-using Lockstep.Core.State.Game;
+using Entitas.Unity;
+using UnityEngine;
+using System.Collections.Generic;
 public static class EntityUtil
 {
+
+    private static Dictionary<uint, GameObject> linkedEntities = new Dictionary<uint, GameObject>();
     //public static T AddComponent<T>(this GameEntity self, T com) where T : IComponent
     //{
     //    //self.
@@ -41,30 +45,63 @@ public static class EntityUtil
 
     public static GameEntity CreateEntity()
     {
-        var entity = Contexts.sharedInstance.game.CreateEntity();
+        GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
+        gameEntity.AddId(AutoCreateEntityID);
+        gameEntity.AddActorId(ActionWorld.Instance.LocalActorId);
+        gameEntity.AddLocalId(AutoCreateEntityID);
+        gameEntity.AddVelocity(BEPUutilities.Vector2.Zero);
+        gameEntity.AddPosition(Lockstep.LVector3.zero);
 
-        IdComponent idComponent = entity.AddComponent(GameComponentsLookup.Id) as IdComponent;
-        idComponent.value = AutoCreateEntityID++;
+        //初始动画
+        AnimationComponent animation = new AnimationComponent()
+        {
+            readyPlay = true,
+            animationName = "Idle_Wait_C"
+        };
+        gameEntity.AddComponent(GameComponentsLookup.Animation, animation);
+        LoadEntityView(gameEntity, "Prefabs/ClazyRunner");
+        AutoCreateEntityID++;
+        return gameEntity;
+    }
 
+    public static GameObject GetEntityGameObject(uint entityId)
+    {
+        if (linkedEntities.ContainsKey(entityId))
+        {
+            return linkedEntities[entityId];
+        }
+        return null;
+    }
 
-        //if (entity.HasComponent(GameComponentsLookup.LocalId) == false)
-        //{
-        //    LocalIdComponent localId = new LocalIdComponent();
-        //    localId.value = LocalEntityID++;
-        //    entity.AddComponent(GameComponentsLookup.LocalId, localId);
-        //}
-        //else
-        //{
-        //    LocalIdComponent localId = entity.GetComponent(GameComponentsLookup.LocalId) as LocalIdComponent;
-        //    localId.value = LocalEntityID++;
-        //}
+    private static void LoadEntityView(GameEntity entity, string path)
+    {
+        //var viewGo = UnityEngine.Object.Instantiate(_entityDatabase.Entities[configId]).gameObject;
+        var obj = Resources.Load<GameObject>(path);
+        var viewGo = GameObject.Instantiate(obj);
+        if (viewGo != null)
+        {
+            viewGo.Link(entity);
 
+            var componentSetters = viewGo.GetComponents<IComponentSetter>();
+            foreach (var componentSetter in componentSetters)
+            {
+                componentSetter.SetComponent(entity);
+                UnityEngine.Object.Destroy((MonoBehaviour)componentSetter);
+            }
 
-        //ActorEntity entityWithId = Contexts.sharedInstance.actor.GetEntityWithId(ActionWorld.Instance.LocalActorId);
-        //uint value = entityWithId.entityCount.value;
-        //entityWithId.ReplaceEntityCount(value + 1);
+            var eventListeners = viewGo.GetComponents<IEventListener>();
+            foreach (var listener in eventListeners)
+            {
+                listener.RegisterListeners(entity);
+            }
 
-        return entity;
+            linkedEntities.Add(entity.localId.value, viewGo);
+
+            //if (isMaster)
+            //{
+            CharacterCameraController.Instance.InitCharacterCamera(viewGo.transform);
+            //}
+        }
     }
 }
 

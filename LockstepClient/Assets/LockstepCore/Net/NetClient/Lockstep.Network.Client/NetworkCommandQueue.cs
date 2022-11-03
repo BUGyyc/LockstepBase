@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,7 +46,7 @@ namespace Lockstep.Network.Client
 
 
         /// <summary>
-        /// ¿Í»§¶ËÈû°üÊı¾İ£¬È»ºó·¢¸ø·şÎñÆ÷
+        /// å®¢æˆ·ç«¯å¡åŒ…æ•°æ®ï¼Œç„¶åå‘ç»™æœåŠ¡å™¨
         /// </summary>
         /// <param name="input"></param>
         public override void Enqueue(Input input)
@@ -68,7 +68,7 @@ namespace Lockstep.Network.Client
 
 
         /// <summary>
-        /// ¿Í»§¶ËÊÕµ½·şÎñÆ÷µÄ°ü
+        /// å®¢æˆ·ç«¯æ”¶åˆ°æœåŠ¡å™¨çš„åŒ…
         /// </summary>
         /// <param name="rawData"></param>
         private void NetworkOnDataReceived(byte[] rawData)

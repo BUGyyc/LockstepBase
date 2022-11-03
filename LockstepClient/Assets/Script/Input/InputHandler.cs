@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
-
+using Entitas;
+using Lockstep;
 public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInput.IUIActions
 {
     private PlayerInput playerInput;
@@ -37,8 +38,21 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
     public void OnMove(InputAction.CallbackContext context)
     {
         //throw new System.NotImplementedException();
-        //Debug.Log(context.ToString());
+
         var move = context.ReadValue<Vector2>();
+
+        var v3 = new Vector3(move.x, 0, move.y);
+
+        Debug.Log($"<color=yello>  move {move}   </color>");
+
+
+
+        //这里应当传入本地EntityID
+        ActionWorld.Instance.Execute(new CharacterInputCommand
+        {
+            moveSpeed = v3.ToLVector3(),
+            entityId = 0
+        });
 
     }
 

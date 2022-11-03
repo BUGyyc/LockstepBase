@@ -39,6 +39,8 @@ public class UnityGameService : IViewService
 
     public void LoadView(GameEntity entity, int configId, bool isMaster = false)
     {
+        isMaster = entity.id.value == 0;
+
         Debug.Log($"LoadView   entity.id {entity.id.value}  configId {configId}   isMaster {isMaster}");
 
         //TODO: pooling    

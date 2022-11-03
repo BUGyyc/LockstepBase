@@ -56,6 +56,24 @@ public sealed class InputMatcher
         }
     }
 
+    private static IMatcher<InputEntity> _matchCharacterInput;
+
+    public static IMatcher<InputEntity> CharacterInput
+    {
+        get
+        {
+
+            if (_matchCharacterInput == null)
+            {
+                Matcher<InputEntity> val = (Matcher<InputEntity>)(object)Matcher<InputEntity>.AllOf(new int[1] { InputComponentsLookup.CharacterInput });
+                val.componentNames = (InputComponentsLookup.componentNames);
+                _matchCharacterInput = (IMatcher<InputEntity>)(object)val;
+            }
+            return _matchCharacterInput;
+
+        }
+    }
+
     public static IMatcher<InputEntity> Selection
     {
         get

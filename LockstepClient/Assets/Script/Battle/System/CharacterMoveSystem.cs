@@ -23,7 +23,7 @@ public class CharacterMoveSystem : IExecuteSystem, ISystem
                 animation.PlaySinceStartFrameKey = Contexts.sharedInstance.gameState.tick.value;
 
                 //TODO:临时写法
-                var obj = UnityGameService.GetEntityGameObject(entity.localId.value);
+                var obj = EntityUtil.GetEntityGameObject(entity.localId.value);
                 var ani = obj.GetComponent<Animator>();
                 ani.CrossFadeInFixedTime(animation.animationName, 0.1f);
             }

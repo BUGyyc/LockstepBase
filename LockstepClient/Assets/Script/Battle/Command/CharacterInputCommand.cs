@@ -1,0 +1,42 @@
+﻿using Lockstep;
+using Lockstep.Core.Logic.Interfaces;
+using Lockstep.Core.Logic.Serialization;
+using Lockstep.Core.Logic.Serialization.Utils;
+using System;
+
+[Serializable]
+public class CharacterInputCommand : ICommand, ISerializable
+{
+    //public int EntityConfigId;
+
+    public LVector3 moveSpeed;
+
+    public uint entityId;
+
+    public ushort Tag => 3;
+
+    public void Execute(InputEntity e)
+    {
+        UnityEngine.Debug.Log($" CharacterInputCommand  Execute ");
+        e.AddCharacterInputSpeed(moveSpeed);
+    }
+
+    public void Serialize(Serializer writer)
+    {
+        writer.Put(moveSpeed._x);
+        writer.Put(moveSpeed._y);
+        writer.Put(moveSpeed._z);
+
+        writer.Put(entityId);
+    }
+
+    public void Deserialize(Deserializer reader)
+    {
+        int x = reader.GetInt();
+        int y = reader.GetInt();
+        int z = reader.GetInt();
+
+        moveSpeed = new LVector3(true, x, y, z);
+        entityId = reader.GetUInt();
+    }
+}

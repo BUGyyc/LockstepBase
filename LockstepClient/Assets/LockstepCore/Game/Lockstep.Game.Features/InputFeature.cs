@@ -1,4 +1,4 @@
-using Entitas;
+﻿using Entitas;
 using Lockstep.Game.Features.Input;
 
 namespace Lockstep.Game.Features
@@ -8,8 +8,12 @@ namespace Lockstep.Game.Features
         public InputFeature(Contexts contexts, ServiceContainer services)
             : base("Input")
         {
-            ((Systems)this).Add((ISystem)(object)new ExecuteSpawnInput(contexts, services));
-            ((Systems)this).Add((ISystem)(object)new ExecuteNavigationInput(contexts, services));
+            Add(new ExecuteSpawnInput(contexts, services));
+            Add(new ExecuteNavigationInput(contexts, services));
+
+
+            Add(new ExecuteCharacterInput(contexts, services));
+
         }
     }
 }

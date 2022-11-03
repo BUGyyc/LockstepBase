@@ -9,6 +9,7 @@
 - [关于Debug](#关于debug)
   - [LiteLibNet 网络环境设置](#litelibnet-网络环境设置)
   - [Link.bat 生成同源代码工程](#linkbat-生成同源代码工程)
+- [TODO](#todo)
 - [参考](#参考)
 
 # Start
@@ -147,6 +148,17 @@ LiteNetLib 可靠 UDP 的实现.
 
 ---
 
+# TODO
+
+- EntityType 描述 GameEntity
+- Jenny 代码生成器，更快生成 ECS 代码
+- ECS 下，预测、预表现测试
+- 外网网络环境测试
+- GameEntityManager 通用逻辑
+- 重构动画导出工具
+
+
+---
 # 参考
 
 

@@ -41,11 +41,11 @@ public class InputManager : MonoBehaviour
         localGameEntity = entity;
     }
 
-    public void BindGameEntity(uint entityId)
-    {
-        var entity = Contexts.sharedInstance.game.GetGameEntityWithId(entityId);
-        localGameEntity = entity;
-    }
+    //public void BindGameEntity(uint entityId)
+    //{
+    //    var entity = Contexts.sharedInstance.game.GetGameEntityWithId(entityId);
+    //    localGameEntity = entity;
+    //}
 
     private void Update()
     {

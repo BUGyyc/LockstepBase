@@ -6,7 +6,7 @@ using Lockstep;
 /// <summary>
 /// 包裹输入指令的Entity，输入数据的载体
 /// </summary>
-public sealed class InputEntity : Entity
+public sealed partial class InputEntity : Entity
 {
     public ActorIdComponent actorId => (ActorIdComponent)GetComponent(0);
 
