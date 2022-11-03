@@ -36,9 +36,16 @@
 
 有实现，但未做大量验证，后续补充
 
-基础移动的测试：
+基础移动同步测试：
 
 ![](Doc/pic.res/inputEntity.gif)
+
+动画驱动位移
+
+![](Doc/pic.res/AnimationMove.gif)
+
+![](Doc/pic.res/AnimationMove2.gif)
+
 
 大量Entity压测：
 
