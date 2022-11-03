@@ -6,14 +6,14 @@ public static class EntityUtil
 {
 
     private static Dictionary<uint, GameObject> linkedEntities = new Dictionary<uint, GameObject>();
-    //public static T AddComponent<T>(this GameEntity self, T com) where T : IComponent
-    //{
-    //    //self.
 
-    //    self.CreateComponent();
-    //    return T;
-    //}
-    public static uint AutoCreateEntityID = 1000;
+    // public const byte BaseCharacterEntityID = 0;
+
+    public static uint BaseCharacterEntityID = 10000;
+
+    public static uint AutoCreateEntityID = BaseCharacterEntityID;
+
+
 
     /// <summary>
     /// 
@@ -43,14 +43,17 @@ public static class EntityUtil
         return com;
     }
 
-    public static GameEntity CreateEntity()
+    public static GameEntity CreateCharacterEntity(byte actorId)
     {
         GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
-        gameEntity.AddId(AutoCreateEntityID);
-        gameEntity.AddActorId(ActionWorld.Instance.LocalActorId);
+        gameEntity.AddId(actorId);
+        gameEntity.AddActorId(actorId);
         gameEntity.AddLocalId(AutoCreateEntityID);
         gameEntity.AddVelocity(BEPUutilities.Vector2.Zero);
-        gameEntity.AddPosition(Lockstep.LVector3.zero);
+
+        int index = actorId;
+
+        gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward);
 
         //初始动画
         AnimationComponent animation = new AnimationComponent()
@@ -75,7 +78,7 @@ public static class EntityUtil
 
     private static void LoadEntityView(GameEntity entity, string path)
     {
-        //var viewGo = UnityEngine.Object.Instantiate(_entityDatabase.Entities[configId]).gameObject;
+        bool isLocalMaster = entity.id.value == ActionWorld.Instance.LocalCharacterEntityId;
         var obj = Resources.Load<GameObject>(path);
         var viewGo = GameObject.Instantiate(obj);
         if (viewGo != null)
@@ -97,10 +100,10 @@ public static class EntityUtil
 
             linkedEntities.Add(entity.localId.value, viewGo);
 
-            //if (isMaster)
-            //{
-            CharacterCameraController.Instance.InitCharacterCamera(viewGo.transform);
-            //}
+            if (isLocalMaster)
+            {
+                CharacterCameraController.Instance.InitCharacterCamera(viewGo.transform);
+            }
         }
     }
 }

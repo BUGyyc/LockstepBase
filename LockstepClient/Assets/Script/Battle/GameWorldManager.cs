@@ -21,11 +21,13 @@ public class GameWorldManager
 
     }
 
-    public void Init()
+    public void Init(byte[] actors)
     {
         InitConfig();
 
-        CreateLocalCharacter();
+        CreateNPC();
+
+        CreateCharacter(actors);
     }
 
     private void InitConfig()
@@ -34,7 +36,7 @@ public class GameWorldManager
         ConfigManager.Instance.Init();
     }
 
-    void CreateLocalCharacter()
+    void CreateNPC()
     {
 
         //生成 Entity , 后续应该改成对应 EntityType 生成 Entity ,走工厂模式
@@ -50,16 +52,15 @@ public class GameWorldManager
         //        });
         //    }
         //}
+    }
 
+    void CreateCharacter(byte[] actors)
+    {
 
-        EntityUtil.CreateEntity();
-
-
-
-
-
-
-
+        foreach (var actor in actors)
+        {
+            EntityUtil.CreateCharacterEntity(actor);
+        }
         Debug.LogFormat("创建玩家");
     }
 

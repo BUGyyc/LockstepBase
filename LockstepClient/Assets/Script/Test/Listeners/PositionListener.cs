@@ -25,14 +25,14 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
         _entity.RemovePositionListener(this);
     }
 
-    public void OnPosition(GameEntity entity, LVector3 newPosition)
+    public void OnPosition(GameEntity entity, LVector3 position)
     {
         //暂时忽略重力
         //var temp = LVector3
 
         //transform.position = temp;
 
-        target = newPosition;
+        target = position;
     }
 
     private void FixedUpdate()
@@ -43,9 +43,18 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
         LFloat distance = LMath.Distance(target, lTransformPos);
 
 
-        LVector3 framePos = LVector3.Lerp(lTransformPos, target, distance * FrameStep);
+        if (distance._val < 50)
+        {
+            transform.position = target.ToVector3();
+        }
+        else
+        {
 
-        transform.position = framePos.ToVector3();
+            LVector3 framePos = LVector3.Lerp(lTransformPos, target, distance * FrameStep);
+
+            transform.position = framePos.ToVector3();
+        }
+
     }
 
 

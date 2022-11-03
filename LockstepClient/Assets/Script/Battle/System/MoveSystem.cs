@@ -10,19 +10,38 @@ using UnityEngine;
 
 public class MoveSystem : IExecuteSystem, ISystem
 {
+    private readonly IGroup<GameEntity> _gameEntities;
+    public MoveSystem(Contexts contexts)
+    {
+
+        _gameEntities = ((Context<GameEntity>)contexts.game).GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.Position));
+    }
+
+
     public void Execute()
     {
-        var entitys = Contexts.sharedInstance.game.GetEntities();
-        for (var i = 0; i < entitys.Length; i++)
+        foreach (GameEntity entity in _gameEntities.GetEntities())
         {
-            var entity = entitys[i];
+            if (entity.hasBackup) continue;
             var position = entity.position;
-            var positionListener = entitys[i].positionListener;
+            var positionListener = entity.positionListener;
             foreach (var listener in positionListener.value)
             {
                 listener.OnPosition(entity, position.value);
             }
         }
+      
+        // for (var i = 0; i < entitys.Length; i++)
+        // {
+        //     var entity = entitys[i];
+        //     if (entity.hasBackup) continue;
+        //     var position = entity.position;
+        //     var positionListener = entitys[i].positionListener;
+        //     foreach (var listener in positionListener.value)
+        //     {
+        //         listener.OnPosition(entity, position.value);
+        //     }
+        // }
     }
 }
 

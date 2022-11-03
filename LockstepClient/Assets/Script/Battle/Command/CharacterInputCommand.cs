@@ -13,7 +13,7 @@ public class CharacterInputCommand : ICommand, ISerializable
 
     public uint entityId;
 
-    public ushort Tag => 3;
+    public ushort Tag => CommandDefine.CharacterInput;
 
     public void Execute(InputEntity e)
     {

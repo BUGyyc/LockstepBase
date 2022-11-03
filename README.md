@@ -36,8 +36,15 @@
 
 有实现，但未做大量验证，后续补充
 
+基础移动的测试：
+
+![](Doc/pic.res/inputEntity.gif)
+
+大量Entity压测：
 
 ![](Doc/pic.res/lockstep.gif)
+
+
 
 # 预测
 

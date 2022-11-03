@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * @Author: delevin.ying 
+ * @Date: 2022-11-03 17:37:09 
+ * @Last Modified by: delevin.ying
+ * @Last Modified time: 2022-11-03 18:14:41
+ */
+using System.Collections.Generic;
 using System.Linq;
 using BEPUutilities;
 using Entitas;
@@ -8,7 +14,9 @@ using Lockstep.Game.Interfaces;
 using Lockstep.Game;
 
 
-
+/// <summary>
+/// 处理玩家输入
+/// </summary>
 public class ExecuteCharacterInput : IExecuteSystem, ISystem
 {
     private readonly IViewService _viewService;
@@ -47,9 +55,15 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
 
             UnityEngine.Debug.Log($"<color=yellow>玩家输入 actor {actor}  speed {speed}  entityId {entityId}  </color>");
 
-            //var gameEntity = _gameContext.GetEntityWithLocalId(entityId);
+            var gameEntity = _gameContext.GetEntityWithLocalId(entityId + EntityUtil.BaseCharacterEntityID);
 
-            //gameEntity.position.value += speed;
+            if (gameEntity == null)
+            {
+                UnityEngine.Debug.LogError($"Entity 不存在  {entityId + EntityUtil.BaseCharacterEntityID}  ");
+                return;
+            }
+
+            gameEntity.position.value += speed;
         }
     }
 }

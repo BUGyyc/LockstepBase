@@ -1991,7 +1991,7 @@ MonoBehaviour:
   playerText: {fileID: 4161338191144366670}
   portText: {fileID: 2988320808064898380}
   mode: 0
-  port: 10005
+  port: 10007
   PlayerNumber: 1
 --- !u!222 &2988320809109292422
 CanvasRenderer:

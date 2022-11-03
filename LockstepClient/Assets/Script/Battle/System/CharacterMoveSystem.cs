@@ -24,6 +24,7 @@ public class CharacterMoveSystem : IExecuteSystem, ISystem
 
                 //TODO:临时写法
                 var obj = EntityUtil.GetEntityGameObject(entity.localId.value);
+                // if (obj == null) continue;
                 var ani = obj.GetComponent<Animator>();
                 ani.CrossFadeInFixedTime(animation.animationName, 0.1f);
             }

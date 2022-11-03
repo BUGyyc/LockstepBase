@@ -30,7 +30,7 @@ public class ActionWorld : MonoBehaviour
     public byte[] AllActorIds { get; private set; }
 
     [HideInInspector]
-    public byte LocalActorId;
+    public byte LocalCharacterEntityId;
 
     private NetworkCommandQueue _commandQueue;
     private readonly LiteNetLibClient _client = new LiteNetLibClient();
@@ -71,9 +71,9 @@ public class ActionWorld : MonoBehaviour
         Debug.Log($"Starting simulation. Total actors: {msg.AllActors.Length}. Local ActorID: {msg.ActorID}  msg.SimulationSpeed {msg.SimulationSpeed} ");
         Simulation.Start(30, msg.ActorID, msg.AllActors);
 
-        LocalActorId = msg.ActorID;
+        LocalCharacterEntityId = msg.ActorID;
 
-        GameWorldManager.Instance.Init();
+        GameWorldManager.Instance.Init(msg.AllActors);
     }
 
 

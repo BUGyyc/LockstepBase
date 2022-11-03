@@ -1,4 +1,10 @@
-﻿
+﻿/*
+ * @Author: delevin.ying 
+ * @Date: 2022-11-03 17:19:03 
+ * @Last Modified by:   delevin.ying 
+ * @Last Modified time: 2022-11-03 17:19:03 
+ */
+
 using Lockstep.Common.Logging;
 using Lockstep.Core.Logic.Interfaces;
 using Lockstep.Game;
@@ -66,7 +72,7 @@ public class TPSWorld : MonoBehaviour
         Debug.Log($"Starting simulation. Total actors: {msg.AllActors.Length}. Local ActorID: {msg.ActorID}");
         Simulation.Start(msg.SimulationSpeed, msg.ActorID, msg.AllActors);
 
-        GameWorldManager.Instance.Init();
+        GameWorldManager.Instance.Init(msg.AllActors);
     }
 
 
