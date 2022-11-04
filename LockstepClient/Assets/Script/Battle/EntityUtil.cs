@@ -53,7 +53,7 @@ public static class EntityUtil
 
         int index = actorId;
 
-        gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward);
+        gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward, Lockstep.LVector3.zero);
 
         //初始动画
         AnimationComponent animation = new AnimationComponent()
@@ -62,6 +62,7 @@ public static class EntityUtil
             animationName = "WalkMove"
         };
         gameEntity.AddComponent(GameComponentsLookup.Animation, animation);
+        // gameEntity.Ad
         LoadEntityView(gameEntity, "Prefabs/ClazyRunner");
         AutoCreateEntityID++;
         return gameEntity;

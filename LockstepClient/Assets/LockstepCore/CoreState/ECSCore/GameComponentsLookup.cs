@@ -47,8 +47,10 @@ public static class GameComponentsLookup
 
     public const int Animation = 21;
 
+    public const int PhysicsGravity = 22;
 
-    public const int TotalComponents = 22;
+
+    public const int TotalComponents = 23;
 
     public static readonly string[] componentNames = new string[TotalComponents]
     {
@@ -77,7 +79,8 @@ public static class GameComponentsLookup
         "Character",
 
         "Model",
-        "Animation"
+        "Animation",
+        "PhysicsGravity"
     };
 
     public static readonly Type[] componentTypes = new Type[TotalComponents]
@@ -107,6 +110,7 @@ public static class GameComponentsLookup
         typeof(CharacterComponent),
 
         typeof(ModelComponent),
-        typeof(AnimationComponent)
+        typeof(AnimationComponent),
+        typeof(PhysicsGravityComponent)
     };
 }

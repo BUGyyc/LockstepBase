@@ -2,5 +2,5 @@
 
 public interface IPositionListener
 {
-    void OnPosition(GameEntity entity, LVector3 value);
+    void OnPosition(GameEntity entity, LVector3 value, LQuaternion rotate);
 }

@@ -27,10 +27,10 @@ public class MoveSystem : IExecuteSystem, ISystem
             var positionListener = entity.positionListener;
             foreach (var listener in positionListener.value)
             {
-                listener.OnPosition(entity, position.value);
+                listener.OnPosition(entity, position.value, position.rotate);
             }
         }
-      
+
         // for (var i = 0; i < entitys.Length; i++)
         // {
         //     var entity = entitys[i];

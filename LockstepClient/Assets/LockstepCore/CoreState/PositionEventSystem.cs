@@ -33,7 +33,7 @@ public sealed class PositionEventSystem : ReactiveSystem<GameEntity>
             _listenerBuffer.AddRange(entity.positionListener.value);
             foreach (IPositionListener item in _listenerBuffer)
             {
-                item.OnPosition(entity, position.value);
+                item.OnPosition(entity, position.value, position.rotate);
             }
         }
     }

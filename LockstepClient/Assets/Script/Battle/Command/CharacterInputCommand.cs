@@ -13,6 +13,8 @@ public class CharacterInputCommand : ICommand, ISerializable
 
     public uint entityId;
 
+    // public uint moveDir;
+
     public ushort Tag => CommandDefine.CharacterInput;
 
     public void Execute(InputEntity e)

@@ -10,6 +10,8 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
     private LFloat FrameStep = new LFloat(0.02f);
 
     private LVector3 target;
+
+    private LQuaternion targetRotate;
     public void RegisterListeners(GameEntity entity)
     {
         _entity = entity;
@@ -25,7 +27,7 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
         _entity.RemovePositionListener(this);
     }
 
-    public void OnPosition(GameEntity entity, LVector3 position)
+    public void OnPosition(GameEntity entity, LVector3 position, LQuaternion _rotate)
     {
         //暂时忽略重力
         //var temp = LVector3
@@ -33,6 +35,7 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
         //transform.position = temp;
 
         target = position;
+        targetRotate = _rotate;
     }
 
     private void FixedUpdate()
@@ -54,6 +57,8 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
 
             transform.position = framePos.ToVector3();
         }
+        LQuaternion q = transform.rotation.ToLQuaternion();
+        transform.rotation = LQuaternion.Lerp(q, targetRotate, FrameStep).ToQuaternion();
 
     }
 

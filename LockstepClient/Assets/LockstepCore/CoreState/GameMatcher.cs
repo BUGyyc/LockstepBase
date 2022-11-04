@@ -1,6 +1,6 @@
 ﻿using Entitas;
 
-public sealed class GameMatcher
+public sealed partial class GameMatcher
 {
     private static IMatcher<GameEntity> _matcherRadius;
 

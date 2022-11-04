@@ -13,7 +13,7 @@ namespace Lockstep.Game.Features
             // this.Add(new CharacterSystem(contexts, services));
             this.Add(new MoveSystem(contexts));
 
-            this.Add(new CharacterMoveSystem());
+            this.Add(new CharacterMoveSystem(contexts));
         }
     }
 }

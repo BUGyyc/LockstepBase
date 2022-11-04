@@ -20,12 +20,6 @@ public sealed partial class GameEntity : Entity
 
 
 
-
-
-    public AnimationComponent animation => (AnimationComponent)GetComponent(GameComponentsLookup.Animation);
-    public bool hasAnimtion => HasComponent(GameComponentsLookup.Animation);
-
-
     public ModelComponent model => (ModelComponent)GetComponent(GameComponentsLookup.Model);
     public bool hasModel => HasComponent(GameComponentsLookup.Model);
 
@@ -462,11 +456,12 @@ public sealed partial class GameEntity : Entity
         RemoveComponent(11);
     }
 
-    public void AddPosition(LVector3 newValue)
+    public void AddPosition(LVector3 newValue, LVector3 newEuler)
     {
         int num = 13;
         PositionComponent positionComponent = (PositionComponent)CreateComponent(num, typeof(PositionComponent));
         positionComponent.value = newValue;
+        positionComponent.value = newEuler;
         AddComponent(num, positionComponent);
     }
 

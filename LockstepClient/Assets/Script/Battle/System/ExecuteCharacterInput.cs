@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-03 17:37:09 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-03 19:08:23
+ * @Last Modified time: 2022-11-04 11:38:49
  */
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +24,8 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
     private readonly GameContext _gameContext;
 
     private readonly GameStateContext _gameStateContext;
+
+
 
     private readonly IGroup<InputEntity> _characterInputs;
 
@@ -53,7 +55,7 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
 
             var actor = item.actorId.value;
 
-            UnityEngine.Debug.Log($"<color=yellow>玩家输入 actor {actor}  speed {speed}  entityId {entityId}  </color>");
+            // UnityEngine.Debug.Log($"<color=yellow>玩家输入 actor {actor}  speed {speed}  entityId {entityId}  </color>");
 
             var gameEntity = _gameContext.GetEntityWithLocalId(entityId + EntityUtil.BaseCharacterEntityID);
 
@@ -65,7 +67,7 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
 
             // gameEntity.position.value += speed;
 
-            gameEntity.animation.inputParams = speed;
+            gameEntity.Animation.inputParams = speed;
         }
     }
 }
