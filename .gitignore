@@ -37,3 +37,7 @@ LockstepCopyClient/obj/
 LockstepCopyClient/.vs/
 LockstepClient/Assets/CLazyRunnerActionAnimPack/
 Tools/
+LockstepClient/Assets/LockstepCore/Game/obj/Debug/
+LockstepClient/Assets/LockstepCore/CoreState/obj/Debug/
+LockstepClient/Assets/LockstepCore/CoreLogic/obj/Debug/
+LockstepClient/Assets/LockstepCore/Common/obj/Debug/

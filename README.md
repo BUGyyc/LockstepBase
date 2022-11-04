@@ -38,11 +38,11 @@
 
 基础移动同步测试：
 
-![](Doc/pic.res/inputEntity.gif)
+![](Doc/pic.res/AnimationMove3.gif)
 
 动画驱动位移
 
-![](Doc/pic.res/AnimationMove.gif)
+![](Doc/pic.res/AnimationMove1.gif)
 
 ![](Doc/pic.res/AnimationMove2.gif)
 
