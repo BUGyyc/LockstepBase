@@ -237,7 +237,10 @@ public partial class MoveBlendTreeTool : EditorWindow
                             }
                         }
 
-                        if (addNode != null) item.NodeList.Add(addNode);
+                        if (addNode != null)
+                        {
+                            item.AddNodeList(addNode);
+                        } //item.NodeList.Add(addNode);
                     }
                 }
 
@@ -511,7 +514,8 @@ public partial class MoveBlendTreeTool : EditorWindow
 
                 blendNode.Motion = AnimationToolUtil.CreateMotion(motion.name, nodes[i].timeScale, motion.length, motion.isLooping, curves, frame: frameCount);
 
-                blender.NodeList.Add(blendNode);
+                // blender.NodeList.Add(blendNode);
+                blender.AddNodeList(blendNode);
 
                 if (mExportBound && boundPointPath.Count >= 2)
                 {
@@ -571,7 +575,9 @@ public partial class MoveBlendTreeTool : EditorWindow
 
                 if (tree.blendType == BlendTreeType.Simple1D)
                 {
-                    cfg.ExportBlenders.Add(GetMotionBlender(state));
+                    // cfg.ExportBlenders.Add(GetMotionBlender(state));
+
+                    cfg.AddExportBlenders(GetMotionBlender(state));
                 }
                 else
                 {
@@ -604,7 +610,11 @@ public partial class MoveBlendTreeTool : EditorWindow
                                 }
                             }
 
-                            if (addNode != null) blender.NodeList.Add(addNode);
+                            if (addNode != null)
+                            {
+                                // blender.NodeList.Add(addNode);
+                                blender.AddNodeList(addNode);
+                            }
                         }
                     }
 

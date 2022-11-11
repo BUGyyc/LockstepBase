@@ -55,15 +55,24 @@ public static class EntityUtil
 
         gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward, Lockstep.LVector3.zero);
 
+        // gameEntity
+
         //初始动画
         AnimationComponent animation = new AnimationComponent()
         {
             readyPlay = true,
-            animationName = "WalkMove"
+            animationName = GameSetting.HeroInitAnimationName
         };
         gameEntity.AddComponent(GameComponentsLookup.Animation, animation);
         // gameEntity.Ad
-        LoadEntityView(gameEntity, "Prefabs/ClazyRunner");
+        var go = LoadEntityView(gameEntity, GameSetting.HeroPrefabPath);
+
+        if (go != null)
+        {
+            var aniBindEntity = go.GetComponentInChildren<AnimatorBindEntity>();
+            if (aniBindEntity) aniBindEntity.SetGameEntity(gameEntity);
+        }
+
         AutoCreateEntityID++;
         return gameEntity;
     }
@@ -77,7 +86,7 @@ public static class EntityUtil
         return null;
     }
 
-    private static void LoadEntityView(GameEntity entity, string path)
+    private static UnityEngine.GameObject LoadEntityView(GameEntity entity, string path)
     {
         bool isLocalMaster = entity.id.value == ActionWorld.Instance.LocalCharacterEntityId;
         var obj = Resources.Load<GameObject>(path);
@@ -106,6 +115,8 @@ public static class EntityUtil
                 CharacterCameraController.Instance.InitCharacterCamera(viewGo.transform);
             }
         }
+
+        return viewGo;
     }
 }
 

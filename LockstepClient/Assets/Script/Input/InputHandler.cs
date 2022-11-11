@@ -49,7 +49,7 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
         var viewDir = Camera.main.transform.forward;
         var lv3 = GetTargetDir(moveDir, viewDir);
 
-        Debug.Log($"<color=yellow>  key {move}   target {lv3}   </color>");
+        Debug.Log($"<color=yellow>  键盘输入   key {move}   target {lv3}   </color>");
 
         //这里应当传入本地EntityID
         ActionWorld.Instance.Execute(new CharacterInputCommand

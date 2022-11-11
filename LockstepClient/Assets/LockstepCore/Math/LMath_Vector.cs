@@ -78,6 +78,20 @@ namespace Lockstep
             return value * lfBase;
         }
 
+        public static LVector3 YZero(this LVector3 self)
+        {
+            return new LVector3(true, self._x, 0, self._z);
+        }
+
+
+        // public static LVector3 ToLVector3(this UnityEngine.Vector3 self)
+        // {
+        //     int x = (int)(self.x * LFloat.Precision);
+        //     int y = (int)(self.y * LFloat.Precision);
+        //     int z = (int)(self.z * LFloat.Precision);
+
+        //     return new LVector3(true, x, y, z);
+        // }
 
 
     }

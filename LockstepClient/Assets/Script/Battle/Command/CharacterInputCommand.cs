@@ -19,7 +19,7 @@ public class CharacterInputCommand : ICommand, ISerializable
 
     public void Execute(InputEntity e)
     {
-        UnityEngine.Debug.Log($" CharacterInputCommand  Execute ");
+        UnityEngine.Debug.Log($" System 响应键盘输入 {moveSpeed}");
         e.AddCharacterInputSpeed(moveSpeed);
     }
 

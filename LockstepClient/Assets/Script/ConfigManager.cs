@@ -14,7 +14,7 @@ public class ConfigManager
     {
         _configsDic = new Dictionary<Type, object>();
 
-        var cfg = ConfigManager.GetMoveController("Debug_RootMotion");
+        var cfg = ConfigManager.GetMoveController(GameSetting.HERO_ANIMATOR);
 
         foreach (var item in cfg.ExportBlenders)
         {

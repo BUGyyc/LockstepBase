@@ -49,12 +49,15 @@ public sealed partial class GameEntity : Entity
 
     public bool hasAnimation => HasComponent(GameComponentsLookup.Animation);
 
-    public const string WalkMove = "WalkMove";
     public const string XKEY = "angle";
     public const string YKEY = "speed";
 
-    public const int SCALE_X = 10;
-    public const int SCALE_Z = 10;
+    public const int SCALE_X = 20;
+    public const int SCALE_Z = 20;
+
+    public bool IsRotating = false;
+
+    public bool IsLeftRotate = false;
 
     //TODO:临时写法
 
@@ -76,7 +79,7 @@ public sealed partial class GameEntity : Entity
         if (animator == null)
         {
             var obj = EntityUtil.GetEntityGameObject(entity.localId.value);
-            animator = obj.GetComponent<Animator>();
+            animator = obj.GetComponentInChildren<Animator>();
         }
         animator.CrossFadeInFixedTime(animation.animationName, 0.1f);
     }
@@ -93,13 +96,26 @@ public sealed partial class GameEntity : Entity
         uint frameCount = 0;
         int frameId = (int)index;
 
-        if (name == WalkMove)
+        if (string.IsNullOrEmpty(name))
         {
-            ExecuteMoveBlender(entity, animation, name, out frameCount);
+            Debug.LogError("动画异常");
+            return;
         }
-        else
+
+        // Debug.LogError($"--------------------------{Contexts.sharedInstance.gameState.tick.value}");
+
+        // if (name == GameSetting.WalkMove)
+        // {
+        ExecuteMoveBlender(entity, animation, name, out frameCount);
+        // }
+        // else
+        // {
+        //     ExecuteAnyMotion(entity, animation, name, frameId, out frameCount);
+        // }
+
+        if (IsRotating)
         {
-            ExecuteAnyMotion(entity, animation, name, frameId, out frameCount);
+            ExecuteRotate(entity);
         }
 
         if (index == frameCount)
@@ -108,71 +124,182 @@ public sealed partial class GameEntity : Entity
         }
     }
 
+    private void ExecuteRotate(GameEntity entity, AnimationComponent animation)
+    {
+        // LFloat heroYAngle = position.rotate.eulerAngles.y;
+
+        LFloat rotateAngleSpeedLf = new LFloat(true, GameSetting.ARC_ROTATE_SPEED);
+
+        LFloat deltaAngleLf = rotateAngleSpeedLf * GameSetting.Key_Time;
+
+        if (IsLeftRotate) deltaAngleLf *= -1;
+
+        var lq = entity.position.rotate;
+
+        entity.position.rotate = LQuaternion.Euler(lq.eulerAngles + (LVector3.up * deltaAngleLf));
+
+        var dir = entity.position.rotate * LVector3.forward;
+
+        Debug.DrawRay(entity.position.value.ToVector3(), dir.ToVector3() * 3f, Color.red, 1);
+
+        var worldMoveDir = animation.inputParams;
+        var heroDir = dir;
+
+        
+    }
+
 
     private void ExecuteMoveBlender(GameEntity entity, AnimationComponent animation, string name, out uint frameCount)
     {
-        var inputMoveDir = animation.inputParams;
-        var cfg = AnimationUtil.GetBlender(name);
-        //TODO:临时写法
-        if (animator == null)
+        /// <summary>
+        /// 世界坐标系下的目标移动方向
+        /// </summary>
+        var worldMoveDir = animation.inputParams;
+        var heroDir = entity.position.rotate * LVector3.forward;
+
+        // Debug.LogError($"worldMoveDir{worldMoveDir}");
+
+        if (worldMoveDir.x == 0 && worldMoveDir.z == 0)
         {
-            var obj = EntityUtil.GetEntityGameObject(entity.localId.value);
-            animator = obj.GetComponent<Animator>();
+            //代表 Stop,所有基础移动都应该停止
+
+            if (IsRotating)
+            {
+                // Debug.LogError($"立即暂停");
+                IsRotating = false;
+                PlayAnimation(animation, "Idle_Wait_A");
+            }
         }
 
-        //通过当前玩家朝向，得到目标转向与速度
-        //用相机朝向
-
-        var characterForward = entity.entityForwardLv3;
-        
-        LFloat val = LVector3.Dot(inputMoveDir, characterForward);
 
 
+        var worldMoveDir2D = worldMoveDir.YZero().Normalize();
+        var heroDir2D = heroDir.YZero().Normalize();
 
-        LFloat angle = LMath.AngleInt(characterForward, inputMoveDir);
+        Debug.DrawRay(entity.position.value.ToVector3(), heroDir2D.ToVector3() * 3, Color.blue, 10f);
 
+        Debug.DrawRay(entity.position.value.ToVector3(), worldMoveDir2D.ToVector3() * 3, Color.yellow, 10f);
 
-        Debug.Log($"<color=red>  angle {angle} val  {val} </color>");
+        LFloat angleLf = LMath.AngleInt(heroDir2D, worldMoveDir2D);
+        if (worldMoveDir2D.magnitude._val < 100)
+        {
+            angleLf = LFloat.zero;
+        }
+        var crossV3 = LVector3.Cross(heroDir2D, worldMoveDir2D);
 
-        var lv3 = inputMoveDir;
-        lv3 = lv3.normalized;
-
-        Debug.DrawRay(entity.position.value.ToVector3(), lv3.ToVector3(), Color.blue, 3f);
-
-        // var forward = CameraManager.Instance.forwardZeroY;
-        // //计算输入方向
-        // MoveDir moveDir = GetMoveDir(inputMoveDir);
-        // GetTargetDir(moveDir, forward);
-
-
-
-        //NOTE: inputMoveDir 是玩家输入，
-        //需要通过计算采样得到最终的混合速度
-
-        var node = cfg.NodeList[1];
-        frameCount = (uint)node.FrameCount;
-        var motion = node.Motion;
-        // Debug.Log($"<color=red> Motion </color>{motion == null}   ");
-
-        // var intX = (int)(node.XPostion * LFloat.Precision) / SCALE_X;
-        // var intZ = (int)(node.YPostion * LFloat.Precision) / SCALE_Z;
-
-        //TODO:
-        inputMoveDir._z = (inputMoveDir._z < 0) ? 0 : inputMoveDir._z;
+        bool isRotateToLeft = crossV3._y < 0;
 
 
-        var intX = inputMoveDir._x / SCALE_X;
-        var intZ = inputMoveDir._z / SCALE_Z;
+        //先旋转 再移动
+        if (angleLf._val > 30 * LFloat.Precision)
+        {
+            var clip = isRotateToLeft ? GameSetting.ARC_ROTATE_LEFT : GameSetting.ARC_ROTATE_RIGHT;
+            //大角度旋转
+            var rotateCfg = AnimationUtil.GetMoveMotion(clip);
+            frameCount = (uint)rotateCfg.FrameCount;
 
-        entity.position.value += new LVector3(true, intX, 0, intZ);
+            Debug.Log($"<color=red> 大角度旋转 isRotateToLeft {isRotateToLeft} frameCount  {frameCount}</color>");
 
-        float x = inputMoveDir._x * LFloat.PrecisionFactor;
-        float y = inputMoveDir._z * LFloat.PrecisionFactor;
+            PlayAnimation(animation, clip);
 
-        // Debug.Log($"<color=red>   x {x}  y {y}  </color>");
+            IsRotating = true;
 
-        animator.SetFloat(XKEY, x);
-        animator.SetFloat(YKEY, y);
+            IsLeftRotate = isRotateToLeft;
+
+        }
+        else if (angleLf._val > 10 * LFloat.Precision)
+        {
+            //小角度旋转
+            frameCount = uint.MaxValue;
+        }
+        else
+        {
+            //容忍范围内，无需表现上的旋转
+            //直接移动
+            var cfg = AnimationUtil.GetBlender(name);
+            if (cfg == null)
+            {
+                frameCount = uint.MaxValue;
+            }
+            else
+            {
+                var node = cfg.NodeList[1];
+                frameCount = (uint)node.FrameCount;
+            }
+
+        }
+
+
+
+        // Debug.Log($"<color=red>  angleLf {angleLf._val}   angleLf  {angleLf}    worldMoveDir2D {worldMoveDir2D.magnitude}   isRotateToLeft {isRotateToLeft} </color>");
+
+
+
+
+
+
+        // var inputMoveDir = animation.inputParams;
+        // var cfg = AnimationUtil.GetBlender(name);
+        // //TODO:临时写法
+        // if (animator == null)
+        // {
+        //     var obj = EntityUtil.GetEntityGameObject(entity.localId.value);
+        //     animator = obj.GetComponentInChildren<Animator>();
+        // }
+
+        // //通过当前玩家朝向，得到目标转向与速度
+        // //用相机朝向
+
+        // var characterForward = entity.entityForwardLv3;
+
+        // LFloat val = LVector3.Dot(inputMoveDir, characterForward);
+
+
+
+        // LFloat angle = LMath.AngleInt(characterForward, inputMoveDir);
+
+
+        // // Debug.Log($"<color=red>  angle {angle} val  {val} </color>");
+
+        // var lv3 = inputMoveDir;
+        // lv3 = lv3.normalized;
+
+        // Debug.DrawRay(entity.position.value.ToVector3(), lv3.ToVector3(), Color.blue, 3f);
+
+        // // var forward = CameraManager.Instance.forwardZeroY;
+        // // //计算输入方向
+        // // MoveDir moveDir = GetMoveDir(inputMoveDir);
+        // // GetTargetDir(moveDir, forward);
+
+
+
+        // //NOTE: inputMoveDir 是玩家输入，
+        // //需要通过计算采样得到最终的混合速度
+
+        // var node = cfg.NodeList[1];
+        // frameCount = (uint)node.FrameCount;
+        // var motion = node.Motion;
+        // // Debug.Log($"<color=red> Motion </color>{motion == null}   ");
+
+        // // var intX = (int)(node.XPostion * LFloat.Precision) / SCALE_X;
+        // // var intZ = (int)(node.YPostion * LFloat.Precision) / SCALE_Z;
+
+        // //TODO:
+        // inputMoveDir._z = (inputMoveDir._z < 0) ? 0 : inputMoveDir._z;
+
+
+        // var intX = inputMoveDir._x / SCALE_X;
+        // var intZ = inputMoveDir._z / SCALE_Z;
+
+        // entity.position.value += new LVector3(true, intX, 0, intZ);
+
+        // float x = inputMoveDir._x * LFloat.PrecisionFactor;
+        // float y = inputMoveDir._z * LFloat.PrecisionFactor;
+
+        // // Debug.Log($"<color=red>   x {x}  y {y}  </color>");
+
+        // animator.SetFloat(XKEY, x);
+        // animator.SetFloat(YKEY, y);
     }
 
     private void ExecuteAnyMotion(GameEntity entity, AnimationComponent animation, string name, int frameId, out uint frameCount)
@@ -202,12 +329,21 @@ public sealed partial class GameEntity : Entity
         ReturnDefault(animation);
     }
 
+    private void PlayAnimation(AnimationComponent animation, string name)
+    {
+        if (animation.animationName == name) return;
+        animation.animationName = name;
+        animation.PlaySinceStartFrameKey = Contexts.sharedInstance.gameState.tick.value;
+        animation.readyPlay = true;
+    }
+
 
     private void ReturnDefault(AnimationComponent animation)
     {
-        animation.animationName = "Idle_Wait_C";
-        animation.PlaySinceStartFrameKey = Contexts.sharedInstance.gameState.tick.value;
-        animation.readyPlay = true;
+        PlayAnimation(animation, GameSetting.ReturnIDLE);
+        // animation.animationName = GameSetting.ReturnIDLE;
+        // animation.PlaySinceStartFrameKey = Contexts.sharedInstance.gameState.tick.value;
+        // animation.readyPlay = true;
     }
 
     private void RandomAnimation(GameEntity entity, string name, AnimationComponent animation)

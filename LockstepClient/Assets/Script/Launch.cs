@@ -62,6 +62,7 @@ public class Launch : MonoBehaviour
         UpdateView();
 
         ShowLocalIP();
+
     }
 
     private void initView()
@@ -206,3 +207,5 @@ public class Launch : MonoBehaviour
     }
 
 }
+
+

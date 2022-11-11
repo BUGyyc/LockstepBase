@@ -58,7 +58,7 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
             transform.position = framePos.ToVector3();
         }
         LQuaternion q = transform.rotation.ToLQuaternion();
-        transform.rotation = LQuaternion.Lerp(q, targetRotate, FrameStep).ToQuaternion();
+        transform.rotation = LQuaternion.Lerp(q, targetRotate, FrameStep * 30).ToQuaternion();
 
     }
 

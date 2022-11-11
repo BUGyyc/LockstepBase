@@ -6,10 +6,9 @@ public static class AnimationUtil
     private static Dictionary<string, Blender> blenderDic = new Dictionary<string, Blender>();
 
 
-    public const string ANIMATOR = "Debug_RootMotion";
     public static MoveMotion GetMoveMotion(string name)
     {
-        MoveControllerCfg cfg = ConfigManager.GetMoveController(ANIMATOR);
+        MoveControllerCfg cfg = ConfigManager.GetMoveController(GameSetting.HERO_ANIMATOR);
         if (cfg == null) return null;
 
         if (motionDic.ContainsKey(name))
@@ -31,7 +30,7 @@ public static class AnimationUtil
 
     public static Blender GetBlender(string name)
     {
-        MoveControllerCfg cfg = ConfigManager.GetMoveController(ANIMATOR);
+        MoveControllerCfg cfg = ConfigManager.GetMoveController(GameSetting.HERO_ANIMATOR);
         if (cfg == null) return null;
 
         if (blenderDic.ContainsKey(name))
