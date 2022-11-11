@@ -13,6 +13,8 @@ public class CharacterInputCommand : ICommand, ISerializable
 
     public uint entityId;
 
+    public LVector2 inputOriginData;
+
     // public uint moveDir;
 
     public ushort Tag => CommandDefine.CharacterInput;
@@ -20,7 +22,8 @@ public class CharacterInputCommand : ICommand, ISerializable
     public void Execute(InputEntity e)
     {
         UnityEngine.Debug.Log($" System 响应键盘输入 {moveSpeed}");
-        e.AddCharacterInputSpeed(moveSpeed);
+        e.AddCharacterInputSpeed(moveSpeed, inputOriginData);
+
     }
 
     public void Serialize(Serializer writer)
@@ -28,6 +31,10 @@ public class CharacterInputCommand : ICommand, ISerializable
         writer.Put(moveSpeed._x);
         writer.Put(moveSpeed._y);
         writer.Put(moveSpeed._z);
+
+        writer.Put(inputOriginData._x);
+        writer.Put(inputOriginData._y);
+        // writer.Put(inputOriginData._z);
 
         writer.Put(entityId);
     }
@@ -37,8 +44,13 @@ public class CharacterInputCommand : ICommand, ISerializable
         int x = reader.GetInt();
         int y = reader.GetInt();
         int z = reader.GetInt();
-
         moveSpeed = new LVector3(true, x, y, z);
+
+        int a = reader.GetInt();
+        int b = reader.GetInt();
+
+        inputOriginData = new LVector2(true, a, b);
+
         entityId = reader.GetUInt();
     }
 }

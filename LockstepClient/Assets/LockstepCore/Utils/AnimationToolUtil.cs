@@ -1,4 +1,5 @@
-﻿using Protocol;
+﻿#if UNITY_EDITOR
+using Protocol;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -397,3 +398,4 @@ public static class AnimationToolUtil
         return str;
     }
 }
+#endif

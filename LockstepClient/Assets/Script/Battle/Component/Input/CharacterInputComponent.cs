@@ -18,6 +18,8 @@ public class CharacterInputComponent : IComponent
     /// </summary>
     public LVector3 moveSpeed;
 
+    public LVector2 inputOriginData;
+
     public uint entityId;
 
     /// <summary>
@@ -33,11 +35,12 @@ public sealed partial class InputEntity : Entity
     public bool HasCharacterInput => HasComponent(InputComponentsLookup.CharacterInput);
 
 
-    public void AddCharacterInputSpeed(LVector3 newValue)
+    public void AddCharacterInputSpeed(LVector3 newValue, LVector2 v2)
     {
         int num = InputComponentsLookup.CharacterInput;
         CharacterInputComponent characterInput = (CharacterInputComponent)CreateComponent(num, typeof(CharacterInputComponent));
         characterInput.moveSpeed = newValue;
+        characterInput.inputOriginData = v2;
         AddComponent(num, characterInput);
     }
 

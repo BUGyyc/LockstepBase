@@ -74,6 +74,24 @@ public sealed class InputMatcher
         }
     }
 
+    private static IMatcher<InputEntity> _matchSkillInput;
+
+    public static IMatcher<InputEntity> SkillInput
+    {
+        get
+        {
+
+            if (_matchSkillInput == null)
+            {
+                Matcher<InputEntity> val = (Matcher<InputEntity>)(object)Matcher<InputEntity>.AllOf(new int[1] { InputComponentsLookup.SkillInput });
+                val.componentNames = (InputComponentsLookup.componentNames);
+                _matchSkillInput = (IMatcher<InputEntity>)(object)val;
+            }
+            return _matchSkillInput;
+
+        }
+    }
+
     public static IMatcher<InputEntity> Selection
     {
         get

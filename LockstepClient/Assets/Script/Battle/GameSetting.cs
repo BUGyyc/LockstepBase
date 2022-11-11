@@ -15,7 +15,7 @@ public static class GameSetting
 
     public const string ARC_ROTATE_RIGHT = "Mvm_Walk_Arc_180_Right";
 
-    public const int ARC_ROTATE_SPEED = 240 * LFloat.Precision;//每秒旋转的角度范围
+    public const int ARC_ROTATE_SPEED = 180 * LFloat.Precision;//每秒旋转的角度范围
 
 
     public static readonly LFloat Key_Time = new LFloat(true, 33);

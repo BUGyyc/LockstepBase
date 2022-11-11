@@ -14,11 +14,26 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
     public void OnClick(InputAction.CallbackContext context)
     {
         //throw new System.NotImplementedException();
+
+
     }
 
     public void OnFire(InputAction.CallbackContext context)
     {
         //throw new System.NotImplementedException();
+        if (context.performed)
+        {
+            Debug.Log($"<color=yellow>  键盘输入  Click  </color>");
+
+            ActionWorld.Instance.Execute(new SkillInputCommand
+            {
+                skillId = 1,
+                entityId = ActionWorld.Instance.LocalCharacterEntityId
+            });
+        }
+
+
+
     }
 
     public void OnLook(InputAction.CallbackContext context)
@@ -55,7 +70,8 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
         ActionWorld.Instance.Execute(new CharacterInputCommand
         {
             moveSpeed = lv3,
-            entityId = 0
+            inputOriginData = new LVector2(true, (int)(move.x * LFloat.Precision), (int)(move.y * LFloat.Precision)),
+            entityId = ActionWorld.Instance.LocalCharacterEntityId
         });
 
     }

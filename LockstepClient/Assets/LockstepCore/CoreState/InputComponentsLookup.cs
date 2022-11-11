@@ -17,7 +17,9 @@ public static class InputComponentsLookup
 
     public const int CharacterInput = 6;
 
-    public const int TotalComponents = 7;
+    public const int SkillInput = 7;
+
+    public const int TotalComponents = 8;
 
     public static readonly string[] componentNames = new string[TotalComponents]
     {
@@ -28,7 +30,8 @@ public static class InputComponentsLookup
         "TargetActorId",
 
         "Tick",
-        "CharacterInput"
+        "CharacterInput",
+        "SkillInput"
     };
 
     public static readonly Type[] componentTypes = new Type[TotalComponents]
@@ -40,6 +43,7 @@ public static class InputComponentsLookup
         typeof(TargetActorIdComponent),
 
         typeof(TickComponent),
-        typeof(CharacterInputComponent)
+        typeof(CharacterInputComponent),
+        typeof(SkillInputComponent)
     };
 }

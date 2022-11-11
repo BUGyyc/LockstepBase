@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-03 17:37:09 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-04 11:38:49
+ * @Last Modified time: 2022-11-11 17:38:47
  */
 using System.Collections.Generic;
 using System.Linq;
@@ -68,6 +68,7 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
             // gameEntity.position.value += speed;
 
             gameEntity.Animation.inputParams = speed;
+            gameEntity.Animation.originInput = item.characterInput.inputOriginData;
         }
     }
 }

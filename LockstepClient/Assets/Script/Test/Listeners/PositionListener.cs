@@ -7,7 +7,7 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
 
     //private LVector3 lv3;
 
-    private LFloat FrameStep = new LFloat(0.02f);
+    private LFloat FrameStep = new LFloat(true, 20);
 
     private LVector3 target;
 
@@ -40,13 +40,15 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
 
     private void FixedUpdate()
     {
-
+        //当前坐标
         var lTransformPos = transform.position.ToLVector3();
 
+        //与目标位置的距离
         LFloat distance = LMath.Distance(target, lTransformPos);
 
+        // Debug.LogFormat($"  dis  {distance}");
 
-        if (distance._val < 50)
+        if (distance._val < 200)
         {
             transform.position = target.ToVector3();
         }
@@ -57,6 +59,8 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
 
             transform.position = framePos.ToVector3();
         }
+
+
         LQuaternion q = transform.rotation.ToLQuaternion();
         transform.rotation = LQuaternion.Lerp(q, targetRotate, FrameStep * 30).ToQuaternion();
 

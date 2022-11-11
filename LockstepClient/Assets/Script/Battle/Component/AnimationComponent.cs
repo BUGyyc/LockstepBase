@@ -1,4 +1,11 @@
-﻿using Entitas;
+﻿
+/*
+ * @Author: delevin.ying 
+ * @Date: 2022-11-11 17:54:36 
+ * @Last Modified by: delevin.ying
+ * @Last Modified time: 2022-11-11 18:30:56
+ */
+using Entitas;
 using Lockstep;
 using UnityEngine;
 
@@ -32,13 +39,35 @@ public class AnimationComponent : IComponent
     /// </summary>
     public bool readyPlay;
 
+    private string _animationName;
 
-    public string animationName;
+
+    public string animationName
+    {
+        set
+        {
+            _animationName = value;
+            Debug.Log($"value write {value}");
+        }
+        get
+        {
+            return _animationName;
+        }
+    }
 
 
     public LVector3 inputParams;
 
+    public LVector2 originInput;
 
+    public AnimationMainState state;
+
+}
+
+public enum AnimationMainState
+{
+    Move = 0,
+    Skill
 }
 
 
@@ -52,8 +81,10 @@ public sealed partial class GameEntity : Entity
     public const string XKEY = "angle";
     public const string YKEY = "speed";
 
-    public const int SCALE_X = 20;
-    public const int SCALE_Z = 20;
+    public const int SCALE_X = 5;
+    public const int SCALE_Z = 5;
+
+    public const int WALK_SCALE = 3;
 
     public bool IsRotating = false;
 
@@ -81,7 +112,9 @@ public sealed partial class GameEntity : Entity
             var obj = EntityUtil.GetEntityGameObject(entity.localId.value);
             animator = obj.GetComponentInChildren<Animator>();
         }
+        Debug.Log($"播放动画 {animation.animationName}");
         animator.CrossFadeInFixedTime(animation.animationName, 0.1f);
+
     }
 
     /// <summary>
@@ -106,7 +139,16 @@ public sealed partial class GameEntity : Entity
 
         // if (name == GameSetting.WalkMove)
         // {
-        ExecuteMoveBlender(entity, animation, name, out frameCount);
+        if (animation.state == AnimationMainState.Move)
+        {
+            ExecuteMoveBlender(entity, animation, name, out frameCount);
+        }
+        else if (animation.state == AnimationMainState.Skill)
+        {
+            ExecuteAnyMotion(entity, animation, name, frameId, out frameCount);
+        }
+
+
         // }
         // else
         // {
@@ -115,7 +157,7 @@ public sealed partial class GameEntity : Entity
 
         if (IsRotating)
         {
-            ExecuteRotate(entity);
+            ExecuteRotate(entity, animation);
         }
 
         if (index == frameCount)
@@ -140,12 +182,25 @@ public sealed partial class GameEntity : Entity
 
         var dir = entity.position.rotate * LVector3.forward;
 
-        Debug.DrawRay(entity.position.value.ToVector3(), dir.ToVector3() * 3f, Color.red, 1);
+        Debug.DrawRay(entity.position.value.ToVector3(), dir.ToVector3() * 3f, Color.red, 0.3f);
 
         var worldMoveDir = animation.inputParams;
         var heroDir = dir;
 
-        
+        var w2D = worldMoveDir.YZero();
+        var h2D = heroDir.YZero();
+
+        LFloat angleLf = LMath.AngleInt(h2D, w2D);
+
+        Debug.LogFormat($" angleLF {angleLf} ");
+
+        if (angleLf._val <= 10 * LFloat.Precision)
+        {
+            entity.position.rotate = LQuaternion.LookRotation(w2D);
+            StopRotate(animation);
+        }
+
+
     }
 
 
@@ -157,6 +212,8 @@ public sealed partial class GameEntity : Entity
         var worldMoveDir = animation.inputParams;
         var heroDir = entity.position.rotate * LVector3.forward;
 
+        var inputOrigin = animation.originInput;
+
         // Debug.LogError($"worldMoveDir{worldMoveDir}");
 
         if (worldMoveDir.x == 0 && worldMoveDir.z == 0)
@@ -166,8 +223,7 @@ public sealed partial class GameEntity : Entity
             if (IsRotating)
             {
                 // Debug.LogError($"立即暂停");
-                IsRotating = false;
-                PlayAnimation(animation, "Idle_Wait_A");
+                StopRotate(animation);
             }
         }
 
@@ -178,7 +234,7 @@ public sealed partial class GameEntity : Entity
 
         Debug.DrawRay(entity.position.value.ToVector3(), heroDir2D.ToVector3() * 3, Color.blue, 10f);
 
-        Debug.DrawRay(entity.position.value.ToVector3(), worldMoveDir2D.ToVector3() * 3, Color.yellow, 10f);
+        // Debug.DrawRay(entity.position.value.ToVector3(), worldMoveDir2D.ToVector3() * 3, Color.yellow, 10f);
 
         LFloat angleLf = LMath.AngleInt(heroDir2D, worldMoveDir2D);
         if (worldMoveDir2D.magnitude._val < 100)
@@ -191,7 +247,7 @@ public sealed partial class GameEntity : Entity
 
 
         //先旋转 再移动
-        if (angleLf._val > 30 * LFloat.Precision)
+        if (angleLf._val >= 30 * LFloat.Precision)
         {
             var clip = isRotateToLeft ? GameSetting.ARC_ROTATE_LEFT : GameSetting.ARC_ROTATE_RIGHT;
             //大角度旋转
@@ -209,8 +265,17 @@ public sealed partial class GameEntity : Entity
         }
         else if (angleLf._val > 10 * LFloat.Precision)
         {
+            var clip = isRotateToLeft ? GameSetting.ARC_ROTATE_LEFT : GameSetting.ARC_ROTATE_RIGHT;
             //小角度旋转
             frameCount = uint.MaxValue;
+
+            Debug.Log($"<color=red> 小角度旋转 isRotateToLeft {isRotateToLeft} frameCount  {frameCount}</color>");
+
+            // IsRotating = true;
+
+            // IsLeftRotate = isRotateToLeft;
+            entity.position.rotate = LQuaternion.LookRotation(worldMoveDir2D);
+            StopRotate(animation);
         }
         else
         {
@@ -227,6 +292,26 @@ public sealed partial class GameEntity : Entity
                 frameCount = (uint)node.FrameCount;
             }
 
+            // var inputMoveDir = animation.inputParams;
+            // inputMoveDir._z = (inputMoveDir._z < 0) ? 0 : inputMoveDir._z;
+
+
+            // var intX = inputMoveDir._x / SCALE_X;
+            // var intZ = inputMoveDir._z / SCALE_Z;
+
+            var entityForward = entity.position.rotate * LVector3.forward;
+            entityForward = entityForward.Normalize();
+            entity.position.value += entityForward * (inputOrigin.y / SCALE_Z) / WALK_SCALE;
+
+            // float x = inputMoveDir._x * LFloat.PrecisionFactor;
+            float y = inputOrigin._y * LFloat.PrecisionFactor;
+
+            // Debug.Log($"<color=red>  delta {entityForward}       {inputOrigin.y}  </color>");
+
+            // animator.SetFloat(XKEY, x);
+            animator.SetFloat(YKEY, y);
+
+            PlayAnimation(animation, GameSetting.WalkMove);
         }
 
 
@@ -302,6 +387,12 @@ public sealed partial class GameEntity : Entity
         // animator.SetFloat(YKEY, y);
     }
 
+    private void StopRotate(AnimationComponent animation)
+    {
+        IsRotating = false;
+        PlayAnimation(animation, "Idle_Wait_A");
+    }
+
     private void ExecuteAnyMotion(GameEntity entity, AnimationComponent animation, string name, int frameId, out uint frameCount)
     {
         var cfg = AnimationUtil.GetMoveMotion(name);
@@ -311,11 +402,23 @@ public sealed partial class GameEntity : Entity
         var deltaY = (frameId < cfg.PositionYCurveCount) ? cfg.GetPositionYCurve(frameId).Value : 0f;
         var deltaZ = (frameId < cfg.PositionZCurveCount) ? cfg.GetPositionZCurve(frameId).Value : 0f;
 
-        var intX = (int)(deltaX * LFloat.Precision) / SCALE_X;
 
-        var intZ = (int)(deltaZ * LFloat.Precision) / SCALE_Z;
+        var deltaDir = new Vector3(deltaX / SCALE_X, 0, deltaZ / SCALE_Z);
+        var realAngle = entity.position.rotate.eulerAngles.ToVector3().y;
+        var realDelta = Quaternion.AngleAxis(realAngle, Vector3.up) * deltaDir;
 
-        entity.position.value += new LVector3(true, intX, 0, intZ);
+        entity.position.value += realDelta.ToLVector3();
+
+
+        // var intX = (int)(deltaX * LFloat.Precision) / SCALE_X;
+
+        // var intZ = (int)(deltaZ * LFloat.Precision) / SCALE_Z;
+
+        // var rotate = entity.position.rotate;
+        // var forward = rotate * LVector3.forward;
+        // var _deltaX = (forward * intX).x;
+        // var _deltaY = (forward * intZ).z;
+        // entity.position.value += new LVector3(true, _deltaX, 0, _deltaY);
 
     }
 
@@ -329,7 +432,7 @@ public sealed partial class GameEntity : Entity
         ReturnDefault(animation);
     }
 
-    private void PlayAnimation(AnimationComponent animation, string name)
+    public void PlayAnimation(AnimationComponent animation, string name)
     {
         if (animation.animationName == name) return;
         animation.animationName = name;
@@ -340,7 +443,9 @@ public sealed partial class GameEntity : Entity
 
     private void ReturnDefault(AnimationComponent animation)
     {
+        Debug.Log($"  {animation.animationName}  播放结束, 重置动画为 {GameSetting.ReturnIDLE}  ");
         PlayAnimation(animation, GameSetting.ReturnIDLE);
+        animation.state = AnimationMainState.Move;
         // animation.animationName = GameSetting.ReturnIDLE;
         // animation.PlaySinceStartFrameKey = Contexts.sharedInstance.gameState.tick.value;
         // animation.readyPlay = true;
