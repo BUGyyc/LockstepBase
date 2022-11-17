@@ -14,7 +14,7 @@ public class TransformSystem : IExecuteSystem, ISystem
     public TransformSystem(Contexts contexts)
     {
 
-        _gameEntities = contexts.game.GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.Position));
+        _gameEntities = contexts.game.GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.Position, GameMatcher.LocalId));
     }
 
 
@@ -22,7 +22,6 @@ public class TransformSystem : IExecuteSystem, ISystem
     {
         foreach (GameEntity entity in _gameEntities.GetEntities())
         {
-            // if (entity.hasBackup) continue;
             var position = entity.position;
             var positionListener = entity.positionListener;
             foreach (var listener in positionListener.value)

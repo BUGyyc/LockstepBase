@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-17 11:16:09 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-17 16:17:30
+ * @Last Modified time: 2022-11-17 19:06:56
  */
 using Entitas;
 using UnityEngine;
@@ -23,7 +23,7 @@ public class BaseMoveSystem : IExecuteSystem, ISystem
     private readonly IGroup<GameEntity> _characterGroup;
     public BaseMoveSystem(Contexts contexts)
     {
-        _characterGroup = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Move, GameMatcher.LocalId));
+        _characterGroup = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Move, GameMatcher.LocalId, GameMatcher.CharacterInput));
     }
 
     void IExecuteSystem.Execute()

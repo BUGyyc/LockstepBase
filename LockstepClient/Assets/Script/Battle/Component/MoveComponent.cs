@@ -5,6 +5,7 @@ public class MoveComponent : IComponent
 {
     public LFloat speed;
     public MoveState moveState;
+    public LVector3 moveDir;
 }
 
 

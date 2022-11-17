@@ -11,19 +11,21 @@ public partial class GameEntity {
     public MoveComponent move { get { return (MoveComponent)GetComponent(GameComponentsLookup.Move); } }
     public bool hasMove { get { return HasComponent(GameComponentsLookup.Move); } }
 
-    public void AddMove(Lockstep.LFloat newSpeed, MoveState newMoveState) {
+    public void AddMove(Lockstep.LFloat newSpeed, MoveState newMoveState, Lockstep.LVector3 newMoveDir) {
         var index = GameComponentsLookup.Move;
         var component = (MoveComponent)CreateComponent(index, typeof(MoveComponent));
         component.speed = newSpeed;
         component.moveState = newMoveState;
+        component.moveDir = newMoveDir;
         AddComponent(index, component);
     }
 
-    public void ReplaceMove(Lockstep.LFloat newSpeed, MoveState newMoveState) {
+    public void ReplaceMove(Lockstep.LFloat newSpeed, MoveState newMoveState, Lockstep.LVector3 newMoveDir) {
         var index = GameComponentsLookup.Move;
         var component = (MoveComponent)CreateComponent(index, typeof(MoveComponent));
         component.speed = newSpeed;
         component.moveState = newMoveState;
+        component.moveDir = newMoveDir;
         ReplaceComponent(index, component);
     }
 

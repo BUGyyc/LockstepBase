@@ -17,6 +17,12 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
         _entity = entity;
         _entity.AddPositionListener(this);
 
+        if (_entity.position != null)
+        {
+            transform.position = _entity.position.value.ToVector3();
+            transform.rotation = _entity.position.rotate.ToQuaternion();
+        }
+
         //lv3 = this.transform.position.ToLVector3();
 
         //transform.position = 
@@ -66,6 +72,10 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
 
     }
 
-
+    public void SetLocationRightNow(GameEntity entity, LVector3 value, LQuaternion rotate)
+    {
+        transform.position = value.ToVector3();
+        transform.rotation = rotate.ToQuaternion();
+    }
 }
 

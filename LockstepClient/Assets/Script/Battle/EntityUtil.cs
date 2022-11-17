@@ -44,16 +44,37 @@ public static class EntityUtil
         return com;
     }
 
+    public static GameEntity CreateSimpleHero(byte actorId)
+    {
+        GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
+        AddBaseComponent(gameEntity, actorId, EntityType.Hero);
+
+
+        gameEntity.AddCharacterInput(0, LVector2.zero, LVector3.zero);
+        gameEntity.AddMove(GameSetting.HERO_BASE_SPEED, MoveState.Idle, LVector3.zero);
+        gameEntity.AddCharacterAttr(LFloat.one * 100, LFloat.one * 100);
+        gameEntity.AddSkill(0, 0);
+
+        int index = actorId;
+        gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward, Lockstep.LQuaternion.identity);
+
+        var go = LoadEntityView(gameEntity, GameSetting.HeroPrefabPath, true);
+
+        return gameEntity;
+    }
+
     public static GameEntity CreateCharacterEntity(byte actorId)
     {
         GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
-        gameEntity.AddId(actorId);
-        gameEntity.AddActorId(actorId);
-        gameEntity.AddLocalId(AutoCreateEntityID);
+        // gameEntity.AddId(AutoCreateEntityID);
+        // gameEntity.AddActorId(actorId);
+        // gameEntity.AddLocalId(AutoCreateEntityID);
+        AddBaseComponent(gameEntity, actorId, EntityType.Hero);
+
         gameEntity.AddVelocity(BEPUutilities.Vector2.Zero);
 
         gameEntity.AddCharacterInput(0, LVector2.zero, LVector3.zero);
-        gameEntity.AddMove(GameSetting.HERO_BASE_SPEED, MoveState.Idle);
+        gameEntity.AddMove(GameSetting.HERO_BASE_SPEED, MoveState.Idle, LVector3.zero);
 
         gameEntity.AddCharacterAttr(LFloat.one * 100, LFloat.one * 100);
 
@@ -73,7 +94,7 @@ public static class EntityUtil
         };
         gameEntity.AddComponent(GameComponentsLookup.Animation, animation);
         // gameEntity.Ad
-        var go = LoadEntityView(gameEntity, GameSetting.HeroPrefabPath);
+        var go = LoadEntityView(gameEntity, GameSetting.HeroPrefabPath, true);
 
         if (go != null)
         {
@@ -81,31 +102,32 @@ public static class EntityUtil
             if (aniBindEntity) aniBindEntity.SetGameEntity(gameEntity);
         }
 
-        AutoCreateEntityID++;
         return gameEntity;
     }
 
 
-    public static GameEntity CreateBulletEntity(byte actorId)
+    public static GameEntity CreateBulletEntity(byte actorId, GameEntity shooter, bool initSetPosition = true)
     {
         GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
-        gameEntity.AddId(actorId);
-        gameEntity.AddActorId(actorId);
-        gameEntity.AddLocalId(AutoCreateEntityID++);
-        // gameEntity.AddVelocity(BEPUutilities.Vector2.Zero);
+        AddBaseComponent(gameEntity, actorId, EntityType.Bullet);
+
+        gameEntity.AddPosition(shooter.position.value + LVector3.up, shooter.position.rotate);
         gameEntity.AddBullet(LFloat.one);
-        gameEntity.AddMove(LFloat.one, MoveState.Walk);
 
+        var forward = shooter.position.rotate * LVector3.forward;
+
+        gameEntity.AddMove(GameSetting.BULLET_SPEED, MoveState.Walk, forward);
         var go = LoadEntityView(gameEntity, GameSetting.BulletPrefab);
-
-        // if (go != null)
-        // {
-        //     var aniBindEntity = go.GetComponentInChildren<AnimatorBindEntity>();
-        //     if (aniBindEntity) aniBindEntity.SetGameEntity(gameEntity);
-        // }
-
-
         return gameEntity;
+    }
+
+    public static void AddBaseComponent(GameEntity gameEntity, byte actorId, EntityType type)
+    {
+        gameEntity.AddId(AutoCreateEntityID);
+        gameEntity.AddActorId(actorId);
+        gameEntity.AddLocalId(AutoCreateEntityID);
+        gameEntity.AddEntityType(type);
+        AutoCreateEntityID++;
     }
 
 
@@ -118,9 +140,9 @@ public static class EntityUtil
         return null;
     }
 
-    private static UnityEngine.GameObject LoadEntityView(GameEntity entity, string path)
+    private static UnityEngine.GameObject LoadEntityView(GameEntity entity, string path, bool isLocalMaster = false)
     {
-        bool isLocalMaster = entity.actorId.value == ActionWorld.Instance.LocalCharacterEntityId;
+        // bool isLocalMaster = entity.actorId.value == ActionWorld.Instance.LocalCharacterEntityId;
         var obj = Resources.Load<GameObject>(path);
         var viewGo = GameObject.Instantiate(obj);
         if (viewGo != null)

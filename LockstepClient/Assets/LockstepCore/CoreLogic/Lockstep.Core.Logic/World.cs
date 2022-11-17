@@ -99,7 +99,7 @@ namespace Lockstep.Core.Logic
             }
 
 
-            //游戏世界内全部 GameEntity ??
+            //NOTE：因为快照数据的GameEntity一定不含LocalId，所以这里是取得游戏世界下所有GameEntity
             GameEntity[] entities = ContextExtension.GetEntities((IContext<GameEntity>)(object)Contexts.game, GameMatcher.LocalId);
             //目标帧号的备份 GameEntity
             List<GameEntity> list = (from e in ContextExtension.GetEntities((IContext<GameEntity>)(object)Contexts.game, GameMatcher.Backup)

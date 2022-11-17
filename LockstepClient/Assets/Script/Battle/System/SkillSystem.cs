@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-17 15:22:43 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-17 16:43:44
+ * @Last Modified time: 2022-11-17 19:26:20
  */
 
 using System.Collections.Generic;
@@ -63,7 +63,7 @@ public class SkillSystem : IExecuteSystem, ISystem
 
         //TODO:这里的创建可能需要挪到Command,因为子弹也是Entity
 
-        EntityUtil.CreateBulletEntity(entityId);
+        EntityUtil.CreateBulletEntity(entityId, entity);
 
     }
 }
