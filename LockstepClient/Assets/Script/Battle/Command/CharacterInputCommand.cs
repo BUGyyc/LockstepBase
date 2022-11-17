@@ -7,13 +7,19 @@ using System;
 [Serializable]
 public class CharacterInputCommand : ICommand, ISerializable
 {
-    //public int EntityConfigId;
-
-    public LVector3 moveSpeed;
-
     public uint entityId;
 
-    public LVector2 inputOriginData;
+    /// <summary>
+    /// 等同于摇杆、WASD
+    /// </summary>
+    public LVector2 moveDir;
+
+    /// <summary>
+    /// 摄像机朝向，这个不需要频繁传输
+    /// </summary>
+    public LVector3 viewDir;
+
+    // public bool mouse
 
     // public uint moveDir;
 
@@ -21,19 +27,19 @@ public class CharacterInputCommand : ICommand, ISerializable
 
     public void Execute(InputEntity e)
     {
-        UnityEngine.Debug.Log($" System 响应键盘输入 {moveSpeed}");
-        e.AddCharacterInput(moveSpeed, inputOriginData, entityId);
+        UnityEngine.Debug.Log($" System 响应键盘输入 {moveDir}");
+        e.AddCharacterInput(entityId, moveDir, viewDir);
 
     }
 
     public void Serialize(Serializer writer)
     {
-        writer.Put(moveSpeed._x);
-        writer.Put(moveSpeed._y);
-        writer.Put(moveSpeed._z);
+        writer.Put(viewDir._x);
+        writer.Put(viewDir._y);
+        writer.Put(viewDir._z);
 
-        writer.Put(inputOriginData._x);
-        writer.Put(inputOriginData._y);
+        writer.Put(moveDir._x);
+        writer.Put(moveDir._y);
         // writer.Put(inputOriginData._z);
 
         writer.Put(entityId);
@@ -44,12 +50,12 @@ public class CharacterInputCommand : ICommand, ISerializable
         int x = reader.GetInt();
         int y = reader.GetInt();
         int z = reader.GetInt();
-        moveSpeed = new LVector3(true, x, y, z);
+        viewDir = new LVector3(true, x, y, z);
 
         int a = reader.GetInt();
         int b = reader.GetInt();
 
-        inputOriginData = new LVector2(true, a, b);
+        moveDir = new LVector2(true, a, b);
 
         entityId = reader.GetUInt();
     }

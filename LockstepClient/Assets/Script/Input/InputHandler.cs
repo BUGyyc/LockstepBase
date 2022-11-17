@@ -53,24 +53,21 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
     public void OnMove(InputAction.CallbackContext context)
     {
         //throw new System.NotImplementedException();
-
         var move = context.ReadValue<Vector2>();
 
         var v3 = new Vector3(move.x, 0, move.y);
-
-
         // var lv3 = v3.ToLVector3();
         var moveDir = GetMoveDir(v3);
         var viewDir = Camera.main.transform.forward;
         var lv3 = GetTargetDir(moveDir, viewDir);
-
-        Debug.Log($"<color=yellow>  键盘输入   key {move}   target {lv3}   </color>");
+        var lv2 = new LVector2(lv3.x, lv3.z);
+        Debug.Log($"<color=yellow>  键盘输入   key {lv2}   target {lv3}   </color>");
 
         //这里应当传入本地EntityID
         ActionWorld.Instance.Execute(new CharacterInputCommand
         {
-            moveSpeed = lv3,
-            inputOriginData = new LVector2(true, (int)(move.x * LFloat.Precision), (int)(move.y * LFloat.Precision)),
+            moveDir = lv2,
+            viewDir = viewDir.ToLVector3(),
             entityId = ActionWorld.Instance.LocalCharacterEntityId
         });
 

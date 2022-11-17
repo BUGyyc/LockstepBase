@@ -8,10 +8,10 @@ using Lockstep.Game.Interfaces;
 using Lockstep.Game;
 using UnityEngine;
 
-public class MoveSystem : IExecuteSystem, ISystem
+public class TransformSystem : IExecuteSystem, ISystem
 {
     private readonly IGroup<GameEntity> _gameEntities;
-    public MoveSystem(Contexts contexts)
+    public TransformSystem(Contexts contexts)
     {
 
         _gameEntities = contexts.game.GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.Position));
@@ -30,18 +30,6 @@ public class MoveSystem : IExecuteSystem, ISystem
                 listener.OnPosition(entity, position.value, position.rotate);
             }
         }
-
-        // for (var i = 0; i < entitys.Length; i++)
-        // {
-        //     var entity = entitys[i];
-        //     if (entity.hasBackup) continue;
-        //     var position = entity.position;
-        //     var positionListener = entitys[i].positionListener;
-        //     foreach (var listener in positionListener.value)
-        //     {
-        //         listener.OnPosition(entity, position.value);
-        //     }
-        // }
     }
 }
 

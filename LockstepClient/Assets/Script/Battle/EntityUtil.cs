@@ -2,6 +2,7 @@
 using Entitas.Unity;
 using UnityEngine;
 using System.Collections.Generic;
+using Lockstep;
 public static class EntityUtil
 {
 
@@ -50,6 +51,9 @@ public static class EntityUtil
         gameEntity.AddActorId(actorId);
         gameEntity.AddLocalId(AutoCreateEntityID);
         gameEntity.AddVelocity(BEPUutilities.Vector2.Zero);
+
+        gameEntity.AddCharacterInput(0, LVector2.zero, LVector3.zero);
+        gameEntity.AddMove(GameSetting.HERO_BASE_SPEED, MoveState.Idle);
 
         int index = actorId;
 

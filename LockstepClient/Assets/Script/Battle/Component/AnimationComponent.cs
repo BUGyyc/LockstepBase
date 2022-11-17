@@ -113,7 +113,7 @@ public sealed partial class GameEntity : Entity
             animator = obj.GetComponentInChildren<Animator>();
         }
         Debug.Log($"播放动画 {animation.animationName}");
-        animator.CrossFadeInFixedTime(animation.animationName, 0.1f);
+        if (animator != null) animator.CrossFadeInFixedTime(animation.animationName, 0.1f);
 
     }
 
@@ -309,7 +309,7 @@ public sealed partial class GameEntity : Entity
             // Debug.Log($"<color=red>  delta {entityForward}       {inputOrigin.y}  </color>");
 
             // animator.SetFloat(XKEY, x);
-            animator.SetFloat(YKEY, y);
+            if (animator != null) animator.SetFloat(YKEY, y);
 
             PlayAnimation(animation, GameSetting.WalkMove);
         }

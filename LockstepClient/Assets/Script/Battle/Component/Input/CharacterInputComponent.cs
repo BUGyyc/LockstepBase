@@ -2,12 +2,13 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-03 16:56:16 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-04 10:26:13
+ * @Last Modified time: 2022-11-17 12:06:22
  */
 using Entitas;
 using Lockstep;
 
 [Input]
+[Game]
 public class CharacterInputComponent : IComponent
 {
     //public MotionState state;
@@ -16,11 +17,14 @@ public class CharacterInputComponent : IComponent
     /// <summary>
     /// 移动速度
     /// </summary>
-    public LVector3 moveSpeed;
+    // public LVector3 moveSpeed;
 
-    public LVector2 inputOriginData;
+    // public LVector2 inputOriginData;
 
     public uint entityId;
+
+    public LVector2 moveDir;
+    public LVector3 viewDir;
 
     /// <summary>
     /// 相机视角

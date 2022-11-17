@@ -10,33 +10,37 @@ public static class GameComponentsLookup {
 
     public const int Animation = 0;
     public const int Character = 1;
-    public const int ActorId = 2;
-    public const int Asset = 3;
-    public const int Backup = 4;
-    public const int Controllable = 5;
-    public const int Destination = 6;
-    public const int Destroyed = 7;
-    public const int Hashable = 8;
-    public const int Health = 9;
-    public const int Id = 10;
-    public const int LocalId = 11;
-    public const int MaxSpeed = 12;
-    public const int Navigable = 13;
-    public const int Position = 14;
-    public const int Radius = 15;
-    public const int RvoAgentSettings = 16;
-    public const int Team = 17;
-    public const int Velocity = 18;
-    public const int Model = 19;
-    public const int PhysicsGravity = 20;
-    public const int PositionListener = 21;
-    public const int Test = 22;
+    public const int CharacterInput = 2;
+    public const int ActorId = 3;
+    public const int Asset = 4;
+    public const int Backup = 5;
+    public const int Controllable = 6;
+    public const int Destination = 7;
+    public const int Destroyed = 8;
+    public const int Hashable = 9;
+    public const int Health = 10;
+    public const int Id = 11;
+    public const int LocalId = 12;
+    public const int MaxSpeed = 13;
+    public const int Navigable = 14;
+    public const int Position = 15;
+    public const int Radius = 16;
+    public const int RvoAgentSettings = 17;
+    public const int Team = 18;
+    public const int Velocity = 19;
+    public const int Model = 20;
+    public const int Move = 21;
+    public const int PhysicsGravity = 22;
+    public const int PositionListener = 23;
+    public const int Skill = 24;
+    public const int Test = 25;
 
-    public const int TotalComponents = 23;
+    public const int TotalComponents = 26;
 
     public static readonly string[] componentNames = {
         "Animation",
         "Character",
+        "CharacterInput",
         "ActorId",
         "Asset",
         "Backup",
@@ -55,14 +59,17 @@ public static class GameComponentsLookup {
         "Team",
         "Velocity",
         "Model",
+        "Move",
         "PhysicsGravity",
         "PositionListener",
+        "Skill",
         "Test"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(AnimationComponent),
         typeof(CharacterComponent),
+        typeof(CharacterInputComponent),
         typeof(Lockstep.Core.State.Game.ActorIdComponent),
         typeof(Lockstep.Core.State.Game.AssetComponent),
         typeof(Lockstep.Core.State.Game.BackupComponent),
@@ -81,8 +88,10 @@ public static class GameComponentsLookup {
         typeof(Lockstep.Core.State.Game.TeamComponent),
         typeof(Lockstep.Core.State.Game.VelocityComponent),
         typeof(ModelComponent),
+        typeof(MoveComponent),
         typeof(PhysicsGravityComponent),
         typeof(PositionListenerComponent),
+        typeof(SkillComponent),
         typeof(TestComponent)
     };
 }

@@ -83,6 +83,11 @@ namespace Lockstep
             return new LVector3(true, self._x, 0, self._z);
         }
 
+        public static LVector2 ToLVector2(this LVector3 self)
+        {
+            return new LVector2(true, self._x, self._z);
+        }
+
 
         // public static LVector3 ToLVector3(this UnityEngine.Vector3 self)
         // {

@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-03 17:37:09 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-11 18:11:50
+ * @Last Modified time: 2022-11-17 14:07:48
  */
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +51,7 @@ public class ExecuteSkillInput : IExecuteSystem, ISystem
         {
             var skillID = item.skillInput.skillId;
             var entityId = item.skillInput.entityId;
-            UnityEngine.Debug.LogError($"Entity {entityId} 释放技能 {skillID} ");
+            UnityEngine.Debug.Log($"Entity {entityId} 释放技能 {skillID} ");
 
             var gameEntity = _gameContext.GetEntityWithLocalId(entityId + EntityUtil.BaseCharacterEntityID);
 

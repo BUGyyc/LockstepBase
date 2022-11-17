@@ -4,7 +4,7 @@ public static class GameSetting
     public const string WalkMove = "WalkMove";
     public const string ReturnIDLE = "WalkMove";
 
-    public const string HeroPrefabPath = "Prefabs/ClazyRunner";
+    public const string HeroPrefabPath = "Prefabs/Hero";
 
     public const string HeroInitAnimationName = "WalkMove";
 
@@ -17,6 +17,8 @@ public static class GameSetting
 
     public const int ARC_ROTATE_SPEED = 180 * LFloat.Precision;//每秒旋转的角度范围
 
+
+    public static readonly LFloat HERO_BASE_SPEED = new LFloat(true, 5000);
 
     public static readonly LFloat Key_Time = new LFloat(true, 33);
 }
