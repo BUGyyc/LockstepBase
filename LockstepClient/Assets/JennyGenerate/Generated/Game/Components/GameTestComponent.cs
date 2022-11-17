@@ -11,17 +11,21 @@ public partial class GameEntity {
     public TestComponent test { get { return (TestComponent)GetComponent(GameComponentsLookup.Test); } }
     public bool hasTest { get { return HasComponent(GameComponentsLookup.Test); } }
 
-    public void AddTest(uint newTestID) {
+    public void AddTest(uint newTestID, string newName, System.Collections.Generic.List<int> newList) {
         var index = GameComponentsLookup.Test;
         var component = (TestComponent)CreateComponent(index, typeof(TestComponent));
         component.testID = newTestID;
+        component.name = newName;
+        component.list = newList;
         AddComponent(index, component);
     }
 
-    public void ReplaceTest(uint newTestID) {
+    public void ReplaceTest(uint newTestID, string newName, System.Collections.Generic.List<int> newList) {
         var index = GameComponentsLookup.Test;
         var component = (TestComponent)CreateComponent(index, typeof(TestComponent));
         component.testID = newTestID;
+        component.name = newName;
+        component.list = newList;
         ReplaceComponent(index, component);
     }
 

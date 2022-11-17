@@ -223,9 +223,9 @@ public sealed partial class GameEntity : Entity
 
     // public bool hasDestinationListener => HasComponent(0);
 
-    public PositionListenerComponent positionListener => (PositionListenerComponent)GetComponent(GameComponentsLookup.PositionListener);
+    // public PositionListenerComponent positionListener => (PositionListenerComponent)GetComponent(GameComponentsLookup.PositionListener);
 
-    public bool hasPositionListener => HasComponent(GameComponentsLookup.PositionListener);
+    // public bool hasPositionListener => HasComponent(GameComponentsLookup.PositionListener);
 
 
     // public CharacterComponent character => (CharacterComponent)GetComponent(GameComponentsLookup.Character);
@@ -562,26 +562,26 @@ public sealed partial class GameEntity : Entity
     //     }
     // }
 
-    public void AddPositionListener(List<IPositionListener> newValue)
-    {
-        int num = GameComponentsLookup.PositionListener;
-        PositionListenerComponent positionListenerComponent = (PositionListenerComponent)CreateComponent(num, typeof(PositionListenerComponent));
-        positionListenerComponent.value = newValue;
-        AddComponent(num, positionListenerComponent);
-    }
+    // public void AddPositionListener(List<IPositionListener> newValue)
+    // {
+    //     int num = GameComponentsLookup.PositionListener;
+    //     PositionListenerComponent positionListenerComponent = (PositionListenerComponent)CreateComponent(num, typeof(PositionListenerComponent));
+    //     positionListenerComponent.value = newValue;
+    //     AddComponent(num, positionListenerComponent);
+    // }
 
-    public void ReplacePositionListener(List<IPositionListener> newValue)
-    {
-        int num = GameComponentsLookup.PositionListener;
-        PositionListenerComponent positionListenerComponent = (PositionListenerComponent)CreateComponent(num, typeof(PositionListenerComponent));
-        positionListenerComponent.value = newValue;
-        ReplaceComponent(num, positionListenerComponent);
-    }
+    // public void ReplacePositionListener(List<IPositionListener> newValue)
+    // {
+    //     int num = GameComponentsLookup.PositionListener;
+    //     PositionListenerComponent positionListenerComponent = (PositionListenerComponent)CreateComponent(num, typeof(PositionListenerComponent));
+    //     positionListenerComponent.value = newValue;
+    //     ReplaceComponent(num, positionListenerComponent);
+    // }
 
-    public void RemovePositionListener()
-    {
-        RemoveComponent(GameComponentsLookup.PositionListener);
-    }
+    // public void RemovePositionListener()
+    // {
+    //     RemoveComponent(GameComponentsLookup.PositionListener);
+    // }
 
     public void AddPositionListener(IPositionListener value)
     {

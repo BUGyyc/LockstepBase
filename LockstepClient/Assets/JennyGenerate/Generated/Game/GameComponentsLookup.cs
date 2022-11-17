@@ -6,8 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public static class GameComponentsLookup
-{
+public static class GameComponentsLookup {
 
     public const int Animation = 0;
     public const int Character = 1;
@@ -30,9 +29,8 @@ public static class GameComponentsLookup
     public const int Velocity = 18;
     public const int Model = 19;
     public const int PhysicsGravity = 20;
-    public const int Test = 21;
-
-    public const int PositionListener = 22;
+    public const int PositionListener = 21;
+    public const int Test = 22;
 
     public const int TotalComponents = 23;
 
@@ -58,8 +56,8 @@ public static class GameComponentsLookup
         "Velocity",
         "Model",
         "PhysicsGravity",
-        "Test",
-        "PositionListener"
+        "PositionListener",
+        "Test"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -84,7 +82,7 @@ public static class GameComponentsLookup
         typeof(Lockstep.Core.State.Game.VelocityComponent),
         typeof(ModelComponent),
         typeof(PhysicsGravityComponent),
-        typeof(TestComponent),
-        typeof(PositionListenerComponent)
+        typeof(PositionListenerComponent),
+        typeof(TestComponent)
     };
 }
