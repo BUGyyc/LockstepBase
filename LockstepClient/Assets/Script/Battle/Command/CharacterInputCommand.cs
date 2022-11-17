@@ -19,6 +19,9 @@ public class CharacterInputCommand : ICommand, ISerializable
     /// </summary>
     public LVector3 viewDir;
 
+    // public bool leftMousePressed;
+    // public bool rightMousePressed;
+
     // public bool mouse
 
     // public uint moveDir;
@@ -43,6 +46,8 @@ public class CharacterInputCommand : ICommand, ISerializable
         // writer.Put(inputOriginData._z);
 
         writer.Put(entityId);
+        // writer.Put(leftMousePressed);
+        // writer.Put(rightMousePressed);
     }
 
     public void Deserialize(Deserializer reader)
@@ -58,5 +63,7 @@ public class CharacterInputCommand : ICommand, ISerializable
         moveDir = new LVector2(true, a, b);
 
         entityId = reader.GetUInt();
+        // leftMousePressed = reader.GetBool();
+        // rightMousePressed = reader.GetBool();
     }
 }

@@ -6,32 +6,28 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public partial class GameEntity
-{
+public partial class GameEntity {
 
     public MoveComponent move { get { return (MoveComponent)GetComponent(GameComponentsLookup.Move); } }
     public bool hasMove { get { return HasComponent(GameComponentsLookup.Move); } }
 
-    public void AddMove(Lockstep.LFloat newSpeed, MoveState state)
-    {
+    public void AddMove(Lockstep.LFloat newSpeed, MoveState newMoveState) {
         var index = GameComponentsLookup.Move;
         var component = (MoveComponent)CreateComponent(index, typeof(MoveComponent));
         component.speed = newSpeed;
-        component.moveState = state;
+        component.moveState = newMoveState;
         AddComponent(index, component);
     }
 
-    public void ReplaceMove(Lockstep.LFloat newSpeed, MoveState state)
-    {
+    public void ReplaceMove(Lockstep.LFloat newSpeed, MoveState newMoveState) {
         var index = GameComponentsLookup.Move;
         var component = (MoveComponent)CreateComponent(index, typeof(MoveComponent));
         component.speed = newSpeed;
-        component.moveState = state;
+        component.moveState = newMoveState;
         ReplaceComponent(index, component);
     }
 
-    public void RemoveMove()
-    {
+    public void RemoveMove() {
         RemoveComponent(GameComponentsLookup.Move);
     }
 }
@@ -44,17 +40,13 @@ public partial class GameEntity
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed partial class GameMatcher
-{
+public sealed partial class GameMatcher {
 
     static Entitas.IMatcher<GameEntity> _matcherMove;
 
-    public static Entitas.IMatcher<GameEntity> Move
-    {
-        get
-        {
-            if (_matcherMove == null)
-            {
+    public static Entitas.IMatcher<GameEntity> Move {
+        get {
+            if (_matcherMove == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Move);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherMove = matcher;

@@ -9,36 +9,40 @@
 public static class GameComponentsLookup {
 
     public const int Animation = 0;
-    public const int Character = 1;
-    public const int CharacterInput = 2;
-    public const int ActorId = 3;
-    public const int Asset = 4;
-    public const int Backup = 5;
-    public const int Controllable = 6;
-    public const int Destination = 7;
-    public const int Destroyed = 8;
-    public const int Hashable = 9;
-    public const int Health = 10;
-    public const int Id = 11;
-    public const int LocalId = 12;
-    public const int MaxSpeed = 13;
-    public const int Navigable = 14;
-    public const int Position = 15;
-    public const int Radius = 16;
-    public const int RvoAgentSettings = 17;
-    public const int Team = 18;
-    public const int Velocity = 19;
-    public const int Model = 20;
-    public const int Move = 21;
-    public const int PhysicsGravity = 22;
-    public const int PositionListener = 23;
-    public const int Skill = 24;
-    public const int Test = 25;
+    public const int Bullet = 1;
+    public const int CharacterAttr = 2;
+    public const int Character = 3;
+    public const int CharacterInput = 4;
+    public const int ActorId = 5;
+    public const int Asset = 6;
+    public const int Backup = 7;
+    public const int Controllable = 8;
+    public const int Destination = 9;
+    public const int Destroyed = 10;
+    public const int Hashable = 11;
+    public const int Health = 12;
+    public const int Id = 13;
+    public const int LocalId = 14;
+    public const int MaxSpeed = 15;
+    public const int Navigable = 16;
+    public const int Position = 17;
+    public const int Radius = 18;
+    public const int RvoAgentSettings = 19;
+    public const int Team = 20;
+    public const int Velocity = 21;
+    public const int Model = 22;
+    public const int Move = 23;
+    public const int PhysicsGravity = 24;
+    public const int PositionListener = 25;
+    public const int Skill = 26;
+    public const int Test = 27;
 
-    public const int TotalComponents = 26;
+    public const int TotalComponents = 28;
 
     public static readonly string[] componentNames = {
         "Animation",
+        "Bullet",
+        "CharacterAttr",
         "Character",
         "CharacterInput",
         "ActorId",
@@ -68,6 +72,8 @@ public static class GameComponentsLookup {
 
     public static readonly System.Type[] componentTypes = {
         typeof(AnimationComponent),
+        typeof(BulletComponent),
+        typeof(CharacterAttrComponent),
         typeof(CharacterComponent),
         typeof(CharacterInputComponent),
         typeof(Lockstep.Core.State.Game.ActorIdComponent),

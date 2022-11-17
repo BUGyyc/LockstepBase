@@ -6,3 +6,11 @@
 - 帧同步录像
 - 帧同步内确定性物理
 - Timeline
+
+
+
+---
+
+- ActorID  // 表示所属阵营
+- LocalId 
+- Id

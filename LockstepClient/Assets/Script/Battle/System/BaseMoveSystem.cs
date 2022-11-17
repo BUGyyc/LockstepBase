@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-17 11:16:09 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-17 15:09:09
+ * @Last Modified time: 2022-11-17 16:17:30
  */
 using Entitas;
 using UnityEngine;
@@ -67,7 +67,7 @@ public class BaseMoveSystem : IExecuteSystem, ISystem
             var crossV3 = LVector3.Cross(currForward2dNor, speed2dNor);
             bool isRotateToLeft = crossV3._y < 0;
             bool needRotate = angleLf._val >= 20 * LFloat.Precision;
-            Debug.Log($"baseMove  speed2dNor {speed2dNor}   needRotate {needRotate} isRotateToLeft {isRotateToLeft} ");
+            // Debug.Log($"baseMove  speed2dNor {speed2dNor}   needRotate {needRotate} isRotateToLeft {isRotateToLeft} ");
             if (needRotate)
             {
                 //先旋转

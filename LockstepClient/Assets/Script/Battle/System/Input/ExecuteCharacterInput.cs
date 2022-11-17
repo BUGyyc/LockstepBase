@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-03 17:37:09 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-17 14:26:59
+ * @Last Modified time: 2022-11-17 16:40:13
  */
 using System.Collections.Generic;
 using System.Linq;
@@ -25,13 +25,8 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
 
     private readonly GameStateContext _gameStateContext;
 
-
-
     private readonly IGroup<InputEntity> _characterInputs;
 
-    //private uint _localIdCounter;
-
-    //private readonly ActorContext _actorContext;
 
     public ExecuteCharacterInput(Contexts contexts, ServiceContainer serviceContainer)
     {
@@ -62,17 +57,10 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
             if (gameEntity == null)
             {
                 UnityEngine.Debug.LogError($"Entity 不存在  {entityId + EntityUtil.BaseCharacterEntityID}  ");
-                return;
+                continue;
             }
 
-            // gameEntity.position.value += speed;
-
-            // gameEntity.animation.inputParams = speed;
-            // gameEntity.animation.originInput = item.characterInput.inputOriginData;
-
             gameEntity.ReplaceCharacterInput(entityId, speed, item.characterInput.viewDir);
-            // gameEntity.characterInput.moveDir = item.characterInput.moveDir;
-            // gameEntity.characterInput.viewDir = item.characterInput.viewDir;
         }
     }
 }

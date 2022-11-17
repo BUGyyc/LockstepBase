@@ -4,6 +4,8 @@ public static class GameSetting
     public const string WalkMove = "WalkMove";
     public const string ReturnIDLE = "WalkMove";
 
+    public const string BulletPrefab = "Prefabs/Hero";
+
     public const string HeroPrefabPath = "Prefabs/Hero";
 
     public const string HeroInitAnimationName = "WalkMove";

@@ -11,19 +11,23 @@ public partial class InputEntity {
     public SkillInputComponent skillInput { get { return (SkillInputComponent)GetComponent(InputComponentsLookup.SkillInput); } }
     public bool hasSkillInput { get { return HasComponent(InputComponentsLookup.SkillInput); } }
 
-    public void AddSkillInput(uint newSkillId, uint newEntityId) {
+    public void AddSkillInput(uint newSkillId, uint newEntityId, bool newLeftMousePressed, bool newRightMousePressed) {
         var index = InputComponentsLookup.SkillInput;
         var component = (SkillInputComponent)CreateComponent(index, typeof(SkillInputComponent));
         component.skillId = newSkillId;
         component.entityId = newEntityId;
+        component.leftMousePressed = newLeftMousePressed;
+        component.rightMousePressed = newRightMousePressed;
         AddComponent(index, component);
     }
 
-    public void ReplaceSkillInput(uint newSkillId, uint newEntityId) {
+    public void ReplaceSkillInput(uint newSkillId, uint newEntityId, bool newLeftMousePressed, bool newRightMousePressed) {
         var index = InputComponentsLookup.SkillInput;
         var component = (SkillInputComponent)CreateComponent(index, typeof(SkillInputComponent));
         component.skillId = newSkillId;
         component.entityId = newEntityId;
+        component.leftMousePressed = newLeftMousePressed;
+        component.rightMousePressed = newRightMousePressed;
         ReplaceComponent(index, component);
     }
 

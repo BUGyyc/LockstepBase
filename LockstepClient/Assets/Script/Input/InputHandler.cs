@@ -18,6 +18,8 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
 
     }
 
+    private bool lastFireState;
+
     public void OnFire(InputAction.CallbackContext context)
     {
         //throw new System.NotImplementedException();
@@ -28,7 +30,20 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
             ActionWorld.Instance.Execute(new SkillInputCommand
             {
                 skillId = 1,
-                entityId = ActionWorld.Instance.LocalCharacterEntityId
+                entityId = ActionWorld.Instance.LocalCharacterEntityId,
+                leftMousePressed = true
+            });
+            lastFireState = true;
+        }
+
+        if (context.canceled && lastFireState)
+        {
+            lastFireState = false;
+            ActionWorld.Instance.Execute(new SkillInputCommand
+            {
+                skillId = 1,
+                entityId = ActionWorld.Instance.LocalCharacterEntityId,
+                leftMousePressed = false
             });
         }
 

@@ -3,7 +3,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-11 17:54:36 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-11 18:30:56
+ * @Last Modified time: 2022-11-17 17:03:22
  */
 using Entitas;
 using Lockstep;
@@ -47,7 +47,7 @@ public class AnimationComponent : IComponent
         set
         {
             _animationName = value;
-            Debug.Log($"value write {value}");
+            // Debug.Log($"value write {value}");
         }
         get
         {
@@ -455,7 +455,7 @@ public sealed partial class GameEntity : Entity
     {
         Debug.Log($"  name  {name}  播放结束 ");
 
-        uint sum = entity.id.value + Contexts.sharedInstance.gameState.tick.value;
+        uint sum = entity.actorId.value + Contexts.sharedInstance.gameState.tick.value;
         int type = (int)sum % 4;
 
         switch (type)

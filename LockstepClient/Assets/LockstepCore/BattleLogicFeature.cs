@@ -15,6 +15,7 @@ namespace Lockstep.Game.Features
 
             // this.Add(new CharacterMoveSystem(contexts));
 
+            Add(new SkillSystem(contexts));
             Add(new BaseMoveSystem(contexts));
 
             //将坐标和朝向传递给 显示层

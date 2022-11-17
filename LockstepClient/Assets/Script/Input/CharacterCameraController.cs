@@ -105,10 +105,10 @@ public class CharacterCameraController : MonoBehaviour
         if (mViewDummyTran == null) return;
 
 
-        if (HasWallBlock(out var point, out var dir))
-        {
-            mViewDummyTran.position = point - 0.3f * dir;
-        }
+        // if (HasWallBlock(out var point, out var dir))
+        // {
+        //     mViewDummyTran.position = point - 0.3f * dir;
+        // }
 
         //if (HasLookAtTf())
         //{

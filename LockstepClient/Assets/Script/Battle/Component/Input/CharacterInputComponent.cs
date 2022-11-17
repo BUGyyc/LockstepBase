@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-03 16:56:16 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-17 12:06:22
+ * @Last Modified time: 2022-11-17 16:30:26
  */
 using Entitas;
 using Lockstep;
@@ -25,6 +25,9 @@ public class CharacterInputComponent : IComponent
 
     public LVector2 moveDir;
     public LVector3 viewDir;
+
+    // public bool leftMousePressed;
+    // public bool rightMousePressed;
 
     /// <summary>
     /// 相机视角

@@ -39,9 +39,9 @@ public class UnityGameService : IViewService
 
     public void LoadView(GameEntity entity, int configId, bool isMaster = false)
     {
-        isMaster = entity.id.value == 0;
+        isMaster = entity.actorId.value == 0;
 
-        Debug.Log($"LoadView   entity.id {entity.id.value}  configId {configId}   isMaster {isMaster}");
+        Debug.Log($"LoadView   entity.id {entity.actorId.value}  configId {configId}   isMaster {isMaster}");
 
         //TODO: pooling    
         var viewGo = UnityEngine.Object.Instantiate(_entityDatabase.Entities[configId]).gameObject;
