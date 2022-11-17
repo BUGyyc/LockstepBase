@@ -28,30 +28,30 @@ public class CharacterInputComponent : IComponent
     //public LVector3 viewDir;
 }
 
-public sealed partial class InputEntity : Entity
-{
-    public CharacterInputComponent characterInput => (CharacterInputComponent)GetComponent(InputComponentsLookup.CharacterInput);
+// public sealed partial class InputEntity : Entity
+// {
+//     public CharacterInputComponent characterInput => (CharacterInputComponent)GetComponent(InputComponentsLookup.CharacterInput);
 
-    public bool HasCharacterInput => HasComponent(InputComponentsLookup.CharacterInput);
+//     public bool HasCharacterInput => HasComponent(InputComponentsLookup.CharacterInput);
 
 
-    public void AddCharacterInputSpeed(LVector3 newValue, LVector2 v2)
-    {
-        int num = InputComponentsLookup.CharacterInput;
-        CharacterInputComponent characterInput = (CharacterInputComponent)CreateComponent(num, typeof(CharacterInputComponent));
-        characterInput.moveSpeed = newValue;
-        characterInput.inputOriginData = v2;
-        AddComponent(num, characterInput);
-    }
+//     public void AddCharacterInputSpeed(LVector3 newValue, LVector2 v2)
+//     {
+//         int num = InputComponentsLookup.CharacterInput;
+//         CharacterInputComponent characterInput = (CharacterInputComponent)CreateComponent(num, typeof(CharacterInputComponent));
+//         characterInput.moveSpeed = newValue;
+//         characterInput.inputOriginData = v2;
+//         AddComponent(num, characterInput);
+//     }
 
-    public void ReplaceCharacterInputSpeed(LVector3 newValue)
-    {
-        int num = InputComponentsLookup.CharacterInput;
-        CharacterInputComponent characterInput = (CharacterInputComponent)CreateComponent(num, typeof(CharacterInputComponent));
-        characterInput.moveSpeed = newValue;
-        ReplaceComponent(num, characterInput);
-    }
-}
+//     public void ReplaceCharacterInputSpeed(LVector3 newValue)
+//     {
+//         int num = InputComponentsLookup.CharacterInput;
+//         CharacterInputComponent characterInput = (CharacterInputComponent)CreateComponent(num, typeof(CharacterInputComponent));
+//         characterInput.moveSpeed = newValue;
+//         ReplaceComponent(num, characterInput);
+//     }
+// }
 
 
 public enum MotionState

@@ -67,8 +67,8 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
 
             // gameEntity.position.value += speed;
 
-            gameEntity.Animation.inputParams = speed;
-            gameEntity.Animation.originInput = item.characterInput.inputOriginData;
+            gameEntity.animation.inputParams = speed;
+            gameEntity.animation.originInput = item.characterInput.inputOriginData;
         }
     }
 }

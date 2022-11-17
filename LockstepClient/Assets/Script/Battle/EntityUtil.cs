@@ -53,7 +53,7 @@ public static class EntityUtil
 
         int index = actorId;
 
-        gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward, Lockstep.LVector3.zero);
+        gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward, Lockstep.LQuaternion.identity);
 
         // gameEntity
 

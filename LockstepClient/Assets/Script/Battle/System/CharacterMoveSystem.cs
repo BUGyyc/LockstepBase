@@ -68,7 +68,7 @@ public class CharacterMoveSystem : IExecuteSystem, ISystem
 
             if (entity.hasAnimation == false) continue;
 
-            var animation = entity.Animation;
+            var animation = entity.animation;//  Animation;
             if (animation.readyPlay)
             {
                 entity.ReadyPlayAnimation(animation, entity);

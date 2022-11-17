@@ -14,9 +14,6 @@ namespace Lockstep.Core.State.Game
 
         public LQuaternion rotate;
     }
-
-
-
 }
 
 

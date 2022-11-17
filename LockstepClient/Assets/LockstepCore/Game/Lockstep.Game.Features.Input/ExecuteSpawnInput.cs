@@ -53,7 +53,7 @@ namespace Lockstep.Game.Features.Input
                 gameEntity.AddActorId(item.actorId.value);
                 gameEntity.AddLocalId(_localIdCounter);
                 gameEntity.AddVelocity(Vector2.Zero);
-                gameEntity.AddPosition(item.coordinate.value, LVector3.zero);
+                gameEntity.AddPosition(item.coordinate.value, LQuaternion.identity);
 
                 //初始动画
                 AnimationComponent animation = new AnimationComponent()

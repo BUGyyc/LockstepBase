@@ -49,8 +49,8 @@ public class ExecuteSkillInput : IExecuteSystem, ISystem
                                      where entity.tick.value == _gameStateContext.tick.value
                                      select entity)
         {
-            var skillID = item.SkillInput.skillId;
-            var entityId = item.SkillInput.entityId;
+            var skillID = item.skillInput.skillId;
+            var entityId = item.skillInput.entityId;
             UnityEngine.Debug.LogError($"Entity {entityId} 释放技能 {skillID} ");
 
             var gameEntity = _gameContext.GetEntityWithLocalId(entityId + EntityUtil.BaseCharacterEntityID);
@@ -64,8 +64,8 @@ public class ExecuteSkillInput : IExecuteSystem, ISystem
             if (gameEntity.hasAnimation)
             {
                 // gameEntity.Animation.
-                gameEntity.Animation.state = AnimationMainState.Skill;
-                gameEntity.PlayAnimation(gameEntity.Animation, "Attack_Hand_1R_Root");
+                gameEntity.animation.state = AnimationMainState.Skill;
+                gameEntity.PlayAnimation(gameEntity.animation, "Attack_Hand_1R_Root");
 
             }
 

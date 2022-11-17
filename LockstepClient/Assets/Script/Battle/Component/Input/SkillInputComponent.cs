@@ -16,18 +16,18 @@ public class SkillInputComponent : IComponent
 
 }
 
-public sealed partial class InputEntity : Entity
-{
-    public SkillInputComponent SkillInput => (SkillInputComponent)GetComponent(InputComponentsLookup.SkillInput);
+// public sealed partial class InputEntity : Entity
+// {
+//     public SkillInputComponent SkillInput => (SkillInputComponent)GetComponent(InputComponentsLookup.SkillInput);
 
-    public bool HasSkillInput => HasComponent(InputComponentsLookup.SkillInput);
+//     public bool HasSkillInput => HasComponent(InputComponentsLookup.SkillInput);
 
-    public void AddSkillInput(uint skillID, uint entityId)
-    {
-        int num = InputComponentsLookup.SkillInput;
-        SkillInputComponent skillInput = (SkillInputComponent)CreateComponent(num, typeof(SkillInputComponent));
-        skillInput.skillId = skillID;
-        skillInput.entityId = entityId;
-        AddComponent(num, skillInput);
-    }
-}
+//     public void AddSkillInput(uint skillID, uint entityId)
+//     {
+//         int num = InputComponentsLookup.SkillInput;
+//         SkillInputComponent skillInput = (SkillInputComponent)CreateComponent(num, typeof(SkillInputComponent));
+//         skillInput.skillId = skillID;
+//         skillInput.entityId = entityId;
+//         AddComponent(num, skillInput);
+//     }
+// }

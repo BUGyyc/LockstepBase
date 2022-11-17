@@ -74,9 +74,9 @@ public enum AnimationMainState
 
 public sealed partial class GameEntity : Entity
 {
-    public AnimationComponent Animation => (AnimationComponent)GetComponent(GameComponentsLookup.Animation);
+    // public AnimationComponent Animation => (AnimationComponent)GetComponent(GameComponentsLookup.Animation);
 
-    public bool hasAnimation => HasComponent(GameComponentsLookup.Animation);
+    // public bool hasAnimation => HasComponent(GameComponentsLookup.Animation);
 
     public const string XKEY = "angle";
     public const string YKEY = "speed";
@@ -482,23 +482,23 @@ public sealed partial class GameEntity : Entity
 
 }
 
-public sealed partial class GameMatcher
-{
-    private static IMatcher<GameEntity> _animation;
-    public static IMatcher<GameEntity> Animation
-    {
-        get
-        {
-            if (_animation == null)
-            {
-                Matcher<GameEntity> val = Matcher<GameEntity>.AllOf(new int[1] { GameComponentsLookup.Animation }) as Matcher<GameEntity>;
-                val.componentNames = GameComponentsLookup.componentNames;
-                _animation = val;
-            }
-            return _animation;
-        }
-    }
-}
+// public sealed partial class GameMatcher
+// {
+//     private static IMatcher<GameEntity> _animation;
+//     public static IMatcher<GameEntity> Animation
+//     {
+//         get
+//         {
+//             if (_animation == null)
+//             {
+//                 Matcher<GameEntity> val = Matcher<GameEntity>.AllOf(new int[1] { GameComponentsLookup.Animation }) as Matcher<GameEntity>;
+//                 val.componentNames = GameComponentsLookup.componentNames;
+//                 _animation = val;
+//             }
+//             return _animation;
+//         }
+//     }
+// }
 
 public enum MoveDir
 {
