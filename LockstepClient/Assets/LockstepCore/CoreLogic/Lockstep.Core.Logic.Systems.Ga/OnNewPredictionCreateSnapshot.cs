@@ -52,24 +52,31 @@ namespace Lockstep.Core.Logic.Systems.GameState
 
         protected override void Execute(List<GameStateEntity> entities)
         {
+            //在这一帧中生成快照数据
             uint value = _gameStateContext.tick.value;
             (_snapshotContext).CreateEntity().AddTick(value);
+
+            //目前存活的GameEntity
             foreach (GameEntity activeEntity in _activeEntities)
             {
                 GameEntity gameEntity = (_gameContext).CreateEntity();
+                //NOTE: Except 是 Linq 写法， 相当于把 activeEntity 中的 LocalId 过滤掉，然后其他 Component 全部拷贝下来
                 foreach (int item in (activeEntity).GetComponentIndices().Except(new int[1] { GameComponentsLookup.LocalId }))//10
                 {
                     IComponent component = (activeEntity).GetComponent(item);
                     IComponent val = (gameEntity).CreateComponent(item, ((object)component).GetType());
                     PublicMemberInfoExtension.CopyPublicMemberValues((object)component, (object)val);
+                    //新建的 GameEntity 保存除 LocalId 外的 全部 Component
                     (gameEntity).AddComponent(item, val);
                 }
-                //添加一份备份数据？？
+                //最后在备份的GameEntity 内写入 LocalId，以及帧号
                 gameEntity.AddBackup(activeEntity.localId.value, value);
             }
+
             foreach (ActorEntity activeActor in _activeActors)
             {
                 ActorEntity actorEntity = _actorContext.CreateEntity();
+                //除了Id 外，其他Component的全部拷贝下来
                 foreach (int item2 in (activeActor).GetComponentIndices().Except(new int[1] { ActorComponentsLookup.Id }))//2
                 {
                     IComponent component2 = (activeActor).GetComponent(item2);
