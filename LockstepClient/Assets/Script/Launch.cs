@@ -43,7 +43,7 @@ public class Launch : MonoBehaviour
         set { localIpAddress = value; }
         get
         {
-            localIpAddress = NetTool.IP(address.IPv4);
+            localIpAddress = LiteNetLib.NetUtils.GetLocalIp(LiteNetLib.LocalAddrType.IPv4);
             return localIpAddress;
         }
     }
