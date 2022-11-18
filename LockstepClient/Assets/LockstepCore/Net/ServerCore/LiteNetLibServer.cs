@@ -7,7 +7,7 @@ namespace Server.LiteNetLib
 {
     public class LiteNetLibServer : IServer
     {
-        private const string ClientKey = "SomeConnectionKey";
+
 
         public event Action<int> ClientConnected;
         public event Action<int> ClientDisconnected;
@@ -45,7 +45,7 @@ namespace Server.LiteNetLib
             _listener.ConnectionRequestEvent += request =>
             {
                 //确认链接
-                request.AcceptIfKey(ClientKey);
+                request.AcceptIfKey(NetProtocolDefine.ConnectKey);
             };
 
             _listener.PeerConnectedEvent += peer =>

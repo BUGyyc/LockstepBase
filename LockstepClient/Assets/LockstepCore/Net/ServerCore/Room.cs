@@ -86,8 +86,9 @@ namespace Lockstep.Network.Server
                         this.InputReceived?.Invoke(this, new InputReceivedEventArgs(_actorIds[clientId], uInt));
                         break;
                     }
-                case NetProtocolDefine.BBB:
+                case NetProtocolDefine.CheckSync:
                     {
+                        // HashCode 验证是否同步
                         Lockstep.Network.Messages.HashCode hashCode = new Lockstep.Network.Messages.HashCode();
                         hashCode.Deserialize(deserializer);
                         if (!_hashCodes.ContainsKey(hashCode.FrameNumber))

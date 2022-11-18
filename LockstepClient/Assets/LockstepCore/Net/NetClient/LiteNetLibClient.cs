@@ -10,6 +10,8 @@ public class LiteNetLibClient : INetwork
 
     public event Action<byte[]> DataReceived;
 
+    public const int Disconnect_Timeout = 30000;
+
     public bool Connected => _client.FirstPeer?.ConnectionState == ConnectionState.Connected;
 
     public void Start()
@@ -25,7 +27,7 @@ public class LiteNetLibClient : INetwork
 
         _client = new NetManager(_listener)
         {
-            DisconnectTimeout = 30000
+            DisconnectTimeout = Disconnect_Timeout
         };
         // _client.UnconnectedMessagesEnabled = true;
         // _client.UpdateTime = 15;
@@ -33,7 +35,7 @@ public class LiteNetLibClient : INetwork
     }
     public void Connect(string serverIp, int port)
     {
-        _client.Connect(serverIp, port, "SomeConnectionKey");
+        _client.Connect(serverIp, port, NetProtocolDefine.ConnectKey);
     }
 
 
