@@ -1,9 +1,16 @@
+/*
+ * @Author: delevin.ying 
+ * @Date: 2022-11-18 16:02:47 
+ * @Last Modified by:   delevin.ying 
+ * @Last Modified time: 2022-11-18 16:02:47 
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Entitas;
 using Lockstep;
 
+//TODO: 这个是测试代码，后面干掉
 public class AnimatorBindEntity : MonoBehaviour
 {
     private GameEntity myEntity;

@@ -101,6 +101,8 @@ public class ActionWorld : MonoBehaviour
     void Update()
     {
         _client.Update();
+
+        //TODO：这里的Time 后续改成 LFloat
         Simulation.Update(Time.deltaTime * 1000);
 
         GameWorldManager.Instance.Update();

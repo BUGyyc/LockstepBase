@@ -8,6 +8,7 @@ namespace Lockstep.Game
 
     public class CommandQueue : ICommandQueue
     {
+        //TODO:如果用了多线程，Buffer容易阻塞，应该用双Buffer交替，防止阻塞
         /// <summary>
         /// 存储每一帧的命令队列
         /// </summary>

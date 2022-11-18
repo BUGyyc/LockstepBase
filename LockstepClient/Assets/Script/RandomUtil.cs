@@ -1,6 +1,10 @@
 ﻿using FixMath.NET;
 using System;
 
+
+/// <summary>
+/// TODO: 待完善
+/// </summary>
 public class RandomUtil
 {
     public static int Seed = 10000;
