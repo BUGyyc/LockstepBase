@@ -8,39 +8,41 @@
 //------------------------------------------------------------------------------
 public static class GameComponentsLookup {
 
-    public const int Animation = 0;
-    public const int Bullet = 1;
-    public const int CharacterAttr = 2;
-    public const int Character = 3;
-    public const int CharacterInput = 4;
-    public const int EntityType = 5;
-    public const int ActorId = 6;
-    public const int Asset = 7;
-    public const int Backup = 8;
-    public const int Controllable = 9;
-    public const int Destination = 10;
-    public const int Destroyed = 11;
-    public const int Hashable = 12;
-    public const int Health = 13;
-    public const int Id = 14;
-    public const int LocalId = 15;
-    public const int MaxSpeed = 16;
-    public const int Navigable = 17;
-    public const int Position = 18;
-    public const int Radius = 19;
-    public const int RvoAgentSettings = 20;
-    public const int Team = 21;
-    public const int Velocity = 22;
-    public const int Model = 23;
-    public const int Move = 24;
-    public const int PhysicsGravity = 25;
-    public const int PositionListener = 26;
-    public const int Skill = 27;
-    public const int Test = 28;
+    public const int AI = 0;
+    public const int Animation = 1;
+    public const int Bullet = 2;
+    public const int CharacterAttr = 3;
+    public const int Character = 4;
+    public const int CharacterInput = 5;
+    public const int EntityType = 6;
+    public const int ActorId = 7;
+    public const int Asset = 8;
+    public const int Backup = 9;
+    public const int Controllable = 10;
+    public const int Destination = 11;
+    public const int Destroyed = 12;
+    public const int Hashable = 13;
+    public const int Health = 14;
+    public const int Id = 15;
+    public const int LocalId = 16;
+    public const int MaxSpeed = 17;
+    public const int Navigable = 18;
+    public const int Position = 19;
+    public const int Radius = 20;
+    public const int RvoAgentSettings = 21;
+    public const int Team = 22;
+    public const int Velocity = 23;
+    public const int Model = 24;
+    public const int Move = 25;
+    public const int PhysicsGravity = 26;
+    public const int PositionListener = 27;
+    public const int Skill = 28;
+    public const int Test = 29;
 
-    public const int TotalComponents = 29;
+    public const int TotalComponents = 30;
 
     public static readonly string[] componentNames = {
+        "AI",
         "Animation",
         "Bullet",
         "CharacterAttr",
@@ -73,6 +75,7 @@ public static class GameComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(AIComponent),
         typeof(AnimationComponent),
         typeof(BulletComponent),
         typeof(CharacterAttrComponent),

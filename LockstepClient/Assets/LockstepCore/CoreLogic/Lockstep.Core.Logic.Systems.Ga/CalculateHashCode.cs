@@ -30,21 +30,23 @@ namespace Lockstep.Core.Logic.Systems.GameState
             num ^= (_hashableEntities).count;
             foreach (GameEntity hashableEntity in _hashableEntities)
             {
+                //先用左右作为参考，后续可以补充其他模块进来运算
                 num ^= hashableEntity.position.value._x;//X.RawValue;
                 num ^= hashableEntity.position.value._y;// Y.RawValue;
                 num ^= hashableEntity.position.value._z;
-                if (hashableEntity.hasVelocity)
-                {
-                    num ^= hashableEntity.velocity.value.X.RawValue;
-                    num ^= hashableEntity.velocity.value.Y.RawValue;
-                }
-                if (hashableEntity.hasDestination)
-                {
-                    num ^= hashableEntity.destination.value.X.RawValue;
-                    num ^= hashableEntity.destination.value.Y.RawValue;
-                }
             }
             _gameStateContext.ReplaceHashCode(num);
+
+#if UNITY_EDITOR
+            var tick = Contexts.sharedInstance.gameState.tick.value;
+            if (DebugSetting.HashCodePrintStepTick > 0 && tick % DebugSetting.HashCodePrintStepTick == 0)
+            {
+                //间隔输出，防止刷屏
+                UnityEngine.Debug.Log($"[HashCode]   hashCode:{num}");
+            }
+#endif
+
+
         }
     }
 }

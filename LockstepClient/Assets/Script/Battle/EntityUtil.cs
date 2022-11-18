@@ -44,6 +44,22 @@ public static class EntityUtil
         return com;
     }
 
+
+    public static GameEntity CreateAI(int index)
+    {
+        GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
+        AddBaseComponent(gameEntity, GameSetting.AI_ACTOR, EntityType.AI);
+
+        gameEntity.AddAI((int)AutoCreateEntityID, AIAction.Idle, 0);
+
+        // int index = actorId;
+        gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward, Lockstep.LQuaternion.identity);
+
+        var go = LoadEntityView(gameEntity, GameSetting.AIPrefab, false);
+
+        return gameEntity;
+    }
+
     public static GameEntity CreateSimpleHero(byte actorId)
     {
         GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
@@ -115,6 +131,8 @@ public static class EntityUtil
         gameEntity.AddBullet(LFloat.one);
 
         var forward = shooter.position.rotate * LVector3.forward;
+
+        Debug.DrawRay(shooter.position.value.ToVector3(), forward.ToVector3(), Color.yellow, 0.2f);
 
         gameEntity.AddMove(GameSetting.BULLET_SPEED, MoveState.Walk, forward);
         var go = LoadEntityView(gameEntity, GameSetting.BulletPrefab);

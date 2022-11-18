@@ -33,3 +33,20 @@
 
 ![](res/20221117180320.png)  
 
+
+
+---
+
+
+# TODO
+
+- [x] EntityType 描述 GameEntity
+- [x] Jenny 代码生成器，更快生成 ECS 代码
+- [ ] ECS 下，预测、预表现测试
+- [ ] 外网网络环境测试
+- [x] GameEntityManager 通用逻辑
+- [ ] 重构动画导出工具
+- [x] HashCode 验证
+- [ ] 引入确定性物理
+- [ ] 帧同步录像模块
+- [ ] 尝试引入Timeline

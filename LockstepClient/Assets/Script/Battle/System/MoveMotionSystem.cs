@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-17 19:08:05 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-17 19:48:04
+ * @Last Modified time: 2022-11-17 19:54:56
  */
 
 using Entitas;
@@ -29,17 +29,11 @@ public class MoveMotionSystem : IExecuteSystem, ISystem
     {
         foreach (var entity in _moveGroup.GetEntities())
         {
-            // var currForward = entity.entityForwardLv3;
-            // var currForward2d = currForward.ToLVector2();
-            // var currForward2dNor = currForward2d.normalized;
             var speed = entity.move.speed;
-            var forward = entity.move.moveDir.normalized;
+            var forward = entity.move.moveDir;
             var dir = speed * forward;
 
-            // LVector3 forwardLv3 = speed2d.ToLVector3();
-            // LQuaternion target = LQuaternion.LookRotation(forwardLv3);
-            // entity.position.rotate = target;
-            entity.position.value += (new LVector3(true, dir._x, 0, dir._y) * GameSetting.Key_Time);
+            entity.position.value += (new LVector3(true, dir._x, 0, dir._z) * GameSetting.Key_Time);
 
 
             //             var speed2d = entity.characterInput.moveDir * speed;

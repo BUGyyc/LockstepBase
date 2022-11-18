@@ -12,5 +12,6 @@ public enum EntityType
     Empty = 0,
 
     Hero = 1,
-    Bullet = 2
+    Bullet = 2,
+    AI
 }
