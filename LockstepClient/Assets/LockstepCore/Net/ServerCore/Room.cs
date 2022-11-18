@@ -73,7 +73,7 @@ namespace Lockstep.Network.Server
             Deserializer deserializer = new Deserializer(Compressor.Decompress(data));
             switch (deserializer.GetByte())
             {
-                case 2:
+                case NetProtocolDefine.Input:
                     {
                         inputMessageCounter++;
                         uint uInt = deserializer.GetUInt();
@@ -86,7 +86,7 @@ namespace Lockstep.Network.Server
                         this.InputReceived?.Invoke(this, new InputReceivedEventArgs(_actorIds[clientId], uInt));
                         break;
                     }
-                case 3:
+                case NetProtocolDefine.BBB:
                     {
                         Lockstep.Network.Messages.HashCode hashCode = new Lockstep.Network.Messages.HashCode();
                         hashCode.Deserialize(deserializer);
@@ -124,20 +124,23 @@ namespace Lockstep.Network.Server
         {
             Serializer serializer = new Serializer();
             int seed = new System.Random().Next(int.MinValue, int.MaxValue);
-            this.Starting?.Invoke(this, new StartedEventArgs(20, _actorIds.Values.ToArray()));
+
+            const int SimulationFPS = 20;
+
+            this.Starting?.Invoke(this, new StartedEventArgs(SimulationFPS, _actorIds.Values.ToArray()));
             foreach (KeyValuePair<int, byte> actorId in _actorIds)
             {
                 serializer.Reset();
-                serializer.Put((byte)0);
+                serializer.Put(NetProtocolDefine.Init);
                 Init init = new Init();
                 init.Seed = seed;
                 init.ActorID = actorId.Value;
                 init.AllActors = _actorIds.Values.ToArray();
-                init.SimulationSpeed = 20;
+                init.SimulationSpeed = SimulationFPS;
                 init.Serialize(serializer);
                 _server.Send(actorId.Key, Compressor.Compress(serializer));
             }
-            this.Started?.Invoke(this, new StartedEventArgs(20, _actorIds.Values.ToArray()));
+            this.Started?.Invoke(this, new StartedEventArgs(SimulationFPS, _actorIds.Values.ToArray()));
         }
     }
 }

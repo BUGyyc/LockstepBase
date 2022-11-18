@@ -1,124 +1,124 @@
-using System;
-using System.Net;
-using System.Net.Sockets;
-using UnityEngine;
-using LiteNetLib;
-using LiteNetLib.Utils;
+// using System;
+// using System.Net;
+// using System.Net.Sockets;
+// using UnityEngine;
+// using LiteNetLib;
+// using LiteNetLib.Utils;
 
-public class LockstepServer : MonoBehaviour, INetEventListener, INetLogger
-{
-    private NetManager _netServer;
-    private NetPeer _ourPeer;
-    private NetDataWriter _dataWriter;
+// public class LockstepServer : MonoBehaviour, INetEventListener, INetLogger
+// {
+//     private NetManager _netServer;
+//     private NetPeer _ourPeer;
+//     private NetDataWriter _dataWriter;
 
-    [SerializeField] public GameObject _serverBall;
-
-
-    public void StartServer(int port = 5000)
-    {
-        NetDebug.Logger = this;
-        _dataWriter = new NetDataWriter();
-        _netServer = new NetManager(this);
-        //Ö¸¶¨¶Ë¿ÚºÅ
-        _netServer.Start(port);
-        _netServer.BroadcastReceiveEnabled = true;
-        _netServer.UpdateTime = 15;
-    }
-
-    void Update()
-    {
-        _netServer.PollEvents();
-    }
-
-    void FixedUpdate()
-    {
-        if (_ourPeer != null)
-        {
-            _serverBall.transform.Translate(1f * Time.fixedDeltaTime, 0f, 0f);
-            _dataWriter.Reset();
-            _dataWriter.Put(_serverBall.transform.position.x);
-            _ourPeer.Send(_dataWriter, DeliveryMethod.Sequenced);
-        }
-    }
-
-    void OnDestroy()
-    {
-        NetDebug.Logger = null;
-        if (_netServer != null)
-            _netServer.Stop();
-    }
-
-    public void OnPeerConnected(NetPeer peer)
-    {
-        Debug.Log("[SERVER] We have new peer " + peer.EndPoint);
-        _ourPeer = peer;
-    }
-
-    public void OnNetworkError(IPEndPoint endPoint, SocketError socketErrorCode)
-    {
-        Debug.Log("[SERVER] error " + socketErrorCode);
-    }
-
-    public void OnNetworkReceiveUnconnected(IPEndPoint remoteEndPoint, NetPacketReader reader,
-        UnconnectedMessageType messageType)
-    {
-        if (messageType == UnconnectedMessageType.Broadcast)
-        {
-            var NetId = reader.GetInt();
-            switch (NetId)
-            {
-                case NetID.ClientSend2ServerStringMsg:
-                    var msg = reader.GetString();
-                    Debug.Log($"[SERVER] ·þÎñÆ÷½ÓÊÕµ½¿Í»§¶ËÊý¾Ý     ¶Ë¿Ú£º{remoteEndPoint}   Ð­ÒéID: {NetId}   msg :{msg} ");
-                    break;
-                case NetID.ClientConnectReq:
-
-                    Debug.Log($"[SERVER] ·þÎñÆ÷½ÓÊÕÁ´½ÓÇëÇó    ¶Ë¿Ú£º{remoteEndPoint}   Ð­ÒéID: {NetId}   ");
-                    //·þÎñÆ÷Í¬ÒâÁ´½Ó
-                    NetDataWriter resp = new NetDataWriter();
-                    resp.Put(NetID.ServerArgeeConnectClient);
-                    resp.Put(1);
-                    //·¢ËÍÎÞÁ´½ÓÏÂµÄ°ü³öÈ¥
-                    _netServer.SendUnconnectedMessage(resp, remoteEndPoint);
-                    break;
+//     [SerializeField] public GameObject _serverBall;
 
 
-                case NetID.ServerBroadcast:
+//     public void StartServer(int port = 5000)
+//     {
+//         NetDebug.Logger = this;
+//         _dataWriter = new NetDataWriter();
+//         _netServer = new NetManager(this);
+//         //Ö¸ï¿½ï¿½ï¿½Ë¿Úºï¿½
+//         _netServer.Start(port);
+//         _netServer.BroadcastReceiveEnabled = true;
+//         _netServer.UpdateTime = 15;
+//     }
 
-                    break;
-            }
+//     void Update()
+//     {
+//         _netServer.PollEvents();
+//     }
+
+//     void FixedUpdate()
+//     {
+//         if (_ourPeer != null)
+//         {
+//             _serverBall.transform.Translate(1f * Time.fixedDeltaTime, 0f, 0f);
+//             _dataWriter.Reset();
+//             _dataWriter.Put(_serverBall.transform.position.x);
+//             _ourPeer.Send(_dataWriter, DeliveryMethod.Sequenced);
+//         }
+//     }
+
+//     void OnDestroy()
+//     {
+//         NetDebug.Logger = null;
+//         if (_netServer != null)
+//             _netServer.Stop();
+//     }
+
+//     public void OnPeerConnected(NetPeer peer)
+//     {
+//         Debug.Log("[SERVER] We have new peer " + peer.EndPoint);
+//         _ourPeer = peer;
+//     }
+
+//     public void OnNetworkError(IPEndPoint endPoint, SocketError socketErrorCode)
+//     {
+//         Debug.Log("[SERVER] error " + socketErrorCode);
+//     }
+
+//     public void OnNetworkReceiveUnconnected(IPEndPoint remoteEndPoint, NetPacketReader reader,
+//         UnconnectedMessageType messageType)
+//     {
+//         if (messageType == UnconnectedMessageType.Broadcast)
+//         {
+//             var NetId = reader.GetInt();
+//             switch (NetId)
+//             {
+//                 case NetID.ClientSend2ServerStringMsg:
+//                     var msg = reader.GetString();
+//                     Debug.Log($"[SERVER] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½     ï¿½Ë¿Ú£ï¿½{remoteEndPoint}   Ð­ï¿½ï¿½ID: {NetId}   msg :{msg} ");
+//                     break;
+//                 case NetID.ClientConnectReq:
+
+//                     Debug.Log($"[SERVER] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½    ï¿½Ë¿Ú£ï¿½{remoteEndPoint}   Ð­ï¿½ï¿½ID: {NetId}   ");
+//                     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//                     NetDataWriter resp = new NetDataWriter();
+//                     resp.Put(NetID.ServerArgeeConnectClient);
+//                     resp.Put(1);
+//                     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ°ï¿½ï¿½ï¿½È¥
+//                     _netServer.SendUnconnectedMessage(resp, remoteEndPoint);
+//                     break;
 
 
-        }
-    }
+//                 case NetID.ServerBroadcast:
 
-    public void OnNetworkLatencyUpdate(NetPeer peer, int latency)
-    {
-    }
+//                     break;
+//             }
 
-    public void OnConnectionRequest(ConnectionRequest request)
-    {
-        request.AcceptIfKey("SomeConnectionKey");
-    }
 
-    public void OnPeerDisconnected(NetPeer peer, DisconnectInfo disconnectInfo)
-    {
-        Debug.Log("[SERVER] peer disconnected " + peer.EndPoint + ", info: " + disconnectInfo.Reason);
-        if (peer == _ourPeer)
-            _ourPeer = null;
-    }
+//         }
+//     }
 
-    public void OnNetworkReceive(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod)
-    {
-    }
+//     public void OnNetworkLatencyUpdate(NetPeer peer, int latency)
+//     {
+//     }
 
-    public void WriteNet(NetLogLevel level, string str, params object[] args)
-    {
-        Debug.LogFormat(str, args);
-    }
+//     public void OnConnectionRequest(ConnectionRequest request)
+//     {
+//         request.AcceptIfKey("SomeConnectionKey");
+//     }
 
-    public void OnNetworkReceive(NetPeer peer, NetPacketReader reader, byte channelNumber, DeliveryMethod deliveryMethod)
-    {
-        //throw new NotImplementedException();
-    }
-}
+//     public void OnPeerDisconnected(NetPeer peer, DisconnectInfo disconnectInfo)
+//     {
+//         Debug.Log("[SERVER] peer disconnected " + peer.EndPoint + ", info: " + disconnectInfo.Reason);
+//         if (peer == _ourPeer)
+//             _ourPeer = null;
+//     }
+
+//     public void OnNetworkReceive(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod)
+//     {
+//     }
+
+//     public void WriteNet(NetLogLevel level, string str, params object[] args)
+//     {
+//         Debug.LogFormat(str, args);
+//     }
+
+//     public void OnNetworkReceive(NetPeer peer, NetPacketReader reader, byte channelNumber, DeliveryMethod deliveryMethod)
+//     {
+//         //throw new NotImplementedException();
+//     }
+// }

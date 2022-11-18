@@ -36,6 +36,11 @@ public class LiteNetLibClient : INetwork
         _client.Connect(serverIp, port, "SomeConnectionKey");
     }
 
+
+    /// <summary>
+    /// 通过可靠传输，发包
+    /// </summary>
+    /// <param name="data"></param>
     public void Send(byte[] data)
     {
         _client.FirstPeer.Send(data, DeliveryMethod.ReliableOrdered);
