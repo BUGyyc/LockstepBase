@@ -59,3 +59,4 @@
 - [ ] 尝试引入Timeline
 - [ ] Entitas 内的JobSystem （注：子线程下不允许修改 Transform 内的Position 和 Rotation）
 - [ ] Animancer 应用
+- [x] 接入InputSystem
