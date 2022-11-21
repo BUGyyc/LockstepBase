@@ -95,6 +95,10 @@ namespace Lockstep.Game
             }
         }
 
+        /// <summary>
+        /// 添加指令到执行队列
+        /// </summary>
+        /// <param name="command"></param>
         public void Execute(ICommand command)
         {
             if (!Running)
@@ -103,6 +107,11 @@ namespace Lockstep.Game
             }
             lock (_localCommandBuffer)
             {
+                if (RecordSetting.HasRecord)
+                {
+                    RecordManager.Instance.AddInputCommand(command);
+                }
+
                 _localCommandBuffer.Add(command);
             }
         }

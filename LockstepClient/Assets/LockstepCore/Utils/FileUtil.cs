@@ -68,6 +68,21 @@ public static class FileUtil
     }
 #endif
 
+    public static Stream LoadStreamByFile(string path)
+    {
+        try
+        {
+            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+            return fs;
+        }
+        catch (FileNotFoundException ioEx)
+        {
+            Debug.LogError(ioEx.Message);
+        }
+
+        return null;
+    }
+
 
     public static byte[] LoadFile(string path)
     {

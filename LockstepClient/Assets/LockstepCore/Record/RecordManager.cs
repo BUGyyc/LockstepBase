@@ -6,14 +6,18 @@
  */
 
 using System.Collections.Generic;
-
+using Lockstep.Core.Logic.Interfaces;
+using UnityEngine;
 public class RecordManager
 {
-    public Queue<int> cacheQueue;
+    public static RecordManager Instance;
 
-    public void AddInputCommand()
+    public Queue<ICommand> cacheQueue;
+
+    public void AddInputCommand(ICommand command)
     {
-
+        Debug.Log($"保存指令 --- {command}");
+        cacheQueue.Enqueue(command);
     }
 
 

@@ -19,8 +19,6 @@ public class ActionWorld : MonoBehaviour
 
     //世界模拟器
     public Simulation Simulation;
-    //[HideInInspector]
-    //public FixMath.NET.Fix64Random FixRandom;
 
     //为了拿到所有Entity
     public RTSEntityDatabase EntityDatabase;
@@ -56,6 +54,11 @@ public class ActionWorld : MonoBehaviour
         Simulation = new Simulation(Contexts.sharedInstance, _commandQueue, new UnityGameService(EntityDatabase));
 
         GameWorldManager.Instance.Awake();
+
+        if (RecordSetting.HasRecord)
+        {
+            // RecordManager.Instance = new RecordManager();
+        }
     }
 
 
@@ -79,7 +82,11 @@ public class ActionWorld : MonoBehaviour
 
     public void DumpGameLog()
     {
-        Simulation.DumpGameLog(new FileStream(@"C:\Log\" + Math.Abs(Contexts.sharedInstance.gameState.hashCode.value) + ".bin", FileMode.Create, FileAccess.Write));
+        var path = Application.streamingAssetsPath;
+
+        var fullPath = path + "/Log/" + Math.Abs(Contexts.sharedInstance.gameState.hashCode.value) + ".bin";
+
+        Simulation.DumpGameLog(new FileStream(fullPath, FileMode.Create, FileAccess.Write));
     }
 
     public void Execute(ICommand command)
@@ -90,7 +97,10 @@ public class ActionWorld : MonoBehaviour
     private void Start()
     {
         _client.Start();
-        StartCoroutine(AutoConnect());
+        if (RecordSetting.HasRecord == false)
+        {
+            StartCoroutine(AutoConnect());
+        }
     }
 
     private void OnDestroy()
@@ -106,6 +116,13 @@ public class ActionWorld : MonoBehaviour
         Simulation.Update(Time.deltaTime * 1000);
 
         GameWorldManager.Instance.Update();
+
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            DumpGameLog();
+        }
+#endif
     }
 
     private void FixedUpdate()

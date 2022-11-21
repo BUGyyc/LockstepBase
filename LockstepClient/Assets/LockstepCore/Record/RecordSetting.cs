@@ -8,6 +8,9 @@
 
 public static class RecordSetting
 {
+
+    public static readonly bool HasRecord = false;
+
     /// <summary>
     /// 是否录下客户端的镜头，一般不录，因为每帧的镜头操作太多了，只是一种观察视角的记录，也许有特殊需求就需要做
     /// </summary>
@@ -19,7 +22,7 @@ public static class RecordSetting
     /// </summary>
     public const bool RecordToClient = false;
 
-    
+
     /// <summary>
     /// 是否持久化到服务器
     /// </summary>
