@@ -32,11 +32,11 @@ public class CharacterMoveSystem : IExecuteSystem, ISystem
 
         _characterGroup = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Animation, GameMatcher.LocalId));
 
-        var cfg = AnimationUtil.GetBlender(GameSetting.WalkMove);
+        // var cfg = AnimationUtil.GetBlender(GameSetting.WalkMove);
 
-        var nodeList = cfg.NodeList;
+        // var nodeList = cfg.NodeList;
 
-        var originNode = nodeList[0];
+        // var originNode = nodeList[0];
 
         // forward1 = GetNodeDir(nodeList[1], originNode);
         // right1 = GetNodeDir(nodeList[2], originNode);

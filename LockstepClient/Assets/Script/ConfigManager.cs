@@ -14,17 +14,17 @@ public class ConfigManager
     {
         _configsDic = new Dictionary<Type, object>();
 
-        var cfg = ConfigManager.GetMoveController(GameSetting.HERO_ANIMATOR);
+        // var cfg = ConfigManager.GetMoveController(GameSetting.HERO_ANIMATOR);
 
-        foreach (var item in cfg.ExportBlenders)
-        {
-            Debug.Log("blender " + item.Name);
-        }
+        // foreach (var item in cfg.ExportBlenders)
+        // {
+        //     Debug.Log("blender " + item.Name);
+        // }
 
-        foreach (var item in cfg.ExportMotions)
-        {
-            Debug.Log("motion " + item.MotionName);
-        }
+        // foreach (var item in cfg.ExportMotions)
+        // {
+        //     Debug.Log("motion " + item.MotionName);
+        // }
     }
 
 
@@ -59,17 +59,17 @@ public class ConfigManager
 
 
 
-    public static MoveControllerCfg GetMoveController(string name)
-    {
-        if (!mCtrlDic.ContainsKey(name))
-        {
-            string path = string.Format("{0}/{1}/{2}.bytes", UnityEngine.Application.streamingAssetsPath, "MoveCtrl", name);
+    // public static MoveControllerCfg GetMoveController(string name)
+    // {
+    //     if (!mCtrlDic.ContainsKey(name))
+    //     {
+    //         string path = string.Format("{0}/{1}/{2}.bytes", UnityEngine.Application.streamingAssetsPath, "MoveCtrl", name);
 
-            var bytes = FileUtil.LoadFile(path);
+    //         var bytes = FileUtil.LoadFile(path);
 
-            mCtrlDic.Add(name, MoveControllerCfg.ParseFrom(bytes));
-        }
+    //         mCtrlDic.Add(name, MoveControllerCfg.ParseFrom(bytes));
+    //     }
 
-        return mCtrlDic[name];
-    }
+    //     return mCtrlDic[name];
+    // }
 }
