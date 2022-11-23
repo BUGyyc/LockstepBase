@@ -3,7 +3,7 @@ using LiteNetLib.Utils;
 using System.IO;
 using UnityEngine;
 using System.Text;
-using Google.Protobuf;
+// using Google.Protobuf;
 using ProtoBuf.Serializers;
 using CustomDataStruct;
 using System;
@@ -29,7 +29,7 @@ public class PbNoGC : MonoBehaviour
             test.UVal = (uint)Time.frameCount;
             test.FVal = Time.realtimeSinceStartup;
 
-            ProtocolHelper.Instance.Obj2BitArrayPreview(test);
+            ProtocolHelper.Instance.Obj2BitArrayPreview2(test);
         }
     }
 }
@@ -55,8 +55,8 @@ public class ProtocolHelper
 
     // private PbGC msg;
 
-    CodedInputStream cis;
-    CodedOutputStream cos;
+    // CodedInputStream cis;
+    // CodedOutputStream cos;
 
     public ProtocolHelper()
     {
@@ -71,7 +71,7 @@ public class ProtocolHelper
         stringBuilder = new StringBuilder();
 
 
-        cis = new CodedInputStream(receiveBuffer);
+        // cis = new CodedInputStream(receiveBuffer);
         // cos = new CodedOutputStream(receiveBuffer);
     }
     ABC cache = new ABC();
@@ -79,14 +79,14 @@ public class ProtocolHelper
 
     public void Obj2BitArrayPreview(ABC msg)
     {
-        //设置一个足够大的内存流长度
-        msSend.SetLength(SEND_BUFFER_LEN);
-        //把内存流操作位置调到头部
-        msSend.Seek(0, SeekOrigin.Begin);
-        //写入流中
-        msg.WriteDelimitedTo(WriteScope.DIRTY_PUBLIC, true, msSend);
-        msSend.SetLength(msSend.Position);
-        msSend.Seek(0, SeekOrigin.Begin);
+        // //设置一个足够大的内存流长度
+        // msSend.SetLength(SEND_BUFFER_LEN);
+        // //把内存流操作位置调到头部
+        // msSend.Seek(0, SeekOrigin.Begin);
+        // //写入流中
+        // msg.WriteDelimitedTo(WriteScope.DIRTY_PUBLIC, true, msSend);
+        // msSend.SetLength(msSend.Position);
+        // msSend.Seek(0, SeekOrigin.Begin);
 
         // cache.MergeFrom
 
@@ -122,12 +122,7 @@ public class ProtocolHelper
         // ProtoFactory.Recycle(tmp);
     }
 
-    private void CleanData(ABC temp)
-    {
-        temp.IVal = 0;
-        temp.FVal = 0f;
-        temp.UVal = 0;
-    }
+
 
     public void Obj2BitArrayPreview2(ABC msg)
     {
@@ -156,6 +151,13 @@ public class ProtocolHelper
         tmp = ProtoBufSerializer.Deserialize(msReceive, typeof(ABC), (int)msSend.Length) as ABC;
         //因为又使用了一次，所以再回收
         ProtoFactory.Recycle(tmp);
+    }
+
+    private void CleanData(ABC temp)
+    {
+        temp.IVal = 0;
+        temp.FVal = 0f;
+        temp.UVal = 0;
     }
 
     ABC temp = new ABC();

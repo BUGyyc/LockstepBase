@@ -1,17 +1,10 @@
-syntax = "proto3";
+syntax = "proto2";
 
+import "include/yd_fieldoptions.proto";
 import "proto_common.proto";
 import "proto_config.proto";
 
 package Protocol;
-
-
-message PbGCMsg
-{
-	optional uint32 u_val = 1;
-	optional int32 i_val = 2;
-	optional float f_val = 3;
-}
 
 message ABC
 {
@@ -24,1291 +17,244 @@ message ABC
 // --------------------entity---------------------------------
 message CreateEntityNotify	
 {	
-	map<uint32,EntitySyncData> entity_data_dic				= 1;//已经在场的entitydata
-	optional BattleSyncData battle_data						= 2;//战局信息
+	repeated EntitySyncData entity_data_list				= 1;//已经在场的entitydata
 };	
 	
 message DeleteEntityNotify	
 {	
-	map<uint32,EntitySyncData> entity_data_dic				= 1;//删除entity，同时同步最后的数据
+	repeated uint32 entity_id_list							= 1;
 };
-	
-// --------------------action---------------------------------
-//移动消息		
-message ActionMoveMsg			
-{		
+
+
+
+
+message MoveActionMsg
+{
 	optional uint32 entity_id								= 1;
 	optional uint32 move_state								= 2;//移动状态（0停止，1走路，2跑步，3疾跑）
-	optional int32 move_angle								= 3;//移动角度，也决定着entity的pitch
+	
+	
+	
+	optional float move_angle								= 3;//移动角度，也决定着entity的pitch
 	optional int32 view_row									= 4;//观察位的row
 	optional int32 view_pitch								= 5;//观察位的pitch
 	optional bool ignore_lock								= 6;//忽略锁
 	optional uint32 motion									= 7;//动画
 	optional uint32 lock_target_id							= 8;//锁定目标entityId
+	
+	optional float blender_x								= 9;
+	optional float blender_y 								= 10;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+// --------------------action---------------------------------
+//移动消息		
+message ActionMoveMsg			
+{		
+	required uint32 entity_id								= 1;
+	optional bool move										= 2;//移动或停止的指令
+	optional int32 move_angle								= 3;//移动角度，也决定着entity的pitch
+	optional bool run										= 4;//是否在跑的状态
+	optional int32 view_row									= 5;//观察位的row
+	optional int32 view_pitch								= 6;//观察位的pitch
+	optional bool in_situ									= 7;//是否原地
+	optional bool ignore_lock								= 8;//忽略锁
+	optional bool aim_state									= 9;//瞄准状态
 };
-	
-// --------------------action.skill---------------------------------
-//技能时间	
-//message ActionSkillEvent		
-//{		
-//	optional uint32 entity_id								= 1;
-//	optional uint64 skill_uid								= 3;
-//	optional string state									= 4;//技能状态
-//	repeated string data_list								= 5;//技能数据
-//	optional string active_state_name						= 6;//当前客户端激活的节点
-//}
-
-//同步技能判定结果
-message ActionSkillResultMsg
-{
-	optional uint32 entity_id								= 1;
-	optional uint64 skill_uid								= 2;
-	repeated uint32 entity_list								= 3;
-}
-	
-//触发技能		
-message ActionExecuteSkillMsg		
-{
-	optional uint32 entity_id								= 1;
-	optional uint32 skill_id								= 2;
-	optional uint64 skill_uid								= 3;
-	optional Float3 skill_pos								= 4;//技能释放点
-	optional float  skill_range								= 5;//以技能释放点为中心的作用半径
-	optional uint32 release_skill_type						= 6;//1.普通 2.快捷 3.智能
-	optional float long_key_time							= 7;//长按时长
-	repeated uint32 target_entity_id_list					= 8;
-	optional Float3 skill_rotation							= 9;
-	optional string timeline_path							= 10;
-	optional string key_event								= 11;//按键信息
-	optional uint32 from_prop_id							= 12;//部分技能来源于道具，这里填 道具ID
-}		
-
-//停止技能		
-message ActionStopSkillMsg		
-{		
-	optional uint32 entity_id								= 1;
-	optional uint32 skill_id								= 2;
-};		
-
-//添加技能		
-message ActionAddSkillReq		
-{		
-	optional uint32 entity_id								= 1;
-	optional uint32 skill_id								= 2;
-}
-
-message ActionAddSkillRsp		
-{
-	optional int32 ret_code									= 1;
-}
-
-//删除技能		
-message ActionDeleteSkillReq		
-{		
-	optional uint32 entity_id								= 1;
-	optional uint32 skill_id								= 2;
-}
-message ActionDeleteSkillRsp		
-{
-	optional int32 ret_code									= 1;
-}
-
-message EntityDeadNtf		
-{		
-	optional uint32 entity_id								= 1;
-	optional bool dead										= 2;
-	optional uint32 target_id								= 3;
-}
-
-message ChangeTimeScaleNtf
-{
-	optional float scale_value								= 1;
-}
-
-message PickThingMsg											//捡东西请求
-{		
-	optional uint32 thing_id								= 1;			
-	optional uint32 to_id									= 2;	
-	optional uint32 to_slot_id								= 3;
-	optional float time										= 4;
-	
-	repeated PropData prop_data_merge_list					= 10;
-}
-
-
-
-message DestoryNestMsg											//破坏巢穴
-{		
-	optional uint32 bossId									= 1;			
-	optional uint32 nestId									= 2;
-}
-
-message SellProductMsg											//卖商品
-{		
-	optional uint32 npc_entity_id							= 1;			
-	optional uint32 sell_entity_id							= 2;
-	optional int32 single_price								= 3;//todo
-	optional uint32 prop_cfg_id								= 4;
-	optional uint32 prop_count								= 5;
-	optional uint32 slot_id									= 6;
-}
-
-message BuyProductMsg											//购买商品
-{		
-	optional uint32 npc_entity_id							= 1;			
-	optional uint32 recv_entity_id							= 2;	
-	optional int32 index									= 3;
-	optional uint32 prop_cfg_id								= 4;//增加校验
-}
-
-//使用连接点
-message UseLadderMsg
-{
-	optional uint32 ladder_id									= 1;
-	optional uint32 user_id										= 2;
-	optional bool is_enter										= 3;
-}
-
-//使用工具点协议，建议服用该协议
-message UsePointMsg
-{
-	optional uint32 user_id										= 1;//使用者
-	optional uint32 point_id									= 2;//工具点
-}
-
-//丢弃物品req
-message DropPropReq
-{
-	optional uint64 thing_id 									= 1;
-	optional uint32 slot_id										= 2;
-	repeated PropData prop_data_list							= 3;
-	optional Float3 position									= 4;
-	optional Float3 rotation									= 5;
-	optional uint32 entity_id									= 6;
-}	
-//丢弃物品rsp
-message DropPropRsp
-{
-	optional uint64 thing_id 									= 1;
-	optional uint32 slot_id										= 2;
-	repeated PropData prop_data_list							= 3;
-	optional Float3 position									= 4;
-	optional Float3 rotation									= 5;
-	optional uint32 entity_id									= 6;
-}
-
-//添加到槽位(杂物/暗器)
-message SwapSlotMsg
-{
-	optional uint32 entity_id									= 1;
-	optional uint32 slot_id_from		 						= 2;
-	optional uint32 slot_id_to		 							= 3;
-}
-
-//打断添加到槽位(杂物/暗器)
-message BreakAddToSlotMsg
-{
-	optional uint32 entity_id									= 1;
-}
-
-//使用物品(杂物/暗器)
-message UsePropMsg
-{
-	optional uint32 entity_id									= 1;
-	optional uint32 slot_id		 								= 2;
-	optional uint32 count 										= 3;//使用数量(默认为1)
-}
-
-message ActiveTaskMsg
-{
-	optional uint32 entity_id									= 1;
-	optional uint32 task_id		 								= 2;
-	
-	repeated TaskDetailParam task_detail_param_merge_list		= 3; //具体任务所需id,num条件
-}
-
-message ThrowBallMsg
-{
-	optional uint32 entity_id									= 1;
-	optional uint64 fsm_id		 								= 2;
-	optional uint32 ball_entity_id								= 3;
-}
-
-message TaskCompleteMsg
-{
-	optional uint32 entity_id									= 1;
-	optional uint32 task_id		 								= 2;
-	optional uint32 task_state									= 3;
-}
-
-message ShowExposeMsg
-{
-	optional uint32 entity_id									= 1;
-}
-
-message TransferNestMsg
-{
-	optional uint32 entity_id									= 1;
-	optional uint32 nest_entity_id 								= 2;
-}
-
-message UpdateCharacterDirMsg
-{
-	optional uint32 entity_id									= 1;
-}
-
-//创建蛊灵
-message CreateInsanityMsg
-{
-	optional uint32 master_entity_id							= 1;
-}
-
-//收集线索
-message ClueCollectMsg
-{
-	optional uint32 entity_id 									= 1;
-	optional uint32 clue_count									= 2;
-}
-
-//玩家携带至宝撤离
-message PlayerGetClueAndExitMsg
-{
-	optional uint32 entity_id									= 1;
-	optional uint32 clue_count									= 2;
-	optional uint32 state										= 3;//1 进行撤离。 0 被打断
-}
-
-message HitSuccessMsg
-{
-	optional uint32 origin_entity_id							= 1;//发动攻击的entity
-	map<uint32,uint32> attacked_entity_dic						= 2;//被攻击盒检测到的Entity 
-}
-
-//游戏结算
-message GameResultMsg
-{
-	optional string uid									        = 1; //
-	optional uint32 player_id                                   = 2;
-	optional uint32 result_state								= 3; //是否成功撤离
-	repeated PropData prop_data_list							= 4; //背包暗格数据
-	repeated VirtualPropData virtual_prop_list					= 5; //虚拟物品数据
-	optional uint32	clue_count									= 6; //线索数量
-	optional uint32 kill_count									= 7; //击杀数量
-}
-
-message TransformSyncMsg
-{
-	optional uint32 eID											= 1;
-	optional Int3 postion										= 2; //位置
-	optional uint32 angle										= 3; //0~360度
-}
-
-message ActionBonfireAddWood
-{
-    optional uint32 origin_id								= 1;  // 发起者ID
-	optional uint32 bonfire_id                              = 2;  // 篝火ID
-}
-
-message ActionBonfireIgnite
-{
-    optional uint32 origin_id								= 1;  // 发起者ID
-	optional uint32 bonfire_id                              = 2;  // 篝火ID
-}
-
-message BonfireBurnRewardProp
-{
-    optional uint32 prop_cfg_id								= 1;  // 道具ID
-	optional uint32 num                                     = 2;  // 数量
-}
-
-message ActionAntidoteScatter
-{
-    optional uint32 origin_id								= 1;  // 发起者ID
-	optional uint32 antidote_id								= 2;  // 篝火ID
-}
-
-message ActionPuppetUnpinned
-{
-    optional uint32 entity_id								= 1;
-	optional uint32 sub_state                               = 2;
-	optional Int3 position                                  = 3;
-}
-
-message ActionPuppetUnpinnedNtf
-{
-    optional uint32 entity_id								= 1;
-	optional uint32 sub_state                               = 2;
-	optional Int3 position                                  = 3;
-}
-
-message ChangeEntityPositionMsg
-{
-	optional uint32 entity_id								= 1;
-	optional Float3 position								= 2;
-}
-
-message TimelineInputMsg
-{
-	optional uint32 entity_id								= 1;
-	optional float jump_time								= 2; 
-	optional string timeline_name							= 3;
-	optional Float3 skill_pos								= 4;
-	optional Float3 skill_rotation							= 5;
-	repeated uint32 target_ids								= 6;
-}
-
-message FixStepCostMsg
-{
-	optional float cost_MP									= 1;//耗蓝
-	optional uint32 cost_entity_id							= 2;
-}
-
-message EntityStateChangeMsg
-{
-	optional uint32 entity_id								= 1;
-	optional uint32 state									= 2;
-	optional float during									= 3;
-}
-
-message InputKeyMsg
-{
-	optional uint32 entity_id								= 1;
-	optional string evt										= 2;
-	optional float	time									= 3;
-	optional bool is_ai										= 4;
-}
-
-
-message ShowSkillInteractionMsg
-{
-	optional uint32 entity_id								= 1;
-	optional uint32 skill_id								= 2;
-}
-
-message ErrorTipsMsg
-{
-	optional uint32 entity_id								= 1;
-	optional string error_tips								= 2;
-}
-
-message ChangeTagMsg
-{
-	optional uint32 entity_id								= 1;
-	optional uint32 tag_id									= 2;
-	optional uint32 val										= 3;
-}
-
-message ChangeAniMsg
-{
-	optional uint32 entity_id								= 1;
-	optional uint32 anim_id									= 2;
-	optional bool is_loop									= 3;
-	optional bool is_return									= 4;
-}
-
-message PlayEffectMsg
-{
-	optional string effect_name								= 1;
-	optional Float3 point									= 2;
-	optional Float3 forward									= 3;
-	optional float time										= 4;
-	optional uint32 entity_id								= 5;
-	optional uint32 bind_type								= 6;
-	optional uint32 bind_root_type							= 7;
-}
-
-
-//--------AI服务
-
-message ActionMoveListMsg
-{		
-	repeated ActionMoveMsg move_msg_list				 	= 1;
-};
-
-message InputKeyListMsg
-{
-	repeated InputKeyMsg input_key_list					= 1;
-}
-
-
-message LoadGameByStateMsg
-{
-	optional string state_file_name							= 1;
-	optional uint32 frame_index 							= 2;
-	optional StateMsg state_data							= 3;
-}
-
-message VAMsg
-{
-	map<uint32,VAItem> va_dic								= 1;
-	optional bool is_client_debug 							= 2;//客户端Debug
-}
-
-message VAItem
-{
-	optional uint32 entity_id								= 1;
-	repeated uint32 active_key_list							= 2;
-}
-
-message AIRotateThunderShotMsg
-{
-	repeated AIRotateThunderShotItem thunder_shot_list		= 1;
-}
-
-message AIRotateThunderShotItem
-{
-	optional uint32 entity_id									= 1;
-	optional float angle_y         							= 2;
-}
-
-message AIRotatePutWallAngleMsg
-{
-	repeated AIRotatePutWallAngleItem rotate_wall_list		= 1;
-}
-
-message AIRotatePutWallAngleItem
-{
-	optional uint32 entity_id								= 1;
-	optional uint32 angle_y									= 2;//旋转
-}
-
-message AIRotateShotMsg
-{
-	repeated AIRotateShotItem  rotate_shot_list				= 1;
-}
-
-message AIRotateShotItem
-{
-	optional uint32 entity_id  								= 1;
-	optional float angle_x 									= 2;
-	optional float angle_y									= 3;
-}
-
-
-message LocalCacheStateMsg
-{
-	map<uint32,StateMsg> state_data_dic						= 1;//帧号 对应数据									
-}
 
 // ------------------------state---------------------------------
 //游戏最终状态结构体	
 message StateMsg			
 {		
-    optional float server_time								= 1;
-	map<uint32,EntitySyncData> entity_data_dic				= 2;//运行时的entity增量数据
-	optional BattleSyncData battle_sync_data				= 3;//局内数据
-	map<uint32,ShadowData>	shadow_data_dic					= 4;//暴露给AI的 隐身显示信息
+    optional uint32 frame								    = 1;
+	repeated EntitySyncData entitys_merge_list				= 3;//运行时的entity增量数据
 };		
-
-message ShadowData
-{
-	map<uint32,ShadowDataItem> shadow_dic					= 1;
-};
-
-message ShadowDataItem
-{
-	optional Float3 pos										= 1;//坐标
-	optional Float3 rotation								= 2;
-	optional float time										= 3;
-};
 		
 message EntitySyncData			
 {
-	optional uint32 id										= 1;
+	required uint32 id										= 1;
 	optional EntityType type								= 2;//类型
 	optional Int3 position									= 3;//位置
 	optional Int3 rotation									= 4;//旋转
 	optional uint32 camp									= 5;//阵营
-	optional bool destroyed									= 7;//已经被销毁了
-	optional uint32 model_id								= 8;//模型ID
-	
-    optional StateAttributeSyncData state_attr_data			= 11;//状态属性
-	optional LifeSyncData life_data							= 12;//生命
-	optional CharacterCtrlSyncData character_ctrl_data   	= 13;//角色控制
-	optional PropCollectionsSyncData prop_collections_data  = 14;//物品集合
-	optional SkillCtrlSyncData skill_ctrl_data				= 15;//技能
-	optional BuffCtrlSyncData buff_ctrl_data				= 16;//Buff
-	optional HitCheckSyncData hit_check_data				= 17;//碰撞信息
-	optional NavSyncData nav_data							= 18;//导航
-	optional TagSyncData tag_data                           = 19;//Tag组件
-	optional GoapSyncData goap_data							= 20;//Goap组件
-	optional ArchitectureSyncData arch_data					= 21;//建筑组件
-	
-	optional AreaSyncData area_data							= 30;//安全区
-	optional PasserBrainSyncData passer_brain_data			= 31;//路人
-	optional GuardSyncData guard_data 						= 32;//警卫
-	optional FlyItemSyncData fly_item_data					= 33;//飞行道具
-	optional LadderSyncData ladder_data						= 34;//连接点
-	optional ThingSyncData thing_data						= 35;//物件
-	optional HeroSyncData hero_data							= 36;//英雄
-	optional WeaponSyncData weapon_data						= 37;//武器
-	optional HotSyncData hot_data							= 38;//热点
-	optional AnqiSyncData anqi_data							= 39;//暗器
-	optional PeddlerSyncData peddler_data					= 40;//摊贩
-	optional WarningSyncData warning_data					= 42;//警觉信息
-	optional SmokeSyncData smoke_data						= 43;//烟雾弹
-	optional JumpPointSyncData jump_point_data				= 44;//跳跃点组件
-	optional LadderCheckSyncData ladder_check_data			= 45;//连接点Check
-	optional BoatSyncData boat_data							= 46;//简单移动
-	optional ShopSyncData shop_data							= 47;//商店
-	//optional BonfireSyncData bonfire_data					= 48;//篝火
-	optional BossSyncData boss_data							= 49;
-	optional NestSyncData nest_data							= 50;//巢穴
-	optional HideStateSyncData hide_state_data				= 51;//隐身状态数据
-	optional DropSyncData drop_data							= 52;//掉落物
-	optional AntidoteScatterSyncData antidote_scatter_data	= 54;//解药派发地
-	optional MonsterSyncData monster_data					= 55;//怪物
-	//optional TaskSyncData task_data							= 56;//任务
-	
-	optional PhyscialSyncData physical_data					= 57;//物理（移动）模块
-	optional FireDiamondSyncData fire_diamond				= 58;//炎玉
-    optional InsanitySyncData insanity_data                 = 59; // 蛊灵
-	
-    optional BallSyncData ball_data			                = 60; // 球
-	
-	optional FollowSyncData follow_data					 	= 61;//跟随数据
-	
-	optional StrengthSyncData strength_data					= 62;//体力
 
+    optional AttributeSyncData attr_data					= 6;//状态属性
+	optional LifeSyncData life_data							= 7;//生命
+	optional BagSyncData bag_data  							= 8;//背包
+	optional SkillCtrlSyncData skill_ctrl_data				= 9;//技能
+	optional BuffCtrlSyncData buff_ctrl_data				= 10;//Buff
 
+	optional TagSyncData tag_data                           = 12;//Tag组件
+	optional HeroSyncData hero_data							= 13;//英雄
 	
-	optional InvisibleSyncData invisible_data				= 64;//隐身
-	
-	optional MagicWallSyncData magic_wall_data				= 65;
-	
-	optional ParalysisSyncData paralysis_data				= 66;//瘫痪
-	
-	optional SealingPointSyncData seal_point_data			= 67;//封印剑
-	optional SealingLineSyncData seal_line_data				= 68;//封印线
-	
-	optional ThunderNailSyncData thunder_nail_data			= 69;//雷钉
-	optional HookPointSyncData hook_point_data				= 70;
-	optional GoldenTireSyncData golden_tire_data			= 71;//金轮
-	optional GoldenBellSyncData golden_bell_data			= 72;//金钟罩
-	optional TimelineSyncData timeline_data					= 73;//timeline
-
-	optional CustomEntitySyncData custom_entity_data        = 74;//自定义entity
-	
-	optional HideAreaSyncData	hide_area_data				= 75;
-    optional RecoverSyncData recover_data			        = 76; //恢复
-	optional GazeSyncData		gaze_syne_data				= 77; //Npc注视
-	
-	
-	optional float total_attack_val							= 78;//全部伤害累计
-	map<uint32,float> attack_stats_dic						= 79;//伤害的详细信息（对每个entity 的伤害）
-
-	optional uint32 total_skill_count						= 80;//释放技能次数
-	optional uint32 total_skill_success_count				= 81;//技能命中次数
-	map<uint32,uint32> skill_stats_dic						= 82;//命中技能的信息 （每个entity 被命中的次数）
-	
-	optional uint32 normal_attack_count                     = 83;//普攻次数
-	optional uint32 normal_attack_success_count				= 84;//普攻成功次数
-	map<uint32,uint32> normal_attack_stats_dic				= 85;//普攻技能的信息 （每个entity 被命中的次数）
-	
-	optional uint32 normal_attack_break_count 				= 86;// 普攻命中 但无效
-	map<uint32,float> hold_dic								= 87;//蓄力类型数据
+	optional CharacterSyncData character_data				= 16;
+	optional AnimationStateSyncData	ani_state_data			= 21;
+	optional bool animation_state							= 22;
 };
 
-message RecoverSyncData
+message AnimationStateSyncData
 {
-	optional int32 recover_time 							= 1;//恢复时间
-	optional int32 recover_times 							= 2;//恢复次数
+	optional uint32 main_state								= 1;
+	optional uint32 sub_state								= 2;
+	optional uint32 last_main_state							= 3;
+	optional uint32 last_sub_state							= 4;
 }
 
-message HideAreaSyncData
+//属性
+message Attr
+{
+	required uint32 id    									= 1;
+	required float data										= 2;
+}	
+
+message CharacterSyncData
 {
 	optional uint32 id										= 1;
-	optional bool invisible									= 2;//进入区域是否能隐身
-	optional bool can_see_in_area							= 6;
-	optional float visible_val_recovery_speed				= 7;
-	optional float stay_invisible_time						= 8;//离开藏匿区域后，保持隐身的时间
-	optional Float3 center_position							= 9;//
-	optional Float3 collider_size									= 10;
+}	
 
-	optional HideAreaType hide_area_type					= 12;
-	optional bool model_occlude								= 13;
-	map<uint32,bool> on_area_entity_dic						= 14;
-	optional Float3	model_size								= 15;
-}
-
-message GoldenTireSyncData
+message BagSyncData
 {
-	optional uint32 origin_entity_id						= 1;
+	required uint32 id										= 1;
 }
 
-message GoldenBellSyncData
+message TagItemData
 {
-	optional uint32 target_entity_id						= 1;
-	optional int32 input_type_code							= 2;
-	optional float leftHp									= 3;
-	optional float rightHp									= 4;
-	optional uint32 origin_entity_id						= 5;
-	
-	optional string effect_name								= 6;
-}
-
-message ThunderNailSyncData
-{
-	optional bool complete_move 							= 1;
-	optional float complete_point_time						= 2;
-	optional float min_radius								= 3;
-	optional float max_radius								= 4;
-	optional float life_time								= 5;
-	optional bool booming									= 6;//正在爆炸中
-	optional bool complete_boom								= 7;//完成爆炸
-	optional float curr_radius								= 8;
-	map<uint32,string> boom_effect_group					= 9;//效果组
-}
-
-message HookPointSyncData
-{
-	optional float limit_radius								= 1;
-	optional uint32 from_entity_id							= 2;
-	optional float effect_radius							= 3;
-	optional bool can_hook									= 4;
-}
-
-message SealingLineSyncData
-{
-	optional float length									= 1;//线的长度
-	optional float create_time								= 2;//创建时间
-	optional bool disable									= 3;//失效用于围成的时候表现和暂留
-	optional float speed                                    = 4;//创建速度
-	optional uint32 owner_id								= 5;//释放者
-	optional float height									= 6;//高度
-	optional Float3 target_postion							= 7;//交汇位置
-	optional bool left_side									= 8;//左边阻挡，反之右边阻挡
-	optional float hit_time									= 9;//打击时间
-}
-
-message SealingPointSyncData
-{
-	optional uint32 owner_id								= 1;
-}
-
-message ParalysisSyncData
-{
-	optional bool  is_paralysis 							= 1;//是否瘫痪
-	optional float  paralysis_value 						= 2;//瘫痪值
-}
-
-//升岩壁
-message MagicWallSyncData
-{
-	optional BoxColliderData collider					= 1;
-	optional float end_time								= 2;
-	optional float final_target_y						= 3;
-	optional BoxColliderData real_collider				= 4;
-	//
-	optional uint32 origin_entity_id					= 5;
-}
-
-message InvisibleSyncData
-{
-	optional bool is_invisible 							= 1;//是否是隐身
-	optional bool last_invisible 						= 2;//上一次隐身状态
-	
-	optional uint32 on_hide_area_id						= 3;//在藏匿区内
-	optional bool on_hide_area							= 4;
-	optional float on_hide_area_break_time				= 5;
-}
-
-message StrengthSyncData
-{
-	optional float add_value	 							= 1;//体力增加值
-}
-
-message FireDiamondSyncData
-{
-	optional float power 									= 1;//聚集的能量
-	optional FireDiamondType type							= 2;//炎玉状态
-	optional uint32 from_entity_id							= 3;//来源ID
-	optional float max_power								= 4;//最大能量
-	optional float base_damage								= 6;//基础伤害
-	optional float bomb_damage								= 7;//爆炸基础伤害
-	optional float aim_speed								= 8;//瞄准状态增长速度
-	optional float normal_speed								= 9;//放置状态增长速度
-	optional float decrease_mp_speed						= 10;//减神源力速度
-	optional float effect_radius							= 11;//效果半径
-	optional uint32 follow_entity_id						= 12;//被entity Catch走
-}
-
-message BoatSyncData			
-{
-	optional BoatState state									= 1;
-	optional int32 action										= 2;
-	optional uint32 npc_id										= 3;//NPC的id
-	
-	optional uint32 way_map_id									= 4;//所属路点类型 0表示所有，TODO：其他可配置组合
-	optional uint32 way_point_type								= 5;//路点类型 0表示人，1代表船
-	optional float npc_move_speed								= 6;//npc移动速度
-}
-
-message ShopSyncData			
-{
-	optional uint32 shop_cfg_id									= 1;//shop cfg id
-	optional string shop_name									= 2;
-	optional string shop_desc									= 3;
-	optional uint32 npc_id										= 4;
-	optional int32 total_income									= 5;
-	map<uint64,SalePropItemData> sale_item_dic					= 6;
-}
-
-message DropSyncData
-{
-    optional uint32 id  									    = 1;
-	optional uint32 area_id									    = 2; 
-	optional uint32 drop_group_id	  							= 3;   // 某一掉落组
-	
-	map<uint64,PropData> prop_data_dic							= 4;
-	
-	optional uint32 from_entity_id								= 5;//掉落物的来源
-}
-
-message BossSyncData
-{
-	optional uint32 boss_id										= 1;
-	optional uint32 skin_id										= 2;
-}
-
-message SalePropItemData
-{
-	optional uint64 id											= 1;//instanceId
-	optional int32 index										= 2;
-	optional uint32 prop_cfg_id									= 3;
-	optional int32 stock_num									= 4;
-	optional int32 total_num									= 5;
-	optional int32 unit_price									= 6;
-	optional string owner										= 7;
-}
-
-message AntidoteScatterSyncData
-{	
-    optional ScatterState state                                  = 1;
-	optional float scatter_num                                   = 2;    
-	optional float scatter_max                                   = 3;    
-	optional BoxColliderData collider					    	 = 5;   // 碰撞盒
-	optional uint32 ignite_id                                    = 6;   // 点火参入者Id
-}
-
-// --------------------action---------------------------------	
-message ActionBoatMoveMsg			
-{		
-	optional uint32 entity_id								= 1;
+    required uint32 id                                      = 1;   // Tag类型
+	optional int32   value                                  = 2;   // Tag值
 };
 
 message TagSyncData
 {
-    map<uint32,int32> temp_value_dic	                	= 1;   // tag标签列表
-	map<int32,int32> tag_dic	                			= 2;   // tag列表
-	map<int32,int32> talent_dic	                	        = 3;   // 天赋列表
+    repeated TagItemData tag_data_merge_list                = 1;   // tag标签列表
 };
 
-message StateAttributeSyncData
+message AttributeSyncData
 {
-	optional uint32 sub_state								= 1;//主状态
-	optional int32 index 									= 2;//子状态
-	optional uint32 default_state							= 3;//默认状态
-	map<uint32,int32> attr_dic								= 4;//属性列表
+	repeated Attr attr_merge_list							= 1;//属性列表
+	repeated uint32 init_attr_merge_list					= 2;//初始化的属性
 };	
+
+
 
 message LifeSyncData		
 {		
-	optional bool dead										= 1;
-	optional float value									= 2;
-	optional float base_value 								= 3;
-	optional float max_value								= 4;
-	
-	optional float last_change_time							= 5;//上一次属性改变时间
-	optional uint32 killer_id								= 6;//击杀者ID			
+	optional float entity_hp								= 1;
+	optional float entity_max_hp							= 2;
+	optional bool dead										= 3;
 }
-
-message CharacterCtrlSyncData			
-{		
-	optional uint32 move_state								= 1;//是否在移动中
-	optional float move_angle								= 2;//移动方向
-	optional float view_row									= 3;//观察位仰角
-	optional float view_pitch								= 4;//观察位偏航角
-	optional float action_speed								= 5;//动作速度
-	optional bool disable_move								= 6;//禁止移动（动画依旧会播放）
-	optional bool disable_rotation							= 7;//禁止旋转（动画依旧会播放）
-	optional string	move_controller							= 8;//移动控制器，来自hero或者npc表
-	optional bool is_start									= 9;//是否处于起步
-	optional float width									= 10;//碰撞体宽度
-	optional float height									= 11;//碰撞体高度
-	optional bool disable_hit_box							= 12;//禁用受击盒
-	
-	optional bool cancel_tween_camera_angle					= 13;//取消缓动相机角度
-	//
-	map<uint32,uint32> view_dic								= 14;//可见的 角色列表（仅敌方）
-}		
-
-message TimelineSyncData
-{
-	optional uint64 skill_uid								= 1;
-	optional float jump_time								= 2; 
-	optional string timeline_name							= 3;
-	optional Float3 skill_pos								= 4;
-	map<uint32,uint32> target_ids							= 5;
-	map<uint32,uint32> result_ids							= 6;
-	optional Float3 skill_rotation							= 7;
-}
-message PropCollectionsSyncData		
-{
-	map<uint32,PropSlotData> weapon_slot_dic				= 5; //武器槽位数据
-	map<uint32,PropSlotData> anqi_slot_dic					= 6; //暗器槽位数据
-	map<uint32,PropSlotData> grocery_slot_dic				= 7; //杂货槽位数据
-	
-	map<uint64,PropData> prop_collections_dic				= 9; 
-}		
 
 message SkillCtrlSyncData		
 {
-	optional uint32 last_skill_id							= 1;//上一个释放技能
-	map<uint32, SkillItemData> skills_dic					= 2;//运行时的技能数据
-}
-
-message WeaponSyncData		
-{
-	optional float switch_weapon_remain_cd					= 1;//切换武器剩余cd时间
-}
-
-message AnqiSyncData		
-{
-	optional float switch_anqi_remain_cd					= 1;//切换暗器剩余cd时间
-}
-
-message TaskSyncData
-{
-	map<uint32,TaskItem> task_item_dic						= 1; //任务数据
-}
-
-message InsanitySyncData
-{
-    optional uint32 catch_entity_id                         = 1;
-	optional uint32 master_entity_id						= 2;//所属master
-	
-	optional uint32 hero_id									= 3;//英雄id
-	optional uint32 skin_id									= 4;//皮肤id
-	
-	optional bool is_shield_weak							= 6;
-	optional uint32 thunder_attack_count					= 7;//雷斩层数
-	optional float last_add_thunder_time					= 8;
-	
-	map<uint32,int32> va_state_dic							= 10;//输入状态		
-	
-	optional bool is_ai										= 11;//是否为AI
-	
-	map<uint32,int32> debug_va_dic							= 12;//展示VA信息，打印在客户端
-}
-
-message TaskItem
-{
-	optional uint32 id										= 1; //任务ID
-	optional uint32 task_state								= 2;
-	
-	map<uint32,TaskDetailParam> task_detail_param_dic		= 3; //具体任务所需id,num条件
-}
-
-message TaskDetailParam
-{
-	optional uint32 id										= 1; //ID
-	//repeated uint32 id_merge_list							= 2; //IDs
-	optional uint32 num										= 3; //数量
-}
-
-message PropSlotData
-{
-	optional uint32 id										= 1; //槽位ID
-	optional PropType prop_type								= 2;
-	optional uint32 prop_cfg_id								= 3;
-	map<uint64, int32> prop_id_dic							= 4;//当前槽位所有prop的instanceId
+	repeated SkillSyncData skills_merge_list				= 1;//运行时的技能数据
+	optional int32 lock_release_count						= 2;//是否被锁释放
+	repeated uint32 skill_id_merge_list						= 3;//拥有的技能ID列表
 }
 
 message BuffCtrlSyncData		
 {		
-	map<uint32,BuffItem> buff_dic							= 1;//携带的buff
-	
+	repeated BuffItem buff_merge_list						= 1;//携带的buff
 }
 
 message BuffItem
 {
-	optional uint32 id										= 1;//buff id
-	optional float add_time									= 2;//buff 添加时间
-	optional uint32 buff_count								= 3;//buff 层数
-	optional uint32 source_eId								= 4;//buff的施加人
-	optional uint32 buff_trigger_count						= 5;//buff的触发次数
-	optional uint32 parent_buff_id							= 6;//父buff_id
+	required uint32 id										= 1;//buff id
+	optional float step_time								= 2;//间隔时间
+	optional float keep_live_time							= 3;//生命时间
+	optional float add_time									= 4;//buff 添加时间
+	optional float start_time								= 5;//buff 开始时间
+	optional float last_execute_time						= 6;//上一次生效时间
+	optional float delay_time								= 7;//延迟生效时间
+	optional uint32 buff_count								= 8;//buff 层数
+	optional bool is_delete									= 9;//是否需要删除
+	repeated BuffEffectItem buff_effect_merge_list			= 10;//效果列表
+	optional float delete_time								= 11;//被删除的时间
 }
 
-
-message FollowSyncData
+message BuffEffectItem
 {
-	optional bool following									= 1;//是否处于跟随
-	optional uint32 follow_entity_id						= 2;//跟随EntityId
-	optional Float3 offset_position							= 3;//相对坐标
-	optional bool stop_follow								= 4;//短暂停止跟随
+	required uint32 id										= 1;
+	optional float step_time								= 2;//间隔时间
+	optional float keep_live_time							= 3;//生命时间
+	optional float add_time									= 4;//buff 添加时间
+	optional float start_time								= 5;//buff 开始时间
+	optional float last_execute_time						= 6;//上一次生效时间
+	optional float delay_time								= 7;//延迟生效时间
+	optional bool is_complete								= 8;//效果是否已经完成
+	optional bool need_reset_on_remove						= 9;//移除时需要重置效果
+	optional float effect_add_value							= 10;//实际生效累加值
+	optional float effect_multi_value						= 11;//实际生效累乘值
+	optional float delete_time								= 12;//被删除的时间
 }
 
-message SkillItemData		
+message SkillSyncData		
 {
-	optional float remain_cd								= 1;//技能剩余cd时间
+	required uint64 id										= 1;
+	optional float remain_cd								= 2;//技能剩余cd时间
 }
 
-message HitInfoData
-{
-	optional Float3 point									= 1;
-	optional Float3 normal									= 2;
-}
-	
-message HitCheckSyncData
-{
-	map<uint32,uint32> hit_entity_dic						= 1;//命中的Entity
-	map<int32,HitInfoData> hit_infos						= 2;//命中的环境物体
-	optional bool is_hit_entity								= 3;//entity碰撞检测
-	optional bool is_hit_environment						= 4;//环境碰撞检测
-	optional Float3 size									= 5;//碰撞盒大小
-	optional bool used_box_cast								= 6;//使用box碰撞（精确） 
-	map<uint32,uint32> mul_hit_entity_dic                   = 7;//法术场中的Entity
-	map<uint32,float> ignore_entity                         = 8;//忽略entity	
-	optional  uint32  created_entity_type					= 9;//被创建的Entity类型		
-	optional  uint32  collider_order			            = 10;//碰撞等级
-}
-
-message NavSyncData
-{
-	optional uint32 way_map_id								= 1;//关联的路点ID
-	optional Float3 next_position							= 2;//正在前往的点
-}
-
-message GoapSyncData
-{
-	optional uint32 play_animation							= 1;//播放指定名称动画   0: Walk 1: Run 2: Idle
-	optional Float3 destin_position							= 2;//当前导航去的终点位置
-	optional string goap_asset_path							= 3;//Goap配置资源文件名称
-	optional bool   architecture_npc						= 4;//是否建筑Npc，摊贩等 无需寻路Npc
-	optional uint32	architecture_bind_id					= 5;//建筑Npc ，绑定的建筑 LogicEntity Id.
-	optional ClusterChatSyncData cluster_chat_data			= 6;//集群聊天行为
-}
-
-message ClusterChatSyncData
-{
-	optional uint32 cluster_id								= 1;//所属集群id.0 默认表示非集群npc
-	optional bool assign_cluster							= 2;//集群当次行为是否分配。
-	optional bool listen									= 3;// true:执行listen行为, false: 执行chat行为
-}
-
-message GazeSyncData
-{
-	optional bool open_gaze_func							= 1; //开启npc注视功能
-	optional float angle 									= 2;
-	optional float radius 									= 3;
-}
-
-message ArchitectureSyncData
-{
-	optional uint32 archit_id								= 1;
-	map<uint32, ArchitectureLineUpInfo> line_dic			= 2;
-}
-
-message ArchitectureLineUpInfo
-{
-	optional uint32 line_idx								= 1;
-	optional Float3 position								= 2;
-	optional Float3 rotation								= 3;
-	optional bool   used									= 4;
-	optional bool   entered									= 5;
-}
-
-message HotSyncData
-{
-	optional int32 point_id									= 1;//得分点ID
-	optional float picking_time								= 2;//交互时间
-}
-
-message AreaSyncData
-{
-	repeated Float3 side_point_merge_list					= 1;//外轮廓点
-	optional float radius									= 2;
-	optional bool hide_side_line							= 3;//是否隐藏边际线
-	optional AreaActionType areaActionType					= 4;//藏匿区行为类型
-	optional uint32 id										= 5;
-	map<uint32,AreaStandPoint> area_stand_dic			    = 6;//藏匿区上的停留点
-	optional uint32 max_npc_count							= 7;//最大NPC数量
-	optional float frequency								= 8;//吸引概率
-	optional float power_radius								= 9;//吸引半径
-}
-
-//路人的同步数据
-message PasserBrainSyncData
-{
-	optional PasserState state								= 1;
-	optional int32 action									= 2;
-	optional uint32 npc_id									= 3;//NPC的id
-	optional uint32 bt_state 								= 4;//行为树所处状态
-	
-	optional NpcSubType subType								= 5;//角色子类型
-	
-	optional bool use_bt_agent								= 6;//是否使用行为树
-	
-	optional float stand_time								= 7;//停留时间
-	
-	optional float pre_min_stand_time						= 8;
-	optional float pre_max_stand_time						= 9;
-}
-
-//警卫的同步数据
-message GuardSyncData
-{
-	optional GuardState state								= 1;
-	optional int32 action									= 2;
-	optional uint32 npc_id									= 3;//NPC的id
-	optional uint32 guard_area_id							= 4;//警卫关联的巡逻区域typeId
-	optional uint32 bt_state 								= 5;//行为树所处状态
-	
-	optional NpcSubType subType								= 6;//角色子类型
-	
-	optional float stand_time								= 7;//停留时间
-}
-
-//摊贩
-message PeddlerSyncData
-{
-	optional PeddlerState state								= 1;
-	optional int32 action									= 2;
-	optional uint32 npc_id									= 3;//NPC的id
-	optional uint32 focusAreaId								= 4;//关心的藏匿区Id
-	optional uint32 bt_state 								= 5;//行为树所处状态
-	
-	optional NpcSubType subType         					= 6;//角色子类型
-}
-
-message FlyItemSyncData
-{
-	map<uint32,string> effect_group							= 1;//效果组
-	optional Float3 attack_box_size							= 2;//攻击盒大小
-	optional float during									= 4;//持续时间
-	optional bool destory_on_hit							= 5;//命中时候销毁
-	repeated uint32 attack_tag_list							= 6;//攻击Tag
-	repeated EntityType entity_type_list					= 7;//目标Entity类型
-	optional uint32 owner_id								= 8;//从属人
-	optional bool is_infinity_time							= 9;//无穷时间
-	optional bool hit_for_all								= 10;//所有collider
-	optional FlyEntityType type                             = 11;//飞行物类型
-	map<uint32,string> env_effect_group						= 12;//环境效果组
-	optional bool destory_on_hit_entity						= 13;//命中Entity时候销毁
-	optional bool destory_on_hit_env						= 14;//命中Env时候销毁
-	optional bool destory_on_hit_tag_entity					= 15;//命中带tag 的Entity时候销毁
-	
-	optional bool hit_myself 								= 16;
-	optional bool hit_all_camp 								= 17;
-}
-
-message CustomEntitySyncData
-{
-	optional float during									= 2;//持续时间
-	optional uint32 owner_id								= 3;//从属人
-	optional uint32 damage_id								= 4;//伤害来源
-	optional CustomEntityType type							= 5;
-}
-
-message NestSyncData
-{
-	optional uint32 source_id								= 1;//施法者
-	optional uint32 nest_cfg_id								= 3;//巢穴ID
-	optional float nest_hp									= 4;//巢穴Hp
-	optional float nest_max_hp								= 5;//巢穴MaxHp
-}
-
-//连接点控制
-message LadderSyncData
-{
-	optional uint32 ladder_id								= 1;
-	repeated Float4 start_postion							= 2;//开始坐标（本地）
-	repeated Float4 end_postion								= 3;//结束坐标（本地）
-	optional float during									= 4;//角度（世界）
-	optional BoxColliderData collider						= 5;//碰撞盒
-	
-	optional LadderSubType subType					 		= 6;//连接点子类型
-};
-
-//连接点check
-message LadderCheckSyncData
-{
-	optional int32 use_times								= 1;//使用次数
-	repeated uint32 need_prop								= 2;//所需物品
-	optional uint32 hot_area_id								= 3;//热点区域ID
-	optional uint32 hot_area_npc_id							= 4;//热点区域 NPC ID
-}
+//message NavSyncData
+//{
+//	optional uint32 way_map_id								= 1;//关联的路点ID
+//	optional Float3 next_position							= 2;//正在前往的点
+//}
 
 message ThingSyncData
 {
-	optional uint64 thing_id								= 1;//instanceId
-
-	optional uint32 id										= 2;//奖励的ID
-	optional BoxColliderData collider						= 3;//
-	map<uint64,PropData> prop_data_dic						= 4;//物件包含的物品列表
-	map<uint64,VirtualPropData> virtual_prop_dic			= 5;//线索数据，虚拟的物品，放入背包，但是不在背包中显示
-	optional uint32 count									= 6;
-	optional float drop_time								= 7;
+	required uint64 thing_id								= 1;//instanceId
+	optional ThingType type									= 2;//物件类型
+	optional uint32 id										= 3;//奖励的ID
+	optional BoxColliderData collider						= 4;//
 	
-	optional float born_start_time							= 8;//物件出生时间
-	optional uint32 owner_id								= 9;//释放者
-	optional Float3 offset_position							= 10;//偏移坐标
-	optional ThingSubType sub_type							= 11;//子类型
-	optional uint32 follow_target_id						= 12;//追踪Entity
-	
-	optional uint32 state_id								= 13;//物品状态id
-}
+	//repeated PropData prop_data_merge_list					= 5;//物件包含的物品列表
+	//repeated VirtualPropData virtual_prop_merge_list		= 6;//线索数据，虚拟的物品，放入背包，但是不在背包中显示
+};
 
 
 message HeroSyncData
 {
 	optional uint32 hero_id									= 1;//英雄id
 	optional uint32 skin_id									= 2;//皮肤id
-	optional bool shouhua									= 4;//是否处于兽化
-	optional float shouhua_end_time							= 5;//兽化结束时间
-	optional uint32 attack_combo							= 6;//连击数
-	optional bool is_phantom								= 7;//是否是幻象
-	optional uint32 master_id								= 8;//召唤师ID
-	optional uint32 guling_id								= 9;//蛊灵ID
-	optional uint32 heroLevel                               = 10;//英雄等级
-	optional uint32 heroExp                                 = 11;//英雄经验值
-	optional float shoot_time                               = 12;//上次射箭时间
-	//
-	map<uint32,int32> va_state_dic							= 13;//输入状态	
-	//optional float shot_val									= 14;//拉弓蓄力进度（0~1）
-	optional uint32 shot_target_id							= 15;//被瞄准的Entity
-	optional bool is_ai										= 16;//是否为AI
-	
-	map<uint32,int32> debug_va_dic							= 17;//展示VA信息，打印在客户端
-}
-
-message WarningSyncData
-{
-	optional uint32 notice_eId								= 1;//警示目标								 
-}
-
-message BallSyncData
-{
-	optional uint32 prop_id									= 2;//prop ID
-	optional float power									= 3;//使用的力气
-}
-
-message SmokeSyncData
-{
-	optional uint32 source_eId								= 1;//释放者
-	optional float voice_range								= 2;//声音范围
-	optional float affect_time								= 3;//作用时间
-	optional float affect_range								= 4;//作用范围
-	optional string effect_name								= 5;//特效名字
-}
-
-message JumpPointSyncData
-{
-	optional float width									= 1;//宽度
-	optional float height									= 2;//高度
-	optional int32 type										= 3;//类型
-}
-
-message HideStateSyncData
-{
-	optional bool is_hide									= 1;//是否隐藏状态
-	optional float hide_start_time							= 2;//进入隐藏状态的时间点
-}
-
-message MonsterSyncData
-{
-	optional uint32 npc_id									= 1;//NPC的id
-	optional uint32 bt_state 								= 2;//行为树所处状态
-	optional Float3 origin_point							= 3;//出生点
-	optional float attack_radius							= 4;//最大攻击范围
-}
-
-message PhyscialSyncData
-{
-	optional bool disable									= 1;//禁用物理
-	optional bool is_ground									= 2;//处理地面摩擦力
-	optional float mass										= 3;//重量，处理重力
-	optional Float3 speed									= 4;//速度
-	optional uint32 lose_momentumXZ_on_hit					= 5;//水平动量损失（0~100）
-	optional uint32 lose_momentumY_on_hit					= 6;//垂直动量损失（0~100）
-	optional bool forward_follow_move						= 7;//朝向向着移动方向
-	optional float acceleration 							= 8;//重力加速度
-	optional uint32 min_gravity_factor						= 9;//最小的重力值（取反默认100）
-	optional uint32 group_id                                = 10;//同组不碰撞
-	optional bool disable_collision                         = 11;//禁用碰撞反弹
-}
-
-//----SyncData结束
-
-//-----单局数据
-message BattleSyncData
-{
-	optional uint32 battle_state							= 1;//战斗阶段
-	
-	optional TwoVsTwoSyncData twoVtwo						= 10;//2v2v2v2玩法数据
-}
-
-//
-message TwoVsTwoSyncData
-{
-	optional int32 round_count								= 1;//回合数
-	optional float end_time									= 2;//回合结束时间
-	map<uint32,TwoVsTwoTeamData> team_datas					= 3;//队伍信息
-	map<int32,float> win_point_reborn_time					= 4;//胜利点重生时间
-	map<int32,uint32> win_team								= 5;//上回合胜利的队伍
-	optional uint32 killer_id								= 6;//淘汰其他队伍的entityId
-}
-
-message TwoVsTwoTeamData
-{
-	map<int32, int32> round_scores							= 1;
+	optional uint32 model_id								= 3;//模型ID
+	optional HeroPowerType hero_power_type 					= 4;
 }
 
 // --------------------state---------------------------------
 //发送GM命令	
 message GMCommandReq									
 {	
-	repeated string commands								= 1;
-	optional uint32 send_id                                 = 2;//当没有控制角色的时候sendID为空	
+	repeated string commands								= 1;	
 }
 
-message AttackBoxDebugMsg
-{
-	optional Float3 attack_pos                               = 1;
-	optional Float3 attack_rot                               = 2;
-	optional Float3 attack_center                            = 3;
-	optional Float3 attack_size                              = 4;
-	optional Float3 hit_pos                                  = 5;
-	optional Float3 hit_rot                                  = 6;
-	optional Float3 hit_center                               = 7;
-	optional Float3 hit_size                                 = 8;
-	optional float hit_radius                                = 9;
-}
 
-message TakeBoxPropMsg
-{
-	optional uint32 thing_id								= 1;	//宝箱id
-	optional uint64 prop_id                                 = 2;	//宝箱里的道具id
-	optional uint32 to_id									= 3;	
-	optional uint32 to_slot_id								= 4;
-	optional float time										= 5;
-	
-	repeated PropData prop_data_merge_list					= 10;
-}
 
-message CloseBoxMsg
-{
-	optional uint32 thing_id								= 1;
-	optional uint32 to_id									= 2;
-}
-
-message PickTalentMsg
-{
-	optional uint32 entity_id								= 1;
-	optional uint32 talent_id								= 2;
-}
 
 
 

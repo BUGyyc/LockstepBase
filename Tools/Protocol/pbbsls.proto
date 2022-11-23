@@ -1,6 +1,0 @@
-syntax = "proto3";
-package pbbsls;
-option go_package = "./pbbsls";
-
-enum RetCode { NONE = 0; }
-

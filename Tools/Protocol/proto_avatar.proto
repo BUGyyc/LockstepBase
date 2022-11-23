@@ -1,6 +1,24 @@
-syntax = "proto3";
+syntax = "proto2";
 
 import "proto_datamodel.proto";
 
 package Protocol;
  
+
+message SyncUserNtf
+{
+    optional User user                                  = 1;
+}
+
+message JoinRoomNtf
+{
+    optional bool ok                                    = 1;
+    optional string msg                                 = 2;
+    optional Room room                                  = 3;
+} 
+
+
+message BattleInitNtf
+{
+    optional string battle_init_cfg                    = 1;
+}

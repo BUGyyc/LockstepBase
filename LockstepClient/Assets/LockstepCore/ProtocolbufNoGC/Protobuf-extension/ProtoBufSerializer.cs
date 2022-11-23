@@ -4,6 +4,9 @@ using ProtoBuf.Serializers;
 using System.IO;
 using Protocol;
 
+//TODO:
+namespace Protocol { }
+
 /// <summary>
 /// 说明：ProtoBuf初始化、缓存等管理；序列化、反序列化等封装
 /// 
@@ -68,7 +71,7 @@ public class ProtoBufSerializer : Singleton<ProtoBufSerializer>
         ProtoFactory.AddProtoPool(typeof(ntf_battle_frame_data.cmd_with_frame), new CmdWithFramePool());
         ProtoFactory.AddProtoPool(typeof(one_cmd), new OneCmdPool());
 
-        ProtoFactory.AddProtoPool(typeof(ABC),new ABCPool());
+        ProtoFactory.AddProtoPool(typeof(ABC), new ABCPool());
     }
 
     void ClearProtoPool()

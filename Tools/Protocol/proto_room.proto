@@ -1,48 +1,102 @@
-syntax = "proto3";
+syntax = "proto2";
 
+import "include/yd_fieldoptions.proto";
+import "proto_common.proto";
 import "proto_battle.proto";
-
 
 package Protocol;
 
-//------------------------ Battle Start ----------------------
-// 客户端请求加载战斗
-	
+message PlayerInfo	
+{	
+	required uint32 player_id							= 1;
+	required PlayerType player_type                     = 2;
+	required string player_name							= 3;
+	required uint32 hero_id							    = 4;
+	required uint32 skin_id								= 5;
+
+	optional BagSyncData bag_sync_data      = 53;
+
+};
+
+message RoomPlayerInfo
+{
+	required PlayerInfo player							= 1;
+	//required RoomPlayerState state						= 2;
+};
+
+//基础数据
+message BatteRuntimeData
+{
+	required int32 game_id = 1;
+	required int32 start_time = 2;
+	required int32 running_time = 3;
+	required string game_type = 4;//单人、组队、休闲、天梯（单人休闲，单人天梯，组队休闲、组队天梯）
+	required int32 real_player_num = 5;//真实玩家数量
+};
+
+message EnterBattleRsp	
+{	
+	required int32 ret_code								= 1;	
+	optional uint64 room_id								= 2;
+	optional string level_name							= 3;//关卡名
+	repeated RoomPlayerInfo room_player_info_list		= 4;
+};	
 	
 message LeaveBattleReq	
 {	
-	optional uint32 player_id							= 1;
-	optional string uid                                 = 2;
+	required uint32 player_id							= 1;
+	required string uid                                 = 2;
 	optional uint32 result_state						= 3; //是否成功撤离
 };	
 	
 message LeaveBattleRsp	
 {	
-	optional int32 ret_code								= 1;
-	GameResultMsg game_result_msg				= 2;//夺宝撤离		
+	required int32 ret_code								= 1;
 };	
 	
 message LeaveBattleNotify	
 {	
-	optional uint32 player_id							= 1;	
+	required uint32 player_id							= 1;	
 };
 
 message BattleEndNotify	
 {	
-	optional uint64 room_id								= 1;	
+	required uint64 room_id								= 1;	
 };
+
+
+//------------------------ Battle Start ----------------------
+// 客户端请求加载战斗
+message LoadBattleReq
+{
+    required string user_id						    	= 1;        // 用户登录时的唯一ID
+}
+
+// 服务器应答加载战斗请求
+message LoadBattleRsp
+{
+    required int32 ret_code								= 1;	        
+	required uint32 host_id                             = 2;            // 本机玩家 player ID
+    repeated PlayerInfo player_list                     = 3;            // 玩家信息列表
+	optional string level_name							= 4;            // 关卡名
+}
 
 // 客户端加载进度
 message LoadProgressNtf
 {
-    optional uint32 progress                            = 1;            // 进度
+    required uint32 progress                            = 1;            // 进度
 }
 
+// 客户端加载完成后，服务器广播玩家进入战斗消息给所有玩家
+// message EnterBattleNtf
+// {
+//    required uint32 player_id                           = 1;
+// }
 
 // 战斗开始，客户端切换战斗状态
 message BattleStart
 {
-	optional float server_time							= 1;
+	required float server_time							= 1;
 }
 
 

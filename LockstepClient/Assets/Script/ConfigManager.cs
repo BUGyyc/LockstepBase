@@ -9,7 +9,7 @@ public class ConfigManager
     public const string DATA_PATH = "ConfigData";
 
     private Dictionary<Type, object> _configsDic;
-    private static Dictionary<string, MoveControllerCfg> mCtrlDic = new Dictionary<string, MoveControllerCfg>();
+    // private static Dictionary<string, MoveControllerCfg> mCtrlDic = new Dictionary<string, MoveControllerCfg>();
     public void Init()
     {
         _configsDic = new Dictionary<Type, object>();

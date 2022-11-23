@@ -1,186 +1,55 @@
-syntax = "proto3";
+syntax = "proto2";
 
 package Protocol;
 
 import "proto_common.proto";
 import "proto_config.proto";
 
-message EffectCfg
+
+message LevelCfg
 {
-	optional float time									= 1;
-	optional EffectBindType bind_type					= 2;
-	optional EffectBindRootType bind_root_type			= 3;
-	optional bool	only_myself_can_see					= 4;
-	
-	optional uint32 can_see_normal						= 5;//通用状态下的可见性
-	optional uint32 can_see_invisible					= 6;//隐身状态下的可见性
-	
-	optional uint32 bind_bone_type						= 7;//最新的绑定骨骼描述
+	optional BattleCfg battle_cfg							= 1;//出生点配置 路点数据
 }
 
-message AreaCfg
+message MapCfg
 {
-	optional uint32 area_Id								= 1;
-	optional Float3 center_point						= 2;//中心点
-	repeated Float3 side_point_list						= 3;//外轮廓点
-	optional float radius								= 4;
-	optional AreaActionType area_action_type			= 5;//藏匿区表现行为类型
-	optional bool is_hide								= 6;
-	optional uint32 max_npc								= 7;//最大NPC数量
-	optional float frequency							= 8;//吸引概率
-	optional float power_radius							= 9;//影响半径
-	repeated AreaStandPoint area_stand_list				= 10;//藏匿区上的停留点
-};
-
-message LadderCfg
-{
-	optional uint32 ladderId								= 1;
-	optional Float3 postion									= 2;
-	optional Float3 rotation								= 3;
-	repeated Float4 start_postion							= 4;//开始坐标（本地）
-	repeated Float4 end_postion								= 5;//结束坐标（本地）
-	optional float during									= 6;
-	optional BoxColliderData collider						= 7;//碰撞盒
-	optional LadderSubType type								= 8;//子类型
-	optional int32 use_times								= 9;//使用次数
-	repeated uint32 need_prop								= 10;//所需物品
-	optional uint32 hot_area_id								= 11;//热点区域ID
-	optional uint32 hot_area_npc_id							= 12;//热点区域 NPC ID
-};
-
-message PlayerCameraCfg
-{
-	repeated CameraCfg cameraCfgList						= 1;
+	required int32 cell_x 									= 1;//行数
+	required int32 cell_y									= 2;//列数
+	required bool is_warp									= 3;//是否被装扮
+	repeated CellCfg cell_cfg_list							= 4;//所有单元 
+	required int32 uint_count								= 5;
+	repeated UnitCfg unit_cfg_list							= 6;//所有Entity 成员
+	
+	required int32 map_file_version							= 7;
 }
 
-message CameraCfg
+message BattleCfg
 {
-	optional uint32 camera_id								= 1;
-	optional int32 camera_type								= 2;//1.人物状态  2.键盘   3.触发盒
-	optional int32 sub_state								= 3;
-	optional int32 key_board_type							= 4;
-	optional Float3 relative_postion						= 5;//  相对主相机的坐标
-	optional string camera_prefab_path						= 6;//  相机prefab路径
-	optional float fov										= 7;//	相机fov
-	
-	optional float min_follow_speed							= 8;
-	optional float max_follow_speed							= 9;
-	optional float max_follow_distance						= 10;
-	repeated MoveKeyFrame speed_curve						= 11;
-};
+	repeated HeroBornCfg	hero_born_list					= 1;
+	repeated MonsterBornCfg 	monster_born_list			= 2;
+	optional WayMapCfg 	way_map_cfg							= 3;
+}
 
 message BornCfg
 {
-	optional EntityType e_type								= 1;
-	optional Float3 postion									= 2;
-	optional Float3 rotation								= 3;	
-	optional uint32 camp									= 4;//阵营信息
+	required EntityType e_type								= 1;
+	required Float3 postion									= 2;
+	required Float3 rotation								= 3;	
+	optional uint32 camp									= 4;
 };
 
-message GoapTargetCfg
+message HeroBornCfg
 {
-	optional uint32 architectureId						    = 1;			//对应建筑配置表ID
-	optional Float3 postion									= 2;			//建筑位置
-	optional Float3 rotation								= 3;			//建筑欧拉旋转角度	
-	optional uint32 npcId									= 4;			//关联NpcId
-	optional Float3 npcPos									= 5;			//Npc位置
-	optional Float3 npcRota									= 6;			//Npc旋转
-	optional EntityType e_type								= 7;			//Entity类型
-	optional NpcSubType subType								= 8;			//角色子类型
-	optional BornType born_type								= 9;			//出生类型
-	optional string goap_asset_name						    = 10;			//Npc_Goap配置名称
-	optional string arch_goap_asset_name					= 12;			//建筑Goap配置名称
-	
-	repeated NpcLineUpCfg line_up_info						= 13;			//建筑npc站位配置
-};
-
-message NpcLineUpCfg
-{
-	optional uint32 line_Id									= 1;			//顺序Id
-	optional Float3 postion									= 2;			
-	optional Float3 rotation								= 3;			
-	optional bool   used								    = 4;			//是否栏位已被占用
+	required uint32 cfg_id									= 1;
+	required BornCfg born_cfg								= 2;
 }
 
-message ClusterCfg
+message MonsterBornCfg
 {
-	optional Float3 postion									= 2;			//建筑位置
-	
-	repeated NpcClusterCfg npc_cluster_cfg					= 3;			//集群npc配置
+	required uint32 cfg_id									= 1;
+	required BornCfg born_cfg								= 2;
 }
 
-message NpcClusterCfg
-{
-	optional uint32 npcId									= 1;			//关联NpcId。
-	optional Float3 npcPos									= 2;			//Npc位置。
-	optional Float3 npcRota									= 3;			//Npc旋转。
-	optional BornType born_type								= 4;			//出生类型。
-	optional string goap_asset_name						    = 5;			//Npc_Goap配置名称。
-	optional EntityType e_type								= 6;			//Entity类型。
-	optional bool  open_gaze_fun							= 7;			// npc开启注视功能。
-	optional float gaze_max_angle							= 8;			// npc注视最大角度 默认100度。默认正前方。 根据策划需求。
-	optional float gaze_max_radius							= 9;			// npc注视扇形最大半径 默认距离为5。
-	optional uint32 cluster_id								= 10;			//关联集群Id，针对集群做表现需求。
-}
-
-//npc注视点配置
-message NpcGazePoint
-{
-	optional Float3 postion									= 1;//注视点位置
-	optional Float3 rotation								= 2;//注视点旋转角度
-	optional uint32 look_priority							= 3;//注视点被注视优先级
-
-}
-
-//npc出生配置
-message NpcBornCfg
-{
-	optional EntityType e_type 								= 1;
-	optional Float3 postion									= 2;
-	optional Float3 rotation								= 3;
-	optional BornType born_type								= 4;//出生类型，是否是动态出生、立即出生
-	
-	optional uint32 clue_area_id							= 5;//所属区域Id
-	optional uint32 way_map_id								= 6;//所属路点类型 0表示所有，TODO：其他可配置组合
-	
-	optional uint32 focus_area_id							= 7;//摊贩关联的藏匿区Id
-	optional uint32 guard_area_id							= 8;//警卫关联的巡逻区域id
-	
-	optional bool is_temp_clue_npc							= 9;//是否是临时线索npc
-	optional uint32 npc_cfg_id								= 10;//npc配置id
-	
-	optional NpcSubType sub_type							= 11;//角色子类型
-	
-	optional uint32 way_point_type							= 12;//路点类型 0表示人，1代表船
-	
-	optional float npc_move_speed							= 13;//npc移动速度
-	
-	optional bool use_bt_agent								= 14;//是否使用行为树
-	
-	optional float pre_min_stand_time						= 15;
-	optional float pre_max_stand_time						= 16;
-	
-	optional uint32 born_link_id							= 17;//出生相关ID
-	optional uint32 group_id							 	= 18;//所属组Id
-	optional float delay_born_time						    = 19;//延迟出生时间
-	optional string goap_asset_name						    = 20;//Goap配置名称
-	optional bool  architecture_npc							= 21;//是否建筑Npc，摊贩等 无需寻路Npc
-	optional uint32 architecture_bind_id					= 22;//建筑Npc， 关联绑定的建筑Logic Id
-	optional bool  open_gaze_fun						    = 23;// npc开启注视功能
-	optional float gaze_max_angle							= 24;// npc注视最大角度 默认100度。默认正前方。 根据策划需求。
-	optional float gaze_max_radius							= 25;// npc注视扇形最大半径 默认距离为5.
-	optional uint32 cluster_id								= 26;// npc集群Id，0默认不属于集群。针对集群做表现需求。
-};
-
-//怪物出生配置，因为和npcBornCfg有太多区别
-//message MonsterBornCfg
-//{
-	//optional EntityType e_type 								= 1;
-	//optional Float3 postion									= 2;
-	//optional Float3 rotation								= 3;
-	//optional MonsterBornType monsterBornType				= 4;//怪物出生类型
-	//optional uint32 link_id									= 5;//相关ID
-//}
 
 //路点配置
 message WayMapCfg
@@ -192,12 +61,13 @@ message WayMapCfg
 //图  点配置
 message WayPointCfg
 {
-	optional uint32 id										= 1;
-	optional uint32 map_id									= 2;//所属类型ID
-	optional Float3 position								= 3;
+	required uint32 id										= 1;
+	required uint32 mapId									= 2;//所属类型ID
+	required Float3 position								= 3;
 	optional Float3 forward									= 4;
-	optional float min_stand_time							= 5;
-	optional float max_stand_time							= 6;
+	optional float minStandTime								= 5;
+	optional float maxStandTime								= 6;
+	
 	optional uint32 type									= 7;
 	optional uint32 line_count								= 8;
 	optional float pass_line_time							= 9;
@@ -209,129 +79,43 @@ message WayPointCfg
 //图  线配置
 message WayLineCfg
 {
-	optional WayPointCfg head 								= 1;
-	optional WayPointCfg last								= 2;
-	optional float cost										= 3;
-	optional bool is_one_way								= 4;//是否单方向代价
-}
-
-
-message ThingCfg
-{
-	optional uint32 cfg_id									= 1;
-	optional ThingType thing_type 							= 2;//物件类型
-	optional Float3 postion									= 3;
-	optional Float3 rotation								= 4;
-	optional BoxColliderData collider						= 5;//碰撞盒
-	
-	optional uint32 clue_id									= 6;//大宝箱编号
-	optional BornType born_type 							= 7;//出生类型
-	
-	optional ThingSubType sub_type					        = 8;//物件子类型
-};
-
-message DropCfg
-{
-	optional Float3 postion									= 1;
-	optional Float3 rotation								= 2;
-	
-	optional uint32 id      						        = 3;   // ID
-	optional uint32 area_id      						    = 4;   // 区域ID
-	repeated uint32 group_selected  						= 5;   // 掉落组选择
-	optional uint32 drop_group_id						    = 6;   // 区域ID
-};
-
-message AntidoteScatterCfg
-{
-	optional Float3 postion									= 1;
-	optional Float3 rotation								= 2;
-	
-	optional BornType born_type 							= 3;   // 出生类型
-	optional uint32 model_id                                = 4; 
-	
-	optional BoxColliderData collider						= 5;  // 碰撞盒
-};
-
-message GuardTargetAreaCfg
-{
-	optional uint32 id										= 1;
-	optional Float3 postion									= 2;
-	optional float radius 								 	= 3;
-	optional uint32 guard_area_id							= 4;//警卫关联的巡逻区域id
-	optional Float3 forward									= 5;//警卫朝向
-}
-
-message HookPointCfg										//勾爪点
-{
-	optional Float3 postion									= 1;
-	optional float radius									= 2;
-	optional float repulsion_distance						= 3;
-}
-
-message JumpPointCfg
-{
-	optional Float3 postion 								= 1;
-	optional Float3 rotation								= 2; 
-	optional float width									= 3;
-	optional float height									= 4;
-	optional int32 type										= 5;
-}
-
-message HideAreaCfg
-{
-	optional uint32 id										= 1;
-	optional bool invisible									= 2;//进入区域是否能隐身
-	repeated EntityType entity_type_list					= 3;//生效的类型
-	repeated uint32 require_tag_list						= 4;
-	repeated uint32 block_tag_list							= 5;
-	optional bool can_see_in_area							= 6;
-	optional float visible_val_recovery_speed				= 7;
-	optional float stay_invisible_time						= 8;//离开藏匿区域后，保持隐身的时间
-	optional Float3 center_position							= 9;//
-
-	optional Float3 collider_size							= 10;
-	optional uint32 model_id								= 11;
-	optional HideAreaType hide_area_type					= 12;
-	optional bool model_occlude								= 13;
-	optional Float3 model_size								= 14;
-	optional Float3 rotation								= 15;
-}
-
-message LevelCfg
-{
-	optional string map_name								= 1;
-	optional BattleCfgData battle_data						= 2;
-
-
-	repeated BornCfg born_list								= 7;		//出生位置列表
-	repeated AreaCfg area_list								= 8;		//藏匿区列表
-	repeated ThingCfg thing_list							= 9;		//物件列表
-	repeated LadderCfg ladder_list							= 10;		//联通点列表
-	repeated CameraCfg camera_list							= 11;		//虚拟相机列表
-	repeated GuardTargetAreaCfg guard_target_list			= 13;		//警卫巡逻区域
-	repeated NpcBornCfg npc_born_list						= 14;		//多种npc出生点
-	optional WayMapCfg way_map_cfg							= 15;		//路点系统
-	optional bool need_debug_ui								= 16;		//是否需要头顶的调试UI
-	
-	repeated ThingWayMap thing_way_map_list					= 17;		//物品所需要的路点
-	
-	repeated DropCfg drop_list								= 19;		//掉落列表
-	repeated HookPointCfg hook_point_list					= 20;		//勾爪点列表
-	repeated JumpPointCfg jump_point_list					= 21;		//跳跃点列表
-	
-	repeated AntidoteScatterCfg antidote_scatter_list       = 22;
-	
-	repeated HideAreaCfg hide_area_list						= 23;
-	
-	repeated GoapTargetCfg goap_target_list					= 24;		//NPC_Goap_寻路终点
-	repeated ClusterCfg cluster_target_list					= 25;		//Npc 站位集群列表
-	repeated NpcGazePoint npc_gaze_point_list				= 26;		//Npc 注视点列表
+	required WayPointCfg head 								= 1;
+	required WayPointCfg last								= 2;
+	required float cost										= 3;
+	required bool is_one_way								= 4;
 }
 
 message ThingWayMap
 {
-	optional uint32 id										= 1;
+	required uint32 id										= 1;
 	optional WayMapCfg way_map_cfg							= 2;
+}
+
+message CellCfg
+{
+	required int32 terrain_type								= 1;//地势
+	required int32 elevation								= 2;
+	required int32 water_level								= 3;
+	required int32 urban_level								= 4;
+	required int32 farm_level								= 5;
+	required int32 plant_level								= 6;
+	required int32 special_index							= 7;
+	required bool is_wall									= 8;
+	optional HexDirection incomingRiver						= 9;
+	optional HexDirection outgoingRiver						= 10;
+	optional int32 roadFlags								= 11;
+	optional bool IsExplored								= 12;
+	
+	required int32 index									= 13;
+	optional Float3 position								= 14;
+	repeated int32 neighbor_cell_index_list					= 15;
+}
+
+message UnitCfg
+{
+	required int32 x										= 1;
+	required int32 y 										= 2;
+	required float rotation									= 3;
 }
 
 //混合模式，对应Unity 2D Blender
@@ -342,6 +126,21 @@ enum BlendType {
     Cartesian												= 3;
 	Simple1D												= 4;		//1D混合器
 };
+
+
+message AnimatorCfg
+{
+	optional string animator_name							= 1;
+	optional uint32 clip_count								= 2;
+	repeated AnimationClipCfg clip_cfg_list					= 3;
+}
+
+message AnimationClipCfg
+{
+	optional string clip_name								= 1;
+	optional float clip_length								= 2;
+	optional uint32 clip_id									= 3;
+}
 
 //移动关键帧
 message MoveKeyFrame
@@ -366,10 +165,6 @@ message MoveMotion
 	optional string motion_name									= 8;
 	repeated MoveKeyFrame position_y_curve						= 9;//Y轴的位移动画
 	
-	optional bool none_rotation									= 10;//没有旋转
-	optional bool none_postion_xz								= 11;//没有平面位移
-	optional bool none_postion_y								= 12;//没有垂直方向位移
-	
 	optional bool is_loop										= 17;
 	
 	repeated MoveKeyFrame scale_x_curve							= 18;
@@ -377,6 +172,7 @@ message MoveMotion
 	repeated MoveKeyFrame scale_z_curve							= 20;
 	optional uint32 motion_type									= 21;
 }
+
 
 //混合节点
 message BlendNode
@@ -414,74 +210,4 @@ message MoveControllerCfg
 	repeated string bound_path_list							= 4;		//组成包围盒的节点列表
 	optional string head_path								= 5;		//头部路径
 	optional float head_size								= 6; 		//头的大小
-	optional string model_path								= 7;		//模型位置
 };
-
-//timeline的属性配置
-message TimelineCfg
-{
-	repeated uint32 add_tag_list							= 1;
-	repeated uint32 require_tag_list						= 2;
-	repeated uint32 block_tag_list							= 3;
-}
-
-//timeline的属性配置
-message PlayerTimelineCfg
-{
-	map<string,TimelineCfg> timeline_cfg_dic				= 1;
-}
-
-//-----战斗玩法数据（需要同步断线帮助断线重连）
-message BattleCfgData
-{
-	//通用数据
-	optional uint32 battle_type										= 1;
-	optional uint32 team_count										= 2;
-	optional uint32 team_member_count								= 3;
-	optional bool hide_ui											= 4;//隐藏UI
-	repeated int32 add_tags											= 5;//开局添加Tag
-	
-	//玩法数据
-	optional TwoVsTwoData two_vs_two								= 10;					
-};
-
-message WinPointData
-{
-	optional int32 point_id								= 1;
-	optional int32 trigger_type							= 2;
-	optional int32 linkId								= 3;
-	optional float picking_time							= 4;//采集时间
-	optional int32 win_score							= 5;//分数
-	optional Float3 position							= 6;//位置
-	optional Float3 rotation							= 7;//旋转
-	optional float delay_time							= 8;//延迟时间
-}
-
-message TwoVsTwoData													//2v2v2v2玩法
-{
-	optional uint32 round_count								= 1;		//总轮次
-	optional uint32 total_seconds							= 2;		//单轮总时长
-	optional uint32 win_score								= 3;		//单轮取胜的分数
-	optional uint32 model_id								= 4;		//模型ID
-	
-	repeated WinPointData win_point_list					= 5;        //得分点列表
-};
-
-//-----结束
-
-//-----AI数据-----
-message AIMapData
-{
-	optional Float3 up_side								= 1;//上边界
-	optional Float3 down_side							= 2;//下边界
-	optional int32 count_x								= 3;//横向格子数量
-	optional int32 count_y								= 4;//纵向格子数量
-	repeated AIMapPointData point_list					= 5;//每个格子的信息，长度为count_x * count_y
-	optional string level_config_name					= 6;//配置名字
-}
-
-message AIMapPointData
-{
-	optional float height								= 1;
-	optional bool is_hide								= 2;
-}

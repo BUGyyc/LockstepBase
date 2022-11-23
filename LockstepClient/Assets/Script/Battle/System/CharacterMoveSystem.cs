@@ -51,12 +51,12 @@ public class CharacterMoveSystem : IExecuteSystem, ISystem
         // };
     }
 
-    private Vector3 GetNodeDir(Protocol.BlendNode target, Protocol.BlendNode origin)
-    {
-        Vector3 t3 = new Vector3(target.XPostion, 0, target.YPostion);
-        Vector3 o3 = new Vector3(origin.XPostion, 0, origin.YPostion);
-        return t3 - o3;
-    }
+    // private Vector3 GetNodeDir(Protocol.BlendNode target, Protocol.BlendNode origin)
+    // {
+    //     Vector3 t3 = new Vector3(target.XPostion, 0, target.YPostion);
+    //     Vector3 o3 = new Vector3(origin.XPostion, 0, origin.YPostion);
+    //     return t3 - o3;
+    // }
 
 
     public void Execute()
