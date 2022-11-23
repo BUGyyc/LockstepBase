@@ -6,12 +6,6 @@ import "proto_config.proto";
 
 package Protocol;
 
-message ABC
-{
-	optional uint32 u_val = 1;
-	optional int32 i_val = 2;
-	optional float f_val = 3;
-}
 
 
 // --------------------entity---------------------------------

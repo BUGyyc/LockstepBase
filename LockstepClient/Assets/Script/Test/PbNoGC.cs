@@ -149,6 +149,9 @@ public class ProtocolHelper
         Buffer.BlockCopy(msSend.GetBuffer(), 0, msReceive.GetBuffer(), 0, (int)msSend.Length);
         //反序列化指定长度的内存流
         tmp = ProtoBufSerializer.Deserialize(msReceive, typeof(ABC), (int)msSend.Length) as ABC;
+
+        // Debug.LogFormat($"反序列化  {temp.IVal}  {temp.FVal} {temp.UVal} ");
+
         //因为又使用了一次，所以再回收
         ProtoFactory.Recycle(tmp);
     }
