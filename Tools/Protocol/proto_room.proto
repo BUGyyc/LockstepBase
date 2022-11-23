@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+import "proto_battle.proto";
+
+
+package Protocol;
+
+//------------------------ Battle Start ----------------------
+// 客户端请求加载战斗
+	
+	
+message LeaveBattleReq	
+{	
+	optional uint32 player_id							= 1;
+	optional string uid                                 = 2;
+	optional uint32 result_state						= 3; //是否成功撤离
+};	
+	
+message LeaveBattleRsp	
+{	
+	optional int32 ret_code								= 1;
+	GameResultMsg game_result_msg				= 2;//夺宝撤离		
+};	
+	
+message LeaveBattleNotify	
+{	
+	optional uint32 player_id							= 1;	
+};
+
+message BattleEndNotify	
+{	
+	optional uint64 room_id								= 1;	
+};
+
+// 客户端加载进度
+message LoadProgressNtf
+{
+    optional uint32 progress                            = 1;            // 进度
+}
+
+
+// 战斗开始，客户端切换战斗状态
+message BattleStart
+{
+	optional float server_time							= 1;
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package Protocol;
+
+enum EntityType
+{
+	Empty												= 0;//空
+	Hero												= 1;//玩家
+	Passer												= 2;//路人npc
+	Area												= 3;//藏匿区
+	FlyItem												= 4;//炸弹
+	Thing 												= 5;//物件
+	Ladder 												= 6;//连接点
+	Guard                                               = 7;//警卫npc
+	Line												= 8;//线
+	Peddler												= 9;//摊贩npc
+	Boat												= 10;//简单移动NPC
+	Bonfire                                             = 12;//篝火
+	Boss												= 13;//Boss
+	Nest												= 14;//巢穴
+	Drop												= 15;//掉落物
+	AntidoteScatter									    = 16;//解药散布
+	Monster												= 17;//怪物
+	Task												= 18;//任务
+	FireDiamond					 						= 19;//炎玉
+    Insanity                                            = 20;//蛊灵
+    Ball	                                            = 21;//烟雾弹  球
+	MagicWall											= 22;//升岩壁
+	SealingSword										= 23;//封印剑
+	GoldenTire											= 24;//金轮
+	GoldenBell											= 25;//金钟罩
+	Arrow                                               = 26;//弓箭
+	HideArea											= 27;//藏匿区
+	ThunderNail											= 28;//雷钉
+	ThunderField                                        = 29;//电浆
+	Architecture										= 30;//建筑
+}
+
+enum FlyEntityType
+{
+	FlyEmpty											= 0;//空
+	Bow												    = 1;//弓箭
+	ThunderLine											= 2;//雷斩剑气
+}
+
+
+enum CustomEntityType
+{
+	CE_Empty												= 0;
+	CE_Bow   												= 1;
+	CE_ThunderLine											= 2;
+	CE_FlyRing												= 3;
+	CE_ThunderSpear											= 4;
+}

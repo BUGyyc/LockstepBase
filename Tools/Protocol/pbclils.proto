@@ -1,0 +1,251 @@
+syntax = "proto3";
+package pbclils;
+option go_package = "./pbclils";
+
+// lobby_server 只允许 0-9999
+enum RetCode {
+    OK                           = 0;
+    SERVER_INTERNAL_ERROR        = 1001;
+    USER_ALREADY_LOGIN           = 1002;
+    USER_NOT_LOGIN               = 1003;
+    USER_ALREADY_IN_BATTLE       = 1004;
+    USER_IS_MATCHING             = 1005;
+    INVALID_LOGIN_TOKEN          = 1006;
+    INVALID_MATCH_MODE           = 1007;
+    INVALID_LEVEL_CFG_ID         = 1008;
+    TEAM_USER_ALREADY_IN_TEAM    = 1011;
+    TEAM_IS_FULL                 = 1012;
+    USER_IS_NOT_TEAM_LEADER      = 1013;
+    INVLID_TEAM_ID               = 1014;
+    INVITEE_ALREADY_IN_TEAM      = 1015;
+    USER_NOT_IN_INVITEE_LIST     = 1016;
+    TEAM_INVITATION_EXPIRE       = 1017;
+    USER_NOT_IN_TEAM             = 1018;
+    TEAM_INVITEE_NOT_ONLINE      = 1019;
+    TARGET_NOT_IN_TEAM           = 1020;
+    TARGET_OFFLINE               = 1021;
+    INVALID_GAME_MODE            = 1022;
+    MATCH_TEAM_NOT_ENOUTH_PLAYER = 1023;
+    INVALID_HERO_ID              = 1024;
+    CAN_NOT_OPERATE_ON_YOURSELF  = 1025;
+    BUNDLE_CODE_NOT_INCONSISTENT = 1026;
+}
+
+enum ProtocolID {
+    NONE                  = 0;
+    HEARTBEAT_REQ         = 10000;
+    LOGIN_REQ             = 10001;
+    MATCH_BATTLE_REQ      = 10002;
+    CHANGE_HERO_ID_REQ    = 10003;
+    CHANGE_SKIN_INDEX_REQ = 10004;
+    TEAM_MATCH_BATTLE_REQ = 10005;
+    CREATE_TEAM_REQ       = 10011;
+    TEAM_INVITE_REQ       = 10012;
+    JOIN_TEAM_REQ         = 10013;
+    LEAVE_TEAM_REQ        = 10014;
+    KICK_TEAM_MEMBER_REQ  = 10015;
+    DISBAND_TEAM_REQ      = 10016;
+
+    HEARTBEAT_RSP         = 20000;
+    LOGIN_RSP             = 20001;
+    MATCH_BATTLE_RSP      = 20002;
+    CHANGE_HERO_ID_RSP    = 20003;
+    CHANGE_SKIN_INDEX_RSP = 20004;
+    TEAM_MATCH_BATTLE_RSP = 20005;
+    CREATE_TEAM_RSP       = 20011;
+    TEAM_INVITE_RSP       = 20012;
+    JOIN_TEAM_RSP         = 20013;
+    LEAVE_TEAM_RSP        = 20014;
+    KICK_TEAM_MEMBER_RSP  = 20015;
+    DISBAND_TEAM_RSP      = 20016;
+
+    MATCH_BATTLE_SUCCESS_NOTIFY    = 30001;
+    TEAM_MEMBER_JOIN_NOTIFY        = 30002;
+    TEAM_MEMBER_LEAVE_NOTIFY       = 30003;
+    TEAM_MEMBER_KICKED_NOTIFY      = 30004;
+    TEAM_DISBAND_NOTIFY            = 30005;
+    TEAM_INVITE_NOTIFY             = 30006;
+    TEAM_LEADER_CHANGE_NOTIFY      = 30007;
+    TEAM_MEMBER_HERO_CHANGE_NOTIFY = 30008;
+}
+
+message HearbeatReq {}
+
+message HearbeatRsp {}
+
+message UserInfo {
+    uint64 id       = 1;
+    string nickname = 2;
+    uint32 hero_id  = 4;
+}
+
+message LoginInfoReq {
+    int64 puid               = 1;
+    string token             = 2;
+    uint32 bundle_build_code = 3;
+    uint32 res_build_code    = 4;
+}
+
+message LoginInfoRsp {
+    RetCode code         = 1;
+    string recover_token = 3;
+    UserInfo user_info   = 4;
+}
+
+enum MatchMode {
+    MATCHMODE_NONE       = 0;
+    SINGLE               = 1;
+    MULTI_UNLIMITED_TIME = 2;
+    MULTI_LIMIT_TIME     = 3;
+    LOCAL_SINGLE         = 4;
+    LOCAL_MULTI          = 5;
+}
+
+message MatchBattleReq {
+    MatchMode match_mode = 1;
+    uint32 level_cfg_id  = 2;
+    uint32 hero_id       = 3;
+    uint32 skin_index    = 4;
+}
+
+message MatchBattleRsp {
+    RetCode code         = 1;
+    MatchMode match_mode = 2;
+    uint32 level_cfg_id  = 3;
+    uint32 hero_id       = 4;
+    uint32 skin_index    = 5;
+}
+
+message MatchBattleSuccessNotify {
+    string server_addr = 2;
+    uint64 battle_id   = 3;
+    string ticket      = 4;
+}
+
+enum TeamMatchMode {
+    TEAMMATCHMODE_NONE   = 0;
+    QUICK                = 1;
+    UNLIMITED_TIME       = 2;
+    LIMIT_TIME           = 3;
+    UNLIMITED_TIME_LOCAL = 4;
+}
+
+message TeamMatchBattleReq {
+    TeamMatchMode match_mode = 1;
+    uint32 level_cfg_id      = 2;
+}
+
+message TeamMatchBattleRsp {
+    RetCode code             = 1;
+    TeamMatchMode match_mode = 2;
+    uint32 level_cfg_id      = 3;
+}
+
+message ChangeHeroIDReq {
+    uint32 hero_id = 1;
+}
+
+message ChangeHeroIDRsp {
+    RetCode code   = 1;
+    uint32 hero_id = 2;
+}
+
+message TeamMemberChangeHeroNotify {
+    uint64 uid     = 1;
+    uint32 hero_id = 2;
+}
+
+message ChangeSkinIndexReq {}
+
+message ChangeSkinIndexRsp {
+    RetCode code = 1;
+}
+
+enum GameMode {
+    GAMEMODE_NONE = 0;
+    V1            = 1;
+    V2            = 2;
+    V4            = 3;
+}
+
+message CreateTeamReq {
+    GameMode mode = 1;
+}
+
+message CreateTeamRsp {
+    RetCode code  = 1;
+    int64 team_id = 2;
+}
+
+message TeamInviteReq {
+    string nickname = 1;
+}
+
+message TeamInviteRsp {
+    RetCode code    = 1;
+    string nickname = 2;
+}
+
+message TeamInviteNotify {
+    uint64 invitor_uid  = 1;
+    int64 team_id       = 2;
+    string invitor_name = 3;
+}
+
+message JoinTeamReq {
+    int64 team_id = 1;
+}
+
+message JoinTeamRsp {
+    RetCode code                = 1;
+    int64 team_id               = 2;
+    uint64 leader_uid           = 3;
+    repeated TeamMember members = 4;
+}
+
+message TeamMember {
+    uint64 uid     = 1;
+    string name    = 2;
+    uint32 hero_id = 3;
+}
+
+message TeamMemberJoinNotify {
+    TeamMember member = 1;
+}
+
+message LeaveTeamReq {}
+
+message LeaveTeamRsp {
+    RetCode code = 1;
+}
+
+message TeamMemberLeaveNotify {
+    uint64 leaver_uid = 1;
+}
+
+message KickTeamMemberReq {
+    uint64 kickee_uid = 1;
+}
+
+message KickTeamMemberRsp {
+    RetCode code      = 1;
+    uint64 kickee_uid = 2;
+}
+
+message TeamMemberKickedNotify {
+    uint64 kickee_uid = 1;
+}
+
+message DisbandTeamReq {}
+
+message DisbandTeamRsp {
+    RetCode code = 1;
+}
+
+message TeamDisbandNotify {
+    int64 team_id = 1;
+}
+
+message TeamLeaderChangeNotify {
+    uint64 newLeaderID = 1;
+}
