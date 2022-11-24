@@ -49,11 +49,11 @@ namespace Lockstep.Game.Features.Input
 
 
                 //UnityEngine.Debug.Log("[ExecuteSpawnInput]    " + entityWithId.id.value + " -> " + value);
-                gameEntity.AddId(value);
+                gameEntity.AddId((byte)value);
                 gameEntity.AddActorId(item.actorId.value);
                 gameEntity.AddLocalId(_localIdCounter);
                 gameEntity.AddVelocity(Vector2.Zero);
-                gameEntity.AddPosition(item.coordinate.value);
+                gameEntity.AddPosition(item.coordinate.value, LQuaternion.identity);
 
                 //初始动画
                 AnimationComponent animation = new AnimationComponent()

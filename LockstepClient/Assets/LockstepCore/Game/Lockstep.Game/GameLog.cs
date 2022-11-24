@@ -6,6 +6,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Lockstep.Core.Logic;
 using Lockstep.Core.Logic.Interfaces;
 
+
+
+//NOTE: 存入输入
 namespace Lockstep.Game
 {
     [Serializable]
