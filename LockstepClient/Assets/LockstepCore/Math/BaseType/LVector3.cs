@@ -307,7 +307,6 @@ namespace Lockstep
         {
             var val = ((long)lhs._x) * rhs._x + ((long)lhs._y) * rhs._y + ((long)lhs._z) * rhs._z;
             return new LFloat(true, val / LFloat.Precision);
-            ;
         }
 
         public static LVector3 Cross(ref LVector3 lhs, ref LVector3 rhs)

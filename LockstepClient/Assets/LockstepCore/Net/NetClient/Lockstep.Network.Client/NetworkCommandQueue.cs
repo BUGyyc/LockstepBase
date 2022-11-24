@@ -25,6 +25,7 @@ namespace Lockstep.Network.Client
 
         public NetworkCommandQueue(INetwork network)
         {
+            //NOTE: 这里注册已经存在的 Command
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (Assembly assembly in assemblies)
             {
@@ -53,7 +54,7 @@ namespace Lockstep.Network.Client
         {
             base.Enqueue(input);
             Serializer serializer = new Serializer();
-            serializer.Put((byte)2);
+            serializer.Put(NetProtocolDefine.Input);
             serializer.Put(input.Tick);
             serializer.Put(LagCompensation);
             serializer.Put(input.Commands.Count());
@@ -77,14 +78,14 @@ namespace Lockstep.Network.Client
             Deserializer deserializer = new Deserializer(source);
             switch (deserializer.GetByte())
             {
-                case 0:
+                case NetProtocolDefine.Init:
                     {
                         Init init = new Init();
                         init.Deserialize(deserializer);
                         this.InitReceived?.Invoke(this, init);
                         break;
                     }
-                case 2:
+                case NetProtocolDefine.Input:
                     {
                         uint tick = deserializer.GetUInt() + deserializer.GetByte();
                         int @int = deserializer.GetInt();

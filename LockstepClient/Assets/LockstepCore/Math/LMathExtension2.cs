@@ -42,6 +42,11 @@ namespace Lockstep
             return new LVector2Int(vec.x.ToInt(), vec.y.ToInt());
         }
 
+        public static LVector3 ToLVector3(this LVector2 self)
+        {
+            return new LVector3(true, self._x, 0, self._y);
+        }
+
         public static LVector3Int ToLVector3Int(this LVector3 vec)
         {
             return new LVector3Int(vec.x.ToInt(), vec.y.ToInt(), vec.z.ToInt());
