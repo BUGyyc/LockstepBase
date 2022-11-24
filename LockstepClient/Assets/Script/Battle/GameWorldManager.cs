@@ -59,9 +59,14 @@ public class GameWorldManager
 
         foreach (var actor in actors)
         {
-            EntityUtil.CreateCharacterEntity(actor);
+            EntityUtil.CreateSimpleHero(actor);
         }
         Debug.LogFormat("创建玩家");
+
+        for (var i = 0; i < 20; i++)
+        {
+            EntityUtil.CreateAI(i);
+        }
     }
 
     private void CreateLocalPlayer()

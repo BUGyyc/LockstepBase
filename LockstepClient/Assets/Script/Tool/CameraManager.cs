@@ -8,8 +8,26 @@ public class CameraManager : MonoBehaviour
 
     public GameObject lookAtObj;
 
+
+    public static CameraManager Instance;
+
     private Transform lookAtTf;
     private Transform cameraTf;
+
+    public Vector3 forwardZeroY
+    {
+        get
+        {
+            var val = this.transform.forward;
+            return new Vector3(val.x, 0, val.z);
+        }
+    }
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         cameraTf = Camera.main.transform;
