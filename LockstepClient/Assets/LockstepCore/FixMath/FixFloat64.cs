@@ -17,7 +17,7 @@ namespace FixMath
     {
         public long RawValue;
 
-        public static readonly decimal Precision = (decimal)new FixFloat64(1L);
+        // public static readonly decimal Precision = (decimal)new FixFloat64(1L);
 
         public static readonly FixFloat64 MaxValue = new FixFloat64(long.MaxValue);
 
@@ -37,10 +37,22 @@ namespace FixMath
 
         public static readonly FixFloat64 Pi = new FixFloat64(13493037704L);
 
+        /// <summary>
+        /// 2分之一π
+        /// </summary>
+        /// <returns></returns>
         public static readonly FixFloat64 PiOver2 = new FixFloat64(6746518852L);
 
+        /// <summary>
+        /// 4分之一 π
+        /// </summary>
+        /// <returns></returns>
         public static readonly FixFloat64 PiOver4 = new FixFloat64(3373259426L);
 
+        /// <summary>
+        /// 2π
+        /// </summary>
+        /// <returns></returns>
         public static readonly FixFloat64 PiTimes2 = new FixFloat64(26986075409L);
 
         public static readonly FixFloat64 PiInv = 0.3183098861837906715377675267m;
@@ -260,7 +272,7 @@ namespace FixMath
             }
             return fix;
         }
-        
+
 
         /// <summary>
         /// 向上取整
@@ -277,7 +289,7 @@ namespace FixMath
             /// <returns></returns>
             return ((value.RawValue & 0xFFFFFFFFu) != 0) ? (Floor(value) + One) : value;
         }
-        
+
 
         /// <summary>
         /// 获取小数部分的 RawValue 表示的定点数
@@ -373,7 +385,7 @@ namespace FixMath
             long rawValue2 = y.RawValue;
             //小数位
             ulong num = (ulong)(rawValue & 0xFFFFFFFFu);
-            //整数位
+            //整数位 并且 降位
             long num2 = rawValue >> 32;
             //小数位
             ulong num3 = (ulong)(rawValue2 & 0xFFFFFFFFu);
@@ -391,6 +403,7 @@ namespace FixMath
             ulong num9 = num5 >> 32;
             long num10 = num6;
             long num11 = num7;
+            //把降位 的运算整数结果，再次放回到高32位上
             long num12 = num8 << 32;
             long rawValue3 = (long)num9 + num10 + num11 + num12;
             return new FixFloat64(rawValue3);
@@ -413,9 +426,14 @@ namespace FixMath
             long y3 = num7;
             long y4 = num8 << 32;
             bool overflow = false;
+
+            #region  防止溢出
             long x3 = AddOverflowHelper((long)x2, y2, ref overflow);
             x3 = AddOverflowHelper(x3, y3, ref overflow);
             x3 = AddOverflowHelper(x3, y4, ref overflow);
+            #endregion
+
+            //判断符号
             bool flag = ((rawValue ^ rawValue2) & long.MinValue) == 0;
             if (flag)
             {
@@ -473,6 +491,7 @@ namespace FixMath
             return num;
         }
 
+        //TODO:
         public static FixFloat64 operator /(FixFloat64 x, FixFloat64 y)
         {
             long rawValue = x.RawValue;
@@ -565,6 +584,12 @@ namespace FixMath
             return x.RawValue <= y.RawValue;
         }
 
+        /// <summary>
+        /// 开根号
+        /// //TODO:
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         public static FixFloat64 Sqrt(FixFloat64 x)
         {
             long rawValue = x.RawValue;
@@ -854,11 +879,15 @@ namespace FixMath
 
         public static explicit operator long(FixFloat64 value)
         {
+            float a = 1f;
+            FixFloat64 b = (FixFloat64)a;
+
             return value.RawValue >> 32;
         }
 
         public static explicit operator FixFloat64(float value)
         {
+            //科学计数法，4.2949673×10的9次方
             return new FixFloat64((long)(value * 4.2949673E+09f));
         }
 
@@ -917,6 +946,7 @@ namespace FixMath
             return new FixFloat64(rawValue);
         }
 
+#if UNITY_EDITOR
         internal static void GenerateSinLut()
         {
             using StreamWriter streamWriter = new StreamWriter("FixFloat64SinLut.cs");
@@ -961,5 +991,6 @@ namespace FixMath
             }
             streamWriter.Write("\r\n        };\r\n    }\r\n}");
         }
+#endif
     }
 }
