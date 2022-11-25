@@ -542,11 +542,13 @@ namespace FixMath
                 #endregion
                 //最终进位给到
                 num <<= num5;
-                //实际进位 - 最大可进位
+                //实际进位 - 最大可进位 ,最终 num4 >=0
                 num4 -= num5;
-                //把进位后的 num 去整除 num2
+                //把进位后的 num 去整除 num2，num6 保留整除结果
                 ulong num6 = num / num2;
+                //进位后的 num 除 num2 取余
                 num %= num2;
+                //还有剩余的进位 （num >= 0）
                 num3 += num6 << num4;
                 if ((num6 & ~(ulong.MaxValue >> num4)) != 0)
                 {
@@ -559,6 +561,7 @@ namespace FixMath
             long num7 = (long)(num3 >> 1);
             if (((rawValue ^ rawValue2) & long.MinValue) != 0)
             {
+                //符号相反的情况，结果是负数
                 num7 = -num7;
             }
             return new FixFloat64(num7);
@@ -625,34 +628,51 @@ namespace FixMath
             ulong num = (ulong)rawValue;
             ulong num2 = 0uL;
             ulong num3;
+
+            ///
+            ///求出一个二进制 num3 <= num,且 Math.pow(2,x) = num3
+            ///    
             for (num3 = 4611686018427387904uL; num3 > num; num3 >>= 2)
             {
             }
+
             for (int i = 0; i < 2; i++)
             {
                 while (num3 != 0)
                 {
+                    //假设 num2+num3 称为模拟数
                     if (num >= num2 + num3)
                     {
+                        //模拟数小于目标数，那么就把目标数缩小
                         num -= num2 + num3;
+                        //并且把 num3 逼近值 加上 num2 右移
                         num2 = (num2 >> 1) + num3;
                     }
                     else
                     {
+                        //如果模拟数大于 目标数
+                        //那么就把 num2 右移缩小，以为他估算的大了
                         num2 >>= 1;
                     }
                     num3 >>= 2;
                 }
+
                 if (i == 0)
                 {
+                    //首次计算时，如果目标数上有整数位表示，即33位-64位上有数值
                     if (num > uint.MaxValue)
                     {
+                        //那么就把 目标值变成 目标值与估算值的差值
                         num -= num2;
+                        //对齐到33位-64位的区间上
                         num = (num << 32) - 2147483648u;
+                        //估算值也对齐到 33位- 64位 区间
                         num2 = (num2 << 32) + 2147483648u;
                     }
                     else
                     {
+                        //说明num 只有 0-32位上有数值
+                        //所以把 num、num2 对齐到 33位-64位
                         num <<= 32;
                         num2 <<= 32;
                     }
