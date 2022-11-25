@@ -446,34 +446,47 @@ namespace FixMath
             {
                 return MinValue;
             }
+
+
             long num9 = num8 >> 32;
             if (num9 != 0L && num9 != -1)
             {
+                //有溢出值，整数位相乘后有进位
                 return flag ? MaxValue : MinValue;
             }
             if (!flag)
             {
+                //如果是负数
                 long num10;
                 long num11;
                 if (rawValue > rawValue2)
                 {
+                    //那么  rawValue 是正数，rawValue2 是负数
                     num10 = rawValue;
                     num11 = rawValue2;
                 }
                 else
                 {
+                    // rawValue2 是正数，rawValue 是负数
                     num10 = rawValue2;
                     num11 = rawValue;
                 }
+                //如果超出范围，那么一定溢出
                 if (x3 > num11 && num11 < -4294967296L && num10 > 4294967296L)
                 {
+                    //负数溢出，给最小数
                     return MinValue;
                 }
             }
             return new FixFloat64(x3);
         }
 
-        //TODO:
+        /// <summary>
+        /// 相当于求出 x 二进制最大位 与 long.MaxValue 如下表达
+        ///   x * Math.Pow(2,num) = long.MaxValue
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int CountLeadingZeroes(ulong x)
         {
@@ -504,8 +517,13 @@ namespace FixMath
             //先转成正数
             ulong num = (ulong)((rawValue >= 0) ? rawValue : (-rawValue));
             ulong num2 = (ulong)((rawValue2 >= 0) ? rawValue2 : (-rawValue2));
+            /// <summary>
+            /// 无符号长整数 0
+            /// </summary>
             ulong num3 = 0uL;
+            //最大位 32 +1
             int num4 = 33;
+            //如果能整除 16 ，就提前算好
             while ((num2 & 0xF) == 0L && num4 >= 4)
             {
                 num2 >>= 4;
@@ -513,13 +531,20 @@ namespace FixMath
             }
             while (num != 0L && num4 >= 0)
             {
+                #region  这里算出 num 最多能进的位数
+                //，肯定是不能超过 num5 数量的，不然就溢出了, num4 是实际除数产生的进位结果
                 int num5 = CountLeadingZeroes(num);
                 if (num5 > num4)
                 {
+                    //最大进位足够包容实际进位，那么就把实际进位给到最终进位  num5
                     num5 = num4;
                 }
+                #endregion
+                //最终进位给到
                 num <<= num5;
+                //实际进位 - 最大可进位
                 num4 -= num5;
+                //把进位后的 num 去整除 num2
                 ulong num6 = num / num2;
                 num %= num2;
                 num3 += num6 << num4;
