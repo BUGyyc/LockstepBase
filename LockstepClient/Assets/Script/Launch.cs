@@ -62,7 +62,49 @@ public class Launch : MonoBehaviour
         UpdateView();
 
         ShowLocalIP();
+        //       4294967296L
+        const long ONE = 4294967296L;
+        long a = 26986075409L;
+        //       25769803776
+        long b = ONE * 6L;
+        //       17179869184
+        long c = ONE << 2;
+        //       34359738368
+        long d = ONE << 3;
+        //       68719476736
+        long e = ONE << 4;
+        // False  a = 26986075409  b= 25769803776   1
+        // Debug.LogError($" {a == b}  a = {a}  b= {b}  c= {c}  d= {d} e= {e}");
 
+        long target = a;
+        long offset = target >> 32;
+        long baseVal = 1L << 32;
+        long res = baseVal * offset;
+        Debug.LogError($" offset {offset} baseVal {baseVal}    res = {res}  target= {target}   {target == res}");
+
+
+
+        long x = a;// 26986075409L;
+        long y = x >> 31;
+        long z = x >> 32;
+
+        Debug.LogError($"   x = {x}  y= {y}  z= {z}   {x >> 32} {x >> 31}");
+        //26986075409L
+
+        //4294967296
+        long j = (long)1 << 32;
+        //8589934592
+        long k = (long)1 << 33;
+        //2147483648
+        long l = (long)1 << 31;
+
+        long val6 = 6;
+        long h6 = j * val6;
+        long val7 = 7;
+        long h7 = j * val7;
+
+        Debug.LogError($" h6 {h6}  {a}   {h6 > a}  {a == h6}  ");
+        Debug.LogError($" h7 {h7}  {a}   {h7 > a}  {a == h7}  ");
     }
 
     private void initView()

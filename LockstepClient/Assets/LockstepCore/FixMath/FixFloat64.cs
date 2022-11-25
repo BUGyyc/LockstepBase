@@ -73,6 +73,7 @@ namespace FixMath
 
         private static readonly FixFloat64 LutInterval = 205886 / PiOver2;
 
+        #region 常数定义
         private const long MAX_VALUE = long.MaxValue;
 
         private const long MIN_VALUE = long.MinValue;
@@ -100,7 +101,7 @@ namespace FixMath
         private const long LOG2MIN = -137438953472L;
 
         private const int LUT_SIZE = 205887;
-
+        #endregion
         private FixFloat64(long rawValue)
         {
             RawValue = rawValue;
@@ -690,6 +691,7 @@ namespace FixMath
         {
             bool flipHorizontal;
             bool flipVertical;
+            //得到一个过滤之后的弧度
             long rawValue = ClampSinValue(x.RawValue, out flipHorizontal, out flipVertical);
             FixFloat64 fix = new FixFloat64(rawValue);
             FixFloat64 fix2 = fix * LutInterval;
@@ -717,55 +719,66 @@ namespace FixMath
             return new FixFloat64(flipVertical ? (-num3) : num3);
         }
 
+        /// <summary>
+        /// TODO: 这里的angle 应该是弧度吧
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <param name="flipHorizontal"></param>
+        /// <param name="flipVertical"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static long ClampSinValue(long angle, out bool flipHorizontal, out bool flipVertical)
         {
-            long num = angle % 26986075409L;
+            //TODO：?? angle % 2π 
+            long num = angle % PI_TIMES_2;
             if (angle < 0)
             {
-                num += 26986075409L;
+                num += PI_TIMES_2;
             }
-            flipVertical = num >= 13493037704L;
+            flipVertical = num >= PI;
             long num2;
-            for (num2 = num; num2 >= 13493037704L; num2 -= 13493037704L)
+            for (num2 = num; num2 >= PI; num2 -= PI)
             {
             }
-            flipHorizontal = num2 >= 6746518852L;
+            flipHorizontal = num2 >= PI_OVER_2;
             long num3 = num2;
-            if (num3 >= 6746518852L)
+            if (num3 >= PI_OVER_2)
             {
-                num3 -= 6746518852L;
+                num3 -= PI_OVER_2;
             }
             return num3;
         }
 
         public static FixFloat64 Cos(FixFloat64 x)
         {
+            //转换到Sin 空间计算
             long rawValue = x.RawValue;
-            long rawValue2 = rawValue + ((rawValue > 0) ? (-20239556556L) : 6746518852L);
+            long rawValue2 = rawValue + ((rawValue > 0) ? (-20239556556L) : PI_OVER_2);
             return Sin(new FixFloat64(rawValue2));
         }
 
         public static FixFloat64 FastCos(FixFloat64 x)
         {
+            //转换到Sin 空间计算
             long rawValue = x.RawValue;
-            long rawValue2 = rawValue + ((rawValue > 0) ? (-20239556556L) : 6746518852L);
+            long rawValue2 = rawValue + ((rawValue > 0) ? (-20239556556L) : PI_OVER_2);
             return FastSin(new FixFloat64(rawValue2));
         }
 
         public static FixFloat64 Tan(FixFloat64 x)
         {
-            long num = x.RawValue % 13493037704L;
+            //过程不复杂，只是查表而已
+            long num = x.RawValue % PI;
             bool flag = false;
             if (num < 0)
             {
                 num = -num;
                 flag = true;
             }
-            if (num > 6746518852L)
+            if (num > PI_OVER_2)
             {
                 flag = !flag;
-                num = 6746518852L - (num - 6746518852L);
+                num = PI_OVER_2 - (num - PI_OVER_2);
             }
             FixFloat64 fix = new FixFloat64(num);
             FixFloat64 fix2 = fix * LutInterval;
