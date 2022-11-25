@@ -11,19 +11,19 @@ public partial class GameEntity {
     public Lockstep.Core.State.Game.DestinationComponent destination { get { return (Lockstep.Core.State.Game.DestinationComponent)GetComponent(GameComponentsLookup.Destination); } }
     public bool hasDestination { get { return HasComponent(GameComponentsLookup.Destination); } }
 
-    public void AddDestination(BEPUutilities.Vector2 newValue) {
-        var index = GameComponentsLookup.Destination;
-        var component = (Lockstep.Core.State.Game.DestinationComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.DestinationComponent));
-        component.value = newValue;
-        AddComponent(index, component);
-    }
+    // public void AddDestination(BEPUutilities.Vector2 newValue) {
+    //     var index = GameComponentsLookup.Destination;
+    //     var component = (Lockstep.Core.State.Game.DestinationComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.DestinationComponent));
+    //     component.value = newValue;
+    //     AddComponent(index, component);
+    // }
 
-    public void ReplaceDestination(BEPUutilities.Vector2 newValue) {
-        var index = GameComponentsLookup.Destination;
-        var component = (Lockstep.Core.State.Game.DestinationComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.DestinationComponent));
-        component.value = newValue;
-        ReplaceComponent(index, component);
-    }
+    // public void ReplaceDestination(BEPUutilities.Vector2 newValue) {
+    //     var index = GameComponentsLookup.Destination;
+    //     var component = (Lockstep.Core.State.Game.DestinationComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.DestinationComponent));
+    //     component.value = newValue;
+    //     ReplaceComponent(index, component);
+    // }
 
     public void RemoveDestination() {
         RemoveComponent(GameComponentsLookup.Destination);

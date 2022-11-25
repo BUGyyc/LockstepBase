@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BEPUutilities;
+// using BEPUutilities;
 using Entitas;
-using FixMath.NET;
+// using FixMath.NET;
 using Lockstep.Common.Logging;
 using Lockstep.Game.Interfaces;
 
@@ -52,7 +52,7 @@ namespace Lockstep.Game.Features.Input
                 gameEntity.AddId((byte)value);
                 gameEntity.AddActorId(item.actorId.value);
                 gameEntity.AddLocalId(_localIdCounter);
-                gameEntity.AddVelocity(Vector2.Zero);
+                // gameEntity.AddVelocity(Vector2.Zero);
                 gameEntity.AddPosition(item.coordinate.value, LQuaternion.identity);
 
                 //初始动画
@@ -68,9 +68,9 @@ namespace Lockstep.Game.Features.Input
                 _viewService.LoadView(gameEntity, item.entityConfigId.value);
                 if (gameEntity.isNavigable)
                 {
-                    gameEntity.AddRadius(F64.C1);
-                    gameEntity.AddMaxSpeed(F64.C2);
-                    gameEntity.AddRvoAgentSettings(Vector2.Zero, 5, new List<KeyValuePair<Fix64, uint>>());
+                    // gameEntity.AddRadius(F64.C1);
+                    // gameEntity.AddMaxSpeed(F64.C2);
+                    // gameEntity.AddRvoAgentSettings(Vector2.Zero, 5, new List<KeyValuePair<Fix64, uint>>());
                 }
                 //记录Entity数量
                 entityWithId.ReplaceEntityCount(value + 1);

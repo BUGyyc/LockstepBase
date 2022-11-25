@@ -6,9 +6,9 @@
  */
 using System.Collections.Generic;
 using System.Linq;
-using BEPUutilities;
+// using BEPUutilities;
 using Entitas;
-using FixMath.NET;
+// using FixMath.NET;
 using Lockstep.Common.Logging;
 using Lockstep.Game.Interfaces;
 using Lockstep.Game;

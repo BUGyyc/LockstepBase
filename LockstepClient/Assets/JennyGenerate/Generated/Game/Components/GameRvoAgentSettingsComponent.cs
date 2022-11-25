@@ -11,23 +11,6 @@ public partial class GameEntity {
     public Lockstep.Core.State.Game.RvoAgentSettingsComponent rvoAgentSettings { get { return (Lockstep.Core.State.Game.RvoAgentSettingsComponent)GetComponent(GameComponentsLookup.RvoAgentSettings); } }
     public bool hasRvoAgentSettings { get { return HasComponent(GameComponentsLookup.RvoAgentSettings); } }
 
-    public void AddRvoAgentSettings(BEPUutilities.Vector2 newPreferredVelocity, FixMath.NET.Fix64 newTimeHorizonObst, System.Collections.Generic.IList<System.Collections.Generic.KeyValuePair<FixMath.NET.Fix64, uint>> newAgentNeighbors) {
-        var index = GameComponentsLookup.RvoAgentSettings;
-        var component = (Lockstep.Core.State.Game.RvoAgentSettingsComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.RvoAgentSettingsComponent));
-        component.preferredVelocity = newPreferredVelocity;
-        component.timeHorizonObst = newTimeHorizonObst;
-        component.agentNeighbors = newAgentNeighbors;
-        AddComponent(index, component);
-    }
-
-    public void ReplaceRvoAgentSettings(BEPUutilities.Vector2 newPreferredVelocity, FixMath.NET.Fix64 newTimeHorizonObst, System.Collections.Generic.IList<System.Collections.Generic.KeyValuePair<FixMath.NET.Fix64, uint>> newAgentNeighbors) {
-        var index = GameComponentsLookup.RvoAgentSettings;
-        var component = (Lockstep.Core.State.Game.RvoAgentSettingsComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.RvoAgentSettingsComponent));
-        component.preferredVelocity = newPreferredVelocity;
-        component.timeHorizonObst = newTimeHorizonObst;
-        component.agentNeighbors = newAgentNeighbors;
-        ReplaceComponent(index, component);
-    }
 
     public void RemoveRvoAgentSettings() {
         RemoveComponent(GameComponentsLookup.RvoAgentSettings);

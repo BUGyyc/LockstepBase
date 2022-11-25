@@ -96,14 +96,23 @@ namespace FixMath
 
         public FixFloat64(int value)
         {
+            /// <summary>
+            /// 相当于左移 33 位，所以整数部分是33位-63位,第64位是符号位，0-32位是小数位
+            /// </summary>
             RawValue = value * 4294967296L;
         }
 
+        /// <summary>
+        /// 判断符号
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static int SignI(FixFloat64 value)
         {
             return (value.RawValue < 0) ? (-1) : ((value.RawValue > 0) ? 1 : 0);
         }
 
+        //TODO:
         public static FixFloat64 Sign(FixFloat64 v)
         {
             long rawValue = v.RawValue;
@@ -122,11 +131,22 @@ namespace FixMath
             return new FixFloat64((value.RawValue + num) ^ num);
         }
 
+        /// <summary>
+        /// 向下取整，舍弃小数位部分 0-32位的小数
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static FixFloat64 Floor(FixFloat64 value)
         {
+            /// <summary>
+            /// 之所以用负号，是为了对齐符号位，保证 "与运算" 结果后，原始符合位不变
+            /// </summary>
+            /// <param name="-4294967296L"></param>
+            /// <returns></returns>
             return new FixFloat64(value.RawValue & -4294967296L);
         }
 
+        //TODO:
         public static FixFloat64 Log2(FixFloat64 x)
         {
             if (x.RawValue <= 0)
@@ -160,11 +180,13 @@ namespace FixMath
             return FromRaw(num2);
         }
 
+        //TODO:
         public static FixFloat64 Ln(FixFloat64 x)
         {
             return Log2(x) * Ln2;
         }
 
+        //TODO:
         public static FixFloat64 Pow2(FixFloat64 x)
         {
             if (x.RawValue == 0)
@@ -238,29 +260,58 @@ namespace FixMath
             }
             return fix;
         }
+        
 
+        /// <summary>
+        /// 向上取整
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static FixFloat64 Ceiling(FixFloat64 value)
         {
+            /// <summary>
+            /// 意思是如果 与 后32位 运算后，不等于0，说明 RawValue 不等于0 ，所以只需要 向下取整的RawValue + One 即可
+            /// 如果等于0 ，说明 RawValue = 0
+            /// </summary>
+            /// <param name="!"></param>
+            /// <returns></returns>
             return ((value.RawValue & 0xFFFFFFFFu) != 0) ? (Floor(value) + One) : value;
         }
+        
 
+        /// <summary>
+        /// 获取小数部分的 RawValue 表示的定点数
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static FixFloat64 FractionalPart(FixFloat64 value)
         {
             return FromRaw(value.RawValue & 0xFFFFFFFFu);
         }
 
+        /// <summary>
+        /// 四舍五入
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static FixFloat64 Round(FixFloat64 value)
         {
+            //取下小数部分数值
             long num = value.RawValue & 0xFFFFFFFFu;
+            //取下整数部分数值
             FixFloat64 fix = Floor(value);
+
             if (num < 2147483648u)
             {
+                //小于
                 return fix;
             }
             if (num > 2147483648u)
             {
+                //大于
                 return fix + One;
             }
+            //等于的补充判断
             return ((fix.RawValue & 0x100000000L) == 0L) ? fix : (fix + One);
         }
 
@@ -300,9 +351,17 @@ namespace FixMath
             return new FixFloat64(num);
         }
 
+        /// <summary>
+        /// 加法的溢出判断
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="overflow"></param>
+        /// <returns></returns>
         private static long AddOverflowHelper(long x, long y, ref bool overflow)
         {
             long num = x + y;
+            //异或判断是否溢出
             overflow |= ((x ^ y ^ num) & long.MinValue) != 0;
             return num;
         }
@@ -312,14 +371,23 @@ namespace FixMath
         {
             long rawValue = x.RawValue;
             long rawValue2 = y.RawValue;
+            //小数位
             ulong num = (ulong)(rawValue & 0xFFFFFFFFu);
+            //整数位
             long num2 = rawValue >> 32;
+            //小数位
             ulong num3 = (ulong)(rawValue2 & 0xFFFFFFFFu);
+            //整数位
             long num4 = rawValue2 >> 32;
+            //小数位 乘 小数位
             ulong num5 = num * num3;
+            //小数位 乘 整数位
             long num6 = (long)num * num4;
+            //整数位 乘 小数位
             long num7 = num2 * (long)num3;
+            //整数位 乘 整数位
             long num8 = num2 * num4;
+            //小数位相乘的结果 只保留 二进制 32 位的精度，所以右移32位，同时也是为了方便二进制对齐，后面会进行相加，小数位必须是0-32位
             ulong num9 = num5 >> 32;
             long num10 = num6;
             long num11 = num7;
@@ -387,6 +455,7 @@ namespace FixMath
             return new FixFloat64(x3);
         }
 
+        //TODO:
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int CountLeadingZeroes(ulong x)
         {
@@ -410,8 +479,10 @@ namespace FixMath
             long rawValue2 = y.RawValue;
             if (rawValue2 == 0)
             {
+                UnityEngine.Debug.LogError("不能把0当作除数");
                 return MaxValue;
             }
+            //先转成正数
             ulong num = (ulong)((rawValue >= 0) ? rawValue : (-rawValue));
             ulong num2 = (ulong)((rawValue2 >= 0) ? rawValue2 : (-rawValue2));
             ulong num3 = 0uL;

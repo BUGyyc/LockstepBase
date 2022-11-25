@@ -1,5 +1,5 @@
 using Entitas;
-using Lockstep.Game.Features.Navigation.Simple;
+// using Lockstep.Game.Features.Navigation.Simple;
 
 namespace Lockstep.Game.Features
 {
@@ -8,7 +8,7 @@ namespace Lockstep.Game.Features
         public SimpleNavigationFeature(Contexts contexts, ServiceContainer services)
             : base("SimpleNavigation")
         {
-            ((Systems)this).Add((ISystem)(object)new NavigationTick(contexts, services));
+            // ((Systems)this).Add((ISystem)(object)new NavigationTick(contexts, services));
         }
     }
 }

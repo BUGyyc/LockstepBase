@@ -1,21 +1,21 @@
-using BEPUutilities;
+// using BEPUutilities;
 
-namespace Lockstep.Game.Features.Navigation.RVO.Algorithm
-{
-    internal class Obstacle
-    {
-        internal Obstacle next_;
+// namespace Lockstep.Game.Features.Navigation.RVO.Algorithm
+// {
+//     internal class Obstacle
+//     {
+//         internal Obstacle next_;
 
-        internal Obstacle previous_;
+//         internal Obstacle previous_;
 
-        internal Vector2 direction_;
+//         internal Vector2 direction_;
 
-        internal Vector2 point_;
+//         internal Vector2 point_;
 
-        internal int id_;
+//         internal int id_;
 
-        internal bool convex_;
-    }
-}
+//         internal bool convex_;
+//     }
+// }
 
 

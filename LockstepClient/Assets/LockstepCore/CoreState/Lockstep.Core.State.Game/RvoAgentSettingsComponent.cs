@@ -1,17 +1,17 @@
 using System.Collections.Generic;
-using BEPUutilities;
+// using BEPUutilities;
 using Entitas;
-using FixMath.NET;
+// using FixMath.NET;
 
 namespace Lockstep.Core.State.Game
 {
     public class RvoAgentSettingsComponent : IComponent
     {
-        public Vector2 preferredVelocity;
+        // public Vector2 preferredVelocity;
 
-        public Fix64 timeHorizonObst;
+        // public Fix64 timeHorizonObst;
 
-        public IList<KeyValuePair<Fix64, uint>> agentNeighbors;
+        // public IList<KeyValuePair<Fix64, uint>> agentNeighbors;
     }
 }
 

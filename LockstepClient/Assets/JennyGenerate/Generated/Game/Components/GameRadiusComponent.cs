@@ -11,19 +11,6 @@ public partial class GameEntity {
     public Lockstep.Core.State.Game.RadiusComponent radius { get { return (Lockstep.Core.State.Game.RadiusComponent)GetComponent(GameComponentsLookup.Radius); } }
     public bool hasRadius { get { return HasComponent(GameComponentsLookup.Radius); } }
 
-    public void AddRadius(FixMath.NET.Fix64 newValue) {
-        var index = GameComponentsLookup.Radius;
-        var component = (Lockstep.Core.State.Game.RadiusComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.RadiusComponent));
-        component.value = newValue;
-        AddComponent(index, component);
-    }
-
-    public void ReplaceRadius(FixMath.NET.Fix64 newValue) {
-        var index = GameComponentsLookup.Radius;
-        var component = (Lockstep.Core.State.Game.RadiusComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.RadiusComponent));
-        component.value = newValue;
-        ReplaceComponent(index, component);
-    }
 
     public void RemoveRadius() {
         RemoveComponent(GameComponentsLookup.Radius);

@@ -11,19 +11,6 @@ public partial class GameEntity {
     public Lockstep.Core.State.Game.VelocityComponent velocity { get { return (Lockstep.Core.State.Game.VelocityComponent)GetComponent(GameComponentsLookup.Velocity); } }
     public bool hasVelocity { get { return HasComponent(GameComponentsLookup.Velocity); } }
 
-    public void AddVelocity(BEPUutilities.Vector2 newValue) {
-        var index = GameComponentsLookup.Velocity;
-        var component = (Lockstep.Core.State.Game.VelocityComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.VelocityComponent));
-        component.value = newValue;
-        AddComponent(index, component);
-    }
-
-    public void ReplaceVelocity(BEPUutilities.Vector2 newValue) {
-        var index = GameComponentsLookup.Velocity;
-        var component = (Lockstep.Core.State.Game.VelocityComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.VelocityComponent));
-        component.value = newValue;
-        ReplaceComponent(index, component);
-    }
 
     public void RemoveVelocity() {
         RemoveComponent(GameComponentsLookup.Velocity);

@@ -11,19 +11,7 @@ public partial class GameEntity {
     public Lockstep.Core.State.Game.MaxSpeedComponent maxSpeed { get { return (Lockstep.Core.State.Game.MaxSpeedComponent)GetComponent(GameComponentsLookup.MaxSpeed); } }
     public bool hasMaxSpeed { get { return HasComponent(GameComponentsLookup.MaxSpeed); } }
 
-    public void AddMaxSpeed(FixMath.NET.Fix64 newValue) {
-        var index = GameComponentsLookup.MaxSpeed;
-        var component = (Lockstep.Core.State.Game.MaxSpeedComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.MaxSpeedComponent));
-        component.value = newValue;
-        AddComponent(index, component);
-    }
-
-    public void ReplaceMaxSpeed(FixMath.NET.Fix64 newValue) {
-        var index = GameComponentsLookup.MaxSpeed;
-        var component = (Lockstep.Core.State.Game.MaxSpeedComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.MaxSpeedComponent));
-        component.value = newValue;
-        ReplaceComponent(index, component);
-    }
+ 
 
     public void RemoveMaxSpeed() {
         RemoveComponent(GameComponentsLookup.MaxSpeed);

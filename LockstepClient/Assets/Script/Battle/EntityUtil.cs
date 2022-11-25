@@ -87,7 +87,7 @@ public static class EntityUtil
         // gameEntity.AddLocalId(AutoCreateEntityID);
         AddBaseComponent(gameEntity, actorId, EntityType.Hero);
 
-        gameEntity.AddVelocity(BEPUutilities.Vector2.Zero);
+        // gameEntity.AddVelocity(BEPUutilities.Vector2.Zero);
 
         gameEntity.AddCharacterInput(0, LVector2.zero, LVector3.zero);
         gameEntity.AddMove(GameSetting.HERO_BASE_SPEED, MoveState.Idle, LVector3.zero);
