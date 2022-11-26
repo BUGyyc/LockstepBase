@@ -169,15 +169,15 @@ namespace FixMath
             long num = 2147483648L;
             long num2 = 0L;
             long num3 = x.RawValue;
-            while (num3 < 4294967296L)
+            while (num3 < ONE)
             {
                 num3 <<= 1;
-                num2 -= 4294967296L;
+                num2 -= ONE;
             }
             while (num3 >= 8589934592L)
             {
                 num3 >>= 1;
-                num2 += 4294967296L;
+                num2 += ONE;
             }
             FixFloat64 fix = FromRaw(num3);
             for (int i = 0; i < 32; i++)
