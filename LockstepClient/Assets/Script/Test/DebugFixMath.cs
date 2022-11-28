@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-28 10:05:37 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-28 17:29:58
+ * @Last Modified time: 2022-11-28 18:05:01
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -68,6 +68,22 @@ public class DebugFixMath : MonoBehaviour
 
         #endregion
     }
+
+    public void AddVector3()
+    {
+        Vector3 v3 = new Vector3(0, 0, 0);
+
+        FixVector3 lv3 = v3.ToFixVector3();
+
+
+        
+    }
+
+
+
+
+
+
     public void Addition()
     {
         UnityEngine.Debug.Log("Addition ----");

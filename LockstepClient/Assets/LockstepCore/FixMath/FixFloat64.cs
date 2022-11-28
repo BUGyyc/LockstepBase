@@ -165,6 +165,30 @@ namespace FixMath
             return sum;
         }
 
+        public static FixFloat64 operator *(FixFloat64 a, long b)
+        {
+            var fix = FixFloat64.FromRaw(b);
+            return a * fix;
+        }
+
+        public static FixFloat64 operator *(long a, FixFloat64 b)
+        {
+            var fix = FixFloat64.FromRaw(a);
+            return b * fix;
+        }
+
+        public static FixFloat64 operator *(FixFloat64 a, int b)
+        {
+            var fix = FixFloat64.FromRaw((long)b);
+            return fix * a;
+        }
+
+        public static FixFloat64 operator *(int b, FixFloat64 a)
+        {
+            var fix = FixFloat64.FromRaw((long)b);
+            return fix * a;
+        }
+
         public static FixFloat64 operator *(FixFloat64 x, FixFloat64 y)
         {
 
@@ -897,12 +921,11 @@ namespace FixMath
             return atan;
         }
 
-
-
         public static explicit operator FixFloat64(long value)
         {
             return new FixFloat64(value * ONE);
         }
+
         public static explicit operator long(FixFloat64 value)
         {
             return value.m_rawValue >> FRACTIONAL_PLACES;
