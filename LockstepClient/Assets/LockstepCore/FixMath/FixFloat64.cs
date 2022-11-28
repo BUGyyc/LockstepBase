@@ -12,42 +12,17 @@ namespace FixMath
     {
         readonly long m_rawValue;
 
-        // Precision of this type is 2^-32, that is 2,3283064365386962890625E-10
-        public static readonly decimal Precision = (decimal)(new FixFloat64(1L));//0.00000000023283064365386962890625m;
-        public static readonly FixFloat64 MaxValue = new FixFloat64(MAX_VALUE);
-        public static readonly FixFloat64 MinValue = new FixFloat64(MIN_VALUE);
-        public static readonly FixFloat64 One = new FixFloat64(ONE);
-        public static readonly FixFloat64 Zero = new FixFloat64();
-        /// <summary>
-        /// The value of Pi
-        /// </summary>
-        public static readonly FixFloat64 Pi = new FixFloat64(PI);
-        public static readonly FixFloat64 PiOver2 = new FixFloat64(PI_OVER_2);
-        public static readonly FixFloat64 PiTimes2 = new FixFloat64(PI_TIMES_2);
-        public static readonly FixFloat64 PiInv = (FixFloat64)0.3183098861837906715377675267M;
-        public static readonly FixFloat64 PiOver2Inv = (FixFloat64)0.6366197723675813430755350535M;
-        static readonly FixFloat64 Log2Max = new FixFloat64(LOG2MAX);
-        static readonly FixFloat64 Log2Min = new FixFloat64(LOG2MIN);
-        static readonly FixFloat64 Ln2 = new FixFloat64(LN2);
 
-        static readonly FixFloat64 LutInterval = (FixFloat64)(LUT_SIZE - 1) / PiOver2;
-        const long MAX_VALUE = long.MaxValue;
-        const long MIN_VALUE = long.MinValue;
-        const int NUM_BITS = 64;
-        const int FRACTIONAL_PLACES = 32;
-        const long ONE = 1L << FRACTIONAL_PLACES;
-        const long PI_TIMES_2 = 0x6487ED511;
-        const long PI = 0x3243F6A88;
-        const long PI_OVER_2 = 0x1921FB544;
-        const long LN2 = 0xB17217F7;
-        const long LOG2MAX = 0x1F00000000;
-        const long LOG2MIN = -0x2000000000;
-        const int LUT_SIZE = (int)(PI_OVER_2 >> 15);
+        public long GetRawValue()
+        {
+            return m_rawValue;
+        }
 
         /// <summary>
-        /// Returns a number indicating the sign of a FixFloat64 number.
-        /// Returns 1 if the value is positive, 0 if is 0, and -1 if it is negative.
+        /// 判断正负，0 表示 0
         /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static int Sign(FixFloat64 value)
         {
             return
@@ -56,61 +31,68 @@ namespace FixMath
                 0;
         }
 
-
         /// <summary>
-        /// Returns the absolute value of a FixFloat64 number.
-        /// Note: Abs(FixFloat64.MinValue) == FixFloat64.MaxValue.
+        /// 绝对值
         /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static FixFloat64 Abs(FixFloat64 value)
         {
             if (value.m_rawValue == MIN_VALUE)
             {
                 return MaxValue;
             }
-
-            // branchless implementation, see http://www.strchr.com/optimized_abs_function
+            // 负数 反码 = 负数的反码加+1
+            // http://www.strchr.com/optimized_abs_function
             var mask = value.m_rawValue >> 63;
             return new FixFloat64((value.m_rawValue + mask) ^ mask);
         }
 
-        /// <summary>
-        /// Returns the absolute value of a FixFloat64 number.
-        /// FastAbs(FixFloat64.MinValue) is undefined.
-        /// </summary>
+
         public static FixFloat64 FastAbs(FixFloat64 value)
         {
-            // branchless implementation, see http://www.strchr.com/optimized_abs_function
             var mask = value.m_rawValue >> 63;
             return new FixFloat64((value.m_rawValue + mask) ^ mask);
         }
 
 
         /// <summary>
-        /// Returns the largest integer less than or equal to the specified number.
+        /// 向下取整
         /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static FixFloat64 Floor(FixFloat64 value)
         {
-            // Just zero out the fractional part
+            // 丢弃 尾部 0 - 31位
             return new FixFloat64((long)((ulong)value.m_rawValue & 0xFFFFFFFF00000000));
         }
 
         /// <summary>
-        /// Returns the smallest integral value that is greater than or equal to the specified number.
+        /// 向上取整
         /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static FixFloat64 Ceiling(FixFloat64 value)
         {
+            //判断小数部分是否有值
             var hasFractionalPart = (value.m_rawValue & 0x00000000FFFFFFFF) != 0;
+            //如果小数部分有值，那么整数位进1
             return hasFractionalPart ? Floor(value) + One : value;
         }
 
         /// <summary>
-        /// Rounds a value to the nearest integral value.
-        /// If the value is halfway between an even and an uneven value, returns the even value.
+        /// 四舍五入
         /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static FixFloat64 Round(FixFloat64 value)
         {
+            //取下小数部分
             var fractionalPart = value.m_rawValue & 0x00000000FFFFFFFF;
+            //取下整数部分
             var integralPart = Floor(value);
+
+            //小数部分对比大小
             if (fractionalPart < 0x80000000)
             {
                 return integralPart;
@@ -119,23 +101,26 @@ namespace FixMath
             {
                 return integralPart + One;
             }
-            // if number is halfway between two values, round to the nearest even number
-            // this is the method used by System.Math.Round().
+
+            //相等的特殊情况，如果 value ==0
             return (integralPart.m_rawValue & ONE) == 0
                        ? integralPart
                        : integralPart + One;
         }
 
         /// <summary>
-        /// Adds x and y. Performs saturating addition, i.e. in case of overflow, 
-        /// rounds to MinValue or MaxValue depending on sign of operands.
+        /// 加法
         /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static FixFloat64 operator +(FixFloat64 x, FixFloat64 y)
         {
             var xl = x.m_rawValue;
             var yl = y.m_rawValue;
             var sum = xl + yl;
-            // if signs of operands are equal and signs of sum and x are different
+
+            //补充溢出的判断
             if (((~(xl ^ yl) & (xl ^ sum)) & MIN_VALUE) != 0)
             {
                 sum = xl > 0 ? MAX_VALUE : MIN_VALUE;
@@ -143,24 +128,23 @@ namespace FixMath
             return new FixFloat64(sum);
         }
 
-        /// <summary>
-        /// Adds x and y witout performing overflow checking. Should be inlined by the CLR.
-        /// </summary>
         public static FixFloat64 FastAdd(FixFloat64 x, FixFloat64 y)
         {
             return new FixFloat64(x.m_rawValue + y.m_rawValue);
         }
 
         /// <summary>
-        /// Subtracts y from x. Performs saturating substraction, i.e. in case of overflow, 
-        /// rounds to MinValue or MaxValue depending on sign of operands.
+        /// 溢出
         /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static FixFloat64 operator -(FixFloat64 x, FixFloat64 y)
         {
             var xl = x.m_rawValue;
             var yl = y.m_rawValue;
             var diff = xl - yl;
-            // if signs of operands are different and signs of sum and x are different
+            //溢出
             if ((((xl ^ yl) & (xl ^ diff)) & MIN_VALUE) != 0)
             {
                 diff = xl < 0 ? MIN_VALUE : MAX_VALUE;
@@ -168,9 +152,6 @@ namespace FixMath
             return new FixFloat64(diff);
         }
 
-        /// <summary>
-        /// Subtracts y from x witout performing overflow checking. Should be inlined by the CLR.
-        /// </summary>
         public static FixFloat64 FastSub(FixFloat64 x, FixFloat64 y)
         {
             return new FixFloat64(x.m_rawValue - y.m_rawValue);
@@ -189,20 +170,27 @@ namespace FixMath
 
             var xl = x.m_rawValue;
             var yl = y.m_rawValue;
-
+            //小数位
             var xlo = (ulong)(xl & 0x00000000FFFFFFFF);
+            //整数位 并且 降位
             var xhi = xl >> FRACTIONAL_PLACES;
+            //小数位
             var ylo = (ulong)(yl & 0x00000000FFFFFFFF);
+            //整数位 并且 降位
             var yhi = yl >> FRACTIONAL_PLACES;
-
+            //小数位 乘 小数位
             var lolo = xlo * ylo;
+            //小数位 乘 整数位
             var lohi = (long)xlo * yhi;
+            //整数位 乘 小数位
             var hilo = xhi * (long)ylo;
+            //整数位 乘 整数位
             var hihi = xhi * yhi;
-
+            //小数位相乘的结果 只保留 二进制 32 位的精度，所以右移32位，同时也是为了方便二进制对齐，后面会进行相加，小数位必须是0-31位
             var loResult = lolo >> FRACTIONAL_PLACES;
             var midResult1 = lohi;
             var midResult2 = hilo;
+            //把降位 的运算整数结果，再次放回到高32位上
             var hiResult = hihi << FRACTIONAL_PLACES;
 
             bool overflow = false;
@@ -212,9 +200,7 @@ namespace FixMath
 
             bool opSignsEqual = ((xl ^ yl) & MIN_VALUE) == 0;
 
-            // if signs of operands are equal and sign of result is negative,
-            // then multiplication overflowed positively
-            // the reverse is also true
+            //不同符号位的溢出判断
             if (opSignsEqual)
             {
                 if (sum < 0 || (overflow && xl > 0))
@@ -230,16 +216,14 @@ namespace FixMath
                 }
             }
 
-            // if the top 32 bits of hihi (unused in the result) are neither all 0s or 1s,
-            // then this means the result overflowed.
+            //如果高32位，还存在进位，那么溢出了
             var topCarry = hihi >> FRACTIONAL_PLACES;
             if (topCarry != 0 && topCarry != -1 /*&& xl != -17 && yl != -17*/)
             {
                 return opSignsEqual ? MaxValue : MinValue;
             }
 
-            // If signs differ, both operands' magnitudes are greater than 1,
-            // and the result is greater than the negative operand, then there was negative overflow.
+            //符号相反时的溢出检查
             if (!opSignsEqual)
             {
                 long posOp, negOp;
@@ -262,10 +246,6 @@ namespace FixMath
             return new FixFloat64(sum);
         }
 
-        /// <summary>
-        /// Performs multiplication without checking for overflow.
-        /// Useful for performance-critical code where the values are guaranteed not to cause overflow
-        /// </summary>
         public static FixFloat64 FastMul(FixFloat64 x, FixFloat64 y)
         {
 
@@ -291,6 +271,12 @@ namespace FixMath
             return new FixFloat64(sum);
         }
 
+        /// <summary>
+        /// 相当于求出 x 二进制最大位 与 long.MaxValue 如下表达
+        ///   x * Math.Pow(2,num) = long.MaxValue
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static int CountLeadingZeroes(ulong x)
         {
@@ -309,14 +295,20 @@ namespace FixMath
             {
                 throw new DivideByZeroException();
             }
-
+            //先转符号
             var remainder = (ulong)(xl >= 0 ? xl : -xl);
             var divider = (ulong)(yl >= 0 ? yl : -yl);
+
+            /// <summary>
+            /// 无符号长整数 0
+            /// </summary>
             var quotient = 0UL;
+
+            //从第33位开始
             var bitPos = NUM_BITS / 2 + 1;
 
 
-            // If the divider is divisible by 2^n, take advantage of it.
+            //如果能整除 16 ，就提前算好
             while ((divider & 0xF) == 0 && bitPos >= 4)
             {
                 divider >>= 4;
@@ -325,19 +317,27 @@ namespace FixMath
 
             while (remainder != 0 && bitPos >= 0)
             {
+                // #region  这里算出 num 最多能进的位数
+                //，肯定是不能超过 shift 数量的，不然就溢出了, bitPos 是实际除数产生的进位结果
                 int shift = CountLeadingZeroes(remainder);
                 if (shift > bitPos)
                 {
+                    //最大进位足够包容实际进位，那么就把实际进位给到最终进位  shift
                     shift = bitPos;
                 }
+                //最终进位给到
                 remainder <<= shift;
+                //实际进位 - 最大可进位 ,最终 num4 >=0
                 bitPos -= shift;
-
+                //把进位后的 remainder 去整除 divider，div 保留整除结果
                 var div = remainder / divider;
+                //进位后的 remainder 除 divider 取余
                 remainder = remainder % divider;
+
+                //还有剩余的进位 div >= 0）
                 quotient += div << bitPos;
 
-                // Detect overflow
+                //溢出判断
                 if ((div & ~(0xFFFFFFFFFFFFFFFF >> bitPos)) != 0)
                 {
                     return ((xl ^ yl) & MIN_VALUE) == 0 ? MaxValue : MinValue;
@@ -347,9 +347,9 @@ namespace FixMath
                 --bitPos;
             }
 
-            // rounding
             ++quotient;
             var result = (long)(quotient >> 1);
+            //符号相反
             if (((xl ^ yl) & MIN_VALUE) != 0)
             {
                 result = -result;
@@ -366,10 +366,6 @@ namespace FixMath
                 x.m_rawValue % y.m_rawValue);
         }
 
-        /// <summary>
-        /// Performs modulo as fast as possible; throws if x == MinValue and y == -1.
-        /// Use the operator (%) for a more reliable but slower modulo.
-        /// </summary>
         public static FixFloat64 FastMod(FixFloat64 x, FixFloat64 y)
         {
             return new FixFloat64(x.m_rawValue % y.m_rawValue);
@@ -410,10 +406,7 @@ namespace FixMath
             return x.m_rawValue <= y.m_rawValue;
         }
 
-        /// <summary>
-        /// Returns 2 raised to the specified power.
-        /// Provides at least 6 decimals of accuracy.
-        /// </summary>
+        //TODO:
         internal static FixFloat64 Pow2(FixFloat64 x)
         {
             if (x.m_rawValue == 0)
@@ -471,13 +464,7 @@ namespace FixMath
             return result;
         }
 
-        /// <summary>
-        /// Returns the base-2 logarithm of a specified number.
-        /// Provides at least 9 decimals of accuracy.
-        /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The argument was non-positive
-        /// </exception>
+        //TODO:
         internal static FixFloat64 Log2(FixFloat64 x)
         {
             if (x.m_rawValue <= 0)
@@ -521,13 +508,7 @@ namespace FixMath
             return new FixFloat64(y);
         }
 
-        /// <summary>
-        /// Returns the natural logarithm of a specified number.
-        /// Provides at least 7 decimals of accuracy.
-        /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The argument was non-positive
-        /// </exception>
+
         public static FixFloat64 Ln(FixFloat64 x)
         {
             return FastMul(Log2(x), Ln2);
