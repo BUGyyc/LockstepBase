@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-25 10:41:49 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-25 10:55:44
+ * @Last Modified time: 2022-11-28 14:33:14
  */
 
 using System;
@@ -17,13 +17,16 @@ namespace FixMath
     {
         public long RawValue;
 
-        // public static readonly decimal Precision = (decimal)new FixFloat64(1L);
+
+
+        public static readonly decimal Precision = (decimal)new FixFloat64(1L);
 
         public static readonly FixFloat64 MaxValue = new FixFloat64(long.MaxValue);
 
         public static readonly FixFloat64 MinValue = new FixFloat64(long.MinValue);
 
         public static readonly FixFloat64 MinusOne = new FixFloat64(-4294967296L);
+
 
         public static readonly FixFloat64 One = new FixFloat64(4294967296L);
 
@@ -107,13 +110,35 @@ namespace FixMath
             RawValue = rawValue;
         }
 
+        public FixFloat64(long rawValue, bool youKnow)
+        {
+            RawValue = rawValue;
+        }
+
         public FixFloat64(int value)
         {
             /// <summary>
             /// 相当于左移 33 位，所以整数部分是33位-63位,第64位是符号位，0-32位是小数位
             /// </summary>
             RawValue = value * 4294967296L;
+
+            //4294967295L
         }
+
+
+        public uint GetZNum()
+        {
+            long temp = RawValue;
+            long zTemp = temp >> 32;
+            return (uint)zTemp;
+        }
+
+        public uint GetXNum()
+        {
+            // long 
+            return 0;
+        }
+
 
         /// <summary>
         /// 判断符号
@@ -925,6 +950,9 @@ namespace FixMath
             return fix2;
         }
 
+
+        #region 转换
+
         public static implicit operator FixFloat64(int value)
         {
             return new FixFloat64(value);
@@ -945,6 +973,10 @@ namespace FixMath
 
         public static explicit operator FixFloat64(float value)
         {
+            if (value == 0)
+            {
+                UnityEngine.Debug.LogError("这里的 0 容易歧义，一定要弄清楚!!!不然的话，不要用这个显示转换");
+            }
             //科学计数法，4.2949673×10的9次方
             return new FixFloat64((long)(value * 4.2949673E+09f));
         }
@@ -974,6 +1006,8 @@ namespace FixMath
             return (decimal)value.RawValue / new decimal(4294967296L);
         }
 
+        #endregion
+
         public override bool Equals(object obj)
         {
             return obj is FixFloat64 && ((FixFloat64)obj).RawValue == RawValue;
@@ -996,7 +1030,8 @@ namespace FixMath
 
         public override string ToString()
         {
-            return ((decimal)this).ToString();
+            return string.Format("  <color=red>[注:ToString()一定会失真]</color> <color=yellow>(value:{0})</color>  ", (decimal)this);
+            // return ((decimal)this).ToString();
         }
 
         public static FixFloat64 FromRaw(long rawValue)
