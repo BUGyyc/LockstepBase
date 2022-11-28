@@ -956,6 +956,9 @@ namespace FixMath
         {
             // Up to 10 decimal places
             // return ((decimal)this).ToString("0.##########");
+#if UNITY_EDITOR
+            UnityEngine.Debug.Log($"<color=red>[ToString()会失真]</color> <color=yellow>(Raw:{m_rawValue} toValue:{(decimal)this})</color> ");
+#endif
             return ((decimal)this).ToString();
         }
 

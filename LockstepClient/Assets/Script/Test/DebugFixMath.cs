@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-28 10:05:37 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-28 17:20:46
+ * @Last Modified time: 2022-11-28 17:29:58
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -21,8 +21,6 @@ public class DebugFixMath : MonoBehaviour
     void Start()
     {
         #region 常用加减乘除
-
-        Test1();
 
         Addition();
         Substraction();
@@ -131,9 +129,7 @@ public class DebugFixMath : MonoBehaviour
                         : expected < (decimal)FixFloat64.MinValue
                               ? (decimal)FixFloat64.MinValue
                               : expected;
-                // sw.Start();
                 var actual = x * y;
-                // sw.Stop();
                 var actualM = (decimal)actual;
                 var maxDelta = (decimal)FixFloat64.FromRaw(1);
                 if (actualM - expected > maxDelta || expected - actualM > maxDelta)
@@ -154,9 +150,6 @@ public class DebugFixMath : MonoBehaviour
         }
 
         UnityEngine.Debug.LogFormat("误差数量：{0}", failures);
-
-        // Console.WriteLine("{0} total, {1} per multiplication", sw.ElapsedMilliseconds, (double)sw.Elapsed.Milliseconds / (m_testCases.Length * m_testCases.Length));
-        // DebugInfo(failures < 1);
     }
 
 
@@ -187,9 +180,7 @@ public class DebugFixMath : MonoBehaviour
                             : expected < (decimal)FixFloat64.MinValue
                                   ? (decimal)FixFloat64.MinValue
                                   : expected;
-                    // sw.Start();
                     var actual = x / y;
-                    // sw.Stop();
                     var actualM = (decimal)actual;
                     var maxDelta = (decimal)FixFloat64.FromRaw(1);
                     if (actualM - expected > maxDelta || expected - actualM > maxDelta)
@@ -443,86 +434,6 @@ public class DebugFixMath : MonoBehaviour
         Debug.LogFormat("Max error: {0} ({1} times precision)", deltas.Max(), deltas.Max() / FixFloat64.Precision);
         Debug.LogFormat("Average precision: {0} ({1} times precision)", deltas.Average(), deltas.Average() / FixFloat64.Precision);
         Debug.LogFormat("failed: {0}%", deltas.Count(d => d > FixFloat64.Precision) * 100.0 / deltas.Count);
-    }
-
-    private void Test1()
-    {
-        /*
-          int.MaxValue   = 2147483647;
-          uint.MaxValue  = 4294967295;
-          FixFloat64.One = 4294967296L
-      */
-        float stepFloat = 0.3f;
-        float baseFloat = 1f;
-
-
-        FixFloat64 stepFix = (FixFloat64)stepFloat; //(FixFloat64)stepFloat;
-        FixFloat64 baseFix = (FixFloat64)baseFloat;
-
-        // FixFloat64 compareFix = FixFloat64.Two;
-
-
-
-        // long lastValue = 0;
-
-        for (var i = 0; i < 10; i++)
-        {
-            baseFloat += stepFloat;
-            baseFix += stepFix;
-
-            // Debug.Log($"i={i}  float result  = {baseFloat}");
-            // Debug.Log($"i={i}  定点数 result = {baseFix}  raw = {baseFix.RawValue}  des {baseFix.RawValue - lastValue}  ");
-            // lastValue = baseFix.RawValue;
-        }
-
-        FixFloat64 compareFix = (FixFloat64)4f;
-
-        Debug.Log($" 定点数 result = {baseFix.RawValue}  compareFix = {compareFix.RawValue}  des {compareFix - baseFix}  ");
-
-
-    }
-
-    private void FixMathTest(FixFloat64 a, float fa)
-    {
-        for (int i = 0; i < 1000; i++)
-        {
-            a += FixFloat64.One;
-            fa += 1f;
-        }
-        Debug.Log($"  fixA 累加 1000次后  fixA =  {a}  fixA.RawValue   {a.RawValue} ");
-        Debug.Log($"  floatA 累加 1000次后  floatA =  {fa}  ");
-
-        for (int i = 0; i < 1000; i++)
-        {
-            a -= FixFloat64.One;
-            fa -= 1f;
-        }
-        Debug.Log($"  fixA 累减 1000次后  fixA =  {a}  fixA.RawValue   {a.RawValue} ");
-        Debug.Log($"  floatA 累减 1000次后  floatA =  {fa}  ");
-
-        for (int i = 0; i < 10; i++)
-        {
-            // a *= (i + 1);
-            fa *= (i + 1);
-        }
-        Debug.Log($"  fixA 累乘 10次后  fixA =  {a}  fixA.RawValue   {a.RawValue} ");
-        Debug.Log($"  floatA 累乘 1000次后  floatA =  {fa}  ");
-
-        for (int i = 0; i < 10; i++)
-        {
-            // a /= (i + 1);
-            fa /= (i + 1);
-        }
-        Debug.Log($"  fixA 累除 10次后  fixA =  {a}  fixA.RawValue   {a.RawValue} ");
-        Debug.Log($"  floatA 累除 1000次后  floatA =  {fa}  ");
-
-        for (int i = 0; i < 10; i++)
-        {
-            a = a * a;
-            fa = fa * fa;
-        }
-        Debug.Log($"  fixA*fixA 10次后  fixA =  {a}  fixA.RawValue   {a.RawValue} ");
-        Debug.Log($"  floatA*floatA 10次后  floatA =  {fa}  ");
     }
 
     void Update()
