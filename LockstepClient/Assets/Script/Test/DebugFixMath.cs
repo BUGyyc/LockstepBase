@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2022-11-28 10:05:37 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2022-11-28 18:05:01
+ * @Last Modified time: 2022-11-29 14:30:32
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -22,62 +22,111 @@ public class DebugFixMath : MonoBehaviour
     {
         #region 常用加减乘除
 
-        Addition();
-        Substraction();
-        BasicMultiplication();
+        // Addition();
+        // Substraction();
+        // BasicMultiplication();
 
 
-        MultiplicationTestCases();
+        // MultiplicationTestCases();
 
-        DivisionTestCases();
+        // DivisionTestCases();
 
-        Sign();
+        // Sign();
 
-        Abs();
+        // Abs();
 
-        FastAbs();
+        // FastAbs();
 
-        Floor();
+        // Floor();
 
-        Ceiling();
+        // Ceiling();
 
-        Round();
+        // Round();
 
-        Sqrt();
+        // Sqrt();
 
 
-        Log2();
+        // Log2();
 
-        Ln();
+        // Ln();
 
-        Pow();
+        // Pow();
 
-        Modulus();
+        // Modulus();
         // Pow2();
         #endregion
 
 
         #region 向量相关操作
 
-        #endregion
-
-
-
-        #region 三角函数
-
+        TestFixVector3();
 
         #endregion
+
+
     }
 
-    public void AddVector3()
+    public void TestFixVector3()
     {
+        Vector3 origin = Vector3.zero;
         Vector3 v3 = new Vector3(0, 0, 0);
+        Vector3 a = Vector3.right;
+        Vector3 b = Vector3.forward;
+        Vector3 c = Vector3.up;
 
+        FixVector3 originLv3 = origin.ToFixVector3();
         FixVector3 lv3 = v3.ToFixVector3();
 
+        FixVector3 la = a.ToFixVector3();
+        FixVector3 lb = b.ToFixVector3();
+        FixVector3 lc = c.ToFixVector3();
 
-        
+
+        var val = la * lb;
+
+        var dotVal = FixVector3.Dot(la, lb);
+        var crossVal = FixVector3.Cross(la, lb);
+
+        var distance = FixVector3.Distance(la, lb);
+
+        #region 带有误差的计算实例
+
+        //这里是因为角度转弧度，或者弧度转角度是存在精度上的取值，所以一定会有一定偏差，
+        //然后把偏差的值继续给到三角函数，导致和预期的有一定的差别
+
+        //角度转弧度
+        var rad90 = MathHelper.ToRadians((FixFloat64)90L);
+
+        Debug.Log($" rad90 {rad90}      {FixFloat64.PiOver2}   ");
+
+        //弧度转角度
+        var angle = MathHelper.ToDegrees(FixFloat64.PiOver2);
+
+        var val90 = (FixFloat64)90;
+        Debug.Log($" angle {angle}   {angle.RawValue}   val90 {val90}    {val90.RawValue}     ");
+
+        var cos90Val = FixFloat64.Cos(rad90);
+
+        var rad60 = MathHelper.ToRadians((FixFloat64)60L);
+
+        var cos60Val = FixFloat64.Cos(rad60);
+
+        Debug.Log($" cos90   {cos90Val}  ");
+
+        Debug.Log($" cos60   {cos60Val}  ");
+        #endregion
+
+        //如下，用精准的弧度 求 三角函数
+        var sin90Val = FixFloat64.Sin(FixFloat64.PiOver2);
+        Debug.Log($" sin90Val   {sin90Val}  ");
+        var cos180Val = FixFloat64.Cos(FixFloat64.Pi);
+        Debug.Log($" cos180Val   {cos180Val}  ");
+
+
     }
+
+
+
 
 
 
