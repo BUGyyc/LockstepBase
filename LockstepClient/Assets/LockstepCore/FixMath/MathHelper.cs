@@ -10,47 +10,37 @@ using System;
 namespace FixMath
 {
 
-
-
-    /// <summary>
-    /// Contains helper math methods.
-    /// </summary>
     public static class MathHelper
     {
         /// <summary>
-        /// Approximate value of Pi.
+        /// π
         /// </summary>
         public static readonly FixFloat64 Pi = FixFloat64.Pi;
 
         /// <summary>
-        /// Approximate value of Pi multiplied by two.
+        /// 二π
         /// </summary>
         public static readonly FixFloat64 TwoPi = FixFloat64.PiTimes2;
 
         /// <summary>
-        /// Approximate value of Pi divided by two.
+        ///  二分之一π
         /// </summary>
         public static readonly FixFloat64 PiOver2 = FixFloat64.PiOver2;
 
         /// <summary>
-        /// Approximate value of Pi divided by four.
+        /// 四分之一π
         /// </summary>
         public static readonly FixFloat64 PiOver4 = FixFloat64.Pi / new FixFloat64(4);
 
-        /// <summary>
-        /// Calculate remainder of of FixFloat64 division using same algorithm
-        /// as Math.IEEERemainder
-        /// </summary>
-        /// <param name="dividend">Dividend</param>
-        /// <param name="divisor">Divisor</param>
-        /// <returns>Remainder</returns>
+
+        //TODO:取模
         public static FixFloat64 IEEERemainder(FixFloat64 dividend, FixFloat64 divisor)
         {
             return dividend - divisor * FixFloat64.Round(dividend / divisor);
         }
 
         /// <summary>
-        /// Reduces the angle into a range from -Pi to Pi.
+        /// 把角度转换 到弧度 -π 到 π 
         /// </summary>
         /// <param name="angle">Angle to wrap.</param>
         /// <returns>Wrapped angle.</returns>
@@ -70,12 +60,12 @@ namespace FixMath
         }
 
         /// <summary>
-        /// Clamps a value between a minimum and maximum value.
+        /// 得到约束范围内的值
         /// </summary>
-        /// <param name="value">Value to clamp.</param>
-        /// <param name="min">Minimum value.  If the value is less than this, the minimum is returned instead.</param>
-        /// <param name="max">Maximum value.  If the value is more than this, the maximum is returned instead.</param>
-        /// <returns>Clamped value.</returns>
+        /// <param name="value"></param>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
         public static FixFloat64 Clamp(FixFloat64 value, FixFloat64 min, FixFloat64 max)
         {
             if (value < min)
@@ -89,43 +79,32 @@ namespace FixMath
             return value;
         }
 
-        /// <summary>
-        /// Returns the higher value of the two parameters.
-        /// </summary>
-        /// <param name="a">First value.</param>
-        /// <param name="b">Second value.</param>
-        /// <returns>Higher value of the two parameters.</returns>
         public static FixFloat64 Max(FixFloat64 a, FixFloat64 b)
         {
             return (a > b) ? a : b;
         }
 
-        /// <summary>
-        /// Returns the lower value of the two parameters.
-        /// </summary>
-        /// <param name="a">First value.</param>
-        /// <param name="b">Second value.</param>
-        /// <returns>Lower value of the two parameters.</returns>
+
         public static FixFloat64 Min(FixFloat64 a, FixFloat64 b)
         {
             return (a < b) ? a : b;
         }
 
         /// <summary>
-        /// Converts degrees to radians.
+        /// 角度转弧度
         /// </summary>
-        /// <param name="degrees">Degrees to convert.</param>
-        /// <returns>Radians equivalent to the input degrees.</returns>
+        /// <param name="degrees"></param>
+        /// <returns></returns>
         public static FixFloat64 ToRadians(FixFloat64 degrees)
         {
             return degrees * (Pi / FixFloat64.C180);
         }
 
         /// <summary>
-        /// Converts radians to degrees.
+        /// 弧度转角度
         /// </summary>
-        /// <param name="radians">Radians to convert.</param>
-        /// <returns>Degrees equivalent to the input radians.</returns>
+        /// <param name="radians"></param>
+        /// <returns></returns>
         public static FixFloat64 ToDegrees(FixFloat64 radians)
         {
             return radians * (FixFloat64.C180 / Pi);
