@@ -18,7 +18,7 @@
 - [x] [EntityType 描述 GameEntity](/LockstepClient/Doc/Entitas.md)
 - [x] [Jenny 代码生成器，更快生成 ECS 代码](/LockstepClient/Doc/Jenny代码生成器.md)
 - [x] 接入 InputSystem
-- [x] HashCode 检验帧同步
+- [x] [HashCode 检验帧同步](/LockstepClient/Doc/HashCode检验同步.md)
 - [x] GameEntityManager 通用逻辑
 - [x] 接入 protocolbuf-no-gc 方案
 - [X] [定点数数学库](/LockstepClient/Doc/定点数数学库.md)
