@@ -1,6 +1,42 @@
-package protocol;
+package Protocol;
 
+import "Common.proto";
 
-message Request {
-	optional string timestamp = 1;
+//开始游戏网络包，服务器下发至每个客户端
+message InitMsg
+{
+	optional uint32 type = 1;
+	optional uint32 actorId = 2;
+	repeated uint32 actorList = 3;
+	optional uint32 simulationSpeed = 4;
+	optional int32 seed = 5;
 }
+
+
+//帧同步指令包
+message CommandMsg {
+	optional uint32 type = 1;//指令类型
+	optional uint32 tick = 2;//帧号
+	optional uint32 lag = 3;
+	optional uint32 count = 4;//指令数量
+	optional uint32 actorId = 5;//发起人
+	
+	
+};
+
+
+message SpawnCommandData
+{
+	optional uint32 tag = 1;
+	optional uint32 entity_config_id = 2;
+	optional Int3 position = 3;
+	
+};
+
+message NavigateCommandData
+{
+	optional uint32 tag = 1;
+	optional Int3 destination = 2;
+	repeated uint32 selection = 3;
+}
+

@@ -10,6 +10,8 @@ using Lockstep.Core.Logic.Serialization.Utils;
 using Lockstep.Game;
 using Lockstep.Network.Messages;
 
+using Protocol;
+
 namespace Lockstep.Network.Client
 {
 
@@ -53,18 +55,33 @@ namespace Lockstep.Network.Client
         public override void Enqueue(Input input)
         {
             base.Enqueue(input);
-            Serializer serializer = new Serializer();
-            serializer.Put(NetProtocolDefine.Input);
-            serializer.Put(input.Tick);
-            serializer.Put(LagCompensation);
-            serializer.Put(input.Commands.Count());
-            serializer.Put(input.ActorId);
-            foreach (Lockstep.Core.Logic.Interfaces.ICommand command in input.Commands)
-            {
-                serializer.Put(command.Tag);
-                command.Serialize(serializer);
-            }
-            _network.Send(Compressor.Compress(serializer));
+
+            // Serializer serializer = new Serializer();
+            // serializer.Put(NetProtocolDefine.Input);
+            // serializer.Put(input.Tick);
+            // serializer.Put(LagCompensation);
+            // serializer.Put(input.Commands.Count());
+            // serializer.Put(input.ActorId);
+            // foreach (Lockstep.Core.Logic.Interfaces.ICommand command in input.Commands)
+            // {
+            //     serializer.Put(command.Tag);
+            //     command.Serialize(serializer);
+            // }
+            // _network.Send(Compressor.Compress(serializer));
+
+
+            CommandMsg msg = new CommandMsg();
+            msg.type = NetProtocolDefine.Input;
+            msg.tick = input.Tick;
+            msg.lag = LagCompensation;
+            msg.count = (uint)input.Commands.Count();
+            msg.actorId = input.ActorId;
+
+            //TODO:
+
+            // protocol.
+
+
         }
 
 
@@ -80,6 +97,8 @@ namespace Lockstep.Network.Client
             {
                 case NetProtocolDefine.Init:
                     {
+                        
+
                         Init init = new Init();
                         init.Deserialize(deserializer);
                         this.InitReceived?.Invoke(this, init);

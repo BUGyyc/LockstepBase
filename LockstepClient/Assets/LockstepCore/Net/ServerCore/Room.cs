@@ -6,6 +6,9 @@ using Lockstep.Core.Logic.Serialization.Utils;
 using Lockstep.Network.Messages;
 using Lockstep.Network.Server.Interfaces;
 using UnityEngine;
+using System.IO;
+
+using Protocol;
 
 namespace Lockstep.Network.Server
 {
@@ -123,7 +126,9 @@ namespace Lockstep.Network.Server
 
         private void StartSimulationOnConnectedPeers()
         {
-            Serializer serializer = new Serializer();
+            // Serializer serializer = new Serializer();
+            InitMsg msg = new InitMsg();
+
             int seed = new System.Random().Next(int.MinValue, int.MaxValue);
 
             const int SimulationFPS = 20;
@@ -131,15 +136,38 @@ namespace Lockstep.Network.Server
             this.Starting?.Invoke(this, new StartedEventArgs(SimulationFPS, _actorIds.Values.ToArray()));
             foreach (KeyValuePair<int, byte> actorId in _actorIds)
             {
-                serializer.Reset();
-                serializer.Put(NetProtocolDefine.Init);
-                Init init = new Init();
-                init.Seed = seed;
-                init.ActorID = actorId.Value;
-                init.AllActors = _actorIds.Values.ToArray();
-                init.SimulationSpeed = SimulationFPS;
-                init.Serialize(serializer);
-                _server.Send(actorId.Key, Compressor.Compress(serializer));
+                // serializer.Reset();
+                // serializer.Put(NetProtocolDefine.Init);
+
+                msg.type = NetProtocolDefine.Init;
+
+                // Init init = new Init();
+                // init.Seed = seed;
+                // init.ActorID = actorId.Value;
+                // init.AllActors = _actorIds.Values.ToArray();
+                // init.SimulationSpeed = SimulationFPS;
+                // init.Serialize(serializer);
+
+                msg.seed = seed;
+                msg.actorId = actorId.Value;
+                foreach (var item in _actorIds.Values)
+                {
+                    msg.actorList.Add(item);
+                }
+                msg.simulationSpeed = SimulationFPS;
+
+                // byte[] bs = msg.
+
+                MemoryStream data = new MemoryStream();
+                ProtoBufSerializer.Serialize(data, msg);
+                byte[] bs = data.ToArray();
+                _server.Send(actorId.Key, bs);
+
+
+                Debug.Log($"服务器发起，启动游戏");
+
+
+                // _server.Send(actorId.Key, Compressor.Compress(serializer));
             }
             this.Started?.Invoke(this, new StartedEventArgs(SimulationFPS, _actorIds.Values.ToArray()));
         }
