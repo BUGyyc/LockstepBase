@@ -1,0 +1,6 @@
+package protocol;
+
+
+message Request {
+	optional string timestamp = 1;
+}

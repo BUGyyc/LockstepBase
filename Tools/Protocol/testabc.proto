@@ -1,0 +1,9 @@
+
+package Protocol;
+
+message ABC
+{
+	optional uint32 UVal = 1;
+	optional int32 IVal = 2;
+	optional float FVal = 3;
+}
