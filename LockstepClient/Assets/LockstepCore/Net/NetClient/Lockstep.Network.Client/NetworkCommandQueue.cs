@@ -91,39 +91,73 @@ namespace Lockstep.Network.Client
         /// <param name="rawData"></param>
         private void NetworkOnDataReceived(byte[] rawData)
         {
-            byte[] source = Compressor.Decompress(rawData);
-            Deserializer deserializer = new Deserializer(source);
-            switch (deserializer.GetByte())
+            // byte[] source = Compressor.Decompress(rawData);
+            Deserializer deserializer = new Deserializer(rawData);
+            uint pId = deserializer.GetByte();
+            UnityEngine.Debug.Log($"<color=yellow>  Client get Msg  net  pId  {pId}  </color>");
+
+
+            switch (pId)
             {
                 case NetProtocolDefine.Init:
-                    {
-                        
 
-                        Init init = new Init();
-                        init.Deserialize(deserializer);
-                        this.InitReceived?.Invoke(this, init);
-                        break;
-                    }
-                case NetProtocolDefine.Input:
-                    {
-                        uint tick = deserializer.GetUInt() + deserializer.GetByte();
-                        int @int = deserializer.GetInt();
-                        byte @byte = deserializer.GetByte();
-                        Lockstep.Core.Logic.Interfaces.ICommand[] array = new Lockstep.Core.Logic.Interfaces.ICommand[@int];
-                        for (int i = 0; i < @int; i++)
-                        {
-                            ushort uShort = deserializer.GetUShort();
-                            if (_commandFactories.ContainsKey(uShort))
-                            {
-                                Lockstep.Core.Logic.Interfaces.ICommand command = (Lockstep.Core.Logic.Interfaces.ICommand)Activator.CreateInstance(_commandFactories[uShort]);
-                                command.Deserialize(deserializer);
-                                array[i] = command;
-                            }
-                        }
-                        base.Enqueue(new Input(tick, @byte, array));
-                        break;
-                    }
+                    MemoryStream stream = new MemoryStream(deserializer.RawData);
+                    InitMsg msg = new InitMsg();
+
+                    // ProtoBufSerializer.Deserialize(stream, msg);
+
+                    // InitMsg.
+
+                    
+
+
+                    UnityEngine.Debug.Log($"<color=yellow>  Client get Msg  net  pId  {pId}  </color>");
+
+                    // Init init = new Init();
+                    // init.Deserialize(deserializer);
+                    // this.InitReceived?.Invoke(this, init);
+                    break;
+                default:
+
+                    break;
             }
+
+
+            // byte[] source = Compressor.Decompress(rawData);
+            // Deserializer deserializer = new Deserializer(source);
+            // switch (deserializer.GetByte())
+            // {
+            //     case NetProtocolDefine.Init:
+            //         {
+
+
+            //             Init init = new Init();
+            //             init.Deserialize(deserializer);
+            //             this.InitReceived?.Invoke(this, init);
+
+
+            //             break;
+            //         }
+            //     case NetProtocolDefine.Input:
+            //         {
+            //             uint tick = deserializer.GetUInt() + deserializer.GetByte();
+            //             int @int = deserializer.GetInt();
+            //             byte @byte = deserializer.GetByte();
+            //             Lockstep.Core.Logic.Interfaces.ICommand[] array = new Lockstep.Core.Logic.Interfaces.ICommand[@int];
+            //             for (int i = 0; i < @int; i++)
+            //             {
+            //                 ushort uShort = deserializer.GetUShort();
+            //                 if (_commandFactories.ContainsKey(uShort))
+            //                 {
+            //                     Lockstep.Core.Logic.Interfaces.ICommand command = (Lockstep.Core.Logic.Interfaces.ICommand)Activator.CreateInstance(_commandFactories[uShort]);
+            //                     command.Deserialize(deserializer);
+            //                     array[i] = command;
+            //                 }
+            //             }
+            //             base.Enqueue(new Input(tick, @byte, array));
+            //             break;
+            //         }
+            // }
         }
     }
 }

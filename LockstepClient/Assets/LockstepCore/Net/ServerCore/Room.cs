@@ -126,7 +126,7 @@ namespace Lockstep.Network.Server
 
         private void StartSimulationOnConnectedPeers()
         {
-            // Serializer serializer = new Serializer();
+            Serializer serializer = new Serializer();
             InitMsg msg = new InitMsg();
 
             int seed = new System.Random().Next(int.MinValue, int.MaxValue);
@@ -136,10 +136,10 @@ namespace Lockstep.Network.Server
             this.Starting?.Invoke(this, new StartedEventArgs(SimulationFPS, _actorIds.Values.ToArray()));
             foreach (KeyValuePair<int, byte> actorId in _actorIds)
             {
-                // serializer.Reset();
-                // serializer.Put(NetProtocolDefine.Init);
+                serializer.Reset();
+                serializer.Put(NetProtocolDefine.Init);
 
-                msg.type = NetProtocolDefine.Init;
+                // msg.type = NetProtocolDefine.Init;
 
                 // Init init = new Init();
                 // init.Seed = seed;
@@ -161,10 +161,13 @@ namespace Lockstep.Network.Server
                 MemoryStream data = new MemoryStream();
                 ProtoBufSerializer.Serialize(data, msg);
                 byte[] bs = data.ToArray();
-                _server.Send(actorId.Key, bs);
+
+                serializer.Put(bs);
+                // Buffer.BlockCopy();
+                _server.Send(actorId.Key, serializer.Data);
 
 
-                Debug.Log($"服务器发起，启动游戏");
+                Debug.Log($"<color=yellow> 服务器发起，启动游戏  </color>");
 
 
                 // _server.Send(actorId.Key, Compressor.Compress(serializer));
