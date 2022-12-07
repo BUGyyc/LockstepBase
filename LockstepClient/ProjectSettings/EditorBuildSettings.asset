@@ -5,24 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Debug/0.launch/LaunchServer.unity
     guid: f80e2b7ce70349e479994e774d7e32ea
   - enabled: 1
-    path: Assets/Scenes/Debug/server/SampleServer.unity
-    guid: a6acfeca88490af438084a065394c6ad
-  - enabled: 0
-    path: Assets/Scenes/Debug/1.battle/TPS.unity
-    guid: 63d3ab65d5aacf749abb6a9fe4c388cc
-  - enabled: 0
-    path: Assets/Scenes/Debug/1.battle/RTS.unity
-    guid: 8ee95a57198521b489321ecae6bb96cd
-  - enabled: 1
-    path: Assets/Scenes/Debug/1.battle/Action.unity
-    guid: b5e303eaf919a49409df6c03c425529a
-  - enabled: 1
-    path: Assets/Scenes/Debug/ClientAndServer.unity
+    path: Assets/Scenes/Debug/0.launch/ClientAndServer.unity
     guid: 86efc22a47e1e704c83420975439f67e
+  - enabled: 1
+    path: Assets/Scenes/Debug/1.battle/Battle.unity
+    guid: b5e303eaf919a49409df6c03c425529a
   - enabled: 1
     path: Assets/Scenes/Server/PureServer.unity
     guid: d4df618ea99d7014a87883bd0493979e
