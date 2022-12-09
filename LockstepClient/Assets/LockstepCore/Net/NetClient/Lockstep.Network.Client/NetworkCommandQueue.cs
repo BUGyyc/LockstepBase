@@ -91,6 +91,8 @@ namespace Lockstep.Network.Client
         /// <param name="rawData"></param>
         private void NetworkOnDataReceived(byte[] rawData)
         {
+
+            return;
             // byte[] source = Compressor.Decompress(rawData);
             Deserializer deserializer = new Deserializer(rawData);
             uint pId = deserializer.GetByte();
@@ -102,16 +104,21 @@ namespace Lockstep.Network.Client
                 case NetProtocolDefine.Init:
 
                     MemoryStream stream = new MemoryStream(deserializer.RawData);
-                    InitMsg msg = new InitMsg();
+
+                    UnityEngine.Debug.Log($"<color=red> stream  {stream.Length}  </color>");
+
+                    InitMsg msg = ProtoBufSerializer.Deserialize(stream, typeof(InitMsg), (int)stream.Length) as InitMsg;
+
+
 
                     // ProtoBufSerializer.Deserialize(stream, msg);
 
                     // InitMsg.
 
-                    
 
 
-                    UnityEngine.Debug.Log($"<color=yellow>  Client get Msg  net  pId  {pId}  </color>");
+
+                    UnityEngine.Debug.Log($"<color=yellow>  Client get Msg  net  pId  {pId}  msg:  {msg.actorId}  {msg.seed}  {msg.simulationSpeed}  {msg.type}   </color>");
 
                     // Init init = new Init();
                     // init.Deserialize(deserializer);

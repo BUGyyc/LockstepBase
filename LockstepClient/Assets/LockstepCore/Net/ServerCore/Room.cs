@@ -167,7 +167,20 @@ namespace Lockstep.Network.Server
                 _server.Send(actorId.Key, serializer.Data);
 
 
-                Debug.Log($"<color=yellow> 服务器发起，启动游戏  </color>");
+                Debug.Log($"<color=yellow> 服务器发起，启动游戏  msg {msg.actorId}  {msg.seed}  {msg.simulationSpeed} {msg.type} </color>");
+
+
+                var testNetPack = serializer.Data;
+                Deserializer deserializer = new Deserializer(testNetPack);
+                uint pId = deserializer.GetByte();
+
+                MemoryStream stream = new MemoryStream(deserializer.RawData);
+
+                UnityEngine.Debug.Log($"<color=red> stream  {stream.Length}  </color>");
+
+                InitMsg test = ProtoBufSerializer.Deserialize(stream, typeof(InitMsg), (int)stream.Length) as InitMsg;
+
+                UnityEngine.Debug.Log($"<color=red>  Client get Msg  net  pId  {pId}  msg:  {test.actorId}  {test.seed}  {test.simulationSpeed}  {test.type}   </color>");
 
 
                 // _server.Send(actorId.Key, Compressor.Compress(serializer));
