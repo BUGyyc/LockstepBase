@@ -6,7 +6,7 @@ public static class GameSetting
 
     public const string BulletPrefab = "Prefabs/Bullet";
 
-    public const string HeroPrefabPath = "Prefabs/Hero";
+    public const string HeroPrefabPath = "Prefabs/ClazyRunner";//"Prefabs/Hero";
 
     public const string AIPrefab = "Prefabs/AI";
 
