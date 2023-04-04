@@ -6,9 +6,6 @@ using Lockstep.Core.Logic.Serialization.Utils;
 using Lockstep.Network.Messages;
 using Lockstep.Network.Server.Interfaces;
 using UnityEngine;
-using System.IO;
-
-using Protocol;
 
 namespace Lockstep.Network.Server
 {
@@ -56,7 +53,7 @@ namespace Lockstep.Network.Server
             _server.ClientDisconnected += OnClientDisconnected;
             _server.DataReceived += OnDataReceived;
             _server.Run(port);
-            Debug.Log("[服务器] 启动， Waiting for " + _size + " players...");
+            Debug.Log("Server started. Waiting for " + _size + " players...");
         }
 
         private void OnClientConnected(int clientId)
@@ -64,7 +61,7 @@ namespace Lockstep.Network.Server
             _actorIds.Add(clientId, _nextPlayerId++);
             if (_actorIds.Count == _size)
             {
-                Debug.Log("Room is full, starting new simulation...");
+                Debug.Log("[服务器] 服务器回应。开启战斗，广播开始游戏。 Room is full, starting new simulation...");
                 StartSimulationOnConnectedPeers();
                 return;
             }
@@ -127,8 +124,6 @@ namespace Lockstep.Network.Server
         private void StartSimulationOnConnectedPeers()
         {
             Serializer serializer = new Serializer();
-            InitMsg msg = new InitMsg();
-
             int seed = new System.Random().Next(int.MinValue, int.MaxValue);
 
             const int SimulationFPS = 20;
@@ -138,52 +133,14 @@ namespace Lockstep.Network.Server
             {
                 serializer.Reset();
                 serializer.Put(NetProtocolDefine.Init);
-
-                // msg.type = NetProtocolDefine.Init;
-
-                // Init init = new Init();
-                // init.Seed = seed;
-                // init.ActorID = actorId.Value;
-                // init.AllActors = _actorIds.Values.ToArray();
-                // init.SimulationSpeed = SimulationFPS;
-                // init.Serialize(serializer);
-
-                msg.seed = seed;
-                msg.actorId = actorId.Value;
-                foreach (var item in _actorIds.Values)
-                {
-                    msg.actorList.Add(item);
-                }
-                msg.simulationSpeed = SimulationFPS;
-
-                // byte[] bs = msg.
-
-                MemoryStream data = new MemoryStream();
-                ProtoBufSerializer.Serialize(data, msg);
-                byte[] bs = data.ToArray();
-
-                serializer.Put(bs);
-                // Buffer.BlockCopy();
-                _server.Send(actorId.Key, serializer.Data);
-
-
-                //Debug.Log($"<color=yellow> 服务器发起，启动游戏  msg {msg.actorId}  {msg.seed}  {msg.simulationSpeed} {msg.type} </color>");
-
-
-                //var testNetPack = serializer.Data;
-                //Deserializer deserializer = new Deserializer(testNetPack);
-                //uint pId = deserializer.GetByte();
-
-                //MemoryStream stream = new MemoryStream(deserializer.RawData);
-
-                //UnityEngine.Debug.Log($"<color=red> stream  {stream.Length}  </color>");
-
-                //InitMsg test = ProtoBufSerializer.Deserialize(stream, typeof(InitMsg), (int)stream.Length) as InitMsg;
-
-                //UnityEngine.Debug.Log($"<color=red>  Client get Msg  net  pId  {pId}  msg:  {test.actorId}  {test.seed}  {test.simulationSpeed}  {test.type}   </color>");
-
-
-                // _server.Send(actorId.Key, Compressor.Compress(serializer));
+                Init init = new Init();
+                init.Seed = seed;
+                init.ActorID = actorId.Value;
+                init.AllActors = _actorIds.Values.ToArray();
+                init.SimulationSpeed = SimulationFPS;
+                init.Serialize(serializer);
+                Debug.Log($"[服务器]  通知客户端 {actorId.Key} {seed}   {actorId.Value} ");
+                _server.Send(actorId.Key, Compressor.Compress(serializer));
             }
             this.Started?.Invoke(this, new StartedEventArgs(SimulationFPS, _actorIds.Values.ToArray()));
         }

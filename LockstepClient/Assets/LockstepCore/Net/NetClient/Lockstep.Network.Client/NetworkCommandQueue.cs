@@ -10,8 +10,6 @@ using Lockstep.Core.Logic.Serialization.Utils;
 using Lockstep.Game;
 using Lockstep.Network.Messages;
 
-using Protocol;
-
 namespace Lockstep.Network.Client
 {
 
@@ -55,33 +53,18 @@ namespace Lockstep.Network.Client
         public override void Enqueue(Input input)
         {
             base.Enqueue(input);
-
-            // Serializer serializer = new Serializer();
-            // serializer.Put(NetProtocolDefine.Input);
-            // serializer.Put(input.Tick);
-            // serializer.Put(LagCompensation);
-            // serializer.Put(input.Commands.Count());
-            // serializer.Put(input.ActorId);
-            // foreach (Lockstep.Core.Logic.Interfaces.ICommand command in input.Commands)
-            // {
-            //     serializer.Put(command.Tag);
-            //     command.Serialize(serializer);
-            // }
-            // _network.Send(Compressor.Compress(serializer));
-
-
-            CommandMsg msg = new CommandMsg();
-            msg.type = NetProtocolDefine.Input;
-            msg.tick = input.Tick;
-            msg.lag = LagCompensation;
-            msg.count = (uint)input.Commands.Count();
-            msg.actorId = input.ActorId;
-
-            //TODO:
-
-            // protocol.
-
-
+            Serializer serializer = new Serializer();
+            serializer.Put(NetProtocolDefine.Input);
+            serializer.Put(input.Tick);
+            serializer.Put(LagCompensation);
+            serializer.Put(input.Commands.Count());
+            serializer.Put(input.ActorId);
+            foreach (Lockstep.Core.Logic.Interfaces.ICommand command in input.Commands)
+            {
+                serializer.Put(command.Tag);
+                command.Serialize(serializer);
+            }
+            _network.Send(Compressor.Compress(serializer));
         }
 
 
@@ -91,80 +74,37 @@ namespace Lockstep.Network.Client
         /// <param name="rawData"></param>
         private void NetworkOnDataReceived(byte[] rawData)
         {
-
-            return;
-            // byte[] source = Compressor.Decompress(rawData);
-            Deserializer deserializer = new Deserializer(rawData);
-            uint pId = deserializer.GetByte();
-            UnityEngine.Debug.Log($"<color=yellow>  Client get Msg  net  pId  {pId}  </color>");
-
-
-            switch (pId)
+            byte[] source = Compressor.Decompress(rawData);
+            Deserializer deserializer = new Deserializer(source);
+            switch (deserializer.GetByte())
             {
                 case NetProtocolDefine.Init:
-
-                    MemoryStream stream = new MemoryStream(deserializer.RawData);
-
-                    UnityEngine.Debug.Log($"<color=red> stream  {stream.Length}  </color>");
-
-                    InitMsg msg = ProtoBufSerializer.Deserialize(stream, typeof(InitMsg), (int)stream.Length) as InitMsg;
-
-
-
-                    // ProtoBufSerializer.Deserialize(stream, msg);
-
-                    // InitMsg.
-
-
-
-
-                    UnityEngine.Debug.Log($"<color=yellow>  Client get Msg  net  pId  {pId}  msg:  {msg.actorId}  {msg.seed}  {msg.simulationSpeed}  {msg.type}   </color>");
-
-                    // Init init = new Init();
-                    // init.Deserialize(deserializer);
-                    // this.InitReceived?.Invoke(this, init);
-                    break;
-                default:
-
-                    break;
+                    {
+                        Init init = new Init();
+                        init.Deserialize(deserializer);
+                        this.InitReceived?.Invoke(this, init);
+                        break;
+                    }
+                case NetProtocolDefine.Input:
+                    {
+                        uint tick = deserializer.GetUInt() + deserializer.GetByte();
+                        int @int = deserializer.GetInt();
+                        byte @byte = deserializer.GetByte();
+                        Lockstep.Core.Logic.Interfaces.ICommand[] array = new Lockstep.Core.Logic.Interfaces.ICommand[@int];
+                        for (int i = 0; i < @int; i++)
+                        {
+                            ushort uShort = deserializer.GetUShort();
+                            if (_commandFactories.ContainsKey(uShort))
+                            {
+                                Lockstep.Core.Logic.Interfaces.ICommand command = (Lockstep.Core.Logic.Interfaces.ICommand)Activator.CreateInstance(_commandFactories[uShort]);
+                                command.Deserialize(deserializer);
+                                array[i] = command;
+                            }
+                        }
+                        base.Enqueue(new Input(tick, @byte, array));
+                        break;
+                    }
             }
-
-
-            // byte[] source = Compressor.Decompress(rawData);
-            // Deserializer deserializer = new Deserializer(source);
-            // switch (deserializer.GetByte())
-            // {
-            //     case NetProtocolDefine.Init:
-            //         {
-
-
-            //             Init init = new Init();
-            //             init.Deserialize(deserializer);
-            //             this.InitReceived?.Invoke(this, init);
-
-
-            //             break;
-            //         }
-            //     case NetProtocolDefine.Input:
-            //         {
-            //             uint tick = deserializer.GetUInt() + deserializer.GetByte();
-            //             int @int = deserializer.GetInt();
-            //             byte @byte = deserializer.GetByte();
-            //             Lockstep.Core.Logic.Interfaces.ICommand[] array = new Lockstep.Core.Logic.Interfaces.ICommand[@int];
-            //             for (int i = 0; i < @int; i++)
-            //             {
-            //                 ushort uShort = deserializer.GetUShort();
-            //                 if (_commandFactories.ContainsKey(uShort))
-            //                 {
-            //                     Lockstep.Core.Logic.Interfaces.ICommand command = (Lockstep.Core.Logic.Interfaces.ICommand)Activator.CreateInstance(_commandFactories[uShort]);
-            //                     command.Deserialize(deserializer);
-            //                     array[i] = command;
-            //                 }
-            //             }
-            //             base.Enqueue(new Input(tick, @byte, array));
-            //             break;
-            //         }
-            // }
         }
     }
 }

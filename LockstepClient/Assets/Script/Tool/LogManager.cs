@@ -15,7 +15,7 @@ public class LogTool
 
     public void Msg(params string[] strs)
     {
-        Debug.LogFormat($"<color=red> {0}  </color>", strs);
+        //Debug.LogFormat($"<color=red> {0}  </color>", strs);
     }
 
 }
