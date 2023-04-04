@@ -40,6 +40,11 @@ namespace Server.LiteNetLib
             _server.ConnectedPeerList.First(peer => peer.Id == clientId).Send(data, DeliveryMethod.ReliableOrdered);
         }
 
+        public void Send(int clientId, uint msgId, byte[] data)
+        {
+            //TODO:
+        }
+
         public void Run(int port)
         {
             _listener.ConnectionRequestEvent += request =>

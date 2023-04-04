@@ -8,22 +8,184 @@
 //------------------------------------------------------------------------------
 
 // Generated from: Battle.proto
-namespace protocol
+// Note: requires additional types generated from: Common.proto
+namespace Protocol
 {
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"Request")]
-  public partial class Request : global::ProtoBuf.IExtensible
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"InitMsg")]
+  public partial class InitMsg : global::ProtoBuf.IExtensible
   {
-    public Request() {}
+    public InitMsg() {}
     
 
-    private string _timestamp = "";
-    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"timestamp", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue("")]
-    public string timestamp
+    private uint _type = default(uint);
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"type", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint type
     {
-      get { return _timestamp; }
-      set { _timestamp = value; }
+      get { return _type; }
+      set { _type = value; }
     }
+
+    private uint _actorId = default(uint);
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"actorId", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint actorId
+    {
+      get { return _actorId; }
+      set { _actorId = value; }
+    }
+    private readonly global::System.Collections.Generic.List<uint> _actorList = new global::System.Collections.Generic.List<uint>();
+    [global::ProtoBuf.ProtoMember(3, Name=@"actorList", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public global::System.Collections.Generic.List<uint> actorList
+    {
+      get { return _actorList; }
+    }
+  
+
+    private uint _simulationSpeed = default(uint);
+    [global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"simulationSpeed", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint simulationSpeed
+    {
+      get { return _simulationSpeed; }
+      set { _simulationSpeed = value; }
+    }
+
+    private int _seed = default(int);
+    [global::ProtoBuf.ProtoMember(5, IsRequired = false, Name=@"seed", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(int))]
+    public int seed
+    {
+      get { return _seed; }
+      set { _seed = value; }
+    }
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CommandMsg")]
+  public partial class CommandMsg : global::ProtoBuf.IExtensible
+  {
+    public CommandMsg() {}
+    
+
+    private uint _type = default(uint);
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"type", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint type
+    {
+      get { return _type; }
+      set { _type = value; }
+    }
+
+    private uint _tick = default(uint);
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"tick", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint tick
+    {
+      get { return _tick; }
+      set { _tick = value; }
+    }
+
+    private uint _lag = default(uint);
+    [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"lag", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint lag
+    {
+      get { return _lag; }
+      set { _lag = value; }
+    }
+
+    private uint _count = default(uint);
+    [global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"count", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint count
+    {
+      get { return _count; }
+      set { _count = value; }
+    }
+
+    private uint _actorId = default(uint);
+    [global::ProtoBuf.ProtoMember(5, IsRequired = false, Name=@"actorId", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint actorId
+    {
+      get { return _actorId; }
+      set { _actorId = value; }
+    }
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"SpawnCommandData")]
+  public partial class SpawnCommandData : global::ProtoBuf.IExtensible
+  {
+    public SpawnCommandData() {}
+    
+
+    private uint _tag = default(uint);
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"tag", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint tag
+    {
+      get { return _tag; }
+      set { _tag = value; }
+    }
+
+    private uint _entity_config_id = default(uint);
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"entity_config_id", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint entity_config_id
+    {
+      get { return _entity_config_id; }
+      set { _entity_config_id = value; }
+    }
+
+    private Protocol.Int3 _position = null;
+    [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"position", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public Protocol.Int3 position
+    {
+      get { return _position; }
+      set { _position = value; }
+    }
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"NavigateCommandData")]
+  public partial class NavigateCommandData : global::ProtoBuf.IExtensible
+  {
+    public NavigateCommandData() {}
+    
+
+    private uint _tag = default(uint);
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"tag", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint tag
+    {
+      get { return _tag; }
+      set { _tag = value; }
+    }
+
+    private Protocol.Int3 _destination = null;
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"destination", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public Protocol.Int3 destination
+    {
+      get { return _destination; }
+      set { _destination = value; }
+    }
+    private readonly global::System.Collections.Generic.List<uint> _selection = new global::System.Collections.Generic.List<uint>();
+    [global::ProtoBuf.ProtoMember(3, Name=@"selection", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public global::System.Collections.Generic.List<uint> selection
+    {
+      get { return _selection; }
+    }
+  
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }

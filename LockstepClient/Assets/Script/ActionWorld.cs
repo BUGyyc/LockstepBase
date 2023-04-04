@@ -69,6 +69,7 @@ public class ActionWorld : MonoBehaviour
     /// <param name="msg"></param>
     public void OnInitReceived(object sender, Init msg)
     {
+        Debug.Log("接收到服务器，启动通知，客户端启动");
         //全部玩家数据
         AllActorIds = msg.AllActors;
         Debug.Log($"Starting simulation. Total actors: {msg.AllActors.Length}. Local ActorID: {msg.ActorID}  msg.SimulationSpeed {msg.SimulationSpeed} ");

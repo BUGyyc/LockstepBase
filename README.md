@@ -21,11 +21,12 @@
 - [x] [HashCode 检验帧同步](/LockstepClient/Doc/HashCode检验同步.md)
 - [x] GameEntityManager 通用逻辑
 - [x] 接入 protocolbuf-no-gc 方案
+  - [ ] 合入InputCommandMsg Pb
 - [X] [定点数数学库](/LockstepClient/Doc/定点数数学库.md)
 - [ ] 引入确定性物理，这个需要Entities 支持，不建议一个框架有两种ECS，另外 Entities 当前依然属于预览版，所以待定
 - [ ] 重构动画导出工具
 - [ ] 帧同步录像模块
-- [ ] 尝试引入Timeline
+- [ ] 尝试引入Timeline，（多轨道时序做战斗的好处太多了）
 - [ ] Entitas 内的JobSystem （注：子线程下不允许修改 Transform 内的Position 和 Rotation）
 - [ ] Animancer 应用
 - [ ] ECS 下，预测、预表现测试

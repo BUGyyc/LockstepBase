@@ -61,7 +61,7 @@ namespace Lockstep.Network.Server
             _actorIds.Add(clientId, _nextPlayerId++);
             if (_actorIds.Count == _size)
             {
-                Debug.Log("Room is full, starting new simulation...");
+                Debug.Log("[服务器] 服务器回应。开启战斗，广播开始游戏。 Room is full, starting new simulation...");
                 StartSimulationOnConnectedPeers();
                 return;
             }
@@ -139,6 +139,7 @@ namespace Lockstep.Network.Server
                 init.AllActors = _actorIds.Values.ToArray();
                 init.SimulationSpeed = SimulationFPS;
                 init.Serialize(serializer);
+                Debug.Log($"[服务器]  通知客户端 {actorId.Key} {seed}   {actorId.Value} ");
                 _server.Send(actorId.Key, Compressor.Compress(serializer));
             }
             this.Started?.Invoke(this, new StartedEventArgs(SimulationFPS, _actorIds.Values.ToArray()));

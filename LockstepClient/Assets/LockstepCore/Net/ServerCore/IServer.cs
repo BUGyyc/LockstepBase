@@ -17,6 +17,8 @@ namespace Lockstep.Network.Server.Interfaces
 
         void Send(int clientId, byte[] data);
 
+        void Send(int clientId, uint msgId, byte[] data);
+
         void Run(int port);
     }
 }
