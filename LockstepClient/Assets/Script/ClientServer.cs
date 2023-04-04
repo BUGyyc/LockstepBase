@@ -42,10 +42,11 @@ public class ClientServer : MonoBehaviour
         RoomPlayerNumber = NetSetting.PlayerNumber;
         //Port = NetSetting.ServerPort;
         //RoomPlayerNumber = NetSetting.PlayerNumber;
+
         server = new LiteNetLibServer();
 
         room = new Lockstep.Network.Server.Room(server, (int)RoomPlayerNumber);
-
+        //开启一个房间
         room.Open((int)Port);
 
         UnityEngine.Debug.Log($"房间开启 RoomPlayerNumber{RoomPlayerNumber}  port {Port}  ");
