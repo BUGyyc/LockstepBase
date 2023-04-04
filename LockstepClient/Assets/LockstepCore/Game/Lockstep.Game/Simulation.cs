@@ -148,6 +148,7 @@ namespace Lockstep.Game
                     inputEntity.AddActorId(item.ActorId);
                 }
             }
+            //本地存储中不属于自己的输入？？？
             List<Input> source = list.Where((Input input) => input.ActorId != LocalActorId).ToList();
             if (!source.Any())
             {
