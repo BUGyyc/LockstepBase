@@ -23,7 +23,7 @@ public class PbNoGC : MonoBehaviour
         // test.IVal = 1;
         // test.UVal = 1;
 
-        MemoryStream temp = new MemoryStream();
+        //MemoryStream temp = new MemoryStream();
         // ProtoBufSerializer.Serialize(temp, test);
 
         // Debug.Log("" + temp.ToArray().Length);
@@ -106,9 +106,9 @@ public class ProtocolHelper
         //反序列化指定长度的内存流
         tmp = ProtoBufSerializer.Deserialize(msReceive, typeof(ABC), (int)msSend.Length) as ABC;
 
-        // msSend.GetBuffer();
+        //NOTE：测试时，可以打印看看
+        //Debug.LogFormat($"反序列化  {tmp.IVal}  {tmp.FVal} {tmp.UVal} ");
 
-        // Debug.LogFormat($"反序列化  {temp.IVal}  {temp.FVal} {temp.UVal} ");
 
         //因为又使用了一次，所以再回收
         ProtoFactory.Recycle(tmp);
