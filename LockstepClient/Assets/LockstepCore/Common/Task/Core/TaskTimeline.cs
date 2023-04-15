@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-15 17:41:07 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-15 18:34:57
+ * @Last Modified time: 2023-04-15 18:50:00
  */
 
 using System.Collections.Generic;
@@ -38,7 +38,12 @@ namespace TaskCore
             // createMainPipeline();
         }
 
-        public ~TaskTimeline()
+        public TaskTimeline()
+        {
+            // createMainPipeline();
+        }
+
+        ~TaskTimeline()
         {
 
         }
@@ -48,10 +53,7 @@ namespace TaskCore
 
         }
 
-        public TaskTimeline()
-        {
-            // createMainPipeline();
-        }
+
 
         // private void createMainPipeline()
         // {
