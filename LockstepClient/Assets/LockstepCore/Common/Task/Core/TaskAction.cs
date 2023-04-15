@@ -2,13 +2,14 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-15 17:45:15 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-15 18:49:28
+ * @Last Modified time: 2023-04-15 19:26:04
  */
 
 namespace TaskCore
 {
     public class TaskAction : ITaskItem
     {
+
         public uint taskId { get; private set; }
         private void SetTaskId(uint Id = 0)
         {
@@ -17,18 +18,81 @@ namespace TaskCore
 
             }
         }
+
+        public TaskActionState state { private set; get; }
+
+
+
+        /// <summary>
+        /// 满足条件才启动 Action,并且执行第一帧
+        /// </summary>
+        public TaskCondition startCondition;
+
+        /// <summary>
+        /// 满足条件才驱动这一帧
+        /// </summary>
+        public TaskCondition executeCondition;
+
+        /// <summary>
+        /// 满足条件就退出
+        /// </summary>
+        public TaskCondition exitCondition;
+
         public void ResetData()
         {
             taskId = 0;
+            startCondition = null;
+            executeCondition = null;
+            exitCondition = null;
         }
 
+        private void Awake()
+        {
+            if (startCondition.CheckResult())
+            {
+                state = TaskActionState.Start;
+            }
+        }
 
+        private void Start()
+        {
+            if (executeCondition.CheckResult())
+            {
+                //第一帧先执行
+                executeTaskAction();
+                //然后切换状态
+                state = TaskActionState.Execute;
+            }
+        }
 
         public bool Execute()
         {
-            // throw new System.NotImplementedException();
+            //对运行的逻辑
+            switch (state)
+            {
+                case TaskActionState.Awake:
+                    Awake();
+                    //立刻判断Start。避免一帧只能切一次
+                    Start();
+                    break;
+                case TaskActionState.Start:
+                    Start();
+                    break;
+                case TaskActionState.Execute:
+                    executeTaskAction();
+                    break;
+            }
 
-            executeTaskAction();
+
+            if (exitCondition.CheckResult())
+            {
+                state = TaskActionState.Destroy;
+                Destroy();
+                //TODO:退出逻辑
+            }
+
+
+
             return true;
         }
 
@@ -63,5 +127,16 @@ namespace TaskCore
             // throw new System.NotImplementedException();
             return false;
         }
+    }
+
+    public enum TaskActionState
+    {
+        Awake = 0,
+
+        Start = 1,
+        Execute = 2,
+        Stop = 3,
+
+        Destroy
     }
 }

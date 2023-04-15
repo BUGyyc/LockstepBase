@@ -13,6 +13,12 @@ namespace TaskCore
     public class TaskCondition
     {
         public Queue<TaskConditionItem> conditionQueue;
+
+
+        public bool CheckResult()
+        {
+            return false;
+        }
     }
 
 

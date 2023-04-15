@@ -2,14 +2,14 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-15 17:30:57 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-15 18:44:13
+ * @Last Modified time: 2023-04-15 19:04:37
  */
 
 using System.Collections.Generic;
 using Lockstep;
 namespace TaskCore
 {
-    public class DelevinTask
+    public partial class DelevinTask
     {
         public TaskTimeline mainTimeline;
 
@@ -62,7 +62,7 @@ namespace TaskCore
 
         }
 
-        public void DestroyTaskTimeline(uint id)
+        private void DestroyTaskTimeline(uint id)
         {
             if (id == 0) return;
 
