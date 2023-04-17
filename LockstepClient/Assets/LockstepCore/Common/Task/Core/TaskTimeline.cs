@@ -12,6 +12,8 @@ namespace TaskCore
 {
     public delegate void TAction();
 
+    public delegate bool ConditionAction();
+
 
     public class TaskTimeline
     {
@@ -81,12 +83,30 @@ namespace TaskCore
 
         }
 
+        public TaskTrack LastTaskTrack()
+        {
+            if (headTrack == null || headTrack.next == null)
+            {
+                return headTrack;
+            }
+
+            var find = headTrack;
+            while (find.next != null)
+            {
+                find = find.next;
+            }
+            return find;
+        }
+
 
         public bool Execute(float deltaTime)
         {
             if (timelineLock)
             {
-                UnityEngine.Debug.LogError("timeline Lock " + this.GetHashCode());
+                // UnityEngine.Debug.LogError("timeline Lock " + this.GetHashCode());
+
+                // UnityEngine.Debug.Log("Timeline actionQueue " + headTrack.actionQueue.Count);
+
                 return false;
             }
             else
@@ -105,22 +125,23 @@ namespace TaskCore
             while (track != null)
             {
                 track.Execute(deltaTime);
+                track = track.next;
             }
 
             //检测是否有空轨道，有的话，就删除
-            track = headTrack;
-            if (track.IsEmpty())
-            {
-                headTrack = headTrack.next;
-                track = headTrack;
-            }
-            while (track.next != null)
-            {
-                if (track.next.IsEmpty())
-                {
-                    track.next = track.next.next;
-                }
-            }
+            // track = headTrack;
+            // if (track.IsEmpty())
+            // {
+            //     headTrack = headTrack.next;
+            //     track = headTrack;
+            // }
+            // while (track.next != null)
+            // {
+            //     if (track.next.IsEmpty())
+            //     {
+            //         track.next = track.next.next;
+            //     }
+            // }
 
             return true;
         }
@@ -155,7 +176,7 @@ namespace TaskCore
         /// 条件通过才推进
         /// </summary>
         /// <returns></returns>
-        public TaskTimeline If()
+        public TaskTimeline If(ConditionAction action)
         {
             return this;
         }
@@ -163,15 +184,48 @@ namespace TaskCore
 
         public TaskTimeline Do(TAction action)
         {
-            if (action != null)
+            if (action == null) return this;
+
+            if (headTrack == null)
             {
-                if (headTrack != null)
-                {
-                    headTrack.Add(action);
-                }
+                UnityEngine.Debug.Log(" 头轨道是null ,创建头轨道 ");
+                headTrack = new TaskTrack();
             }
+            headTrack.Add(action);
+
             return this;
         }
+
+        /// <summary>
+        /// 单线程下的假并行，其实就是在Timeline下单独开辟一条轨道，假的并行
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public TaskTimeline WithDo(TAction action)
+        {
+            if (action == null) return this;
+
+            TaskTrack track = null;
+            if (headTrack == null)
+            {
+                headTrack = new TaskTrack();
+                track = headTrack;
+            }
+            else
+            {
+                track = new TaskTrack();
+                var last = LastTaskTrack();
+                last.next = track;
+            }
+
+            track.Add(action);
+
+            return this;
+        }
+
+
+
+
 
         public TaskTimeline Do(TAction action, uint trackUid)
         {
@@ -185,7 +239,28 @@ namespace TaskCore
         }
 
 
-        public TaskTimeline LoopDo()
+        public TaskTimeline LoopDo(int count)
+        {
+            return this;
+        }
+
+
+        public TaskTimeline Loop()
+        {
+            return this;
+        }
+
+        public TaskTimeline WaitFrame(int count)
+        {
+            return this;
+        }
+
+        public TaskTimeline WaitTime(int ms)
+        {
+            return this;
+        }
+
+        public TaskTimeline BreakLoop(ConditionAction condition)
         {
             return this;
         }

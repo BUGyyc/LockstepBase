@@ -21,7 +21,7 @@ namespace TaskCore
 
         public TaskActionState state { private set; get; }
 
-
+        public TAction call;
 
         /// <summary>
         /// 满足条件才启动 Action,并且执行第一帧
@@ -48,7 +48,8 @@ namespace TaskCore
 
         private void Awake()
         {
-            if (startCondition.CheckResult())
+            if (startCondition == null) state = TaskActionState.Start;
+            else if (startCondition.CheckResult())
             {
                 state = TaskActionState.Start;
             }
@@ -56,7 +57,13 @@ namespace TaskCore
 
         private void Start()
         {
-            if (executeCondition.CheckResult())
+            if (executeCondition == null)
+            {
+                //第一帧先执行
+                executeTaskAction();
+                state = TaskActionState.Execute;
+            }
+            else if (executeCondition.CheckResult())
             {
                 //第一帧先执行
                 executeTaskAction();
@@ -83,10 +90,12 @@ namespace TaskCore
                     break;
             }
 
+            //TODO:
+            state = TaskActionState.Destroy;
 
-            if (exitCondition.CheckResult())
+            if (exitCondition != null && exitCondition.CheckResult())
             {
-                state = TaskActionState.Destroy;
+
                 Destroy();
                 //TODO:退出逻辑
             }
@@ -101,7 +110,10 @@ namespace TaskCore
 
         private void executeTaskAction()
         {
-
+            if (call != null)
+            {
+                call();
+            }
         }
 
 

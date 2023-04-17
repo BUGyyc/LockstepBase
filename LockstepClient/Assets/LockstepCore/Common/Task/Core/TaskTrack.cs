@@ -19,6 +19,15 @@ namespace TaskCore
 
         public TaskTrack Add(TAction action)
         {
+            TaskAction taskAction = new TaskAction();
+            taskAction.call = action;
+
+            if (actionQueue == null)
+            {
+                actionQueue = new Queue<TaskAction>();
+            }
+            actionQueue.Enqueue(taskAction);
+
             return this;
         }
 
@@ -31,6 +40,12 @@ namespace TaskCore
             var action = actionQueue.Peek();
 
             action.Execute(deltaTime);
+
+            if (action.state == TaskActionState.Destroy)
+            {
+                actionQueue.Dequeue();
+            }
+
             return true;
         }
 
