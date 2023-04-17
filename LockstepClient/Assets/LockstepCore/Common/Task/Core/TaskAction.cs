@@ -65,7 +65,7 @@ namespace TaskCore
             }
         }
 
-        public bool Execute()
+        public bool Execute(float deltaTime)
         {
             //对运行的逻辑
             switch (state)
@@ -95,6 +95,8 @@ namespace TaskCore
 
             return true;
         }
+
+        public bool Execute() { return false; }
 
 
         private void executeTaskAction()

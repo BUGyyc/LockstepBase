@@ -23,34 +23,21 @@ namespace TaskCore
         }
 
 
-        public static bool DoDelayFrameAction(int frame)
+        public static bool DelayFrameTaskAction(int frame)
         {
             return false;
         }
 
 
-        public static bool DoDelayTimeAction(float time)
+        public static bool DelayTaskAction(float time)
         {
             return false;
         }
 
 
-        public static bool DoDelayTimeAction(int time)
+        public static bool DelayTaskAction(int time)
         {
             return false;
-        }
-    }
-
-
-
-    public class Test
-    {
-
-        public void _test()
-        {
-
-            // TaskUtil.DoAction().
-
         }
     }
 }

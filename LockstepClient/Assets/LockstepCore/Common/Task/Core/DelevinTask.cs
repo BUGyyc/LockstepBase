@@ -9,25 +9,25 @@ using System.Collections.Generic;
 using Lockstep;
 namespace TaskCore
 {
-    public partial class DelevinTask
+    public partial class DelevinTask : Singleton<DelevinTask>
     {
-        public TaskTimeline mainTimeline;
+        public TaskTimeline head;
 
         public Dictionary<uint, TaskTimeline> taskTimelineDic;
 
-        private bool timelineLock = false;
+        private bool globalTimelineLock = false;
 
         public void SetTimelineLock(bool value)
         {
-            timelineLock = value;
+            globalTimelineLock = value;
         }
 
         public DelevinTask()
         {
-            mainTimeline = new TaskTimeline(true);
+            // head = new TaskTimeline(true);
             taskTimelineDic = new Dictionary<uint, TaskTimeline>();
 
-            taskTimelineDic.Add(0, mainTimeline);
+            // taskTimelineDic.Add(0, head);
         }
 
         public bool HasTaskTimeline(uint id)
@@ -35,21 +35,31 @@ namespace TaskCore
             return false;
         }
 
-        public void AddTaskTimeline(uint id)
+        // public void AddTaskTimeline(uint id)
+        // {
+        //     if (head == null) return;
+
+        //     var taskTimeline = CreateTaskTimeline();
+        //     if (taskTimeline == null) return;
+
+        //     taskTimelineDic.Add(id, taskTimeline);
+        // }
+
+        public TaskTimeline CreateTaskTimeline()
         {
-            if (mainTimeline == null) return;
+            var timeline = new TaskTimeline();
+            UnityEngine.Debug.Log("创建TaskTimeline " + timeline.GetHashCode());
 
-            var taskTimeline = CreateTaskTimeline();
-            if (taskTimeline == null) return;
+            if (head == null)
+            {
+                head = timeline;
+            }
+            else
+            {
+                head.next = timeline;
+            }
 
-            taskTimelineDic.Add(id, taskTimeline);
-        }
-
-        private TaskTimeline CreateTaskTimeline()
-        {
-
-
-            return null;
+            return timeline;
         }
 
         public void PauseTaskTimeline()
@@ -75,29 +85,18 @@ namespace TaskCore
             }
         }
 
-        public void Execute(LFloat deltaTime)
+        public void Execute(float deltaTime)
         {
-            if (mainTimeline == null) return;
+            if (globalTimelineLock == true) return;
 
-            if (timelineLock == true) return;
-
-            var timeline = mainTimeline;
+            var timeline = head;
 
             //后续多线程运行Timeline
             while (timeline != null)
             {
-                if (timeline.GetTimelineLock()) continue;
+                timeline.Execute(deltaTime);
 
-                var queue = timeline.taskTrackQueue;
-                if (queue == null) continue;
-
-                var taskAction = queue.Dequeue();
-
-                while (taskAction != null)
-                {
-                    // taskAction.
-                }
-
+                timeline = timeline.next;
             }
         }
 
@@ -106,6 +105,15 @@ namespace TaskCore
 
         }
 
+        // public void ExecuteByFixedUpdate(LFloat deltaTime)
+        // {
+
+        // }
+
+        public override void Dispose()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
 

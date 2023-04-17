@@ -12,8 +12,38 @@ namespace TaskCore
     {
         public uint trackId { private set; get; }
 
-        public Queue<TaskAction> taskActionQueue;
+        public Queue<TaskAction> actionQueue;
 
         // public 
+        public TaskTrack next;
+
+        public TaskTrack Add(TAction action)
+        {
+            return this;
+        }
+
+
+        public bool Execute(float deltaTime)
+        {
+            if (actionQueue == null) return false;
+            if (actionQueue.Count == 0) return false;
+
+            var action = actionQueue.Peek();
+
+            action.Execute(deltaTime);
+            return true;
+        }
+
+        /// <summary>
+        /// 空轨道
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEmpty()
+        {
+            if (actionQueue == null) return true;
+            if (actionQueue.Count == 0) return true;
+
+            return false;
+        }
     }
 }
