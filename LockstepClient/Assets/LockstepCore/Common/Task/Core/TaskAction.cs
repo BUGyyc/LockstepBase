@@ -7,20 +7,8 @@
 
 namespace TaskCore
 {
-    public class TaskAction : ITaskItem
+    public struct TaskActionData
     {
-
-        public uint taskId { get; private set; }
-        private void SetTaskId(uint Id = 0)
-        {
-            if (Id == 0)
-            {
-
-            }
-        }
-
-        public TaskActionState state { private set; get; }
-
         public TAction call;
 
         /// <summary>
@@ -37,19 +25,39 @@ namespace TaskCore
         /// 满足条件就退出
         /// </summary>
         public TaskCondition exitCondition;
+    }
+
+
+
+    public class TaskAction : ITaskItem
+    {
+
+        public uint taskId { get; private set; }
+        private void SetTaskId(uint Id = 0)
+        {
+            if (Id == 0)
+            {
+
+            }
+        }
+
+        public TaskActionState state { private set; get; }
+
+        public TaskActionData actionContent;
 
         public void ResetData()
         {
             taskId = 0;
-            startCondition = null;
-            executeCondition = null;
-            exitCondition = null;
+            actionContent.startCondition = null;
+            actionContent.executeCondition = null;
+            actionContent.exitCondition = null;
+            actionContent.call = null;
         }
 
         private void Awake()
         {
-            if (startCondition == null) state = TaskActionState.Start;
-            else if (startCondition.CheckResult())
+            if (actionContent.startCondition == null) state = TaskActionState.Start;
+            else if (actionContent.startCondition.CheckResult())
             {
                 state = TaskActionState.Start;
             }
@@ -57,13 +65,13 @@ namespace TaskCore
 
         private void Start()
         {
-            if (executeCondition == null)
+            if (actionContent.executeCondition == null)
             {
                 //第一帧先执行
                 executeTaskAction();
                 state = TaskActionState.Execute;
             }
-            else if (executeCondition.CheckResult())
+            else if (actionContent.executeCondition.CheckResult())
             {
                 //第一帧先执行
                 executeTaskAction();
@@ -93,7 +101,7 @@ namespace TaskCore
             //TODO:
             state = TaskActionState.Destroy;
 
-            if (exitCondition != null && exitCondition.CheckResult())
+            if (actionContent.exitCondition != null && actionContent.exitCondition.CheckResult())
             {
 
                 Destroy();
@@ -110,9 +118,9 @@ namespace TaskCore
 
         private void executeTaskAction()
         {
-            if (call != null)
+            if (actionContent.call != null)
             {
-                call();
+                actionContent.call();
             }
         }
 

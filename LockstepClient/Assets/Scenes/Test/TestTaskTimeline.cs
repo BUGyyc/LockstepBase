@@ -20,11 +20,9 @@ public class TestTaskTimeline : MonoBehaviour
 
         //并行与串行同时存在
         // this.TaskTimeline().WithDo(A).Do(B).Do(C).WithDo(D).WithDo(E).Start();
-
-
-
+        
         // //条件驱动Timeline，这种写法太鸡肋了，除非是写在循环结构中
-        // this.TaskTimeline().If(Condition1).Do(A).Do(B).Start();
+        this.TaskTimeline().If(Condition1).Do(A).If(Condition2).Do(B).Start();
         // //循环指定次数
         // this.TaskTimeline().LoopDo(5).Do(A).Do(B).Do(C).Start();
         // //循环，不指定次数
@@ -39,6 +37,11 @@ public class TestTaskTimeline : MonoBehaviour
     }
 
     private bool Condition1()
+    {
+        return false;
+    }
+
+    private bool Condition2()
     {
         return false;
     }

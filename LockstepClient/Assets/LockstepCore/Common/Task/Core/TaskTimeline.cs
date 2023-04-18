@@ -14,6 +14,8 @@ namespace TaskCore
 
     public delegate bool ConditionAction();
 
+    public delegate bool ConditionTrack();
+
 
     public class TaskTimeline
     {
@@ -172,26 +174,83 @@ namespace TaskCore
             return this;
         }
 
-        /// <summary>
-        /// 条件通过才推进
-        /// </summary>
-        /// <returns></returns>
-        public TaskTimeline If(ConditionAction action)
+        // /// <summary>
+        // /// 条件通过才推进
+        // /// </summary>
+        // /// <returns></returns>
+        // public TaskTimeline If(ConditionTrack condition)
+        // {
+        //     var track = LastTaskTrack();
+
+        //     track.executeCondition = condition;
+
+        //     return this;
+        // }
+
+        // public TaskTimeline If(ConditionAction condition)
+        // {
+        //     return this;
+        // }
+
+        public TaskTimeline If(ConditionAction condition)
+        {
+            if (condition == null) return this;
+            var track = LastTaskTrack();
+
+            return this;
+        }
+
+
+        public TaskTimeline EndIf()
         {
             return this;
         }
+
+
+
+        // public TaskTimeline IfDo(ConditionAction condition, TAction action)
+        // {
+        //     if (action == null) return this;
+
+        //     if (condition == null) return this;
+
+        //     // TaskTrack track = null;
+        //     // if (headTrack == null)
+        //     // {
+        //     //     UnityEngine.Debug.Log(" 头轨道是null ,创建头轨道 ");
+        //     //     headTrack = new TaskTrack();
+        //     //     track = headTrack;
+        //     // }
+        //     // else
+        //     // {
+        //     //     track = LastTaskTrack();
+        //     // }
+        //     // track.Add(action);
+
+        //     return this;
+        // }
+
 
 
         public TaskTimeline Do(TAction action)
         {
             if (action == null) return this;
 
+            TaskTrack track = null;
             if (headTrack == null)
             {
                 UnityEngine.Debug.Log(" 头轨道是null ,创建头轨道 ");
                 headTrack = new TaskTrack();
+                track = headTrack;
             }
-            headTrack.Add(action);
+            else
+            {
+                track = LastTaskTrack();
+            }
+            //TODO:对象池
+            var actionContent = new TaskActionData();
+            actionContent.call = action;
+            track.Add(actionContent);
 
             return this;
         }
@@ -217,8 +276,9 @@ namespace TaskCore
                 var last = LastTaskTrack();
                 last.next = track;
             }
-
-            track.Add(action);
+            var actionContent = new TaskActionData();
+            actionContent.call = action;
+            track.Add(actionContent);
 
             return this;
         }

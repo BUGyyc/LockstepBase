@@ -17,10 +17,12 @@ namespace TaskCore
         // public 
         public TaskTrack next;
 
-        public TaskTrack Add(TAction action)
+        public ConditionTrack executeCondition;
+
+        public TaskTrack Add(TaskActionData actionContent)
         {
             TaskAction taskAction = new TaskAction();
-            taskAction.call = action;
+            taskAction.actionContent = actionContent;
 
             if (actionQueue == null)
             {
