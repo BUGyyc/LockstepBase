@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-23 19:57:44 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-24 10:02:41
+ * @Last Modified time: 2023-04-24 15:06:21
  */
 
 
@@ -145,6 +145,8 @@ namespace AssetBuilder.Process
             // 给资源文件设置AB名称以及后缀
             AssetImporter tmpImportObj = AssetImporter.GetAtPath(strAssetFilePath);
             tmpImportObj.assetBundleName = strABName;
+
+            Debug.Log($"AB 标记  file {fileInfoObj.Name}   abTag {strABName}  ");
 
             // 判断文件是否是场景文件
             if (fileInfoObj.Extension == ".unity")
