@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-23 20:14:02 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-24 09:46:37
+ * @Last Modified time: 2023-04-24 10:09:23
  */
 
 using UnityEditor;
@@ -26,6 +26,7 @@ namespace AssetBuilder.Process
             ClearAssetBundlesName();
 
             string sourcePath = Application.dataPath + "/Resources";
+
             Pack(sourcePath);
 
             string outputPath = Path.Combine(AssetBundlesOutputPath, Platform.GetPlatformFolder(EditorUserBuildSettings.activeBuildTarget));
@@ -100,8 +101,9 @@ namespace AssetBuilder.Process
             foreach (var dp in dps)
             {
                 Debug.Log("dp " + dp);
-                if (dp.EndsWith(".cs"))
-                    continue;
+
+                if (dp.EndsWith(".cs")) continue;
+
                 AssetImporter assetImporter = AssetImporter.GetAtPath(dp);
                 string pathTmp = dp.Substring("Assets".Length + 1);
                 string assetName = pathTmp.Substring(pathTmp.IndexOf("/") + 1);
@@ -110,30 +112,6 @@ namespace AssetBuilder.Process
                 assetImporter.assetBundleName = assetName;
             }
 
-        }
-
-
-
-        //设置要打包的文件
-        static void file(string source)
-        {
-            Debug.Log("file source " + source);
-            string _source = Replace(source);
-            string _assetPath = "Assets" + _source.Substring(Application.dataPath.Length);
-            string _assetPath2 = _source.Substring(Application.dataPath.Length + 1);
-            //Debug.Log (_assetPath);
-
-            //在代码中给资源设置AssetBundleName
-            AssetImporter assetImporter = AssetImporter.GetAtPath(_assetPath);
-            string[] dps = AssetDatabase.GetDependencies(_assetPath);
-            foreach (var dp in dps)
-            {
-                Debug.Log("dp " + dp);
-            }
-            string assetName = _assetPath2.Substring(_assetPath2.IndexOf("/") + 1);
-            assetName = assetName.Replace(Path.GetExtension(assetName), ".unity3d");
-            Debug.Log(assetName);
-            assetImporter.assetBundleName = assetName;
         }
 
         static string Replace(string s)

@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-23 19:57:44 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-24 09:47:36
+ * @Last Modified time: 2023-04-24 10:02:41
  */
 
 
@@ -23,16 +23,11 @@ namespace AssetBuilder.Process
             ClearABLabel();
 
             OnAutoCreateABLabel();
-
         }
 
         /// <summary>
-        /// 清除之前设置过的AssetBundleName，避免产生不必要的资源也打包
-        /// 之前说过，只要设置了AssetBundleName的，都会进行打包，不论在什么目录下
+        /// 清除AB标记
         /// </summary>
-        /// 
-        /// 
-        /// 
         private void ClearABLabel()
         {
             // 清空无用的 AB 标记
@@ -115,32 +110,8 @@ namespace AssetBuilder.Process
                 // 目录类型
                 else
                 {
-
                     // 如果是目录，则递归调用
                     JudgeDirOrFileByRecursive(fileInfo, sceneName);
-                }
-            }
-        }
-
-
-        static void Pack(string source)
-        {
-            //Debug.Log("Pack source " + source);
-            DirectoryInfo folder = new DirectoryInfo(source);
-            FileSystemInfo[] files = folder.GetFileSystemInfos();
-            int length = files.Length;
-            for (int i = 0; i < length; i++)
-            {
-                if (files[i] is DirectoryInfo)
-                {
-                    Pack(files[i].FullName);
-                }
-                else
-                {
-                    if (!files[i].Name.EndsWith(".meta"))
-                    {
-                        fileWithDepends(files[i].FullName);
-                    }
                 }
             }
         }
@@ -152,21 +123,17 @@ namespace AssetBuilder.Process
         /// <param name="scenesName">场景名称</param>
         static void SetFileABLabel(FileInfo fileInfoObj, string scenesName)
         {
-            // 调试信息
-            //Debug.Log("fileInfoObj.Name = " + fileInfoObj.Name);
-            //Debug.Log("scenesName = " + scenesName);
+            // 参数检查（*.meta 文件不做处理）
+            if (fileInfoObj.Extension == ".meta")
+            {
+                return;
+            }
 
             // 参数定义
             // AssetBundle 包名称
             string strABName = string.Empty;
             // 文件路径（相对路径）
             string strAssetFilePath = string.Empty;
-
-            // 参数检查（*.meta 文件不做处理）
-            if (fileInfoObj.Extension == ".meta")
-            {
-                return;
-            }
 
             // 得到 AB 包名称
             strABName = GetABName(fileInfoObj, scenesName);
@@ -190,37 +157,6 @@ namespace AssetBuilder.Process
                 // 定义AB包的非场景扩展名
                 tmpImportObj.assetBundleVariant = "ab";
             }
-        }
-
-        //设置要打包的文件
-        static void fileWithDepends(string source)
-        {
-            Debug.Log("file source " + source);
-            string _source = Replace(source);
-            string _assetPath = "Assets" + _source.Substring(Application.dataPath.Length);
-
-            Debug.Log(_assetPath);
-
-            //自动获取依赖项并给其资源设置AssetBundleName
-            string[] dps = AssetDatabase.GetDependencies(_assetPath);
-            foreach (var dp in dps)
-            {
-                Debug.Log("dp " + dp);
-                if (dp.EndsWith(".cs"))
-                    continue;
-                AssetImporter assetImporter = AssetImporter.GetAtPath(dp);
-                string pathTmp = dp.Substring("Assets".Length + 1);
-                string assetName = pathTmp.Substring(pathTmp.IndexOf("/") + 1);
-                assetName = assetName.Replace(Path.GetExtension(assetName), ".data");
-                Debug.Log(assetName);
-                assetImporter.assetBundleName = assetName;
-            }
-
-        }
-
-        static string Replace(string s)
-        {
-            return s.Replace("\\", "/");
         }
 
         /// <summary>

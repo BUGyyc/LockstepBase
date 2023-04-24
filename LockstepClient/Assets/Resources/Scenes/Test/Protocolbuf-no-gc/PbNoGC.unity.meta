@@ -3,5 +3,5 @@ guid: b0983789d579e2f4190198c176aa7aa6
 DefaultImporter:
   externalObjects: {}
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: scenes/test/protocolbuf-no-gc/pbnogc.data
+  assetBundleVariant: u3d
