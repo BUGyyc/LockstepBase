@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-24 10:17:41 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-24 16:21:35
+ * @Last Modified time: 2023-04-24 17:52:09
  */
 
 
@@ -23,6 +23,37 @@ namespace ABCore
         public Dictionary<string, AssetBundle> ABDic;
 
         public Dictionary<string, string[]> ABDependencies;
+
+        private GameObject ABHookObj;
+
+        private ABHookScript abHook;
+
+        public ABHookScript ABHook
+        {
+            get
+            {
+                if (abHook == null)
+                {
+                    if (ABHookObj == null)
+                    {
+                        ABHookObj = new GameObject();
+                        ABHookObj.name = "ABHookObj";
+                        GameObject.DontDestroyOnLoad(ABHookObj);
+                        abHook = ABHookObj.AddComponent<ABHookScript>();
+                    }
+                    else if (ABHookObj.GetComponent<ABHookScript>() == null)
+                    {
+                        abHook = ABHookObj.AddComponent<ABHookScript>();
+                    }
+                    else
+                    {
+                        abHook = ABHookObj.GetComponent<ABHookScript>();
+                    }
+                }
+                return abHook;
+            }
+        }
+
 
         public readonly Dictionary<AssetFileType, string> FilePathDefine = new Dictionary<AssetFileType, string>()
         {
@@ -45,6 +76,11 @@ namespace ABCore
             AssetBundle ab = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/OutPutAB/windows/windows");
 
             AssetBundleManifestCoreData = ab.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+        }
+
+        public override void Dispose()
+        {
+            // throw new NotImplementedException();
         }
 
 
@@ -79,13 +115,6 @@ namespace ABCore
             }
         }
 
-
-
-        // public void LoadFileFromAssetBundle(string fileName, Action<GameObject> call)
-        // {
-        //     // AsyncLoadAssetBundle("prefabs/" + fileName + ".data.ab", fileName, call);
-        // }
-
         private AssetBundle LoadAssetBundle(string abName)
         {
             string fullPath = Application.streamingAssetsPath + "/OutPutAB/windows/" + abName;
@@ -95,8 +124,6 @@ namespace ABCore
             foreach (string dependency in deps)
             {
                 Debug.Log($"[AssetBundle] 需要依赖包 , 开始加载 {dependency} ...");
-
-
                 LoadAssetBundle(dependency);
             }
 
@@ -109,9 +136,12 @@ namespace ABCore
         }
 
 
-        public void LoadAssetBundle(string path, Action call)
+        public Coroutine AsyncLoadAssetBundle(string path, Action<AssetBundle> call)
         {
-            var ab = AssetBundle.LoadFromFileAsync(path);
+            // var ab = AssetBundle.LoadFromFileAsync(path);
+
+
+            return null;
         }
 
         public void LoadFile(string path)
@@ -155,9 +185,41 @@ namespace ABCore
             return dependencies;
         }
 
+        //TODO: 协程加载
+
+        // private IEnumerator LoadAssetAsync(string path)
+        // {
+        //     // yield return 
+        // }
+
+
+
 
 
         //TODO: ET Task 多线程加载
+
+
+        // public async ETTask AsyncAssetBundle(string abName)
+        // {
+        //     string fullPath = Application.streamingAssetsPath + "/OutPutAB/windows/" + abName;
+
+        //     string[] deps = GetDependencies(abName);
+
+        //     foreach (string dependency in deps)
+        //     {
+        //         Debug.Log($"[AssetBundle] 需要依赖包 , 开始加载 {dependency} ...");
+
+
+        //         LoadAssetBundle(dependency);
+        //     }
+
+
+        //     var loadAb = AssetBundle.LoadFromFile(fullPath);
+
+        //     Debug.Log($"[AssetBundle]  {fullPath} 加载完成");
+
+        //     // return loadAb;
+        // }
 
 
         // public static string BundleNameToLower(this string value)
@@ -183,49 +245,49 @@ namespace ABCore
         //     return ss;
         // }
 
-        // /// <summary>
-        // /// 异步加载assetbundle, 加载ab包分两部分，第一部分是从硬盘加载，第二部分加载all assets。两者不能同时并发
-        // /// </summary>
+        /// <summary>
+        /// 异步加载assetbundle, 加载ab包分两部分，第一部分是从硬盘加载，第二部分加载all assets。两者不能同时并发
+        /// </summary>
         // public static async ETTask LoadBundleAsync(string assetBundleName)
         // {
-        //     assetBundleName = assetBundleName.BundleNameToLower();
+        // assetBundleName = assetBundleName.BundleNameToLower();
 
-        //     string[] dependencies = GetSortedDependencies(assetBundleName);
+        // string[] dependencies = GetSortedDependencies(assetBundleName);
 
 
-        //     using (ListComponent<ABInfo> abInfos = ListComponent<ABInfo>.Create())
+        // using (ListComponent<ABInfo> abInfos = ListComponent<ABInfo>.Create())
+        // {
+        //     async ETTask LoadDependency(string dependency, List<ABInfo> abInfosList)
         //     {
-        //         async ETTask LoadDependency(string dependency, List<ABInfo> abInfosList)
+        //         using CoroutineLock coroutineLock = await CoroutineLockComponent.Instance.Wait(CoroutineLockType.Resources, dependency.GetHashCode());
+
+        //         ABInfo abInfo = await self.LoadOneBundleAsync(dependency);
+        //         if (abInfo == null || abInfo.RefCount > 1)
         //         {
-        //             using CoroutineLock coroutineLock = await CoroutineLockComponent.Instance.Wait(CoroutineLockType.Resources, dependency.GetHashCode());
-
-        //             ABInfo abInfo = await self.LoadOneBundleAsync(dependency);
-        //             if (abInfo == null || abInfo.RefCount > 1)
-        //             {
-        //                 return;
-        //             }
-
-        //             abInfosList.Add(abInfo);
+        //             return;
         //         }
 
-        //         // LoadFromFileAsync部分可以并发加载
-        //         using (ListComponent<ETTask> tasks = ListComponent<ETTask>.Create())
-        //         {
-        //             foreach (string dependency in dependencies)
-        //             {
-        //                 tasks.Add(LoadDependency(dependency, abInfos));
-        //             }
-        //             await ETTaskHelper.WaitAll(tasks);
-
-        //             // ab包从硬盘加载完成，可以再并发加载all assets
-        //             tasks.Clear();
-        //             foreach (ABInfo abInfo in abInfos)
-        //             {
-        //                 tasks.Add(self.LoadOneBundleAllAssets(abInfo));
-        //             }
-        //             await ETTaskHelper.WaitAll(tasks);
-        //         }
+        //         abInfosList.Add(abInfo);
         //     }
+
+        //     // LoadFromFileAsync部分可以并发加载
+        //     using (ListComponent<ETTask> tasks = ListComponent<ETTask>.Create())
+        //     {
+        //         foreach (string dependency in dependencies)
+        //         {
+        //             tasks.Add(LoadDependency(dependency, abInfos));
+        //         }
+        //         await ETTaskHelper.WaitAll(tasks);
+
+        //         // ab包从硬盘加载完成，可以再并发加载all assets
+        //         tasks.Clear();
+        //         foreach (ABInfo abInfo in abInfos)
+        //         {
+        //             tasks.Add(self.LoadOneBundleAllAssets(abInfo));
+        //         }
+        //         await ETTaskHelper.WaitAll(tasks);
+        //     }
+        // }
         // }
 
         // private static async ETTask<ABInfo> LoadOneBundleAsync(this ResourcesComponent self, string assetBundleName)
@@ -322,9 +384,6 @@ namespace ABCore
 
         //     abInfo.AlreadyLoadAssets = true;
         // }
-        public override void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
