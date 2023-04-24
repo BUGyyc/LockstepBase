@@ -10,7 +10,7 @@ namespace AssetBuilderCore
     public class PathTools
     {
         /* 路径常量 */
-        public const string AB_RESOURCES = "Resources";  // 打包AB包根路径
+        public const string AB_RESOURCES = "Resources";//"Resources";  // 打包AB包根路径
 
         /* 路径方法 */
 

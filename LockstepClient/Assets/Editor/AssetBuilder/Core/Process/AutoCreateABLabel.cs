@@ -195,11 +195,12 @@ namespace AssetBuilder.Process
                 // AB 包名称正式形成
                 strABName = scenesName + "/" + tmpStrArray[0];
             }
-            // 场景资源
             else
             {
-                // 定义*.unity 文件形成的特殊 AB 包名称
-                strABName = scenesName + "/" + scenesName;
+                //####### 定义*.unity 文件形成的特殊 AB 包名称
+                // strABName = scenesName+ "/" + scenesName;
+
+                strABName = scenesName;//+ "/" + scenesName;
             }
             return strABName;
         }

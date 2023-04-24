@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-23 20:14:02 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-24 10:09:23
+ * @Last Modified time: 2023-04-24 10:46:28
  */
 
 using UnityEditor;
@@ -15,7 +15,7 @@ namespace AssetBuilder.Process
     public sealed class BuildABDataProcess : IABProcess
     {
 
-        const string AssetBundlesOutputPath = "Assets/OutPut";
+        readonly string AssetBundlesOutputPath = Application.streamingAssetsPath + "/OutPutAB";
         public void ExecuteProcess()
         {
             OnBuildABDataProcess();

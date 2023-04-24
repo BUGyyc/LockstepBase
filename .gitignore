@@ -67,3 +67,5 @@ LockstepClient/Assembly-CSharp-firstpass.csproj
 LockstepCopyClient/Assembly-CSharp-firstpass.csproj
 LockstepClient/Assets/OutPut/
 LockstepClient/Assets/OutPut.meta
+LockstepClient/Assets/StreamingAssets/OutPutAB/
+LockstepClient/Assets/StreamingAssets/OutPutAB.meta
