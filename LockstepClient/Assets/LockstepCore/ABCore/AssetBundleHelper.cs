@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace ABCore
 {
-    public class AssetBundleHelper : Singleton<AssetBundleHelper>, IAssetBundle
+    public partial class AssetBundleHelper : Singleton<AssetBundleHelper>, IAssetBundle
     {
 
         private ABLoadType loadType = ABLoadType.FromLocalAssetBundle;
