@@ -7,6 +7,10 @@ namespace ET
 {
     public struct AsyncETTaskCompletedMethodBuilder
     {
+
+        //NOTE:  DebuggerHidden :  忽略断点调试
+
+
         // 1. Static Create method.
         [DebuggerHidden]
         public static AsyncETTaskCompletedMethodBuilder Create()
@@ -38,6 +42,8 @@ namespace ET
         {
             awaiter.OnCompleted(stateMachine.MoveNext);
         }
+
+        //NOTE:  SecuritySafeCritical ： 设置安全级别
 
         // 6. AwaitUnsafeOnCompleted
         [DebuggerHidden]

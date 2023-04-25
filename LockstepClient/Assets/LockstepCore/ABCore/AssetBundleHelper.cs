@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-24 10:17:41 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-24 17:52:09
+ * @Last Modified time: 2023-04-25 17:54:26
  */
 
 
@@ -17,6 +17,8 @@ namespace ABCore
 {
     public class AssetBundleHelper : Singleton<AssetBundleHelper>, IAssetBundle
     {
+
+        private ABLoadType loadType = ABLoadType.FromLocalAssetBundle;
 
         public AssetBundleManifest AssetBundleManifestCoreData;
 
