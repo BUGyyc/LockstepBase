@@ -5,17 +5,20 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Resources/Scenes/Debug/0.launch/LaunchServer.unity
+  - enabled: 0
+    path: Assets/Scenes/Debug/0.launch/LaunchServer.unity
     guid: f80e2b7ce70349e479994e774d7e32ea
-  - enabled: 1
-    path: Assets/Resources/Scenes/Debug/0.launch/ClientAndServer.unity
+  - enabled: 0
+    path: Assets/Scenes/Debug/0.launch/ClientAndServer.unity
     guid: 86efc22a47e1e704c83420975439f67e
-  - enabled: 1
-    path: Assets/Resources/Scenes/Debug/1.battle/Battle.unity
+  - enabled: 0
+    path: Assets/Scenes/Debug/1.battle/Battle.unity
     guid: b5e303eaf919a49409df6c03c425529a
-  - enabled: 1
-    path: Assets/Resources/Scenes/Server/PureServer.unity
+  - enabled: 0
+    path: Assets/Scenes/Server/PureServer.unity
     guid: d4df618ea99d7014a87883bd0493979e
+  - enabled: 1
+    path: Assets/Scenes/Test/ABLaunch.unity
+    guid: 4c0e3432f7f8da5408bbc3c766f02d30
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 09ca91241b3139640a435e65b5de6253, type: 2}

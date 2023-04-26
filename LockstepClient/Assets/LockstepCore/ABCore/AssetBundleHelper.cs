@@ -12,6 +12,7 @@ using System;
 using System.IO;
 using ET;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ABCore
 {
@@ -73,8 +74,6 @@ namespace ABCore
             ABDic = new Dictionary<string, AssetBundle>();
             ABDependencies = new Dictionary<string, string[]>();
 
-            // AssetBundleManifestCoreData = AssetBundle.
-
             AssetBundle ab = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/OutPutAB/windows/windows");
 
             AssetBundleManifestCoreData = ab.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
@@ -85,9 +84,69 @@ namespace ABCore
             // throw new NotImplementedException();
         }
 
-
         public void LoadFile(string fileName, AssetFileType type, Action<GameObject> call)
         {
+
+            string filePath = LoadFilePath(fileName, type);
+            switch (loadType)
+            {
+                case ABLoadType.FromResource:
+                    LoadFileFromResource(filePath, call);
+                    break;
+                case ABLoadType.FromLocalAssetBundle:
+                    LoadFileFromAssetBundle(filePath, type, call);
+                    break;
+                case ABLoadType.FromSimulationAssetBundle: break;
+                case ABLoadType.Release: break;
+
+                default: break;
+            }
+
+            //if (loadType == ABLoadType.FRom)
+        }
+
+        private string LoadFilePath(string fileName, AssetFileType type)
+        {
+            switch (loadType)
+            {
+                case ABLoadType.FromResource:
+                    switch (type)
+                    {
+                        case AssetFileType.Prefab:
+                            return "prefabs/" + fileName;
+                        case AssetFileType.Mat:
+                            return "mat/" + fileName;
+                        //case AssetFileType.Mesh
+                        default:
+                            return string.Empty;
+                            //break;
+                    }
+                //    break;
+                //case ABLoadType.FromLocalAssetBundle:
+                //    LoadFile(fileName, type, call);
+                //    break;
+                //case ABLoadType.FromSimulationAssetBundle: break;
+                //case ABLoadType.Release: break;
+
+                default: return fileName;
+            }
+        }
+
+
+        private void LoadFileFromResource(string fileName, Action<GameObject> call)
+        {
+            var obj = Resources.Load<GameObject>(fileName);
+            call?.Invoke(obj);
+        }
+
+
+
+        private void LoadFileFromAssetBundle(string fileName, AssetFileType type, Action<GameObject> call)
+        {
+
+
+
+
             if (FilePathDefine.TryGetValue(type, out string path))
             {
                 string abPath = path + fileName + ".data.ab";
@@ -102,7 +161,7 @@ namespace ABCore
 
 
 
-        public void LoadFileFromAssetBundle(string abName, string fileName, Action<GameObject> call = null)
+        private void LoadFileFromAssetBundle(string abName, string fileName, Action<GameObject> call = null)
         {
             if (ABDic.TryGetValue(abName, out AssetBundle ab))
             {
@@ -138,23 +197,13 @@ namespace ABCore
         }
 
 
-        public Coroutine AsyncLoadAssetBundle(string path, Action<AssetBundle> call)
-        {
-            // var ab = AssetBundle.LoadFromFileAsync(path);
+        //public Coroutine AsyncLoadAssetBundle(string path, Action<AssetBundle> call)
+        //{
+        //    // var ab = AssetBundle.LoadFromFileAsync(path);
 
 
-            return null;
-        }
-
-        public void LoadFile(string path)
-        {
-
-        }
-
-        public void AsyncLoadFile(string path, Action action)
-        {
-
-        }
+        //    return null;
+        //}
 
 
         public void UnLoadAll()
@@ -177,10 +226,20 @@ namespace ABCore
             string[] dependencies = Array.Empty<string>();
             if (ResourcesMgr.Instance.DependenciesCache.TryGetValue(abName, out dependencies))
             {
+                if (dependencies.Length > 0)
+                {
+                    Debug.Log($" {abName} 发现依赖包  " + dependencies);
+                }
+
                 return dependencies;
             }
 
             dependencies = AssetBundleManifestCoreData.GetAllDependencies(abName);
+
+            if (dependencies.Length > 0)
+            {
+                Debug.Log($" {abName} 发现依赖包  " + dependencies);
+            }
 
             ResourcesMgr.Instance.DependenciesCache.Add(abName, dependencies);
 

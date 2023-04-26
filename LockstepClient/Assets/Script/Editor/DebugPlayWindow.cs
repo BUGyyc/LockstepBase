@@ -26,5 +26,15 @@ namespace GameEditor
             }
             EditorApplication.ExecuteMenuItem("Edit/Play");
         }
+
+        [MenuItem("调试工具/运行AB测试场景")]
+        public static void RunAssetBundleScene()
+        {
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Equals(GameSceneSetting.ABTestScene) == false)
+            {
+                EditorSceneManager.OpenScene(GameSceneSetting.ABTestScene);
+            }
+            EditorApplication.ExecuteMenuItem("Edit/Play");
+        }
     }
 }
