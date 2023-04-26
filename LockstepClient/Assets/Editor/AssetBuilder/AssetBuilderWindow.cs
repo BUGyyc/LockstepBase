@@ -49,11 +49,14 @@ namespace AssetBuilderCore
 
         private void BuildApplication()
         {
-            //string path = "BuildApplicationConfig.asset";
+            string path = "Assets/Resources/BuildApplicationConfig.asset";
 
-            //BuildApplicationConfig config = AssetDatabase.LoadAssetAtPath(path, typeof(UnityEngine.Object)) as BuildApplicationConfig;
-            //PlayerSettings.companyName = config.companyName;
-            //PlayerSettings.productName = config.appName;
+            BuildApplicationConfig config = AssetDatabase.LoadAssetAtPath(path, typeof(UnityEngine.Object)) as BuildApplicationConfig;
+            PlayerSettings.companyName = config.companyName;
+            PlayerSettings.productName = config.appName;
+
+            int version = config.version;
+
 
             if (EditorUserBuildSettings.activeBuildTarget.Equals(BuildTarget.Android) == false)
             {
@@ -68,7 +71,7 @@ namespace AssetBuilderCore
 
             BuildPlayerOptions buildPlayerOptions;
 
-            int version = 10001;
+            //int version = 10001;
             string channel = "tx";
             string floderPath = Application.dataPath.Replace("/Assets", "") + "/OutPutAPP/";
 
@@ -95,13 +98,29 @@ namespace AssetBuilderCore
             if (buildReport.summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded)
             {
                 LogMaster.L($"构建成功 path {appOutPutPath}");
+
+                version = SetNextVersion(version);
             }
             else
             {
-                Debug.LogError($"构建失败 path {appOutPutPath}");
+                //Debug.LogError($"构建失败 path {appOutPutPath}");
+
+                LogMaster.E($"构建失败  path {appOutPutPath}");
             }
         }
 
+
+        private int SetNextVersion(int version)
+        {
+            version++;
+            if (version >= 9999999)
+            {
+                LogMaster.E("版本超过限定------");
+                return 1;
+            }
+
+            return version;
+        }
 
 
 

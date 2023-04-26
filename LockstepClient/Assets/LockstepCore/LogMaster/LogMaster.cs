@@ -16,6 +16,12 @@ public static class LogMaster
     }
 
 
+    public static void E(params string[] str)
+    {
+        Debug.LogErrorFormat($"<color=red>  err:    {string.Join(",", str)}   </color>");
+    }
+
+
     public static void L(this Entity self, params string[] str)
     {
         Debug.LogFormat($"{self} info:  ", str);
