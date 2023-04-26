@@ -70,7 +70,7 @@ namespace AssetBuilderCore
 
             int version = 10001;
             string channel = "tx";
-            string floderPath = Application.streamingAssetsPath + "/../OutPutAPP/";
+            string floderPath = Application.dataPath.Replace("/Assets", "") + "/OutPutAPP/";
 
             if (Directory.Exists(floderPath) == false)
             {
@@ -82,17 +82,24 @@ namespace AssetBuilderCore
             buildPlayerOptions = new BuildPlayerOptions()
             {
                 scenes = new string[]{
-                    "scenes/test/ABLaunch.unity"
+                    "Assets/Scenes/Test/ABLaunch.unity"
                 },
                 locationPathName = appOutPutPath,
                 options = buildOp,
                 target = BuildTarget.Android,
-                targetGroup = BuildTargetGroup.Android
+                //targetGroup = BuildTargetGroup.Android
             };
 
-            BuildPipeline.BuildPlayer(buildPlayerOptions);
+            var buildReport = BuildPipeline.BuildPlayer(buildPlayerOptions);
 
-            Debug.Log($"构建成功 path {appOutPutPath}");
+            if (buildReport.summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded)
+            {
+                LogMaster.L($"构建成功 path {appOutPutPath}");
+            }
+            else
+            {
+                Debug.LogError($"构建失败 path {appOutPutPath}");
+            }
         }
 
 
