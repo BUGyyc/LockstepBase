@@ -55,7 +55,7 @@ namespace AssetBuilderCore
             PlayerSettings.companyName = config.companyName;
             PlayerSettings.productName = config.appName;
 
-            int version = config.version;
+            int versionCode = VersionParse(config.version);
 
 
             if (EditorUserBuildSettings.activeBuildTarget.Equals(BuildTarget.Android) == false)
@@ -80,7 +80,7 @@ namespace AssetBuilderCore
                 Directory.CreateDirectory(floderPath);
             }
 
-            string appOutPutPath = floderPath + string.Format($"my_legend_v{version}_c{channel}.apk");
+            string appOutPutPath = floderPath + string.Format($"my_legend_v{versionCode}_c{channel}.apk");
 
             buildPlayerOptions = new BuildPlayerOptions()
             {
@@ -99,7 +99,9 @@ namespace AssetBuilderCore
             {
                 LogMaster.L($"构建成功 path {appOutPutPath}");
 
-                version = SetNextVersion(version);
+                config.version = SetNextVersion(versionCode);
+
+                AssetDatabase.SaveAssetIfDirty(config);
             }
             else
             {
@@ -109,17 +111,45 @@ namespace AssetBuilderCore
             }
         }
 
+        private int VersionParse(string version)
+        {
+            if (string.IsNullOrEmpty(version))
+            {
+                version = "1";
+            }
+            version = version.Replace(".", "");
+            return int.Parse(version);
+        }
 
-        private int SetNextVersion(int version)
+
+        /// <summary>
+        /// 版本号自动增加
+        /// </summary>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        private string SetNextVersion(int version)
         {
             version++;
             if (version >= 9999999)
             {
                 LogMaster.E("版本超过限定------");
-                return 1;
+                return string.Format("0.0.1");
             }
 
-            return version;
+            if (version < 100)
+            {
+                return string.Format($"0.0.{version}");
+            }
+            else if (version < 10000)
+            {
+                return string.Format($"0.{version / 100}.{version % 100}");
+            }
+            else
+            {
+                var high = version / 10000;
+                var low = version % 10000;
+                return string.Format($"{high}.{low / 100}.{low % 100}");
+            }
         }
 
 

@@ -19,5 +19,5 @@ public class BuildApplicationConfig : ScriptableObject
     public int key;
 
 
-    public int version;
+    public string version;
 }
