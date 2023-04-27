@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-23 17:47:41 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-27 15:20:30
+ * @Last Modified time: 2023-04-27 16:47:11
  */
 
 using UnityEditor;
@@ -118,10 +118,105 @@ namespace AssetBuilderCore
 
         }
 
+
         private void BuildAssetBundle(GlobalAssetConfig globalCfg, SubAssetBundleConfig subABCfg, HashSet<string> needLoadAssetPath, HashSet<string> shaderPath)
         {
-            Dictionary<string,string[]> needLoadAndDepends = new Dictionary<string, string[]>();
+            //直接引用的资源文件、以及依赖相关的文件
+            Dictionary<string, string[]> needLoadAndDepends = new Dictionary<string, string[]>();
+            //所有被点名需要的资源包
             string[] Paths = subABCfg.assetPathList.ToArray();
+            //统计依赖资源的次数
+            Dictionary<string, int> dependenciesCount = new Dictionary<string, int>();
+            //记录需要的Shader文件
+            HashSet<string> shaders = new HashSet<string>();
+            //选定 主动加载的文件
+            HashSet<string> files = new HashSet<string>();
+            for (var i = 0; i < Paths.Length; i++)
+            {
+                string item = Paths[i];
+                //STEP: 从指定文件夹下，去查找所有的文件，并记录下来
+                BuildAssetsTools.GetChildFiles(item, files);
+            }
+
+            //把子包中的场景记录进去
+            SceneAsset[] sceneAssets = subABCfg.sceneList.ToArray();
+            for (var i = 0; i < sceneAssets.Length; i++)
+            {
+                var sceneAsset = sceneAssets[i];
+                string scenePath = AssetDatabase.GetAssetPath(sceneAsset);
+                if (files.Contains(scenePath) == false)
+                {
+                    files.Add(scenePath);
+                }
+            }
+
+            //TODO: 组包
+
+            //TODO: 所有需要主动加载的资源
+
+            List<string> needRemoveFile = new List<string>();
+            // Dictionary<string,List<string>> 
+            foreach (var file in files)
+            {
+                if (BuildAssetsTools.IsShaderAsset(file))
+                {
+                    Shader shader = AssetDatabase.LoadAssetAtPath<Shader>(file);
+                    if (shader != null && shaderPath.Contains(shader.name))
+                    {
+                        //已经被IncludeShader 包含，不需要再做处理
+                        continue;
+                    }
+                    if (shaders.Contains(file) == false)
+                    {
+                        shaders.Add(file);
+                    }
+                    if (needRemoveFile.Contains(file) == false)
+                    {
+                        needRemoveFile.Add(file);
+                    }
+                    continue;
+                }
+
+                //处理依赖文件
+                string[] depends = AssetDatabase.GetDependencies(file);
+                List<string> dependResultList = new List<string>();
+                for (var i = 0; i < depends.Length; i++)
+                {
+                    string depend = depends[i];
+                    if (depend.EndsWith(".cs")) { continue; }
+
+                    if (BuildAssetsTools.IsShaderAsset(depend))
+                    {
+                        Shader shader = AssetDatabase.LoadAssetAtPath<Shader>(depend);
+                        if (shader != null && shaderPath.Contains(shader.name)) { continue; }
+
+                        if (shaders.Contains(depend) == false)
+                        {
+                            shaders.Add(depend);
+                        }
+                        continue;
+                    }
+
+                    if (depend.StartsWith("Assets/") == false) { continue; }
+
+                    if (BuildAssetsTools.CantLoadFile(file) == false)
+                    {
+                        continue;
+                    }
+                }
+
+                needLoadAndDepends.Add(file, dependResultList.ToArray());
+
+                //清理多余文件
+                foreach (var item in needRemoveFile)
+                {
+                    files.Remove(item);
+                }
+
+                //复合依赖文件
+                HashSet<string> compoundDepends = new HashSet<string>();
+                
+            }
         }
 
 
