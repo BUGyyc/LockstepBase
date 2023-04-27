@@ -2,14 +2,15 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-23 17:47:41 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-26 17:50:24
+ * @Last Modified time: 2023-04-27 15:20:30
  */
 
 using UnityEditor;
 using UnityEngine;
 using System.IO;
-
+using System.Collections.Generic;
 using AssetBuilder.Process;
+using UnityEngine.Rendering;
 
 namespace AssetBuilderCore
 {
@@ -64,7 +65,63 @@ namespace AssetBuilderCore
         /// </summary>
         private void BuildFirstAPK()
         {
+            GlobalAssetConfig globalCfg = AssetDatabase.LoadAssetAtPath<GlobalAssetConfig>(AssetBuilderSetting.GlobalAssetCfgPath);
 
+            if (globalCfg == null)
+            {
+                LogMaster.E("没有找到配置");
+                return;
+            }
+
+
+            List<EditorBuildSettingsScene> editorSceneList = new List<EditorBuildSettingsScene>();
+            foreach (var item in globalCfg.OriginSceneList)
+            {
+                editorSceneList.Add(new EditorBuildSettingsScene(AssetDatabase.GetAssetPath(item), true));
+            }
+
+            EditorBuildSettings.scenes = editorSceneList.ToArray();
+
+            //TODO: 加密资源处理
+
+            //处理Shader
+            HashSet<string> shaderSet = new HashSet<string>();
+            Object graphicsSettings =
+#if UNITY_2020_1_OR_NEWER
+                       GraphicsSettings.GetGraphicsSettings();
+#else
+                AssetDatabase.LoadAssetAtPath<GraphicsSettings>("ProjectSettings/GraphicsSettings.asset");
+#endif
+            SerializedObject serializedObject = new SerializedObject(graphicsSettings);
+            SerializedProperty serializedProperty = serializedObject.FindProperty("m_AlwaysIncludedShaders");
+            if (serializedProperty.isArray)
+            {
+                for (int i = 0; i < serializedProperty.arraySize; i++)
+                {
+                    SerializedProperty property = serializedProperty.GetArrayElementAtIndex(i);
+                    Object shaderInfo = property.objectReferenceValue;
+                    if (!shaderSet.Contains(shaderInfo.name))
+                    {
+                        shaderSet.Add(shaderInfo.name);
+                    }
+                }
+            }
+
+            //TODO:构建APK、SubAssetBundle
+            List<SubAssetBundleConfig> subABList = globalCfg.subABCfgList;
+            //寻找需要加载的资源包
+            HashSet<string> findAllNeedLoadAsset = new HashSet<string>();
+            foreach (var assetItem in subABList)
+            {
+                BuildAssetBundle();
+            }
+
+        }
+
+        private void BuildAssetBundle(GlobalAssetConfig globalCfg, SubAssetBundleConfig subABCfg, HashSet<string> needLoadAssetPath, HashSet<string> shaderPath)
+        {
+            Dictionary<string,string[]> needLoadAndDepends = new Dictionary<string, string[]>();
+            string[] Paths = subABCfg.assetPathList.ToArray();
         }
 
 

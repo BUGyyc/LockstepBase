@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-23 19:52:06 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-23 19:55:59
+ * @Last Modified time: 2023-04-27 14:29:40
  */
 
 
@@ -15,5 +15,9 @@ namespace AssetBuilderCore
         public readonly static string Android = "android";
 
         public readonly static string IOS = "ios";
+
+
+
+        public readonly static string GlobalAssetCfgPath = "Assets/Config/GlobalAssetConfig.asset";
     }
 }

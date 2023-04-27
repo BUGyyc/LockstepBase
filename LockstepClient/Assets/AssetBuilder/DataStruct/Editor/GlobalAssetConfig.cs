@@ -2,7 +2,7 @@
  * @Author: delevin.ying 
  * @Date: 2023-04-27 11:53:45 
  * @Last Modified by: delevin.ying
- * @Last Modified time: 2023-04-27 12:14:31
+ * @Last Modified time: 2023-04-27 14:13:24
  */
 using UnityEngine;
 using System.Collections.Generic;
@@ -17,5 +17,5 @@ public class GlobalAssetConfig : ScriptableObject
     public List<SceneAsset> OriginSceneList;
 
 
-    // public List<>
+    public List<SubAssetBundleConfig> subABCfgList;
 }
