@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65d548d3ddaf2ac4d875162b9ed9f581, type: 3}
-  m_Name: SubAssetBundleConfig_001
+  m_Script: {fileID: 11500000, guid: 838a5fafa3ac4dd6a2d37b1fc3154ab2, type: 3}
+  m_Name: AssetsOriginSetting_0
   m_EditorClassIdentifier: 
-  subABName: 
-  versionCode: 0
-  hashKey: 
-  buildAssetBundleOptions: 1
-  assetPathList: []
-  sceneList: []
+  BuildName: 
+  BuildIndex: 0
+  OriginFilePath: 

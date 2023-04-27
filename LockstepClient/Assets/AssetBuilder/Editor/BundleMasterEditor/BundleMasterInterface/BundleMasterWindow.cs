@@ -38,17 +38,17 @@ namespace BM
         /// <summary>
         /// 分包文件资源索引配置
         /// </summary>
-        public static string AssetLoadTablePath = "Assets/Editor/BundleMasterEditor/BuildSettings/AssetLoadTable.asset";
+        public static string AssetLoadTablePath = "Assets/Config/AssetLoadTable.asset";
 
         /// <summary>
         /// 分包配置信息
         /// </summary>
-        public static string AssetsLoadSettingPath = "Assets/Editor/BundleMasterEditor/BuildSettings/AssetsLoadSetting";
+        public static string AssetsLoadSettingPath = "Assets/Config/AssetsLoadSetting";
 
         /// <summary>
         /// 原生资源包配置信息
         /// </summary>
-        public static string AssetsOriginSettingPath = "Assets/Editor/BundleMasterEditor/BuildSettings/AssetsOriginSetting";
+        public static string AssetsOriginSettingPath = "Assets/Config/AssetsOriginSetting";
 
         private static AssetLoadTable _assetLoadTable = null;
 
