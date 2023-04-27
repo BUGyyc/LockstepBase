@@ -117,24 +117,28 @@ namespace BM
             }
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("当前资源加载模式: \t" + _bundleMasterRuntimeConfig.AssetLoadMode, GUILayout.Width(_w / 4), GUILayout.Height(_h / 8), GUILayout.ExpandWidth(false));
-            if (GUILayout.Button("开发模式", GUILayout.Width(_w / 6), GUILayout.Height(_h / 8), GUILayout.ExpandWidth(true)))
+            GUILayout.Label("当前资源加载模式: \t" + _bundleMasterRuntimeConfig.AssetLoadMode, GUILayout.Width(_w / 5), GUILayout.Height(_h / 8), GUILayout.ExpandWidth(false));
+            if (GUILayout.Button("开发模式", GUILayout.Width(_w / 7), GUILayout.Height(_h / 8), GUILayout.ExpandWidth(true)))
             {
                 _bundleMasterRuntimeConfig.AssetLoadMode = AssetLoadMode.Develop;
                 DevelopSceneChange.CheckSceneChange(_bundleMasterRuntimeConfig.AssetLoadMode);
                 needFlush = true;
             }
-            if (GUILayout.Button("本地模式", GUILayout.Width(_w / 6), GUILayout.Height(_h / 8), GUILayout.ExpandWidth(true)))
+            if (GUILayout.Button("本地模式", GUILayout.Width(_w / 7), GUILayout.Height(_h / 8), GUILayout.ExpandWidth(true)))
             {
                 _bundleMasterRuntimeConfig.AssetLoadMode = AssetLoadMode.Local;
                 DevelopSceneChange.CheckSceneChange(_bundleMasterRuntimeConfig.AssetLoadMode);
                 needFlush = true;
             }
-            if (GUILayout.Button("构建模式", GUILayout.Width(_w / 6), GUILayout.Height(_h / 8), GUILayout.ExpandWidth(true)))
+            if (GUILayout.Button("构建模式", GUILayout.Width(_w / 7), GUILayout.Height(_h / 8), GUILayout.ExpandWidth(true)))
             {
                 _bundleMasterRuntimeConfig.AssetLoadMode = AssetLoadMode.Build;
                 DevelopSceneChange.CheckSceneChange(_bundleMasterRuntimeConfig.AssetLoadMode);
                 needFlush = true;
+            }
+             if (GUILayout.Button("一键出包", GUILayout.Width(_w / 7), GUILayout.Height(_h / 8), GUILayout.ExpandWidth(true)))
+            {
+                BundleMaster.BuildApplication();
             }
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal(GUILayout.ExpandHeight(false));

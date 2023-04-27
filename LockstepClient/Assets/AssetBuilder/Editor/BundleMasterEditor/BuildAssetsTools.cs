@@ -18,7 +18,7 @@ namespace BM
             FileInfo[] basefil = basefolder.GetFiles();
             for (int i = 0; i < basefil.Length; i++)
             {
-                    
+
                 if (CantLoadType(basefil[i].FullName))
                 {
                     files.Add(basePath + "/" + basefil[i].Name);
@@ -34,7 +34,7 @@ namespace BM
                     FileInfo[] fil = subfolder.GetFiles();
                     for (int j = 0; j < fil.Length; j++)
                     {
-                    
+
                         if (CantLoadType(fil[j].FullName))
                         {
                             files.Add(subfolders[i] + "/" + fil[j].Name);
@@ -51,6 +51,13 @@ namespace BM
         public static void GetOriginsPath(string originPath, HashSet<string> files, HashSet<string> dirs)
         {
             DirectoryInfo buildBundlePath = new DirectoryInfo(originPath);
+
+            if (!Directory.Exists(originPath))
+            {
+                Directory.CreateDirectory(originPath);
+                buildBundlePath = new DirectoryInfo(originPath);
+            }
+
             FileSystemInfo[] fileSystemInfos = buildBundlePath.GetFileSystemInfos();
             foreach (FileSystemInfo fileSystemInfo in fileSystemInfos)
             {
@@ -65,7 +72,7 @@ namespace BM
                 }
             }
         }
-        
+
         /// <summary>
         /// 创建加密的AssetBundle
         /// </summary>
@@ -86,7 +93,7 @@ namespace BM
                 }
             }
         }
-        
+
         /// <summary>
         /// 需要忽略加载的格式
         /// </summary>
@@ -132,7 +139,7 @@ namespace BM
             // }
             return true;
         }
-        
+
         /// <summary>
         /// 是Shader资源
         /// </summary>
@@ -148,7 +155,7 @@ namespace BM
             }
             return false;
         }
-        
+
         public static bool IsGroupAsset(string fileFullName, AssetsLoadSetting assetsLoadSetting)
         {
             foreach (string assetGroupPath in assetsLoadSetting.AssetGroupPaths)
@@ -160,7 +167,7 @@ namespace BM
             }
             return false;
         }
-        
+
         public static string GetGroupAssetPath(string fileFullName, AssetsLoadSetting assetsLoadSetting)
         {
             foreach (string assetGroupPath in assetsLoadSetting.AssetGroupPaths)

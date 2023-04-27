@@ -9,9 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d36208e8b0045f7ab3a61f1ab8f60c6, type: 3}
-  m_Name: BMConfig
+  m_Script: {fileID: 11500000, guid: 8f4acba0d04dbe4439552cc1b0163041, type: 3}
+  m_Name: AssetsLoadSetting_2
   m_EditorClassIdentifier: 
-  AssetLoadMode: 1
-  MaxDownLoadCount: 8
-  ReDownLoadCount: 3
+  BuildName: 
+  BuildIndex: 0
+  BundleVariant: 
+  NameByHash: 0
+  BuildAssetBundleOptions: 1
+  EncryptAssets: 0
+  SecretKey: 
+  AssetPath: []
+  AssetGroupPaths: []
+  Scene: []
