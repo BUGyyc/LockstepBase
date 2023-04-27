@@ -25,6 +25,16 @@ namespace AssetBuilderCore
             window.Show();
         }
 
+        /**
+         * 1.自动打标签
+         * 2.一键生成AB包
+         * 3.快速构建 APP
+         * 4.首包策略、配置工具
+         * 5.资源服务器download AB 包测试
+         * 
+         * 
+         * 
+         * **/
         private void OnGUI()
         {
             if (GUILayout.Button("AutoABLabel"))
@@ -46,7 +56,9 @@ namespace AssetBuilderCore
         }
 
 
-
+        /// <summary>
+        /// 一键生成APP
+        /// </summary>
         private void BuildApplication()
         {
             string path = "Assets/Resources/BuildApplicationConfig.asset";
@@ -57,17 +69,13 @@ namespace AssetBuilderCore
 
             int versionCode = VersionParse(config.version);
 
-
             if (EditorUserBuildSettings.activeBuildTarget.Equals(BuildTarget.Android) == false)
             {
                 Debug.Log("未包含Android模块");
                 return;
             }
 
-
             var buildOp = BuildOptions.CompressWithLz4;
-
-
 
             BuildPlayerOptions buildPlayerOptions;
 
@@ -80,7 +88,7 @@ namespace AssetBuilderCore
                 Directory.CreateDirectory(floderPath);
             }
 
-            string appOutPutPath = floderPath + string.Format($"my_legend_v{versionCode}_c{channel}.apk");
+            string appOutPutPath = floderPath + string.Format($"{config.appName}_v{config.version}_c{channel}.apk");
 
             buildPlayerOptions = new BuildPlayerOptions()
             {
@@ -90,7 +98,7 @@ namespace AssetBuilderCore
                 locationPathName = appOutPutPath,
                 options = buildOp,
                 target = BuildTarget.Android,
-                //targetGroup = BuildTargetGroup.Android
+                targetGroup = BuildTargetGroup.Android
             };
 
             var buildReport = BuildPipeline.BuildPlayer(buildPlayerOptions);
@@ -105,8 +113,6 @@ namespace AssetBuilderCore
             }
             else
             {
-                //Debug.LogError($"构建失败 path {appOutPutPath}");
-
                 LogMaster.E($"构建失败  path {appOutPutPath}");
             }
         }
