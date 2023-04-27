@@ -53,6 +53,18 @@ namespace AssetBuilderCore
             {
                 BuildApplication();
             }
+
+
+        }
+
+        /// <summary>
+        /// 快速构建首包
+        /// 1.通过BuildConfig设置，进行包体的构建
+        /// 2.
+        /// </summary>
+        private void BuildFirstAPK()
+        {
+
         }
 
 
