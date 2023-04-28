@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4acba0d04dbe4439552cc1b0163041, type: 3}
   m_Name: AssetsLoadSetting_1
   m_EditorClassIdentifier: 
-  BuildName: 
+  BuildName: SubBundle
   BuildIndex: 0
-  BundleVariant: 
+  BundleVariant: bundle
   NameByHash: 0
   BuildAssetBundleOptions: 1
   EncryptAssets: 0
   SecretKey: 
   AssetPath: []
   AssetGroupPaths: []
-  Scene: []
+  Scene:
+  - {fileID: 102900000, guid: a9b24614e1990c548b43d5e225b17d22, type: 3}
