@@ -15,6 +15,12 @@
 
 # Dev TODO
 
+- [X] 一键模拟CDN服务器，方便测试AB包热更等模块
+  - 本地先使用 BundleMaster 构建AB包
+  - 打开 LockstepClient\BuildBundles 文件路径
+  - 首先确保安装了 Python
+  - 然后缺少 simple_http_server 模块的同学，一键运行 InstallSimpleHttpServer.bat
+  - 最后一键 StartAssetBundleServer.bat , 资源服务器运行，默认情况下，同网段无障碍测试（尽可能关闭防火墙），默认URL ：http:127.0.0.1:8000
 - [x] [EntityType 描述 GameEntity](/LockstepClient/Doc/Entitas.md)
 - [x] [Jenny 代码生成器，更快生成 ECS 代码](/LockstepClient/Doc/Jenny代码生成器.md)
 - [x] 接入 InputSystem
