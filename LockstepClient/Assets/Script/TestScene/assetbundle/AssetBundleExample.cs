@@ -18,28 +18,53 @@ public class AssetBundleExample : MonoBehaviour
 
     private async ETTask Download()
     {
+        //点名要分包文件
         Dictionary<string, bool> updatePackageBundle = new Dictionary<string, bool>()
         {
-            {AssetComponentConfig.DefaultBundlePackageName, false},
-            {"SubBundle", false},
-            //{"Main", false},
-            //{"APK", false},
+            {"SubBundle", false}
         };
-        var info = await AssetComponent.CheckAllBundlePackageUpdate(updatePackageBundle);
 
-        if (info == null)
+        var updateInfo = await AssetComponent.CheckAllBundlePackageUpdate(updatePackageBundle);
+
+        if (updateInfo == null)
         {
             LogMaster.L("info == null");
             return;
         }
 
-        if(info.NeedUpdate == false)
+        if (updateInfo.NeedUpdate == false)
         {
             LogMaster.L("不需要更新");
             return;
         }
+        InitializePackage().Coroutine();
 
-        LogMaster.L("需要更新包体大小 " + info.NeedUpdateSize);
+        LogMaster.L("需要更新包体大小 " + updateInfo.NeedUpdateSize);
+
+        updateInfo.DownLoadFinishCallback += () =>
+        {
+            LogMaster.L("加载完成");
+        };
+
+        updateInfo.ProgressCallback += (p) =>
+        {
+            LogMaster.L($"加载中 {p / 100f}");
+        };
+
+        updateInfo.ErrorCancelCallback += () =>
+        {
+            LogMaster.E("加载失败");
+        };
+
+        AssetComponent.DownLoadUpdate(updateInfo).Coroutine();
+
+
+    }
+
+    private async ETTask InitializePackage()
+    {
+        //await AssetComponent.Initialize(AssetComponentConfig.DefaultBundlePackageName);
+        await AssetComponent.Initialize("SubBundle");
     }
 
     private void Update()

@@ -26,6 +26,9 @@ namespace BM
         {
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
+
+                AssetLogHelper.Log("DownloadData  url: " + url);
+
                 UnityWebRequestAsyncOperation webRequestAsync = webRequest.SendWebRequest();
                 ETTask waitDown = ETTask.Create(true);
                 webRequestAsync.completed += (asyncOperation) =>
@@ -39,7 +42,7 @@ namespace BM
                 if (!string.IsNullOrEmpty(webRequest.error))
 #endif
                 {
-                    AssetLogHelper.Log("下载Bundle失败 重试\n" + webRequest.error + "\nURL：" + url);
+                    AssetLogHelper.Log("下载Bundle失败 重试       " + webRequest.error + "    URL：" + url);
                     return null;
                 }
                 return webRequest.downloadHandler.data;
