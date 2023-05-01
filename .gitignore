@@ -74,3 +74,4 @@ LockstepClient/Assets/Art/
 LockstepClient/BuildBundles/
 LockstepClient/IngameDebugConsole.Editor.csproj
 LockstepClient/IngameDebugConsole.Runtime.csproj
+/LockstepClient/BundleMaster.csproj
