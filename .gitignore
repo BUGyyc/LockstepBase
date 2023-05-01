@@ -72,3 +72,5 @@ LockstepClient/Assets/StreamingAssets/OutPutAB.meta
 LockstepClient/OutPutAPP/
 LockstepClient/Assets/Art/
 LockstepClient/BuildBundles/
+LockstepClient/IngameDebugConsole.Editor.csproj
+LockstepClient/IngameDebugConsole.Runtime.csproj

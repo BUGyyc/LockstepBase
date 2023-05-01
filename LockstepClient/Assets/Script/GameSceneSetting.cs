@@ -9,8 +9,8 @@
     public const string LaunchServer = "LaunchServer";
     public const string LaunchServerPath = "Assets/Scenes/Debug/0.launch/LaunchServer.unity";
 
-    public const string ABTestScene = "TestAssetBundle";
-    public const string ABTestScenePath = "Assets/Scenes/Test/TestAssetBundle";
+    public const string ABTestScene = "ABLaunch";
+    public const string ABTestScenePath = "Assets/Scenes/Test/ABLaunch.unity";
 
 
 

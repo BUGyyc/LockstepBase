@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838a5fafa3ac4dd6a2d37b1fc3154ab2, type: 3}
   m_Name: AssetsOriginSetting_0
   m_EditorClassIdentifier: 
-  BuildName: APK
+  BuildName: AutoLegend
   BuildIndex: 0
   OriginFilePath: F:\BM_APK_Install_2\launcher\release
+  VersionCode: 
+  buildTarget: 5

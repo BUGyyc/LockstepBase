@@ -32,9 +32,13 @@ namespace GameEditor
         {
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Equals(GameSceneSetting.ABTestScene) == false)
             {
-                EditorSceneManager.OpenScene(GameSceneSetting.ABTestScene);
+                EditorSceneManager.OpenScene(GameSceneSetting.ABTestScenePath);
+
             }
+
             EditorApplication.ExecuteMenuItem("Edit/Play");
+
+
         }
     }
 }

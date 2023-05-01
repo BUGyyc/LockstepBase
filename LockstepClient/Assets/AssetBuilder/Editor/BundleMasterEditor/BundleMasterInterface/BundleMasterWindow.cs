@@ -48,7 +48,7 @@ namespace BM
         /// <summary>
         /// 原生资源包配置信息
         /// </summary>
-        public static string AssetsOriginSettingPath = "Assets/Config/AssetsOriginSetting";
+        public static string AssetsOriginSettingPath = "Assets/Config/AssetsOriginSetting_0.asset";
 
         private static AssetLoadTable _assetLoadTable = null;
 
@@ -136,9 +136,10 @@ namespace BM
                 DevelopSceneChange.CheckSceneChange(_bundleMasterRuntimeConfig.AssetLoadMode);
                 needFlush = true;
             }
-             if (GUILayout.Button("一键出包", GUILayout.Width(_w / 7), GUILayout.Height(_h / 8), GUILayout.ExpandWidth(true)))
+            if (GUILayout.Button("一键出包", GUILayout.Width(_w / 7), GUILayout.Height(_h / 8), GUILayout.ExpandWidth(true)))
             {
-                BundleMaster.BuildApplication();
+                //BundleMaster.BuildApplication();
+                BundleMaster.BuildAPP();
             }
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal(GUILayout.ExpandHeight(false));
