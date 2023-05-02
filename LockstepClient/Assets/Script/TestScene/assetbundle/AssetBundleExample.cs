@@ -9,6 +9,9 @@ using System.Collections.Generic;
 //{
 public class AssetBundleExample : MonoBehaviour
 {
+
+    private UpdateBundleDataInfo updateInfo;
+
     void Start()
     {
         LogMaster.L("Hello Start");
@@ -50,17 +53,18 @@ public class AssetBundleExample : MonoBehaviour
 
         updateInfo.DownLoadFinishCallback += () =>
         {
-            LogMaster.L("加载完成");
+            //LogMaster.L("加载完成");
+            InitializePackage().Coroutine();
         };
 
         updateInfo.ProgressCallback += (p) =>
         {
-            LogMaster.L($"加载中 {p / 100f}");
+            //LogMaster.L($"加载中 {p / 100f}");
         };
 
         updateInfo.ErrorCancelCallback += () =>
         {
-            LogMaster.E("加载失败");
+            //LogMaster.E("加载失败");
         };
 
         AssetComponent.DownLoadUpdate(updateInfo).Coroutine();
@@ -74,11 +78,21 @@ public class AssetBundleExample : MonoBehaviour
         await AssetComponent.Initialize("SubBundle");
     }
 
-    private void Update()
+    void Update()
     {
-        //LogMaster.E("AB  Update");
+        AssetComponent.Update();
     }
 
+    void OnLowMemory()
+    {
+        AssetComponent.ForceUnLoadAll();
+    }
+
+    void OnDestroy()
+    {
+        updateInfo?.CancelUpdate();
+        LMTD.ThreadFactory.Destroy();
+    }
 
 }
 //}
