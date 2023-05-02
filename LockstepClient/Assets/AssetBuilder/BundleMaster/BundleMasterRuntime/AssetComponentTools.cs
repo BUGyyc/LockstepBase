@@ -57,6 +57,7 @@ namespace BM
                 string path = Path.Combine(AssetComponentConfig.HotfixPath, bundlePackageName, fileName);
                 if (!File.Exists(path))
                 {
+                    //TODO: 这里是想表明热更存在，则用热更的资源，否则用原始包资源？？
                     //热更目录不存在，返回streaming目录
                     path = Path.Combine(AssetComponentConfig.LocalBundlePath, bundlePackageName, fileName);
                 }

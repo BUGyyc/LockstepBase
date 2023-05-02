@@ -13,6 +13,11 @@ public class AssetBundleExample : MonoBehaviour
     {
         LogMaster.L("Hello Start");
 
+        AssetComponentConfig.HotfixPath = Application.dataPath + "/../HotfixBundles/";
+
+        //声明一个默认包？？
+        AssetComponentConfig.DefaultBundlePackageName = "AllBundle";
+
         Download().Coroutine();
     }
 
@@ -63,7 +68,7 @@ public class AssetBundleExample : MonoBehaviour
 
     private async ETTask InitializePackage()
     {
-        //await AssetComponent.Initialize(AssetComponentConfig.DefaultBundlePackageName);
+        await AssetComponent.Initialize(AssetComponentConfig.DefaultBundlePackageName);
         await AssetComponent.Initialize("SubBundle");
     }
 
@@ -72,28 +77,6 @@ public class AssetBundleExample : MonoBehaviour
         //LogMaster.E("AB  Update");
     }
 
-    // private async ETVoid Func()
-    // {
-    //     //Debug.Log("3");
-
-    //     await AssetBundleHelper.instance.AsyncLoadAssetBundle<AssetBundle>("hero");
-
-    //     await AssetBundleHelper.instance.AsyncLoadAssetBundle<AssetBundle>("bullet");
-
-
-    //     await AssetBundleHelper.instance.AsyncLoadAssetBundle<AssetBundle>("canvas");
-
-
-    //     await AssetBundleHelper.instance.AsyncLoadAssetBundle<AssetBundle>("enemy");
-
-    //     await AssetBundleHelper.instance.AsyncLoadAssetBundle<AssetBundle>("clazyrunnner");
-
-
-    //     await AssetBundleHelper.instance.AsyncLoadAssetBundle<AssetBundle>("player");
-    // }
-
-
-
-
+   
 }
 //}

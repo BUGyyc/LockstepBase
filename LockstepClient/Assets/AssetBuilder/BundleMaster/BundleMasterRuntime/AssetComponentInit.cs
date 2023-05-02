@@ -21,12 +21,12 @@ namespace BM
         {
             if (AssetComponentConfig.AssetLoadMode == AssetLoadMode.Develop)
             {
-                AssetLogHelper.Log("AssetLoadMode = Develop 不需要初始化Bundle配置文件");
+                Debug.Log("AssetLoadMode = Develop 不需要初始化Bundle配置文件");
                 return false;
             }
             if (BundleNameToRuntimeInfo.ContainsKey(bundlePackageName))
             {
-                AssetLogHelper.LogError(bundlePackageName + " 重复初始化");
+                Debug.LogError(bundlePackageName + " 重复初始化");
                 return false;
             }
             BundleRuntimeInfo bundleRuntimeInfo = new BundleRuntimeInfo(bundlePackageName, secretKey);
@@ -48,7 +48,7 @@ namespace BM
                 if (!string.IsNullOrEmpty(webRequest.error))
 #endif
                 {
-                    AssetLogHelper.LogError("初始化分包未找到FileLogs 分包名: " + bundlePackageName + "\t" + filePath);
+                    Debug.LogError("初始化分包未找到FileLogs 分包名: " + bundlePackageName + "\t" + filePath);
                     return false;
                 }
                 string fileLogs = webRequest.downloadHandler.text;
@@ -90,7 +90,7 @@ namespace BM
                 if (!string.IsNullOrEmpty(webRequest.error))
 #endif
                 {
-                    AssetLogHelper.LogError("初始化分包未找到DependLogs 分包名: " + bundlePackageName + "\t" + dependPath);
+                    Debug.LogError("初始化分包未找到DependLogs 分包名: " + bundlePackageName + "\t" + dependPath);
                     return false;
                 }
                 string dependLogs = webRequest.downloadHandler.text;
@@ -121,7 +121,7 @@ namespace BM
                 if (!string.IsNullOrEmpty(webRequest.error))
 #endif
                 {
-                    AssetLogHelper.LogError("初始化分包未找到GroupLogs 分包名: " + bundlePackageName+ "\t" + groupPath);
+                    Debug.LogError("初始化分包未找到GroupLogs 分包名: " + bundlePackageName+ "\t" + groupPath);
                     return false;
                 }
                 string groupLogs = webRequest.downloadHandler.text;

@@ -75,3 +75,9 @@ LockstepClient/BuildBundles/
 LockstepClient/IngameDebugConsole.Editor.csproj
 LockstepClient/IngameDebugConsole.Runtime.csproj
 /LockstepClient/BundleMaster.csproj
+LockstepClient/Assets/StreamingAssets/AllBundle.meta
+LockstepClient/Assets/StreamingAssets/AllBundle/DependLogs.txt
+LockstepClient/Assets/StreamingAssets/SubBundle.meta
+LockstepClient/HotfixBundles/
+LockstepClient/Assembly-CSharp.csproj.user
+LockstepClient/.cr/
