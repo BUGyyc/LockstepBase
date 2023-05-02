@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using ET;
 using UnityEngine.Networking;
+using UnityEngine;
 
 namespace BM
 {
@@ -111,6 +112,7 @@ namespace BM
                     if (!string.IsNullOrEmpty(webRequest.error))
 #endif
                     {
+                        Debug.Log("VersionLogs  不存在 ，Path " + localVersionLogExistPath);
                         localVersionLog = "INIT|0";
                     }
                     else

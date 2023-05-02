@@ -28,7 +28,7 @@ namespace BM
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
 
-                Debug.Log("DownloadData  url: " + url);
+                //Debug.Log("DownloadData  url: " + url);
 
                 UnityWebRequestAsyncOperation webRequestAsync = webRequest.SendWebRequest();
                 ETTask waitDown = ETTask.Create(true);

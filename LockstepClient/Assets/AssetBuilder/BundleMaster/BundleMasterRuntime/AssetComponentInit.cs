@@ -32,8 +32,9 @@ namespace BM
             BundleRuntimeInfo bundleRuntimeInfo = new BundleRuntimeInfo(bundlePackageName, secretKey);
             BundleNameToRuntimeInfo.Add(bundlePackageName, bundleRuntimeInfo);
 
-            ETTask fileTcs= ETTask.Create();
+            ETTask fileTcs = ETTask.Create();
             string filePath = BundleFileExistPath(bundlePackageName, "FileLogs.txt", true);
+            Debug.Log("Initialize load filePath  " + filePath);
             using (UnityWebRequest webRequest = UnityWebRequest.Get(filePath))
             {
                 UnityWebRequestAsyncOperation weq = webRequest.SendWebRequest();
@@ -61,7 +62,7 @@ namespace BM
                     LoadFile loadFile = new LoadFile();
                     loadFile.FilePath = fileLog[0];
                     loadFile.AssetBundleName = fileLog[1];
-                    
+
                     if (fileLog.Length > 2)
                     {
                         for (int i = 2; i < fileLog.Length; i++)
@@ -121,7 +122,7 @@ namespace BM
                 if (!string.IsNullOrEmpty(webRequest.error))
 #endif
                 {
-                    Debug.LogError("初始化分包未找到GroupLogs 分包名: " + bundlePackageName+ "\t" + groupPath);
+                    Debug.LogError("初始化分包未找到GroupLogs 分包名: " + bundlePackageName + "\t" + groupPath);
                     return false;
                 }
                 string groupLogs = webRequest.downloadHandler.text;
@@ -148,7 +149,7 @@ namespace BM
             await LoadShader(bundlePackageName);
             return true;
         }
-        
+
         /// <summary>
         /// 加载Shader文件
         /// </summary>
@@ -192,6 +193,6 @@ namespace BM
             }
             await tcs;
         }
-        
+
     }
 }

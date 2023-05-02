@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using ET;
+using UnityEngine;
 
 namespace BM
 {
@@ -57,9 +58,15 @@ namespace BM
                 string path = Path.Combine(AssetComponentConfig.HotfixPath, bundlePackageName, fileName);
                 if (!File.Exists(path))
                 {
+                    Debug.LogError("不存在路径 path: " + path);
                     //TODO: 这里是想表明热更存在，则用热更的资源，否则用原始包资源？？
                     //热更目录不存在，返回streaming目录
                     path = Path.Combine(AssetComponentConfig.LocalBundlePath, bundlePackageName, fileName);
+                    Debug.Log("更换路径后 path: " + path);
+                }
+                else
+                {
+                    Debug.Log("存在路径 path: " + path);
                 }
                 //热更目录存在，返回热更目录
                 return path;
@@ -74,12 +81,12 @@ namespace BM
             byte[] data = await DownloadBundleHelper.DownloadDataByUrl(Path.Combine(AssetComponentConfig.BundleServerUrl, bundlePackageName, "VersionLogs.txt"));
             if (data == null)
             {
-                AssetLogHelper.LogError(bundlePackageName + "获取更新索引列表失败");
+                Debug.LogError(bundlePackageName + "获取更新索引列表失败");
                 return null;
             }
             return System.Text.Encoding.UTF8.GetString(data);
         }
-        
+
         /// <summary>
         /// 创建更新后的Log文件
         /// </summary>
@@ -94,7 +101,7 @@ namespace BM
                 sw.WriteLine(sb.ToString());
             }
         }
-        
+
     }
 
 }

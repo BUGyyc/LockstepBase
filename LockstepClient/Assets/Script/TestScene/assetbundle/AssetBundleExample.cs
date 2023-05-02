@@ -26,6 +26,7 @@ public class AssetBundleExample : MonoBehaviour
         //点名要分包文件
         Dictionary<string, bool> updatePackageBundle = new Dictionary<string, bool>()
         {
+            {"AllBundle",false },
             {"SubBundle", false}
         };
 
@@ -44,7 +45,7 @@ public class AssetBundleExample : MonoBehaviour
         }
         InitializePackage().Coroutine();
 
-        LogMaster.L("需要更新包体大小 " + updateInfo.NeedUpdateSize);
+        LogMaster.E("需要更新, 大小: " + updateInfo.NeedUpdateSize);
 
         updateInfo.DownLoadFinishCallback += () =>
         {
@@ -77,6 +78,6 @@ public class AssetBundleExample : MonoBehaviour
         //LogMaster.E("AB  Update");
     }
 
-   
+
 }
 //}
