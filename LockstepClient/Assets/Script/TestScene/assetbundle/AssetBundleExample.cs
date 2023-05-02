@@ -41,11 +41,12 @@ public class AssetBundleExample : MonoBehaviour
         if (updateInfo.NeedUpdate == false)
         {
             LogMaster.L("不需要更新");
+            InitializePackage().Coroutine();
             return;
         }
-        InitializePackage().Coroutine();
 
-        LogMaster.E("需要更新, 大小: " + updateInfo.NeedUpdateSize);
+
+        Debug.LogError("需要更新, 大小: " + updateInfo.NeedUpdateSize);
 
         updateInfo.DownLoadFinishCallback += () =>
         {
