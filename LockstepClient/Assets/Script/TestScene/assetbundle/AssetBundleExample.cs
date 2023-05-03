@@ -4,11 +4,14 @@ using System.IO;
 using ET;
 using BM;
 using System.Collections.Generic;
+using UnityEngine.UI;
 // using ABCore;
 //namespace ET.Client
 //{
 public class AssetBundleExample : MonoBehaviour
 {
+
+    public Scrollbar loadPbr;
 
     private UpdateBundleDataInfo updateInfo;
 
@@ -59,6 +62,7 @@ public class AssetBundleExample : MonoBehaviour
 
         updateInfo.ProgressCallback += (p) =>
         {
+            if (loadPbr != null) loadPbr.size = p / 100f;
             //LogMaster.L($"加载中 {p / 100f}");
         };
 

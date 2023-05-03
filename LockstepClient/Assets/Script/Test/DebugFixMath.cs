@@ -10,6 +10,7 @@ using UnityEngine;
 using System.Linq;
 
 using FixMath;
+using Lockstep;
 // using System;
 
 
@@ -20,6 +21,17 @@ public class DebugFixMath : MonoBehaviour
 {
     void Start()
     {
+
+        int a = 45 * 45;
+
+
+        LFloat ab = new LFloat(false, a * 1000);
+
+        var val = LMath.Sqrt(ab);
+
+        Debug.Log($"{val}  {val._val}  {Mathf.Sqrt(a)} ");
+
+        return;
         #region 常用加减乘除
 
         // Addition();

@@ -78,8 +78,66 @@ SpriteAtlas:
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: cd91b2c08449f6648bef8286c51bc769, type: 3}
+  - {fileID: 21300000, guid: 3c96da12a67c5ff4992c622f32f21e4e, type: 3}
+  - {fileID: 21300000, guid: a4e183320e18f78478767c7e5d936d09, type: 3}
+  - {fileID: 21300000, guid: 263b8f432bb74ae4a9dabfdf9c56fd50, type: 3}
+  - {fileID: 21300000, guid: 48914953ee9810b4e8a23aa369daacc1, type: 3}
+  - {fileID: 21300000, guid: 72ff2793a56c4db43bf0f538cce91434, type: 3}
+  - {fileID: 21300000, guid: 92638454058f68a4e8c66f6634c3c61d, type: 3}
+  - {fileID: 21300000, guid: 3dfdfef5e95a0dc499c86c83fa3c962d, type: 3}
+  - {fileID: 21300000, guid: a660546663e64bc4891c85048d0943df, type: 3}
+  - {fileID: 21300000, guid: 7f4c0fb63947b7345afeae4a3bffdb0d, type: 3}
+  - {fileID: 21300000, guid: 135e08d63d9a5304e8fe16af8c769900, type: 3}
+  - {fileID: 21300000, guid: 83904a771d37655408f81d1df5784cb7, type: 3}
+  - {fileID: 21300000, guid: 166efd280fe9ae44985ea5be2b90c3d0, type: 3}
+  - {fileID: 21300000, guid: c468c73886fa72646a34e08ac718c24c, type: 3}
+  - {fileID: 21300000, guid: c29cd5896647cbd4580c7ad68d712699, type: 3}
+  - {fileID: 21300000, guid: 007589b9f9e58ba4dbf324be28ed48e2, type: 3}
+  - {fileID: 21300000, guid: ba447ed99fba2164a99fc55226490296, type: 3}
+  - {fileID: 21300000, guid: 3f1eba4a8d09b4a4eafa4d1525e2f4d8, type: 3}
+  - {fileID: 21300000, guid: 62c2691bb28d6ce47aa63583d68c6bfe, type: 3}
+  - {fileID: 21300000, guid: a2a7d36b94c252b4585c0e2780c2642f, type: 3}
+  - {fileID: 21300000, guid: 7741948cd29a3764e86e978da1747509, type: 3}
+  - {fileID: 21300000, guid: 588006fc23efd97419c4883417f98c37, type: 3}
+  - {fileID: 21300000, guid: 412c8a0df48ec4e4bacff006960267c5, type: 3}
+  - {fileID: 21300000, guid: 2ffee05d59aa4814c8b153db90a4f85e, type: 3}
+  - {fileID: 21300000, guid: 12747b7d754c314449f63751f3e130f9, type: 3}
+  - {fileID: 21300000, guid: e4bce0ae8975e744588e71679bf5a60d, type: 3}
+  - {fileID: 21300000, guid: 9b01adde4eaa969429bc2f8f47652be9, type: 3}
+  - {fileID: 21300000, guid: 202285ee4b0a68a44a8514fb15114e8c, type: 3}
+  - {fileID: 21300000, guid: 86102e6f00cc3c640a31b76e7a40ce89, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - UI2_TLgame_MZ1_1
+  - UI2_TLgame_scoreBT1
+  - UI2_TLgame_icon_star1
+  - UI2_TLgame_ZZ3
+  - UI2_TLgame_icon_star2
+  - UI2_TLgame_scoreDI3
+  - UI2_TLgame_icon_LQ2
+  - UI2_TLgame_title_fail
+  - UI2_TLgame_scoreBT2
+  - UI2_TLgame_frame_end
+  - UI2_TLgame_title_win
+  - UI2_TLgame_scoreBT3
+  - UI2_TLgame_icon_LQ1
+  - UI2_TLgame_scoreDI2
+  - UI2_TLgame_scoreDI4
+  - UI2_TLgame_scoreDI1
+  - UI2_TLgame_RTab_1
+  - UI2_TLgame_scoreBT4
+  - UI2_TLgame_icon_arrow
+  - UI2_TLgame_ZZ5
+  - UI2_TLgame_ZZ4
+  - UI2_TLgame_icon_LQ3
+  - UI2_TLgame_timeDi
+  - UI2_TLgame_frame_score
+  - UI2_TLgame_MZ1_2
+  - UI2_TLgame_ZZ2
+  - UI2_TLgame_scoreBT0
+  - UI2_TLgame_ZZ1
+  - UI2_TLgame_maskTop
   m_RenderDataMap: {}
   m_Tag: Assets_Art_UI_icon_
   m_IsVariant: 0
