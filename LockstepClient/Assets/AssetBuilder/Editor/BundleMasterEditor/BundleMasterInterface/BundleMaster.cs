@@ -322,7 +322,7 @@ public static class BundleMaster
         SetUpAtlasInfo(ref atlas);
 
 
-        CheckAssetFile("Assets/Art/UI/");
+        CheckAssetFile("Assets/Art/UI/icon/");
     }
 
     /// <summary>
@@ -371,6 +371,10 @@ public static class BundleMaster
             string atlasname = GetAtlasNameFromPath(relativePath);
             string atlasPath = relativePath + atlasname;
             CreateSpriteAtlas(atlasname, atlasPath, sprites);
+        }
+        else
+        {
+            Debug.LogError($" {relativePath} 目录下没有Sprite");
         }
 
         DirectoryInfo direction = new DirectoryInfo(relativePath);
