@@ -11,6 +11,7 @@ using BM;
 using System.Collections.Generic;
 using UnityEngine.U2D;
 using UnityEditor.U2D;
+//using UnityEngine.Windows;
 
 public static class BundleMaster
 {
@@ -316,13 +317,89 @@ public static class BundleMaster
         }
     }
 
+
+
+    //const string SpritePath = "Assets/Art/UI/";
+    //public static void BuildAtlas()
+    //{
+    //    string[] directories = System.IO.Directory.GetDirectories(SpritePath);
+
+    //    //IDirectory tmpSourceDir;
+    //    for (int i = 0; i < directories.Length; i++)
+    //    {
+    //        string dirName = directories[i].Substring(directories[i].LastIndexOf(@"\") + 1);
+    //        BuildAtlasFromDirectory(directories[i], dirName);
+    //    }
+
+    //    AssetDatabase.Refresh();
+    //}
+
+    //private static void BuildAtlasFromDirectory(string dir, string dirName)
+    //{
+    //    Debug.Log(string.Format($" Building <color=#7BE578> {dirName} </color> atlas .."));
+
+    //    string atlasName = dirName + "_atlas" + ".spriteatlas";
+
+    //    SpriteAtlas atlas = new SpriteAtlas();
+    //    atlas.SetPackingSettings(packSetting);
+    //    atlas.SetTextureSettings(textureSetting);
+    //    atlas.SetPlatformSettings(importerSetting);
+
+
+    //    IFile[] tmpFile = directory.GetFiles();
+    //    Sprite sprite;
+    //    List<Sprite> spriteList = new List<Sprite>();
+    //    string assetPath = string.Empty;
+    //    for (int i = 0; i < tmpFile.Length; i++)
+    //    {
+    //        if (tmpFile[i].Extension.Contains(".meta"))
+    //        {
+    //            continue;
+    //        }
+    //        EditorUtility.DisplayProgressBar(string.Format($"Start Build {dirName} atlas .."), tmpFile[i].Name, i / tmpFile.Length);
+
+    //        assetPath = "Assets/ArtAssets/ui/sprites/" + dirName + "/" + tmpFile[i].Name;
+    //        sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
+    //        if (sprite != null)
+    //        {
+    //            spriteList.Add(sprite);
+    //        }
+    //    }
+    //    if (spriteList.Count > 0) atlas.Add(spriteList.ToArray());
+
+    //    string dir = "Assets/ABAssets/AssetBundle/ui/prefabs/" + dirName;
+    //    string filePath = dir + "/" + atlasName;
+    //    if (!Directory.Exists(dir))
+    //    {
+    //        Directory.CreateDirectory(dir);
+    //    }
+
+    //    AssetDatabase.CreateAsset(atlas, filePath);
+    //    AssetDatabase.SaveAssets();
+    //    EditorUtility.ClearProgressBar();
+    //}
+
+
+
     public static void GenerateSpriteAtlas()
     {
-        SpriteAtlas atlas = new SpriteAtlas();
-        SetUpAtlasInfo(ref atlas);
-
-
+        atlasDataDic.Clear();
         CheckAssetFile("Assets/Art/UI/icon/");
+        string spriteAtlasPath = "Assets/Resources/UI/icon/";
+        foreach (var item in atlasDataDic)
+        {
+            SpriteAtlas atlas = new SpriteAtlas();
+            SetUpAtlasInfo(ref atlas);
+            atlas.Add(item.Value.sprites.ToArray());
+
+            if (Directory.Exists(spriteAtlasPath) == false)
+            {
+                Directory.CreateDirectory(spriteAtlasPath);
+            }
+
+            AssetDatabase.CreateAsset(atlas, spriteAtlasPath + item.Value.atlasName + ".spriteatlas");
+            AssetDatabase.SaveAssets();
+        }
     }
 
     /// <summary>
@@ -353,7 +430,6 @@ public static class BundleMaster
         //C区域参数设定
         TextureImporterPlatformSettings platformSetting = new TextureImporterPlatformSettings()
         {
-
             maxTextureSize = (int)MAX_SPRITE_SIZE,
             format = TextureImporterFormat.Automatic,
             crunchedCompression = true,
