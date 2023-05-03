@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace BM
 {
@@ -26,20 +27,23 @@ namespace BM
         /// 资源服务器的地址 http://192.168.50.157/BundleData/
         /// </summary>
         public static string BundleServerUrl = "http://127.0.0.1:8000/";
-        
+
         /// <summary>
         /// 默认加载的Bundle名
         /// </summary>
         public static string DefaultBundlePackageName = "";
-        
+
         private static void InitRuntimeConfig()
         {
             if (_bmRuntimeConfig == null)
             {
-                _bmRuntimeConfig = Resources.Load<BundleMasterRuntimeConfig>("BMConfig");
+                _bmRuntimeConfig =
+                    AssetDatabase.LoadAssetAtPath<BundleMasterRuntimeConfig>("Assets/Config/BMConfig.asset");
+
+                    //Resources.Load<BundleMasterRuntimeConfig>("BMConfig");
             }
         }
-        
+
         /// <summary>
         /// 加载模式
         /// </summary>
@@ -75,6 +79,6 @@ namespace BM
                 return _bmRuntimeConfig.ReDownLoadCount;
             }
         }
-        
+
     }
 }

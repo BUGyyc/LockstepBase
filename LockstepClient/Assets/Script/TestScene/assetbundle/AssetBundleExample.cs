@@ -12,12 +12,17 @@ public class AssetBundleExample : MonoBehaviour
 {
 
     public Scrollbar loadPbr;
-
+    public Text loadTip;
+    public Text loadStepTip;
     private UpdateBundleDataInfo updateInfo;
+
+
 
     void Start()
     {
         LogMaster.L("Hello Start");
+
+        loadStepTip.text = "";
 
         AssetComponentConfig.HotfixPath = Application.dataPath + "/../HotfixBundles/";
 
@@ -48,6 +53,7 @@ public class AssetBundleExample : MonoBehaviour
         {
             LogMaster.L("不需要更新");
             InitializePackage().Coroutine();
+            loadPbr?.gameObject.SetActive(false);
             return;
         }
 
@@ -57,6 +63,7 @@ public class AssetBundleExample : MonoBehaviour
         updateInfo.DownLoadFinishCallback += () =>
         {
             //LogMaster.L("加载完成");
+            loadPbr?.gameObject.SetActive(false);
             InitializePackage().Coroutine();
         };
 
@@ -64,11 +71,13 @@ public class AssetBundleExample : MonoBehaviour
         {
             if (loadPbr != null) loadPbr.size = p / 100f;
             //LogMaster.L($"加载中 {p / 100f}");
+            loadTip.text = string.Format($"加载中（{p / 100f}）...");
         };
 
         updateInfo.ErrorCancelCallback += () =>
         {
             Debug.LogError("下载取消");
+            loadPbr?.gameObject.SetActive(false);
         };
 
         AssetComponent.DownLoadUpdate(updateInfo).Coroutine();
