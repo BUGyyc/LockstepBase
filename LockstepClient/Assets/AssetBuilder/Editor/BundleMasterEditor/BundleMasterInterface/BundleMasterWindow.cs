@@ -139,7 +139,9 @@ namespace BM
             if (GUILayout.Button("一键出包", GUILayout.Width(_w / 7), GUILayout.Height(_h / 8), GUILayout.ExpandWidth(true)))
             {
                 //BundleMaster.BuildApplication();
-                BundleMaster.BuildAPP();
+                //BundleMaster.BuildAPP();
+
+                BundleMaster.GenerateSpriteAtlas();
             }
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal(GUILayout.ExpandHeight(false));

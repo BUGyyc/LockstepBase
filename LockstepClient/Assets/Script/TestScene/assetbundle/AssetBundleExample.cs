@@ -64,7 +64,7 @@ public class AssetBundleExample : MonoBehaviour
 
         updateInfo.ErrorCancelCallback += () =>
         {
-            //LogMaster.E("加载失败");
+            Debug.LogError("下载取消");
         };
 
         AssetComponent.DownLoadUpdate(updateInfo).Coroutine();
@@ -76,6 +76,21 @@ public class AssetBundleExample : MonoBehaviour
     {
         await AssetComponent.Initialize(AssetComponentConfig.DefaultBundlePackageName);
         await AssetComponent.Initialize("SubBundle");
+    }
+
+    /// <summary>
+    /// 初始化 UI
+    /// </summary>
+    /// <returns></returns>
+    private async ETTask InitUI()
+    {
+        //加载图集
+        //await AssetComponent.LoadAsync(out LoadHandler atlasHandler,BPa);
+    }
+
+    private async ETTask LoadAtlas()
+    {
+
     }
 
     void Update()

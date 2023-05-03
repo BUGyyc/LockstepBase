@@ -8,9 +8,16 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 using BM;
+using System.Collections.Generic;
+using UnityEngine.U2D;
+using UnityEditor.U2D;
 
 public static class BundleMaster
 {
+    private const int MAX_SPRITE_SIZE = 1024;
+
+    private static Dictionary<string, AtlasData> atlasDataDic = new Dictionary<string, AtlasData>();
+
     public static string SetNextVersion(int version)
     {
         version++;
@@ -308,4 +315,160 @@ public static class BundleMaster
             LogMaster.E($"构建失败  path {appOutPutPath}");
         }
     }
+
+    public static void GenerateSpriteAtlas()
+    {
+        SpriteAtlas atlas = new SpriteAtlas();
+        SetUpAtlasInfo(ref atlas);
+
+
+        CheckAssetFile("Assets/Art/UI/");
+    }
+
+    /// <summary>
+    /// 设定图集参数
+    /// </summary>
+    /// <param name="atlas"></param>
+    public static void SetUpAtlasInfo(ref SpriteAtlas atlas)
+    {
+        atlas.SetIncludeInBuild(false);
+        //A区域参数设定
+        SpriteAtlasPackingSettings packSetting = new SpriteAtlasPackingSettings()
+        {
+            blockOffset = 1,
+            enableRotation = false,
+            enableTightPacking = false,
+            padding = 2,
+        };
+        atlas.SetPackingSettings(packSetting);
+        //B区域参数设定
+        SpriteAtlasTextureSettings textureSetting = new SpriteAtlasTextureSettings()
+        {
+            readable = false,
+            generateMipMaps = false,
+            sRGB = true,
+            filterMode = FilterMode.Bilinear,
+        };
+        atlas.SetTextureSettings(textureSetting);
+        //C区域参数设定
+        TextureImporterPlatformSettings platformSetting = new TextureImporterPlatformSettings()
+        {
+
+            maxTextureSize = (int)MAX_SPRITE_SIZE,
+            format = TextureImporterFormat.Automatic,
+            crunchedCompression = true,
+            textureCompression = TextureImporterCompression.Compressed,
+            compressionQuality = 50,
+        };
+        atlas.SetPlatformSettings(platformSetting);
+    }
+
+    public static void CheckAssetFile(string relativePath)
+    {
+        List<Sprite> sprites = GetFileSprites(relativePath);
+        if (sprites != null && sprites.Count > 1)
+        {
+            string atlasname = GetAtlasNameFromPath(relativePath);
+            string atlasPath = relativePath + atlasname;
+            CreateSpriteAtlas(atlasname, atlasPath, sprites);
+        }
+
+        DirectoryInfo direction = new DirectoryInfo(relativePath);
+        if (direction == null) return;
+
+        DirectoryInfo[] dirChild = direction.GetDirectories();
+        foreach (var item in dirChild)
+        {
+            CheckAssetFile(relativePath + item.Name + "/");
+        }
+    }
+
+    private static string GetAtlasNameFromPath(string path)
+    {
+        return path.Replace("/", "_");
+    }
+
+    private static void CreateSpriteAtlas(string atlasname, string atlasPath, List<Sprite> sprites)
+    {
+        if (atlasDataDic.ContainsKey(atlasPath))
+        {
+            Debug.LogError("警告，有相同名字的Sprite资源文件夹！！！");
+            return;
+        }
+        AtlasData data = new AtlasData()
+        {
+            atlasName = atlasname.Replace(".asset", ""),
+            assetPath = atlasPath,
+            sprites = sprites
+        };
+        atlasDataDic.Add(atlasPath, data);
+    }
+
+
+    public static List<Sprite> GetFileSprites(string relativePath)
+    {
+        if (Directory.Exists(relativePath))
+        {
+            DirectoryInfo direction = new DirectoryInfo(relativePath);
+            FileInfo[] files = direction.GetFiles("*");//只查找本文件夹下
+            if (files == null) return null;
+
+            List<Sprite> sprites = new List<Sprite>();
+            foreach (var file in files)
+            {
+                if (file.Name.EndsWith(".meta")) continue;
+                var item = AssetDatabase.LoadAssetAtPath<Sprite>(relativePath + file.Name);
+                if (item != null && ChackSpritePackerState(item))
+                {
+                    sprites.Add((Sprite)item);
+                }
+            }
+            return sprites;
+        }
+        return null;
+    }
+
+    private static bool ChackSpritePackerState(Sprite sprite)
+    {
+        if (sprite.rect.width > MAX_SPRITE_SIZE)
+        {
+            if (sprite.rect.width % 2 != 0 || sprite.rect.height % 2 != 0)
+            {
+                Debug.LogError($"{sprite.name}尺寸不符合压缩规范（宽高均为2的倍数），请注意");
+            }
+            return false;
+        }
+
+        if (sprite.rect.height > MAX_SPRITE_SIZE)
+        {
+            if (sprite.rect.width % 2 != 0 || sprite.rect.height % 2 != 0)
+            {
+                Debug.LogError($"{sprite.name}宽度不符合压缩规范（宽高均为2的倍数），请注意");
+            }
+            return false;
+        }
+
+        if (sprite.rect.width * sprite.rect.height > MAX_SPRITE_SIZE * MAX_SPRITE_SIZE)
+        {
+            Debug.LogError($"{sprite.name}尺寸过大，请注意");
+            return false;
+        }
+        return true;
+    }
+
+}
+
+
+public class AtlasData
+{
+    public string atlasName;
+    public string assetPath;
+    /// <summary>
+    /// 缓存中的SpriteAtlas，不直接指向本地资源
+    /// </summary>
+    public SpriteAtlas atlas;
+    public List<Sprite> sprites;
+
+    //编辑器界面数据
+    public bool isShowDital;
 }

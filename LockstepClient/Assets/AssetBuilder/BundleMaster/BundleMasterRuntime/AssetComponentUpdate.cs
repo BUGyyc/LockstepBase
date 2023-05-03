@@ -392,9 +392,12 @@ namespace BM
         /// </summary>
         public static async ETTask DownLoadUpdate(UpdateBundleDataInfo updateBundleDataInfo)
         {
+
+            Debug.Log($" DownLoadUpdate  Start ");
+
             if (AssetComponentConfig.AssetLoadMode != AssetLoadMode.Build)
             {
-                AssetLogHelper.LogError("AssetLoadMode != AssetLoadMode.Build 不需要更新");
+                Debug.LogError("AssetLoadMode != AssetLoadMode.Build 不需要更新");
                 return;
             }
             Dictionary<string, Queue<DownLoadTask>> packageDownLoadTask = new Dictionary<string, Queue<DownLoadTask>>();
@@ -459,6 +462,7 @@ namespace BM
             {
                 if (updateBundleDataInfo.Cancel)
                 {
+                    Debug.LogError($" {packageName}  Cancel");
                     return;
                 }
                 if (updateBundleDataInfo.PackageToType[packageName] != UpdateBundleDataInfo.PackageType.Origin)
@@ -469,7 +473,7 @@ namespace BM
                     if (fileLogsData == null || dependLogsData == null || groupLogsData == null)
                     {
                         updateBundleDataInfo.CancelUpdate();
-                        AssetLogHelper.LogError("获取Log表失败, PackageName: " + packageName);
+                        Debug.LogError("获取Log表失败, PackageName: " + packageName);
                         continue;
                     }
                     CreateUpdateLogFile(Path.Combine(AssetComponentConfig.HotfixPath, packageName, "FileLogs.txt"),
@@ -483,7 +487,7 @@ namespace BM
                 if (versionLogsData == null)
                 {
                     updateBundleDataInfo.CancelUpdate();
-                    AssetLogHelper.LogError("获取Log表失败, PackageName: " + packageName);
+                    Debug.LogError("获取Log表失败, PackageName: " + packageName);
                     continue;
                 }
                 CreateUpdateLogFile(Path.Combine(AssetComponentConfig.HotfixPath, packageName, "VersionLogs.txt"),
@@ -493,7 +497,7 @@ namespace BM
             updateBundleDataInfo.SmoothProgress = 100;
             DownLoadAction -= updateBundleDataInfo.UpdateProgressAndSpeedCallBack;
             updateBundleDataInfo.FinishCallback?.Invoke();
-            AssetLogHelper.LogError("下载完成");
+            Debug.LogError("下载完成");
         }
 
     }
