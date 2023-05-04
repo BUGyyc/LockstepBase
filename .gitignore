@@ -65,3 +65,8 @@ LockstepCopyClient/.vscode/
 LockstepClient/Assets/StreamingAssets/Log/
 LockstepClient/Assembly-CSharp-firstpass.csproj
 LockstepCopyClient/Assembly-CSharp-firstpass.csproj
+LockstepClient/.cr/
+LockstepClient/Assembly-CSharp.csproj.user
+LockstepClient/BundleMaster.csproj
+LockstepClient/IngameDebugConsole.Editor.csproj
+LockstepClient/IngameDebugConsole.Runtime.csproj
