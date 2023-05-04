@@ -385,7 +385,7 @@ public static class BundleMaster
     {
         atlasDataDic.Clear();
         CheckAssetFile("Assets/Art/UI/icon/");
-        string spriteAtlasPath = "Assets/Resources/UI/icon/";
+        string spriteAtlasPath = "Assets/Bundles/UI/icon/";
         foreach (var item in atlasDataDic)
         {
             SpriteAtlas atlas = new SpriteAtlas();
@@ -465,7 +465,10 @@ public static class BundleMaster
 
     private static string GetAtlasNameFromPath(string path)
     {
-        return path.Replace("/", "_");
+        string[] strs = path.Split("/");
+        var name = strs[strs.Length - 2];
+        Debug.Log("path name " + name);
+        return name;//path.Replace("/", "_");
     }
 
     private static void CreateSpriteAtlas(string atlasname, string atlasPath, List<Sprite> sprites)
