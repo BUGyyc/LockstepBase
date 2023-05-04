@@ -17,4 +17,6 @@ public class SkillInputComponent : IComponent
     public bool leftMousePressed;
     public bool rightMousePressed;
 
+    public LVector3 shootDir;
+
 }

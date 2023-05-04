@@ -57,7 +57,7 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
         {
             transform.position = Vector3.Lerp(transform.position, nowViewPos, 0.3f);
         }
-        else if (distance < 2)
+        else if (distance < 3)
         {
             transform.position = Vector3.Lerp(transform.position, nowViewPos, 0.4f);
         }

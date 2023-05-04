@@ -2,6 +2,8 @@
 using UnityEngine.InputSystem;
 using Entitas;
 using Lockstep;
+using UnityEngine.InputSystem.HID;
+
 public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInput.IUIActions
 {
     private PlayerInput playerInput;
@@ -14,8 +16,13 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
     public void OnClick(InputAction.CallbackContext context)
     {
         //throw new System.NotImplementedException();
+    }
 
-
+    void Update()
+    {
+        //playerInput.Player.Look.ReadValue
+        //var pos = Mouse.current.w;
+        //Debug.DrawRay(pos, Vector3.up, Color.red, 1);
     }
 
     private bool lastFireState;
@@ -25,27 +32,43 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
         //throw new System.NotImplementedException();
         if (context.performed)
         {
-            Debug.Log($"<color=yellow>  键盘输入  Click  </color>");
+
+            var origin = InputManager.Instance.localGameEntity.position.value.ToVector3();
+            var dir = Vector3.zero;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit = default;
+            if (Physics.Raycast(ray, out hit))
+            {
+                //Debug.Log(" 当前鼠标点击物体的名字是————" + hit.collider.name);
+                var targetPos = hit.point;
+                dir = targetPos - origin;
+                dir.y = 0;
+
+            }
+
+            Debug.Log($"<color=yellow>  键盘输入  Click dir：{dir} </color>");
 
             ActionWorld.Instance.Execute(new SkillInputCommand
             {
                 skillId = 1,
                 entityId = ActionWorld.Instance.LocalCharacterEntityId,
-                leftMousePressed = true
+                leftMousePressed = true,
+                shootDir = dir.ToLVector3()
             });
-            lastFireState = true;
+            //lastFireState = true;
         }
 
-        if (context.canceled && lastFireState)
-        {
-            lastFireState = false;
-            ActionWorld.Instance.Execute(new SkillInputCommand
-            {
-                skillId = 1,
-                entityId = ActionWorld.Instance.LocalCharacterEntityId,
-                leftMousePressed = false
-            });
-        }
+        //if (context.canceled && lastFireState)
+        //{
+        //    lastFireState = false;
+        //    ActionWorld.Instance.Execute(new SkillInputCommand
+        //    {
+        //        skillId = 1,
+        //        entityId = ActionWorld.Instance.LocalCharacterEntityId,
+        //        leftMousePressed = false,
+        //        shootDir = dir.ToLVector3()
+        //    });
+        //}
 
 
 

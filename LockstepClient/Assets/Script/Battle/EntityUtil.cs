@@ -8,7 +8,6 @@ using BM;
 
 public static class EntityUtil
 {
-
     private static Dictionary<uint, GameObject> linkedEntities = new Dictionary<uint, GameObject>();
 
     // public const byte BaseCharacterEntityID = 0;
@@ -17,10 +16,8 @@ public static class EntityUtil
 
     public static uint AutoCreateEntityID = BaseCharacterEntityID;
 
-
-
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static uint LocalEntityID = 1000;
 
@@ -47,7 +44,6 @@ public static class EntityUtil
         return com;
     }
 
-
     public static GameEntity CreateAI(int index)
     {
         GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
@@ -56,7 +52,10 @@ public static class EntityUtil
         gameEntity.AddAI((int)AutoCreateEntityID, AIAction.Idle, 0);
 
         // int index = actorId;
-        gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward, Lockstep.LQuaternion.identity);
+        gameEntity.AddPosition(
+            Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward,
+            Lockstep.LQuaternion.identity
+        );
 
         LoadAsyncEntityView(gameEntity, GameSetting.AIPrefab, false).Coroutine();
 
@@ -68,14 +67,16 @@ public static class EntityUtil
         GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
         AddBaseComponent(gameEntity, actorId, EntityType.Hero);
 
-
         gameEntity.AddCharacterInput(0, LVector2.zero, LVector3.zero);
         gameEntity.AddMove(GameSetting.HERO_BASE_SPEED, MoveState.Idle, LVector3.zero);
         gameEntity.AddCharacterAttr(LFloat.one * 100, LFloat.one * 100);
-        gameEntity.AddSkill(0, false);
+        gameEntity.AddSkill(0, false, LVector3.zero);
 
         int index = actorId;
-        gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward, Lockstep.LQuaternion.identity);
+        gameEntity.AddPosition(
+            Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward,
+            Lockstep.LQuaternion.identity
+        );
 
         LoadAsyncEntityView(gameEntity, GameSetting.AIPrefab, true).Coroutine();
 
@@ -97,11 +98,14 @@ public static class EntityUtil
 
         gameEntity.AddCharacterAttr(LFloat.one * 100, LFloat.one * 100);
 
-        gameEntity.AddSkill(0, false);
+        gameEntity.AddSkill(0, false, LVector3.zero);
 
         int index = actorId;
 
-        gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward, Lockstep.LQuaternion.identity);
+        gameEntity.AddPosition(
+            Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward,
+            Lockstep.LQuaternion.identity
+        );
 
         // gameEntity
 
@@ -124,8 +128,36 @@ public static class EntityUtil
         return gameEntity;
     }
 
+    public static GameEntity CreateBulletEntityWithDir(
+        byte actorId,
+        GameEntity shooter,
+        LVector3 dir,
+        bool initSetPosition = true
+    )
+    {
+        GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
+        AddBaseComponent(gameEntity, actorId, EntityType.Bullet);
 
-    public static GameEntity CreateBulletEntity(byte actorId, GameEntity shooter, bool initSetPosition = true)
+        gameEntity.AddPosition(shooter.position.value + LVector3.up, shooter.position.rotate);
+        gameEntity.AddBullet(LFloat.one);
+
+        // var forward = shooter.position.rotate * LVector3.forward;
+
+        // Debug.DrawRay(shooter.position.value.ToVector3(), forward.ToVector3(), Color.yellow, 0.2f);
+
+        gameEntity.AddMove(GameSetting.BULLET_SPEED, MoveState.Walk, dir.normalized);
+        //var go = LoadEntityView(gameEntity, GameSetting.BulletPrefab);
+
+        LoadAsyncEntityView(gameEntity, GameSetting.BulletPrefab).Coroutine();
+
+        return gameEntity;
+    }
+
+    public static GameEntity CreateBulletEntity(
+        byte actorId,
+        GameEntity shooter,
+        bool initSetPosition = true
+    )
     {
         GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
         AddBaseComponent(gameEntity, actorId, EntityType.Bullet);
@@ -154,7 +186,6 @@ public static class EntityUtil
         AutoCreateEntityID++;
     }
 
-
     public static GameObject GetEntityGameObject(uint entityId)
     {
         if (linkedEntities.ContainsKey(entityId))
@@ -164,10 +195,14 @@ public static class EntityUtil
         return null;
     }
 
-    private static async ETTask LoadAsyncEntityView(GameEntity entity, string path, bool isLocalMaster = false)
+    private static async ETTask LoadAsyncEntityView(
+        GameEntity entity,
+        string path,
+        bool isLocalMaster = false
+    )
     {
         var obj = await AssetComponent.LoadAsync<GameObject>(out LoadHandler handler, path);
-        if (obj == null) 
+        if (obj == null)
         {
             Debug.LogError($"加载失败    path {path}");
             return;
@@ -195,13 +230,18 @@ public static class EntityUtil
             if (isLocalMaster)
             {
                 CharacterCameraController.Instance.InitCharacterCamera(viewGo.transform);
+
+                InputManager.Instance.BindGameEntity(entity);
             }
         }
         //return obj;
     }
 
-
-    private static UnityEngine.GameObject LoadEntityView(GameEntity entity, string path, bool isLocalMaster = false)
+    private static UnityEngine.GameObject LoadEntityView(
+        GameEntity entity,
+        string path,
+        bool isLocalMaster = false
+    )
     {
         // bool isLocalMaster = entity.actorId.value == ActionWorld.Instance.LocalCharacterEntityId;
         var obj = Resources.Load<GameObject>(path);
@@ -234,4 +274,3 @@ public static class EntityUtil
         return viewGo;
     }
 }
-

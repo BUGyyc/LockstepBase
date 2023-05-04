@@ -19,6 +19,11 @@ public class InputManager : MonoBehaviour
 
     private InputHandler inputHandler;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         mainCamera = Camera.main;

@@ -15,13 +15,15 @@ public class SkillInputCommand : ICommand, ISerializable
     public bool leftMousePressed;
     public bool rightMousePressed;
 
+    public LVector3 shootDir;
+
     public ushort Tag => CommandDefine.SkillInput;
 
     public void Execute(InputEntity e)
     {
-        // UnityEngine.Debug.Log($" System 响应键盘输入 {moveSpeed}");
+         UnityEngine.Debug.Log($" System 响应键盘输入 {shootDir}");
         // e.AddCharacterInputSpeed(moveSpeed, inputOriginData);
-        e.AddSkillInput(skillId, entityId, leftMousePressed, rightMousePressed);
+        e.AddSkillInput(skillId, entityId, leftMousePressed, rightMousePressed, shootDir);
     }
 
     public void Serialize(Serializer writer)

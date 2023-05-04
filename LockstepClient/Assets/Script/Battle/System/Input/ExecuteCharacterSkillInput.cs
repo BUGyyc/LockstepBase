@@ -40,8 +40,8 @@ public class ExecuteCharacterSkillInput : IExecuteSystem, ISystem
         //晒选指定帧号，生成对应的Entity
         foreach (
             InputEntity item in from entity in _skillInputs.GetEntities()
-            where entity.tick.value == _gameStateContext.tick.value
-            select entity
+                                where entity.tick.value == _gameStateContext.tick.value
+                                select entity
         )
         {
             var leftMousePressed = item.skillInput.leftMousePressed;
@@ -60,6 +60,11 @@ public class ExecuteCharacterSkillInput : IExecuteSystem, ISystem
             gameEntity.skill.skillId = item.skillInput.skillId;
 
             gameEntity.skill.shootSkill = true;
+
+
+            LogMaster.L("射击方向 " + item.skillInput.shootDir);
+
+            gameEntity.skill.shootDir = item.skillInput.shootDir;
 
             // var speed = item.characterInput.moveDir;
 
