@@ -5,6 +5,7 @@ using ET;
 using BM;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 // using ABCore;
 //namespace ET.Client
 //{
@@ -16,7 +17,10 @@ public class AssetBundleExample : MonoBehaviour
     public Text loadStepTip;
     private UpdateBundleDataInfo updateInfo;
 
-
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
 
     void Start()
     {
@@ -96,7 +100,9 @@ public class AssetBundleExample : MonoBehaviour
 
     const string AtlasPath = "Assets/Bundles/Atlas/icon.spriteatlas";
     const string SuccessBtnPath = "Assets/Bundles/Prefabs/SuccessBtn.prefab";
-
+    const string SubScene0 = "Assets/Scenes/Test/AB_0.unity";
+    const string SubScene1 = "Assets/Scenes/Test/AB_1.unity";
+    const string SubScene2 = "Assets/Scenes/Test/AB_2.unity";
     /// <summary>
     /// 初始化 UI
     /// </summary>
@@ -114,14 +120,32 @@ public class AssetBundleExample : MonoBehaviour
         loginUIObj.GetComponent<Button>().onClick.AddListener(() =>
         {
             loadStepTip.text = "点击了按钮";
-            atlasHandler.UnLoad();
-            loginUIHandler.UnLoad();
+            //atlasHandler.UnLoad();
+            //loginUIHandler.UnLoad();
+
+            LoadABScene().Coroutine();
         });
 
     }
 
-    private async ETTask LoadAtlas()
+    private async ETTask LoadABScene()
     {
+        LoadSceneHandler loadHandler = await AssetComponent.LoadSceneAsync(SubScene0);
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync("AB_0");
+        operation.completed += asyncOperation =>
+        {
+            Debug.Log("场景加载完成");
+
+            //loadStepTip.text = "场景加载完成";
+            //AssetComponent.LoadAsync<GameObject>(out LoadHandler handler, BPath.Assets_Bundles_SubBundleAssets_mister91jiao__prefab, "SubBundle").Coroutine();
+            //handler.Completed += loadHandler =>
+            //{
+            //    UnityEngine.Object.Instantiate(loadHandler.Asset);
+            //    ResetUI().Coroutine();
+            //};
+            //LoadGroupTest().Coroutine();
+        };
 
     }
 
