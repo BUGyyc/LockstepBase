@@ -27,7 +27,7 @@ public class InputManager : MonoBehaviour
         inputHandler = this.gameObject.AddComponent<InputHandler>();
         inputHandler.Init();
 
-        InputUtil.HideMouse();
+        //InputUtil.HideMouse();
     }
 
 

@@ -61,26 +61,28 @@ public class BaseMoveSystem : IExecuteSystem, ISystem
             }
 
 
+            entity.position.value += (new LVector3(true, speed2d._x, 0, speed2d._y) * GameSetting.Key_Time);
 
-
-            LFloat angleLf = LMath.AngleInt(currForward2dNor, speed2dNor);
-            var crossV3 = LVector3.Cross(currForward2dNor, speed2dNor);
-            bool isRotateToLeft = crossV3._y < 0;
-            bool needRotate = angleLf._val >= 20 * LFloat.Precision;
-            // Debug.Log($"baseMove  speed2dNor {speed2dNor}   needRotate {needRotate} isRotateToLeft {isRotateToLeft} ");
-            if (needRotate)
-            {
-                //先旋转
-                RotateEntity(entity, isRotateToLeft);
-            }
-            else
-            {
-                //立即转向到方向，然后直接移动
-                LVector3 forwardLv3 = speed2d.ToLVector3();
-                LQuaternion target = LQuaternion.LookRotation(forwardLv3);
-                entity.position.rotate = target;
-                entity.position.value += (new LVector3(true, speed2d._x, 0, speed2d._y) * GameSetting.Key_Time);
-            }
+            
+            //TODO: 先旋转，再位移
+            //LFloat angleLf = LMath.AngleInt(currForward2dNor, speed2dNor);
+            //var crossV3 = LVector3.Cross(currForward2dNor, speed2dNor);
+            //bool isRotateToLeft = crossV3._y < 0;
+            //bool needRotate = angleLf._val >= 20 * LFloat.Precision;
+            //// Debug.Log($"baseMove  speed2dNor {speed2dNor}   needRotate {needRotate} isRotateToLeft {isRotateToLeft} ");
+            //if (needRotate)
+            //{
+            //    //先旋转
+            //    RotateEntity(entity, isRotateToLeft);
+            //}
+            //else
+            //{
+            //    //立即转向到方向，然后直接移动
+            //    LVector3 forwardLv3 = speed2d.ToLVector3();
+            //    LQuaternion target = LQuaternion.LookRotation(forwardLv3);
+            //    entity.position.rotate = target;
+            //    entity.position.value += (new LVector3(true, speed2d._x, 0, speed2d._y) * GameSetting.Key_Time);
+            //}
         }
     }
 

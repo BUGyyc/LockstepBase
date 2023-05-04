@@ -40,35 +40,64 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
 
         //transform.position = temp;
 
+        //数据层的坐标和朝向
         target = position;
         targetRotate = _rotate;
+    }
+
+    private void Update()
+    {
+        var lastViewPos = transform.position;
+        var lastViewRot = transform.rotation;
+
+        var nowViewPos = target.ToVector3();
+
+        var distance = Vector3.Distance(lastViewPos, target.ToVector3());
+        if (distance < 1)
+        {
+            transform.position = Vector3.Lerp(transform.position, nowViewPos, 0.3f);
+        }
+        else if (distance < 2)
+        {
+            transform.position = Vector3.Lerp(transform.position, nowViewPos, 0.4f);
+        }
+        else
+        {
+            transform.position = nowViewPos;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(target.ToVector3(), 1f);
     }
 
     private void FixedUpdate()
     {
         //当前坐标
-        var lTransformPos = transform.position.ToLVector3();
+        //var lTransformPos = transform.position.ToLVector3();
 
-        //与目标位置的距离
-        LFloat distance = LMath.Distance(target, lTransformPos);
+        ////与目标位置的距离
+        //LFloat distance = LMath.Distance(target, lTransformPos);
 
-        // Debug.LogFormat($"  dis  {distance}");
+        //// Debug.LogFormat($"  dis  {distance}");
 
-        if (distance._val < 200)
-        {
-            transform.position = target.ToVector3();
-        }
-        else
-        {
+        //if (distance._val < 200)
+        //{
+        //    transform.position = target.ToVector3();
+        //}
+        //else
+        //{
 
-            LVector3 framePos = LVector3.Lerp(lTransformPos, target, distance * FrameStep);
+        //    LVector3 framePos = LVector3.Lerp(lTransformPos, target, distance * FrameStep);
 
-            transform.position = framePos.ToVector3();
-        }
+        //    transform.position = framePos.ToVector3();
+        //}
 
 
-        LQuaternion q = transform.rotation.ToLQuaternion();
-        transform.rotation = LQuaternion.Lerp(q, targetRotate, FrameStep * 30).ToQuaternion();
+        //LQuaternion q = transform.rotation.ToLQuaternion();
+        //transform.rotation = LQuaternion.Lerp(q, targetRotate, FrameStep * 30).ToQuaternion();
 
     }
 

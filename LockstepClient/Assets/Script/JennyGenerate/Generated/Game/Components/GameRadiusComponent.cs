@@ -8,12 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public Lockstep.Core.State.Game.RadiusComponent radius { get { return (Lockstep.Core.State.Game.RadiusComponent)GetComponent(GameComponentsLookup.Radius); } }
-    public bool hasRadius { get { return HasComponent(GameComponentsLookup.Radius); } }
+    static readonly Lockstep.Core.State.Game.RadiusComponent radiusComponent = new Lockstep.Core.State.Game.RadiusComponent();
 
+    public bool isRadius {
+        get { return HasComponent(GameComponentsLookup.Radius); }
+        set {
+            if (value != isRadius) {
+                var index = GameComponentsLookup.Radius;
+                if (value) {
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : radiusComponent;
 
-    public void RemoveRadius() {
-        RemoveComponent(GameComponentsLookup.Radius);
+                    AddComponent(index, component);
+                } else {
+                    RemoveComponent(index);
+                }
+            }
+        }
     }
 }
 

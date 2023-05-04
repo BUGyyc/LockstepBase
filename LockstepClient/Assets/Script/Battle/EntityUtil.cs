@@ -3,6 +3,9 @@ using Entitas.Unity;
 using UnityEngine;
 using System.Collections.Generic;
 using Lockstep;
+using ET;
+using BM;
+
 public static class EntityUtil
 {
 
@@ -55,7 +58,7 @@ public static class EntityUtil
         // int index = actorId;
         gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward, Lockstep.LQuaternion.identity);
 
-        var go = LoadEntityView(gameEntity, GameSetting.AIPrefab, false);
+        LoadAsyncEntityView(gameEntity, GameSetting.AIPrefab, false).Coroutine();
 
         return gameEntity;
     }
@@ -69,12 +72,12 @@ public static class EntityUtil
         gameEntity.AddCharacterInput(0, LVector2.zero, LVector3.zero);
         gameEntity.AddMove(GameSetting.HERO_BASE_SPEED, MoveState.Idle, LVector3.zero);
         gameEntity.AddCharacterAttr(LFloat.one * 100, LFloat.one * 100);
-        gameEntity.AddSkill(0, 0);
+        gameEntity.AddSkill(0, false);
 
         int index = actorId;
         gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward, Lockstep.LQuaternion.identity);
 
-        var go = LoadEntityView(gameEntity, GameSetting.HeroPrefabPath, true);
+        LoadAsyncEntityView(gameEntity, GameSetting.AIPrefab, true).Coroutine();
 
         return gameEntity;
     }
@@ -94,7 +97,7 @@ public static class EntityUtil
 
         gameEntity.AddCharacterAttr(LFloat.one * 100, LFloat.one * 100);
 
-        gameEntity.AddSkill(0, 0);
+        gameEntity.AddSkill(0, false);
 
         int index = actorId;
 
@@ -110,13 +113,13 @@ public static class EntityUtil
         };
         gameEntity.AddComponent(GameComponentsLookup.Animation, animation);
         // gameEntity.Ad
-        var go = LoadEntityView(gameEntity, GameSetting.HeroPrefabPath, true);
+        LoadAsyncEntityView(gameEntity, GameSetting.HeroPrefabPath, true).Coroutine();
 
-        if (go != null)
-        {
-            var aniBindEntity = go.GetComponentInChildren<AnimatorBindEntity>();
-            if (aniBindEntity) aniBindEntity.SetGameEntity(gameEntity);
-        }
+        //if (go != null)
+        //{
+        //    var aniBindEntity = go.GetComponentInChildren<AnimatorBindEntity>();
+        //    if (aniBindEntity) aniBindEntity.SetGameEntity(gameEntity);
+        //}
 
         return gameEntity;
     }
@@ -135,7 +138,10 @@ public static class EntityUtil
         Debug.DrawRay(shooter.position.value.ToVector3(), forward.ToVector3(), Color.yellow, 0.2f);
 
         gameEntity.AddMove(GameSetting.BULLET_SPEED, MoveState.Walk, forward);
-        var go = LoadEntityView(gameEntity, GameSetting.BulletPrefab);
+        //var go = LoadEntityView(gameEntity, GameSetting.BulletPrefab);
+
+        LoadAsyncEntityView(gameEntity, GameSetting.BulletPrefab).Coroutine();
+
         return gameEntity;
     }
 
@@ -157,6 +163,43 @@ public static class EntityUtil
         }
         return null;
     }
+
+    private static async ETTask LoadAsyncEntityView(GameEntity entity, string path, bool isLocalMaster = false)
+    {
+        var obj = await AssetComponent.LoadAsync<GameObject>(out LoadHandler handler, path);
+        if (obj == null) 
+        {
+            Debug.LogError($"加载失败    path {path}");
+            return;
+        }
+        var viewGo = GameObject.Instantiate(obj);
+        if (viewGo != null)
+        {
+            viewGo.Link(entity);
+
+            var componentSetters = viewGo.GetComponents<IComponentSetter>();
+            foreach (var componentSetter in componentSetters)
+            {
+                componentSetter.SetComponent(entity);
+                UnityEngine.Object.Destroy((MonoBehaviour)componentSetter);
+            }
+
+            var eventListeners = viewGo.GetComponents<IEventListener>();
+            foreach (var listener in eventListeners)
+            {
+                listener.RegisterListeners(entity);
+            }
+
+            linkedEntities.Add(entity.localId.value, viewGo);
+
+            if (isLocalMaster)
+            {
+                CharacterCameraController.Instance.InitCharacterCamera(viewGo.transform);
+            }
+        }
+        //return obj;
+    }
+
 
     private static UnityEngine.GameObject LoadEntityView(GameEntity entity, string path, bool isLocalMaster = false)
     {

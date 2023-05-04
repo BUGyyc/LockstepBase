@@ -74,15 +74,18 @@ public class CharacterCameraController : MonoBehaviour
         Instance = this;
     }
 
+    GameObject virtualCameraList;
+    GameObject virtualCamera;
+
     public void InitCharacterCamera(Transform virtualParentRoot)
     {
         _virtualParentRoot = virtualParentRoot;
-        var virtualCameraList = new GameObject("VirtualCameraList");
+        virtualCameraList = new GameObject("VirtualCameraList");
         virtualCameraList.transform.SetParent(virtualParentRoot);
         virtualCameraList.transform.localPosition = Vector3.zero;
         virtualCameraList.transform.localEulerAngles = Vector3.zero;
 
-        var virtualCamera = new GameObject("VirtualCamera");
+        virtualCamera = new GameObject("VirtualCamera");
         virtualCamera.transform.SetParent(virtualCameraList.transform);
         virtualCamera.transform.localPosition = GlobalSetting.CameraInitPos;
         virtualCamera.transform.localRotation = GlobalSetting.CameraInitQ;
@@ -97,6 +100,24 @@ public class CharacterCameraController : MonoBehaviour
 
     private void Update()
     {
+        if (virtualCameraList != null)
+        {
+            virtualCameraList.transform.localPosition = Vector3.zero;
+            virtualCameraList.transform.localEulerAngles = Vector3.zero;
+        }
+
+        if (virtualCamera != null)
+        {
+            virtualCamera.transform.localPosition = GlobalSetting.CameraInitPos;
+            virtualCamera.transform.localRotation = GlobalSetting.CameraInitQ;
+        }
+
+        if (cameraTf != null)
+        {
+            var v3 = cameraTf.transform.localRotation.eulerAngles;
+            cameraTf.transform.localRotation = Quaternion.Euler(v3.x, 0, v3.z);
+        }
+
         UpdateView();
     }
 
@@ -116,7 +137,7 @@ public class CharacterCameraController : MonoBehaviour
         //    mRotation = Quaternion.LookRotation(direction, Vector3.up);
         //}
 
-        mViewDummyTran.rotation = Quaternion.Euler(Pitch, Yaw, 0);
+        //mViewDummyTran.rotation = Quaternion.Euler(Pitch, Yaw, 0);
     }
 
     //public bool HasLookAtTf()
@@ -149,8 +170,8 @@ public class CharacterCameraController : MonoBehaviour
 
     public void UpdateCameraDir(Vector2 deltaViewDir)
     {
-        Pitch += deltaViewDir.y * PitchRotateScaleValue;
-        Yaw += deltaViewDir.x * YawRotateScaleValue;
+        //Pitch += deltaViewDir.y * PitchRotateScaleValue;
+        //Yaw += deltaViewDir.x * YawRotateScaleValue;
     }
 
     private bool CheckWall()

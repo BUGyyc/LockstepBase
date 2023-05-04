@@ -82,3 +82,6 @@ LockstepClient/HotfixBundles/
 LockstepClient/Assembly-CSharp.csproj.user
 LockstepClient/.cr/
 LockstepClient/Assets/Bundles/
+LockstepCopyClient/HotfixBundles/
+LockstepCopyClient/IngameDebugConsole.Editor.csproj
+LockstepCopyClient/IngameDebugConsole.Runtime.csproj

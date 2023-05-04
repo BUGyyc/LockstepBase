@@ -4,11 +4,11 @@ public static class GameSetting
     public const string WalkMove = "WalkMove";
     public const string ReturnIDLE = "WalkMove";
 
-    public const string BulletPrefab = "Prefabs/Bullet";
+    public const string BulletPrefab = "Assets/Bundles/Prefabs/Bullet.prefab";
 
-    public const string HeroPrefabPath = "Prefabs/ClazyRunner";//"Prefabs/Hero";
+    public const string HeroPrefabPath = "Assets/Bundles/Prefabs/ClazyRunner.prefab";//"Prefabs/Hero";
 
-    public const string AIPrefab = "Prefabs/AI";
+    public const string AIPrefab = "Assets/Bundles/Prefabs/AI.prefab";
 
     public const string HeroInitAnimationName = "WalkMove";
 

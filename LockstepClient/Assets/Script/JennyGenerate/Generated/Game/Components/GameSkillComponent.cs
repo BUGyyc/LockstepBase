@@ -11,19 +11,21 @@ public partial class GameEntity {
     public SkillComponent skill { get { return (SkillComponent)GetComponent(GameComponentsLookup.Skill); } }
     public bool hasSkill { get { return HasComponent(GameComponentsLookup.Skill); } }
 
-    public void AddSkill(uint newSkillId, uint newLastStartTick) {
+    public void AddSkill(uint newSkillId, bool newShootSkill) {
         var index = GameComponentsLookup.Skill;
         var component = (SkillComponent)CreateComponent(index, typeof(SkillComponent));
         component.skillId = newSkillId;
-        component.lastStartTick = newLastStartTick;
+        component.shootSkill = newShootSkill;
+        //component.lastStartTick = newLastStartTick;
         AddComponent(index, component);
     }
 
-    public void ReplaceSkill(uint newSkillId, uint newLastStartTick) {
+    public void ReplaceSkill(uint newSkillId, bool newShootSkill) {
         var index = GameComponentsLookup.Skill;
         var component = (SkillComponent)CreateComponent(index, typeof(SkillComponent));
         component.skillId = newSkillId;
-        component.lastStartTick = newLastStartTick;
+        component.shootSkill = newShootSkill;
+        //component.lastStartTick = newLastStartTick;
         ReplaceComponent(index, component);
     }
 

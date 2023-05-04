@@ -33,7 +33,7 @@ namespace BM
                 AssetLogHelper.LogError(bundlePackageName + "分包没有初始化");
                 return null;
             }
-            
+
             if (!bundleRuntimeInfo.AllAssetLoadHandler.TryGetValue(assetPath, out loadHandler))
             {
                 loadHandler = LoadHandlerFactory.GetLoadHandler(assetPath, bundlePackageName, true, true);
@@ -59,7 +59,7 @@ namespace BM
             }
             return asset;
         }
-        
+
         /// <summary>
         /// 获取Handler 同步加载(泛型)
         /// </summary>
@@ -96,13 +96,13 @@ namespace BM
             return (T)handler.Asset;
         }
         public static T Load<T>(out LoadHandler handler, string assetPath, string bundlePackageName) where T : UnityEngine.Object => Load<T>(out handler, assetPath, false, bundlePackageName);
-        
+
         /// <summary>
         /// 同步加载
         /// </summary>
         public static UnityEngine.Object Load(string assetPath, string bundlePackageName = null)
         {
-           
+
             if (bundlePackageName == null)
             {
                 bundlePackageName = AssetComponentConfig.DefaultBundlePackageName;
@@ -142,13 +142,13 @@ namespace BM
             }
             return loadHandler.Asset;
         }
-        
+
         /// <summary>
         /// 获取Handler 同步加载
         /// </summary>
         public static UnityEngine.Object Load(out LoadHandler handler, string assetPath, bool isPool = false, string bundlePackageName = null)
         {
-           
+
             if (bundlePackageName == null)
             {
                 bundlePackageName = AssetComponentConfig.DefaultBundlePackageName;
@@ -180,7 +180,7 @@ namespace BM
             return handler.Asset;
         }
         public static UnityEngine.Object Load(out LoadHandler handler, string assetPath, string bundlePackageName) => Load(out handler, assetPath, false, bundlePackageName);
-        
+
         /// <summary>
         /// 异步加载(泛型)
         /// </summary>
@@ -227,7 +227,7 @@ namespace BM
             coroutineLock.Dispose();
             return (T)loadHandler.Asset;
         }
-        
+
         /// <summary>
         /// 获取Handler 异步加载(泛型)
         /// </summary>
@@ -253,7 +253,7 @@ namespace BM
             }
             if (!BundleNameToRuntimeInfo.TryGetValue(bundlePackageName, out BundleRuntimeInfo bundleRuntimeInfo))
             {
-                AssetLogHelper.LogError(bundlePackageName + "分包没有初始化");
+                AssetLogHelper.LogError(bundlePackageName + "分包没有初始化" + "  assetPath: " + assetPath);
                 handler = null;
                 tcs.SetResult(null);
                 return tcs;
@@ -264,7 +264,7 @@ namespace BM
             return tcs;
         }
         public static ETTask<T> LoadAsync<T>(out LoadHandler handler, string assetPath, string bundlePackageName) where T : UnityEngine.Object => LoadAsync<T>(out handler, assetPath, false, bundlePackageName);
-        
+
         /// <summary>
         /// 异步加载
         /// </summary>
@@ -311,7 +311,7 @@ namespace BM
             coroutineLock.Dispose();
             return loadHandler.Asset;
         }
-        
+
         /// <summary>
         /// 获取Handler 异步加载
         /// </summary>
@@ -348,7 +348,7 @@ namespace BM
             return tcs;
         }
         public static ETTask<UnityEngine.Object> LoadAsync(out LoadHandler handler, string assetPath, string bundlePackageName) => LoadAsync(out handler, assetPath, false, bundlePackageName);
-        
+
         private static async ETTask LoadAsyncTcs<T>(LoadHandler handlerRef, string assetPath, ETTask<T> finishTcs) where T : UnityEngine.Object
         {
             await handlerRef.LoadAsync();
@@ -373,7 +373,7 @@ namespace BM
                 finishTcs.SetResult(loadAssetAsync.asset);
             };
         }
-        
+
         /// <summary>
         /// 同步加载场景的AssetBundle包
         /// </summary>
@@ -398,7 +398,7 @@ namespace BM
             loadSceneHandler.LoadSceneBundle();
             return loadSceneHandler;
         }
-        
+
         /// <summary>
         /// 异步加载场景的AssetBundle包
         /// </summary>
@@ -451,7 +451,7 @@ namespace BM
             loadSceneHandler.LoadSceneBundleAsync(tcs).Coroutine();
             return tcs;
         }
-        
+
         /// <summary>
         /// 从一个分包里加载shader
         /// </summary>
@@ -477,7 +477,7 @@ namespace BM
             }
             return bundleRuntimeInfo.Shader.LoadAsset<Shader>(shaderPath);
         }
-        
+
         /// <summary>
         /// 从一个分包里异步加载shader
         /// </summary>
@@ -503,11 +503,11 @@ namespace BM
                 AssetLogHelper.LogError("加载Shader没有此分包: " + bundlePackageName);
                 return null;
             }
-            
+
             AssetBundleRequest bundleRequest = bundleRuntimeInfo.Shader.LoadAssetAsync<Shader>(shaderPath);
             bundleRequest.completed += operation =>
             {
-                tcs.SetResult(bundleRequest.asset as  Shader);
+                tcs.SetResult(bundleRequest.asset as Shader);
             };
             return tcs;
         }
@@ -517,7 +517,7 @@ namespace BM
         /// </summary>
         public static BundleRuntimeInfo GetBundleRuntimeInfo(string bundlePackageName)
         {
-            
+
             if (AssetComponentConfig.AssetLoadMode == AssetLoadMode.Develop)
             {
 #if UNITY_EDITOR
@@ -531,7 +531,7 @@ namespace BM
 #else
                 AssetLogHelper.LogError("资源加载Develop模式只能在编辑器下运行");
 #endif
-               
+
             }
             if (BundleNameToRuntimeInfo.TryGetValue(bundlePackageName, out BundleRuntimeInfo bundleRuntimeInfo))
             {
@@ -551,18 +551,18 @@ namespace BM
         /// 开发模式(无需打包，编辑器下AssetDatabase加载)
         /// </summary>
         Develop = 0,
-        
+
         /// <summary>
         /// 本地调试模式(需要打包，直接加载最新Bundle，不走热更逻辑)
         /// </summary>
         Local = 1,
-        
+
         /// <summary>
         /// 发布模式(需要打包，走版本对比更新流程)
         /// </summary>
         Build = 2,
     }
-    
+
 }
 
 

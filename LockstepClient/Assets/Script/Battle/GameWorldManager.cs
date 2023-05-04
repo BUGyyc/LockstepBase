@@ -63,10 +63,10 @@ public class GameWorldManager
         }
         Debug.LogFormat("创建玩家");
 
-        for (var i = 0; i < 20; i++)
-        {
-            EntityUtil.CreateAI(i);
-        }
+        //for (var i = 0; i < 20; i++)
+        //{
+        //    EntityUtil.CreateAI(i);
+        //}
     }
 
     private void CreateLocalPlayer()

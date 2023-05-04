@@ -4,5 +4,7 @@ public class SkillComponent : IComponent
 {
     public uint skillId;
 
-    public uint lastStartTick;
+    public bool shootSkill;
+
+    //public uint lastStartTick;
 }

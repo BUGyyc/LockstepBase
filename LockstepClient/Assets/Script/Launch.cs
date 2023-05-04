@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using BM;
+using ET;
 
 public class Launch : MonoBehaviour
 {
@@ -172,7 +174,10 @@ public class Launch : MonoBehaviour
 
         PlayerNumber = (uint)int.Parse(playerIF.text);
 
-        SceneManager.LoadScene("ClientAndServer");
+        //SceneManager.LoadScene("ClientAndServer");
+
+        LoadAsyncScene().Coroutine();
+
 
         NetSetting.ServerIp = SetGet_str_ipAddress;
         NetSetting.ServerPort = (uint)port;
@@ -180,6 +185,18 @@ public class Launch : MonoBehaviour
         NetSetting.PlayerNumber = PlayerNumber;
 
         //Debug.Log($"启动Server  IP {SetGet_str_ipAddress} Port {port}  PlayerNumber {PlayerNumber}  ");
+    }
+
+    private async ETTask LoadAsyncScene()
+    {
+        string scenePath = "Assets/Scenes/Debug/0.launch/ClientAndServer.unity";
+        string sceneName = "ClientAndServer";
+        LoadSceneHandler loadHandler = await AssetComponent.LoadSceneAsync(scenePath);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.completed += asyncOperation =>
+        {
+            Debug.Log("场景加载完成  " + scenePath);
+        };
     }
 
     private void StartClient()
@@ -192,7 +209,8 @@ public class Launch : MonoBehaviour
 
         //Debug.Log($"开始连接Server IP {NetSetting.ServerIp} Port {NetSetting.ServerPort}  ");
 
-        SceneManager.LoadScene(GameSceneSetting.BattleTestScene);
+        //SceneManager.LoadScene(GameSceneSetting.BattleTestScene);
+        LoadAsyncScene().Coroutine();
     }
 
 

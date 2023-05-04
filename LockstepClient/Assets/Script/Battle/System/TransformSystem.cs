@@ -21,7 +21,11 @@ public class TransformSystem : IExecuteSystem, ISystem
         foreach (GameEntity entity in _gameEntities.GetEntities())
         {
             var position = entity.position;
+
+            if (entity.hasPositionListener == false) continue;
+
             var positionListener = entity.positionListener;
+           
             foreach (var listener in positionListener.value)
             {
                 listener.OnPosition(entity, position.value, position.rotate);

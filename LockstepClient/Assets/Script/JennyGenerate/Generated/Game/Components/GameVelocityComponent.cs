@@ -8,12 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public Lockstep.Core.State.Game.VelocityComponent velocity { get { return (Lockstep.Core.State.Game.VelocityComponent)GetComponent(GameComponentsLookup.Velocity); } }
-    public bool hasVelocity { get { return HasComponent(GameComponentsLookup.Velocity); } }
+    static readonly Lockstep.Core.State.Game.VelocityComponent velocityComponent = new Lockstep.Core.State.Game.VelocityComponent();
 
+    public bool isVelocity {
+        get { return HasComponent(GameComponentsLookup.Velocity); }
+        set {
+            if (value != isVelocity) {
+                var index = GameComponentsLookup.Velocity;
+                if (value) {
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : velocityComponent;
 
-    public void RemoveVelocity() {
-        RemoveComponent(GameComponentsLookup.Velocity);
+                    AddComponent(index, component);
+                } else {
+                    RemoveComponent(index);
+                }
+            }
+        }
     }
 }
 

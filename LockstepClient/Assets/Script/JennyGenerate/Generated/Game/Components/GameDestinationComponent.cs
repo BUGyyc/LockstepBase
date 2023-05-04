@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public Lockstep.Core.State.Game.DestinationComponent destination { get { return (Lockstep.Core.State.Game.DestinationComponent)GetComponent(GameComponentsLookup.Destination); } }
-    public bool hasDestination { get { return HasComponent(GameComponentsLookup.Destination); } }
+    static readonly Lockstep.Core.State.Game.DestinationComponent destinationComponent = new Lockstep.Core.State.Game.DestinationComponent();
 
-    // public void AddDestination(BEPUutilities.Vector2 newValue) {
-    //     var index = GameComponentsLookup.Destination;
-    //     var component = (Lockstep.Core.State.Game.DestinationComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.DestinationComponent));
-    //     component.value = newValue;
-    //     AddComponent(index, component);
-    // }
+    public bool isDestination {
+        get { return HasComponent(GameComponentsLookup.Destination); }
+        set {
+            if (value != isDestination) {
+                var index = GameComponentsLookup.Destination;
+                if (value) {
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : destinationComponent;
 
-    // public void ReplaceDestination(BEPUutilities.Vector2 newValue) {
-    //     var index = GameComponentsLookup.Destination;
-    //     var component = (Lockstep.Core.State.Game.DestinationComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.DestinationComponent));
-    //     component.value = newValue;
-    //     ReplaceComponent(index, component);
-    // }
-
-    public void RemoveDestination() {
-        RemoveComponent(GameComponentsLookup.Destination);
+                    AddComponent(index, component);
+                } else {
+                    RemoveComponent(index);
+                }
+            }
+        }
     }
 }
 

@@ -25,3 +25,7 @@ MonoBehaviour:
   AssetGroupPaths: []
   Scene:
   - {fileID: 102900000, guid: c01e45e2a2c64594a95d33b12a99e8f3, type: 3}
+  - {fileID: 102900000, guid: 86efc22a47e1e704c83420975439f67e, type: 3}
+  - {fileID: 102900000, guid: b0817d15af463a54f843f61182c218f7, type: 3}
+  - {fileID: 102900000, guid: f80e2b7ce70349e479994e774d7e32ea, type: 3}
+  - {fileID: 102900000, guid: b5e303eaf919a49409df6c03c425529a, type: 3}

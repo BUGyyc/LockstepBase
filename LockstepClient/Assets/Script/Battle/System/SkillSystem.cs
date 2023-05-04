@@ -45,14 +45,20 @@ public class SkillSystem : IExecuteSystem, ISystem
 
             if (skillId == 0) continue;
 
-            uint lastTick = entity.skill.lastStartTick;
-
-            if (tick - lastTick >= 10)
+            if (entity.skill.shootSkill)
             {
-                entity.skill.lastStartTick = tick;
-
+                entity.skill.shootSkill = false;
                 TickFire(entity);
             }
+
+            //uint lastTick = entity.skill.lastStartTick;
+
+            //if (tick - lastTick >= 10)
+            //{
+            //    entity.skill.lastStartTick = tick;
+
+            //    TickFire(entity);
+            //}
 
         }
     }

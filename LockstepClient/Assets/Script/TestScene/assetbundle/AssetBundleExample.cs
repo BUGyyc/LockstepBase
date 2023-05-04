@@ -103,6 +103,8 @@ public class AssetBundleExample : MonoBehaviour
     const string SubScene0 = "Assets/Scenes/Test/AB_0.unity";
     const string SubScene1 = "Assets/Scenes/Test/AB_1.unity";
     const string SubScene2 = "Assets/Scenes/Test/AB_2.unity";
+
+    const string ClientRoomScene = "Assets/Scenes/Debug/0.launch/LaunchClient.unity";
     /// <summary>
     /// 初始化 UI
     /// </summary>
@@ -123,10 +125,21 @@ public class AssetBundleExample : MonoBehaviour
             //atlasHandler.UnLoad();
             //loginUIHandler.UnLoad();
 
-            LoadABScene().Coroutine();
+            LoadClientRoomScene().Coroutine();
         });
 
     }
+
+    private async ETTask LoadClientRoomScene()
+    {
+        LoadSceneHandler loadHandler = await AssetComponent.LoadSceneAsync(ClientRoomScene);
+        AsyncOperation operation = SceneManager.LoadSceneAsync("LaunchClient");
+        operation.completed += asyncOperation =>
+        {
+            Debug.Log("场景加载完成  " + ClientRoomScene);
+        };
+    }
+
 
     private async ETTask LoadABScene()
     {

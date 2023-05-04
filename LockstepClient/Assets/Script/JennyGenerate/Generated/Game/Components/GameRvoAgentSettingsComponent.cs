@@ -8,12 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public Lockstep.Core.State.Game.RvoAgentSettingsComponent rvoAgentSettings { get { return (Lockstep.Core.State.Game.RvoAgentSettingsComponent)GetComponent(GameComponentsLookup.RvoAgentSettings); } }
-    public bool hasRvoAgentSettings { get { return HasComponent(GameComponentsLookup.RvoAgentSettings); } }
+    static readonly Lockstep.Core.State.Game.RvoAgentSettingsComponent rvoAgentSettingsComponent = new Lockstep.Core.State.Game.RvoAgentSettingsComponent();
 
+    public bool isRvoAgentSettings {
+        get { return HasComponent(GameComponentsLookup.RvoAgentSettings); }
+        set {
+            if (value != isRvoAgentSettings) {
+                var index = GameComponentsLookup.RvoAgentSettings;
+                if (value) {
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : rvoAgentSettingsComponent;
 
-    public void RemoveRvoAgentSettings() {
-        RemoveComponent(GameComponentsLookup.RvoAgentSettings);
+                    AddComponent(index, component);
+                } else {
+                    RemoveComponent(index);
+                }
+            }
+        }
     }
 }
 

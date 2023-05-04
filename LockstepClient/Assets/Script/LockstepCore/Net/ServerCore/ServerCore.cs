@@ -52,6 +52,11 @@ public class ServerCore : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        server?.OnDestroy();
+    }
+
     // Update is called once per frame
     void Update()
     {

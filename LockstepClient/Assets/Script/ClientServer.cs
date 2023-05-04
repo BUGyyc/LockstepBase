@@ -1,4 +1,6 @@
-﻿using Server.LiteNetLib;
+﻿using BM;
+using ET;
+using Server.LiteNetLib;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -62,8 +64,22 @@ public class ClientServer : MonoBehaviour
         if (/*stepTime >= 10 &&*/ hasLoad == false)
         {
             hasLoad = true;
-            SceneManager.LoadScene(GameSceneSetting.BattleTestScene);
+            //SceneManager.LoadScene(GameSceneSetting.BattleTestScene);
+
+            LoadAsyncScene().Coroutine();
         }
+    }
+
+    private async ETTask LoadAsyncScene()
+    {
+        string scenePath = "Assets/Scenes/Debug/1.battle/Battle.unity";
+        string sceneName = "Battle";
+        LoadSceneHandler loadHandler = await AssetComponent.LoadSceneAsync(scenePath);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.completed += asyncOperation =>
+        {
+            Debug.Log("场景加载完成  " + scenePath);
+        };
     }
 
     private void OnGUI()

@@ -8,13 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public Lockstep.Core.State.Game.MaxSpeedComponent maxSpeed { get { return (Lockstep.Core.State.Game.MaxSpeedComponent)GetComponent(GameComponentsLookup.MaxSpeed); } }
-    public bool hasMaxSpeed { get { return HasComponent(GameComponentsLookup.MaxSpeed); } }
+    static readonly Lockstep.Core.State.Game.MaxSpeedComponent maxSpeedComponent = new Lockstep.Core.State.Game.MaxSpeedComponent();
 
- 
+    public bool isMaxSpeed {
+        get { return HasComponent(GameComponentsLookup.MaxSpeed); }
+        set {
+            if (value != isMaxSpeed) {
+                var index = GameComponentsLookup.MaxSpeed;
+                if (value) {
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : maxSpeedComponent;
 
-    public void RemoveMaxSpeed() {
-        RemoveComponent(GameComponentsLookup.MaxSpeed);
+                    AddComponent(index, component);
+                } else {
+                    RemoveComponent(index);
+                }
+            }
+        }
     }
 }
 

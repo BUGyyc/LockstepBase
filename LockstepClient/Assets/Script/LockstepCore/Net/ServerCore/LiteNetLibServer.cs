@@ -25,6 +25,11 @@ namespace Server.LiteNetLib
             };
         }
 
+        public void OnDestroy()
+        {
+            _server.CloseSocket(false);
+        }
+
         public void Distribute(byte[] data)
         {
             _server.SendToAll(data, DeliveryMethod.ReliableOrdered);
