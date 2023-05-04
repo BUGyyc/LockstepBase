@@ -57,6 +57,8 @@ namespace Lockstep.Game.Features
             Add(new SkillSystem(contexts));
             Add(new BaseMoveSystem(contexts));
             Add(new MoveMotionSystem(contexts));
+
+            Add(new BulletSystem(contexts));
         }
 
         /// <summary>

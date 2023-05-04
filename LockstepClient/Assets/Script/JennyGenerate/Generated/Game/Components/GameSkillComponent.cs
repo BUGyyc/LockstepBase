@@ -16,7 +16,6 @@ public partial class GameEntity {
         var component = (SkillComponent)CreateComponent(index, typeof(SkillComponent));
         component.skillId = newSkillId;
         component.shootSkill = newShootSkill;
-        //component.lastStartTick = newLastStartTick;
         AddComponent(index, component);
     }
 
@@ -25,7 +24,6 @@ public partial class GameEntity {
         var component = (SkillComponent)CreateComponent(index, typeof(SkillComponent));
         component.skillId = newSkillId;
         component.shootSkill = newShootSkill;
-        //component.lastStartTick = newLastStartTick;
         ReplaceComponent(index, component);
     }
 

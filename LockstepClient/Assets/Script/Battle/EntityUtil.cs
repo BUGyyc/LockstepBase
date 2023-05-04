@@ -74,6 +74,8 @@ public static class EntityUtil
         gameEntity.AddCharacterAttr(LFloat.one * 100, LFloat.one * 100);
         gameEntity.AddSkill(0, false);
 
+        gameEntity.AddLife(100);
+
         int index = actorId;
         gameEntity.AddPosition(Lockstep.LVector3.zero + 3 * index * Lockstep.LVector3.forward, Lockstep.LQuaternion.identity);
 
