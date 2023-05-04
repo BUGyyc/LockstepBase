@@ -19,7 +19,9 @@ MonoBehaviour:
   BuildAssetBundleOptions: 768
   EncryptAssets: 0
   SecretKey: 
-  AssetPath: []
+  AssetPath:
+  - Assets/Bundles
+  - Assets/Art/UI/icon
   AssetGroupPaths: []
   Scene:
   - {fileID: 102900000, guid: c01e45e2a2c64594a95d33b12a99e8f3, type: 3}

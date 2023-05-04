@@ -34,6 +34,7 @@ public class AssetBundleExample : MonoBehaviour
 
     private async ETTask Download()
     {
+        loadStepTip.text = "步骤0：检测分包";
         //点名要分包文件
         Dictionary<string, bool> updatePackageBundle = new Dictionary<string, bool>()
         {
@@ -52,6 +53,7 @@ public class AssetBundleExample : MonoBehaviour
         if (updateInfo.NeedUpdate == false)
         {
             LogMaster.L("不需要更新");
+            loadStepTip.text = "";
             InitializePackage().Coroutine();
             loadPbr?.gameObject.SetActive(false);
             return;
@@ -89,7 +91,11 @@ public class AssetBundleExample : MonoBehaviour
     {
         await AssetComponent.Initialize(AssetComponentConfig.DefaultBundlePackageName);
         await AssetComponent.Initialize("SubBundle");
+        await InitUI();
     }
+
+    const string AtlasPath = "Assets/Bundles/Atlas/icon.spriteatlas";
+    const string SuccessBtnPath = "Assets/Bundles/Prefabs/SuccessBtn.prefab";
 
     /// <summary>
     /// 初始化 UI
@@ -98,7 +104,20 @@ public class AssetBundleExample : MonoBehaviour
     private async ETTask InitUI()
     {
         //加载图集
-        //await AssetComponent.LoadAsync(out LoadHandler atlasHandler,BPa);
+        loadStepTip.text = "步骤1：加载图集";
+        await AssetComponent.LoadAsync(out LoadHandler atlasHandler, AtlasPath);
+
+        var loginBtn = await AssetComponent.LoadAsync<GameObject>(out LoadHandler loginUIHandler, SuccessBtnPath);
+        GameObject loginUIObj = UnityEngine.Object.Instantiate(loginBtn);
+        loginUIObj.transform.parent = loadStepTip.transform.parent;
+        loginUIObj.transform.localPosition = Vector3.zero;
+        loginUIObj.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            loadStepTip.text = "点击了按钮";
+            atlasHandler.UnLoad();
+            loginUIHandler.UnLoad();
+        });
+
     }
 
     private async ETTask LoadAtlas()

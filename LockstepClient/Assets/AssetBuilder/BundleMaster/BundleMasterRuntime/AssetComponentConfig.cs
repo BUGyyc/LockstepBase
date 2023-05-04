@@ -38,9 +38,9 @@ namespace BM
             if (_bmRuntimeConfig == null)
             {
                 _bmRuntimeConfig =
-                    AssetDatabase.LoadAssetAtPath<BundleMasterRuntimeConfig>("Assets/Config/BMConfig.asset");
+                    //AssetDatabase.LoadAssetAtPath<BundleMasterRuntimeConfig>("Assets/Config/BMConfig.asset");
 
-                    //Resources.Load<BundleMasterRuntimeConfig>("BMConfig");
+                    Resources.Load<BundleMasterRuntimeConfig>("BMConfig");
             }
         }
 

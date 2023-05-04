@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ET;
+using UnityEngine;
 
 namespace BM
 {
@@ -63,7 +64,7 @@ namespace BM
                 //先找到对应加载的LoadGroup类
                 if (!AssetComponent.BundleNameToRuntimeInfo[BundlePackageName].LoadGroupDic.TryGetValue(groupPath, out LoadGroup loadGroup))
                 {
-                    AssetLogHelper.LogError("没有找到资源组: " + groupPath);
+                    Debug.LogError("没有找到资源组: " + groupPath);
                     return;
                 }
                 LoadBase = loadGroup;
@@ -86,14 +87,14 @@ namespace BM
                         LoadDependGroups.Add(loadDependGroup);
                         continue;
                     }
-                    AssetLogHelper.LogError("依赖的资源没有找到对应的类: " + dependFile);
+                    Debug.LogError("依赖的资源没有找到对应的类: " + dependFile);
                 }
                 return;
             }
             //先找到对应加载的LoadFile类
             if (!AssetComponent.BundleNameToRuntimeInfo[BundlePackageName].LoadFileDic.TryGetValue(AssetPath, out LoadFile loadFile))
             {
-                AssetLogHelper.LogError("没有找到资源: " + AssetPath);
+                Debug.LogError("没有找到资源: " + AssetPath);
                 return;
             }
             LoadBase = loadFile;
@@ -116,7 +117,7 @@ namespace BM
                     LoadDependGroups.Add(loadDependGroup);
                     continue;
                 }
-                AssetLogHelper.LogError("依赖的资源没有找到对应的类: " + dependFile);
+                Debug.LogError("依赖的资源没有找到对应的类: " + dependFile);
             }
         }
     
@@ -167,7 +168,7 @@ namespace BM
             await tcs;
             if (LoadState == LoadState.Finish)
             {
-                AssetLogHelper.Log("此资源异步加载时触发了强制加载: " + AssetPath);
+                Debug.Log("此资源异步加载时触发了强制加载: " + AssetPath);
             }
             LoadState = LoadState.Finish;
             FileAssetBundle = LoadBase.AssetBundle;
@@ -223,14 +224,14 @@ namespace BM
             //从缓存里取出进池
             if (!AssetComponent.BundleNameToRuntimeInfo.TryGetValue(BundlePackageName, out BundleRuntimeInfo bundleRuntimeInfo))
             {
-                AssetLogHelper.LogError("没要找到分包的信息: " + BundlePackageName);
+                Debug.LogError("没要找到分包的信息: " + BundlePackageName);
                 return;
             }
             if (HaveHandler)
             {
                 if (!bundleRuntimeInfo.AllAssetLoadHandler.ContainsKey(AssetPath))
                 {
-                    AssetLogHelper.LogError("没要找到缓存的LoadHandler: " + AssetPath);
+                    Debug.LogError("没要找到缓存的LoadHandler: " + AssetPath);
                     return;
                 }
                 bundleRuntimeInfo.AllAssetLoadHandler.Remove(AssetPath);
