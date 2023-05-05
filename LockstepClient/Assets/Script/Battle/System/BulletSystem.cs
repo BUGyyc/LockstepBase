@@ -26,7 +26,7 @@ public class BulletSystem : IExecuteSystem, ISystem
             byte camp = entity.actorId.value;
             var pos = entity.position.value;
 
-            if (Contexts.sharedInstance.gameState.tick.value - entity.bullet.frameIndexOnStart >= 200)
+            if (Contexts.sharedInstance.gameState.tick.value - entity.bullet.frameIndexOnStart >= 100)
             {
                 EntityUtil.DestroyGameEntity(entity);
                 entity.InternalDestroy();
@@ -43,7 +43,7 @@ public class BulletSystem : IExecuteSystem, ISystem
                 if (distance < minDistance)
                 {
                     character.life.value -= new LFloat(false, 5);
-                    UnityEngine.Debug.Log("扣血 5");
+                    //UnityEngine.Debug.Log("扣血 5");
                 }
             }
         }

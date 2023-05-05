@@ -141,7 +141,7 @@ namespace Lockstep.Game
                 GameLog.Add(_world.Tick, item);
                 foreach (ICommand command in item.Commands)
                 {
-                    Log.Trace(this, item.ActorId + " >> " + item.Tick + ": " + item.Commands.Count());
+                    LogMaster.L(item.ActorId + " >> " + item.Tick + "#" + _world.Tick + ": " + item.Commands.Count());
                     InputEntity inputEntity = ((Context<InputEntity>)Contexts.input).CreateEntity();
                     command.Execute(inputEntity);
                     inputEntity.AddTick(item.Tick);
@@ -156,7 +156,7 @@ namespace Lockstep.Game
             }
             uint num = source.Min((Input input) => input.Tick);
             uint num2 = source.Max((Input input) => input.Tick);
-            Log.Trace(this, ">>>Input from " + num + " to " + num2);
+            LogMaster.L(">>>Input from " + num + " to " + num2);
             if (num < _world.Tick)
             {
                 uint tick = _world.Tick;

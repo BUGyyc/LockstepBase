@@ -37,12 +37,14 @@ namespace Lockstep.Core.Logic.Systems.GameState
             }
             _gameStateContext.ReplaceHashCode(num);
 
+
+
 #if UNITY_EDITOR
             var tick = Contexts.sharedInstance.gameState.tick.value;
             if (DebugSetting.HashCodePrintStepTick > 0 && tick % DebugSetting.HashCodePrintStepTick == 0)
             {
                 //间隔输出，防止刷屏
-                UnityEngine.Debug.Log($"[HashCode]   hashCode:{num}");
+                UnityEngine.Debug.Log($"[HashCode] frame:{ActionWorld.Instance.Simulation.GetWorld().Tick}   {tick}    hashCode:{num}");
             }
 #endif
 

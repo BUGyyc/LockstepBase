@@ -22,6 +22,8 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
 
     public void OnFire(InputAction.CallbackContext context)
     {
+        return;
+
         //throw new System.NotImplementedException();
         if (context.performed)
         {

@@ -80,7 +80,11 @@ public static class EntityUtil
             Lockstep.LQuaternion.identity
         );
 
-        LoadAsyncEntityView(gameEntity, GameSetting.AIPrefab, true).Coroutine();
+        LogMaster.L($" gameEntity.actorId {gameEntity.actorId.value}    {ActionWorld.Instance.Simulation.LocalActorId}  ");
+
+        bool value = gameEntity.actorId.value == ActionWorld.Instance.Simulation.LocalActorId;
+
+        LoadAsyncEntityView(gameEntity, GameSetting.AIPrefab, value).Coroutine();
 
         return gameEntity;
     }
