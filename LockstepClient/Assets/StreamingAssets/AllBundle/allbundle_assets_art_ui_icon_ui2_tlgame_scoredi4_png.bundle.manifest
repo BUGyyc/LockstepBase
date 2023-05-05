@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 3276252543
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7b921501135794e23e683e742b5058c8
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9000e56e955832e18b547895309e5b00
+HashAppended: 0
+ClassTypes:
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Art/UI/icon/UI2_TLgame_scoreDI4.png
+Dependencies: []

@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3085337368
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: subbundle_assets_scenes_test_ab_2_unity.bundle
+      Dependencies: {}

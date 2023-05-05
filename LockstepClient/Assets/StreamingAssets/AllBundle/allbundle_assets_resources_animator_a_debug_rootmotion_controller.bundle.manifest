@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 1049590644
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4210a0eb7c6f85cce3759ed2cd52690d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 8b8448c7b696490ac5d512ac9b401452
+HashAppended: 0
+ClassTypes:
+- Class: 91
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resources/Animator/A_Debug_RootMotion.controller
+Dependencies: []

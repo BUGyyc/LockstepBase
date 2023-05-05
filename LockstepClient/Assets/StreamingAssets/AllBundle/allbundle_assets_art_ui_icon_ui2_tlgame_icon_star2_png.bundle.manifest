@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 886023331
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: de06c1be29560fd45800c8af01527de3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9000e56e955832e18b547895309e5b00
+HashAppended: 0
+ClassTypes:
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Art/UI/icon/UI2_TLgame_icon_star2.png
+Dependencies: []

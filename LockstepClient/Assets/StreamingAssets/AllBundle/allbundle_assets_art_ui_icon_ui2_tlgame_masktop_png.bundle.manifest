@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 744591920
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c6e1b4fc61c7b4b9fd6f63ad274cf882
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9000e56e955832e18b547895309e5b00
+HashAppended: 0
+ClassTypes:
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Art/UI/icon/UI2_TLgame_maskTop.png
+Dependencies: []

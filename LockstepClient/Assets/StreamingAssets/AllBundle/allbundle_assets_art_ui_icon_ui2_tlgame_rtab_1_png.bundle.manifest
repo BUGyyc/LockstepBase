@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 3677160300
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ced198a43a7f4c6f6e1ff1bc1ec4f75b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9000e56e955832e18b547895309e5b00
+HashAppended: 0
+ClassTypes:
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Art/UI/icon/UI2_TLgame_RTab_1.png
+Dependencies: []

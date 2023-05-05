@@ -1,0 +1,212 @@
+ManifestFileVersion: 0
+CRC: 748703868
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: allbundle_assets_bundles_atlas_icon_spriteatlas.bundle
+      Dependencies:
+        Dependency_0: allbundle_assets_art_ui_icon_ui2_tlgame_frame_end_png.bundle
+        Dependency_1: allbundle_assets_art_ui_icon_ui2_tlgame_frame_score_png.bundle
+        Dependency_2: allbundle_assets_art_ui_icon_ui2_tlgame_icon_arrow_png.bundle
+        Dependency_3: allbundle_assets_art_ui_icon_ui2_tlgame_icon_lq1_png.bundle
+        Dependency_4: allbundle_assets_art_ui_icon_ui2_tlgame_icon_lq2_png.bundle
+        Dependency_5: allbundle_assets_art_ui_icon_ui2_tlgame_icon_lq3_png.bundle
+        Dependency_6: allbundle_assets_art_ui_icon_ui2_tlgame_icon_star1_png.bundle
+        Dependency_7: allbundle_assets_art_ui_icon_ui2_tlgame_icon_star2_png.bundle
+        Dependency_8: allbundle_assets_art_ui_icon_ui2_tlgame_masktop_png.bundle
+        Dependency_9: allbundle_assets_art_ui_icon_ui2_tlgame_mz1_1_png.bundle
+        Dependency_10: allbundle_assets_art_ui_icon_ui2_tlgame_mz1_2_png.bundle
+        Dependency_11: allbundle_assets_art_ui_icon_ui2_tlgame_rtab_1_png.bundle
+        Dependency_12: allbundle_assets_art_ui_icon_ui2_tlgame_scorebt0_png.bundle
+        Dependency_13: allbundle_assets_art_ui_icon_ui2_tlgame_scorebt1_png.bundle
+        Dependency_14: allbundle_assets_art_ui_icon_ui2_tlgame_scorebt2_png.bundle
+        Dependency_15: allbundle_assets_art_ui_icon_ui2_tlgame_scorebt3_png.bundle
+        Dependency_16: allbundle_assets_art_ui_icon_ui2_tlgame_scorebt4_png.bundle
+        Dependency_17: allbundle_assets_art_ui_icon_ui2_tlgame_scoredi1_png.bundle
+        Dependency_18: allbundle_assets_art_ui_icon_ui2_tlgame_scoredi2_png.bundle
+        Dependency_19: allbundle_assets_art_ui_icon_ui2_tlgame_scoredi3_png.bundle
+        Dependency_20: allbundle_assets_art_ui_icon_ui2_tlgame_scoredi4_png.bundle
+        Dependency_21: allbundle_assets_art_ui_icon_ui2_tlgame_timedi_png.bundle
+        Dependency_22: allbundle_assets_art_ui_icon_ui2_tlgame_title_fail_png.bundle
+        Dependency_23: allbundle_assets_art_ui_icon_ui2_tlgame_title_win_png.bundle
+        Dependency_24: allbundle_assets_art_ui_icon_ui2_tlgame_zz1_png.bundle
+        Dependency_25: allbundle_assets_art_ui_icon_ui2_tlgame_zz2_png.bundle
+        Dependency_26: allbundle_assets_art_ui_icon_ui2_tlgame_zz3_png.bundle
+        Dependency_27: allbundle_assets_art_ui_icon_ui2_tlgame_zz4_png.bundle
+        Dependency_28: allbundle_assets_art_ui_icon_ui2_tlgame_zz5_png.bundle
+    Info_1:
+      Name: allbundle_assets_bundles_prefabs_ai_prefab.bundle
+      Dependencies: {}
+    Info_2:
+      Name: allbundle_assets_bundles_prefabs_bullet_prefab.bundle
+      Dependencies:
+        Dependency_0: allbundle_assets_resources_mat_yellow_mat.bundle
+    Info_3:
+      Name: allbundle_assets_bundles_prefabs_canvas_prefab.bundle
+      Dependencies: {}
+    Info_4:
+      Name: allbundle_assets_bundles_prefabs_capsule_prefab.bundle
+      Dependencies:
+        Dependency_0: allbundle_assets_resources_mat_yellow_mat.bundle
+    Info_5:
+      Name: allbundle_assets_bundles_prefabs_clazyrunner_prefab.bundle
+      Dependencies:
+        Dependency_0: allbundle_assets_resources_animator_a_debug_rootmotion_controller.bundle
+    Info_6:
+      Name: allbundle_assets_bundles_prefabs_clazyrunnerpro_prefab.bundle
+      Dependencies: {}
+    Info_7:
+      Name: allbundle_assets_bundles_prefabs_enemy_prefab.bundle
+      Dependencies: {}
+    Info_8:
+      Name: allbundle_assets_bundles_prefabs_entity_prefab.bundle
+      Dependencies:
+        Dependency_0: allbundle_assets_resources_mat_yellow_mat.bundle
+    Info_9:
+      Name: allbundle_assets_bundles_prefabs_floor_prefab.bundle
+      Dependencies:
+        Dependency_0: allbundle_assets_resources_mat_ground_mat.bundle
+    Info_10:
+      Name: allbundle_assets_bundles_prefabs_hero_prefab.bundle
+      Dependencies: {}
+    Info_11:
+      Name: allbundle_assets_bundles_prefabs_player_prefab.bundle
+      Dependencies: {}
+    Info_12:
+      Name: allbundle_assets_bundles_prefabs_settingui_prefab.bundle
+      Dependencies: {}
+    Info_13:
+      Name: allbundle_assets_bundles_prefabs_spawner_prefab.bundle
+      Dependencies: {}
+    Info_14:
+      Name: allbundle_assets_bundles_prefabs_successbtn_prefab.bundle
+      Dependencies: {}
+    Info_15:
+      Name: allbundle_assets_bundles_prefabs_wingchun_prefab.bundle
+      Dependencies: {}
+    Info_16:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_frame_end_png.bundle
+      Dependencies: {}
+    Info_17:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_frame_score_png.bundle
+      Dependencies: {}
+    Info_18:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_icon_arrow_png.bundle
+      Dependencies: {}
+    Info_19:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_icon_lq1_png.bundle
+      Dependencies: {}
+    Info_20:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_icon_lq2_png.bundle
+      Dependencies: {}
+    Info_21:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_icon_lq3_png.bundle
+      Dependencies: {}
+    Info_22:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_icon_star1_png.bundle
+      Dependencies: {}
+    Info_23:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_icon_star2_png.bundle
+      Dependencies: {}
+    Info_24:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_masktop_png.bundle
+      Dependencies: {}
+    Info_25:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_mz1_1_png.bundle
+      Dependencies: {}
+    Info_26:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_mz1_2_png.bundle
+      Dependencies: {}
+    Info_27:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_rtab_1_png.bundle
+      Dependencies: {}
+    Info_28:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_scorebt0_png.bundle
+      Dependencies: {}
+    Info_29:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_scorebt1_png.bundle
+      Dependencies: {}
+    Info_30:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_scorebt2_png.bundle
+      Dependencies: {}
+    Info_31:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_scorebt3_png.bundle
+      Dependencies: {}
+    Info_32:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_scorebt4_png.bundle
+      Dependencies: {}
+    Info_33:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_scoredi1_png.bundle
+      Dependencies: {}
+    Info_34:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_scoredi2_png.bundle
+      Dependencies: {}
+    Info_35:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_scoredi3_png.bundle
+      Dependencies: {}
+    Info_36:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_scoredi4_png.bundle
+      Dependencies: {}
+    Info_37:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_timedi_png.bundle
+      Dependencies: {}
+    Info_38:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_title_fail_png.bundle
+      Dependencies: {}
+    Info_39:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_title_win_png.bundle
+      Dependencies: {}
+    Info_40:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_zz1_png.bundle
+      Dependencies: {}
+    Info_41:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_zz2_png.bundle
+      Dependencies: {}
+    Info_42:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_zz3_png.bundle
+      Dependencies: {}
+    Info_43:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_zz4_png.bundle
+      Dependencies: {}
+    Info_44:
+      Name: allbundle_assets_art_ui_icon_ui2_tlgame_zz5_png.bundle
+      Dependencies: {}
+    Info_45:
+      Name: allbundle_assets_scenes_test_ab_0_unity.bundle
+      Dependencies: {}
+    Info_46:
+      Name: allbundle_assets_scenes_debug_0_launch_clientandserver_unity.bundle
+      Dependencies: {}
+    Info_47:
+      Name: allbundle_assets_scenes_debug_0_launch_launchclient_unity.bundle
+      Dependencies:
+        Dependency_0: allbundle_assets_resources_input_playerinput_inputactions.bundle
+    Info_48:
+      Name: allbundle_assets_scenes_debug_0_launch_launchserver_unity.bundle
+      Dependencies:
+        Dependency_0: allbundle_assets_bundles_prefabs_settingui_prefab.bundle
+    Info_49:
+      Name: allbundle_assets_scenes_debug_1_battle_battle_unity.bundle
+      Dependencies:
+        Dependency_0: allbundle_assets_bundles_prefabs_clazyrunner_prefab.bundle
+        Dependency_1: allbundle_assets_bundles_prefabs_entity_prefab.bundle
+        Dependency_2: allbundle_assets_bundles_prefabs_hero_prefab.bundle
+        Dependency_3: allbundle_assets_bundles_prefabs_player_prefab.bundle
+        Dependency_4: allbundle_assets_resources_mat_ground_mat.bundle
+        Dependency_5: allbundle_assets_resources_input_playerinput_inputactions.bundle
+    Info_50:
+      Name: allbundle_assets_resources_mat_yellow_mat.bundle
+      Dependencies: {}
+    Info_51:
+      Name: allbundle_assets_resources_animator_a_debug_rootmotion_controller.bundle
+      Dependencies: {}
+    Info_52:
+      Name: allbundle_assets_resources_mat_ground_mat.bundle
+      Dependencies:
+        Dependency_0: allbundle_assets_resources_tex_groundbg_jpg.bundle
+    Info_53:
+      Name: allbundle_assets_resources_tex_groundbg_jpg.bundle
+      Dependencies: {}
+    Info_54:
+      Name: allbundle_assets_resources_input_playerinput_inputactions.bundle
+      Dependencies: {}

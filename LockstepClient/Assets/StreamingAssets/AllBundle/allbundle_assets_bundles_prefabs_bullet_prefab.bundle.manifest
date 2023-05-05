@@ -1,0 +1,32 @@
+ManifestFileVersion: 0
+CRC: 4196131910
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 24ac64ce0735689b9fd04a0893ecfb54
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3457e0c2cd176e7483870a3a7c3ec284
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: b263215d9fe37a7418eaaad2d2a105fe, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Bundles/Prefabs/Bullet.prefab
+Dependencies:
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_resources_mat_yellow_mat.bundle

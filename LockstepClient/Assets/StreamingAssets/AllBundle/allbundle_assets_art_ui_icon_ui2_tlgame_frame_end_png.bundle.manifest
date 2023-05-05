@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 2718349841
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 790de2ecb6c058ec9678ac9716d28aff
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9000e56e955832e18b547895309e5b00
+HashAppended: 0
+ClassTypes:
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Art/UI/icon/UI2_TLgame_frame_end.png
+Dependencies: []

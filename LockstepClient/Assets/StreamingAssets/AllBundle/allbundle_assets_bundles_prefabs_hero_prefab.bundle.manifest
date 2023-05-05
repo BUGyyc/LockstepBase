@@ -1,0 +1,33 @@
+ManifestFileVersion: 0
+CRC: 989496230
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5ae4ee1a5427d9f39a2984a090284c5c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5d5535ca4cd45f365c88555d5010b6da
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: b263215d9fe37a7418eaaad2d2a105fe, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Bundles/Prefabs/Hero.prefab
+Dependencies: []

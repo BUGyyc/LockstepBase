@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 2699110091
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d76a3ab505ce3410f5dc64a51ec6bfe5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: a1b8ae978d101eec5d12a49988ba7adf
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resources/Mat/ground.mat
+Dependencies:
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_resources_tex_groundbg_jpg.bundle

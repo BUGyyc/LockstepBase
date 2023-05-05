@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 669072015
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: cc37bc954e03fcf3cb8cff4e1478d767
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9000e56e955832e18b547895309e5b00
+HashAppended: 0
+ClassTypes:
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Art/UI/icon/UI2_TLgame_icon_LQ3.png
+Dependencies: []

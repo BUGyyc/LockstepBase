@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 3217307171
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2ec3d78fb0ab3a5f143e50a7cca20f7a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ff414f606ea1972259b080d7bcf51689
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resources/Tex/groundBg.jpg
+Dependencies: []

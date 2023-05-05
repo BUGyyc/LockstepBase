@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+CRC: 1891538064
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 627650eb4be99af16ff3854d721f44de
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 48ea13743e87621aed6e683d6b76f678
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 515fb56fefd6d4eaa972f90de4eacfed, type: 3}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Bundles/Prefabs/Enemy.prefab
+Dependencies: []

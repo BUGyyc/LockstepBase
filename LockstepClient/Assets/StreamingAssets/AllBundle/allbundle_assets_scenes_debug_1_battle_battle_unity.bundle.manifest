@@ -1,0 +1,111 @@
+ManifestFileVersion: 0
+CRC: 678708645
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2c97651be682b7d4eaf7d0afdf622f68
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c4ec7ed5e862cbf08c1b0e19b30d948d
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 81
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 104
+  Script: {instanceID: 0}
+- Class: 108
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 236d6a447b64b6747b7ed813503bc10b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6afcacb30d5498246be3c9a7d2aaf254, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 39fa3d8997a24136984ca6e2c99902bc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: bb4931639ff1d134dad0783f530301dc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 516cdcd6b4b7da345810311630ad30c8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 254b3a40e09a6b444a54cc10a5ddc3f2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b263215d9fe37a7418eaaad2d2a105fe, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5ba1be29e31f14a40a1216d6f6a1abe6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a8908b1163e71784995eaf2af7d8220a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c5a3b49afc33d1149b7d24cab4c61e64, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 124
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+- Class: 157
+  Script: {instanceID: 0}
+- Class: 196
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+- Class: 850595691
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Scenes/Debug/1.battle/Battle.unity
+Dependencies:
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_bundles_prefabs_clazyrunner_prefab.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_bundles_prefabs_entity_prefab.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_bundles_prefabs_hero_prefab.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_bundles_prefabs_player_prefab.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_resources_input_playerinput_inputactions.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_resources_mat_ground_mat.bundle

@@ -1,0 +1,50 @@
+ManifestFileVersion: 0
+CRC: 1113286584
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c408fc6fbfa5c8bf08a48fd9faf54a07
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0d677c6dec2405a43fe6dd294cca7c3e
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 687078895
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Bundles/Atlas/icon.spriteatlas
+Dependencies:
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_frame_end_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_frame_score_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_icon_arrow_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_icon_lq1_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_icon_lq2_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_icon_lq3_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_icon_star1_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_icon_star2_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_masktop_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_mz1_1_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_mz1_2_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_rtab_1_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_scorebt0_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_scorebt1_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_scorebt2_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_scorebt3_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_scorebt4_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_scoredi1_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_scoredi2_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_scoredi3_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_scoredi4_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_timedi_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_title_fail_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_title_win_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_zz1_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_zz2_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_zz3_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_zz4_png.bundle
+- F:/github/LockstepBase/LockstepBase/LockstepClient/BuildBundles/AllBundle/allbundle_assets_art_ui_icon_ui2_tlgame_zz5_png.bundle

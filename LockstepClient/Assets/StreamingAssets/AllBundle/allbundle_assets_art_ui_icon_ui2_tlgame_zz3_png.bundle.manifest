@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 181315418
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 115c4e0631723b4609a6095d25d700ca
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9000e56e955832e18b547895309e5b00
+HashAppended: 0
+ClassTypes:
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Art/UI/icon/UI2_TLgame_ZZ3.png
+Dependencies: []

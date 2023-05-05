@@ -1,0 +1,35 @@
+ManifestFileVersion: 0
+CRC: 679906423
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 360495a245164dbe8a4e4968722f3593
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ac006df062f7f1aa53ac1605a1b7aa9b
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 104
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: c614f66680d71ee42a768dd827cc838b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 157
+  Script: {instanceID: 0}
+- Class: 196
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Scenes/Debug/0.launch/ClientAndServer.unity
+Dependencies: []

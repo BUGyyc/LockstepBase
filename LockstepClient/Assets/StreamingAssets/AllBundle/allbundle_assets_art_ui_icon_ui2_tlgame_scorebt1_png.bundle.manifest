@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 1690485056
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9b338ef3ae7158d004fd84a01258b97d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9000e56e955832e18b547895309e5b00
+HashAppended: 0
+ClassTypes:
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Art/UI/icon/UI2_TLgame_scoreBT1.png
+Dependencies: []
