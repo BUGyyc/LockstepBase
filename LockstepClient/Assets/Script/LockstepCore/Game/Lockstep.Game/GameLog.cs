@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using Lockstep.Core.Logic;
@@ -28,6 +29,9 @@ namespace Lockstep.Game
 
         public void Add(uint tick, Input input)
         {
+
+            // UnityEngine.Debug.Log($" tick:{tick}  input: {input.ActorId} ,  {input.Tick}    command : {input.Commands.Count()}   ");
+
             if (!InputLog.ContainsKey(tick))
             {
                 InputLog.Add(tick, new Dictionary<uint, Dictionary<byte, List<ICommand>>>());

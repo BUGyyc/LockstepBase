@@ -35,6 +35,9 @@ namespace Lockstep.Core.Logic
                 Contexts.gameState.isPredicting = true;
             }
             Log.Trace(this, "Predict " + Contexts.gameState.tick.value);
+
+            // LogMaster.L("Predict: " + Contexts.gameState.tick.value);
+
             (_systems).Execute();
             (_systems).Cleanup();
         }

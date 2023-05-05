@@ -8,6 +8,7 @@ using Entitas;
 using UnityEngine;
 using Lockstep;
 using System.Collections.Generic;
+using System.Linq;
 
 
 //NOTE: ReactiveSystem 很特别，只有通过过滤条件的Entity 才具备执行的条件，这意味着可以在某种情况下减少无效的执行
@@ -21,14 +22,23 @@ public class BaseMoveSystem : IExecuteSystem, ISystem
     // readonly GameContext _context;
 
     private readonly IGroup<GameEntity> _characterGroup;
+    private readonly GameStateContext _gameStateContext;
     public BaseMoveSystem(Contexts contexts)
     {
         _characterGroup = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Move, GameMatcher.LocalId, GameMatcher.CharacterInput));
+
+        _gameStateContext = contexts.gameState;
     }
 
     void IExecuteSystem.Execute()
     {
+        //return;
+
         foreach (var entity in _characterGroup.GetEntities())
+
+            //foreach (var entity in from entity in _characterGroup.GetEntities()
+            //                   where entity.tick.value == _gameStateContext.tick.value
+            //                   select entity)
         {
             var currForward = entity.entityForwardLv3;
             var currForward2d = currForward.ToLVector2();

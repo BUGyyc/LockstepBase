@@ -27,6 +27,7 @@ namespace Server.LiteNetLib
 
         public void OnDestroy()
         {
+            UnityEngine.Debug.Log("关闭服务器");
             _server.CloseSocket(false);
         }
 

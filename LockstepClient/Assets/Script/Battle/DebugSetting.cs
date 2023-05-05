@@ -10,7 +10,7 @@ public static class DebugSetting
     /// <summary>
     /// 每隔 n 帧 输出一次 HashCode 的输出
     /// </summary>
-    public const int HashCodePrintStepTick = 0;
+    public const int HashCodePrintStepTick = 1;
 }
 
 

@@ -44,7 +44,7 @@ namespace Lockstep.Core.Logic.Systems.GameState
             if (DebugSetting.HashCodePrintStepTick > 0 && tick % DebugSetting.HashCodePrintStepTick == 0)
             {
                 //间隔输出，防止刷屏
-                UnityEngine.Debug.Log($"[HashCode] frame:{ActionWorld.Instance.Simulation.GetWorld().Tick}   {tick}    hashCode:{num}");
+                UnityEngine.Debug.Log($"[HashCode]  tick: {tick}   hashCode:{num}"); //frame:{ActionWorld.Instance.Simulation.GetWorld().Tick}   {tick} 
             }
 #endif
 

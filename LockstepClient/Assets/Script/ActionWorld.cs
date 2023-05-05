@@ -48,7 +48,7 @@ public class ActionWorld : MonoBehaviour
 
         _commandQueue = new NetworkCommandQueue(_client)
         {
-            LagCompensation = 10
+            LagCompensation = 8
         };
         _commandQueue.InitReceived += OnInitReceived;
 
@@ -86,9 +86,40 @@ public class ActionWorld : MonoBehaviour
     {
         var path = Application.streamingAssetsPath;
 
+        if (Directory.Exists(path + "/Log/") == false)
+        {
+            Directory.CreateDirectory(path + "/Log/");
+        }
+
         var fullPath = path + "/Log/" + Math.Abs(Contexts.sharedInstance.gameState.hashCode.value) + ".bin";
 
         Simulation.DumpGameLog(new FileStream(fullPath, FileMode.Create, FileAccess.Write));
+
+
+
+
+
+        //FileStream fs = new FileStream(fullPath, FileMode.Open);
+
+        //var gameLog = GameLog.ReadFrom(fs);
+        //if (gameLog != null)
+        //{
+        //    // var gameLog = GameLog.ReadFrom(stream);
+
+        //    Debug.Log($"[GameLog]  {gameLog.LocalActorId}   {gameLog.InputLog.Count} ");
+
+        //    var inputLog = gameLog.InputLog;
+
+        //    foreach (var item in inputLog)
+        //    {
+        //        Debug.Log($"{item}");
+
+        //    }
+        //}
+
+
+
+
     }
 
     public void Execute(ICommand command)

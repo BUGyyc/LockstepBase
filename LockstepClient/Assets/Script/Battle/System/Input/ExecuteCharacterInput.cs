@@ -12,6 +12,9 @@ using Entitas;
 using Lockstep.Common.Logging;
 using Lockstep.Game.Interfaces;
 using Lockstep.Game;
+using static UnityEngine.EventSystems.EventTrigger;
+
+using Lockstep;
 
 
 /// <summary>
@@ -61,6 +64,17 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
             }
 
             gameEntity.ReplaceCharacterInput(entityId, speed, item.characterInput.viewDir);
+
+
+            //var currForward = gameEntity.entityForwardLv3;
+            //var currForward2d = currForward.ToLVector2();
+            //var currForward2dNor = currForward2d.normalized;
+
+            //var _speed = gameEntity.move.speed;
+            //var speed2d = gameEntity.characterInput.moveDir * _speed;
+            //var speed2dNor = speed2d.normalized;
+
+            //gameEntity.position.value += (new LVector3(true, speed2d._x, 0, speed2d._y) * GameSetting.Key_Time);
         }
     }
 }

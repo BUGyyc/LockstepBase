@@ -69,6 +69,8 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (context.performed == false && context.canceled == false) return;
+
         //throw new System.NotImplementedException();
         var move = context.ReadValue<Vector2>();
 
@@ -78,7 +80,8 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
         var viewDir = Camera.main.transform.forward;
         var lv3 = GetTargetDir(moveDir, viewDir);
         var lv2 = new LVector2(lv3.x, lv3.z);
-        // Debug.Log($"<color=yellow>  键盘输入   key {lv2}   target {lv3}   </color>");
+
+        // Debug.Log($"<color=yellow>  键盘输入   key: {lv2}   actor: {ActionWorld.Instance.LocalCharacterEntityId}   </color>");
 
         //这里应当传入本地EntityID
         ActionWorld.Instance.Execute(new CharacterInputCommand

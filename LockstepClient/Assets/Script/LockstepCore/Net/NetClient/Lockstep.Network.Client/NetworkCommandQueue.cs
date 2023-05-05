@@ -12,13 +12,17 @@ using Lockstep.Network.Messages;
 
 namespace Lockstep.Network.Client
 {
-
     public class NetworkCommandQueue : CommandQueue
     {
         private readonly INetwork _network;
 
-        private readonly Dictionary<ushort, Type> _commandFactories = new Dictionary<ushort, Type>();
+        private readonly Dictionary<ushort, Type> _commandFactories =
+            new Dictionary<ushort, Type>();
 
+        /// <summary>
+        /// 延迟补偿，允许有一定帧数的延迟
+        /// </summary>
+        /// <value></value>
         public byte LagCompensation { get; set; }
 
         public event EventHandler<Init> InitReceived;
@@ -29,14 +33,28 @@ namespace Lockstep.Network.Client
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (Assembly assembly in assemblies)
             {
-                foreach (Type item in from type in assembly.GetTypes()
-                                      where type.GetInterfaces().Any((Type intf) => intf.FullName != null && intf.FullName!.Equals(typeof(Lockstep.Core.Logic.Interfaces.ICommand).FullName))
-                                      select type)
+                foreach (
+                    Type item in from type in assembly.GetTypes()
+                    where
+                        type.GetInterfaces()
+                            .Any(
+                                (Type intf) =>
+                                    intf.FullName != null
+                                    && intf.FullName!.Equals(
+                                        typeof(Lockstep.Core.Logic.Interfaces.ICommand).FullName
+                                    )
+                            )
+                    select type
+                )
                 {
-                    ushort tag = ((Lockstep.Core.Logic.Interfaces.ICommand)Activator.CreateInstance(item)).Tag;
+                    ushort tag = (
+                        (Lockstep.Core.Logic.Interfaces.ICommand)Activator.CreateInstance(item)
+                    ).Tag;
                     if (_commandFactories.ContainsKey(tag))
                     {
-                        throw new InvalidDataException($"The command tag {tag} is already registered. Every command tag must be unique.");
+                        throw new InvalidDataException(
+                            $"The command tag {tag} is already registered. Every command tag must be unique."
+                        );
                     }
                     _commandFactories.Add(tag, item);
                 }
@@ -44,7 +62,6 @@ namespace Lockstep.Network.Client
             _network = network;
             _network.DataReceived += NetworkOnDataReceived;
         }
-
 
         /// <summary>
         /// 客户端塞包数据，然后发给服务器
@@ -67,7 +84,6 @@ namespace Lockstep.Network.Client
             _network.Send(Compressor.Compress(serializer));
         }
 
-
         /// <summary>
         /// 客户端收到服务器的包
         /// </summary>
@@ -79,31 +95,48 @@ namespace Lockstep.Network.Client
             switch (deserializer.GetByte())
             {
                 case NetProtocolDefine.Init:
-                    {
-                        Init init = new Init();
-                        init.Deserialize(deserializer);
-                        this.InitReceived?.Invoke(this, init);
-                        break;
-                    }
+                {
+                    Init init = new Init();
+                    init.Deserialize(deserializer);
+                    this.InitReceived?.Invoke(this, init);
+                    break;
+                }
                 case NetProtocolDefine.Input:
+                {
+                    //TODO: 这里的TICK是加上延迟补偿后的
+                    // uint tick = deserializer.GetUInt() + deserializer.GetByte();
+
+                    uint u1 = deserializer.GetUInt();
+                    uint u2 = deserializer.GetByte();
+
+                    uint tick = u1 + u2;
+
+                    int @int = deserializer.GetInt();
+                    byte @byte = deserializer.GetByte();
+
+                    LogMaster.L($"网络包  tick:{tick}   t1: {u1}  t2: {u2}     actorId:{@byte} ");
+
+                    Lockstep.Core.Logic.Interfaces.ICommand[] array =
+                        new Lockstep.Core.Logic.Interfaces.ICommand[@int];
+                    for (int i = 0; i < @int; i++)
                     {
-                        uint tick = deserializer.GetUInt() + deserializer.GetByte();
-                        int @int = deserializer.GetInt();
-                        byte @byte = deserializer.GetByte();
-                        Lockstep.Core.Logic.Interfaces.ICommand[] array = new Lockstep.Core.Logic.Interfaces.ICommand[@int];
-                        for (int i = 0; i < @int; i++)
+                        ushort uShort = deserializer.GetUShort();
+                        if (_commandFactories.ContainsKey(uShort))
                         {
-                            ushort uShort = deserializer.GetUShort();
-                            if (_commandFactories.ContainsKey(uShort))
-                            {
-                                Lockstep.Core.Logic.Interfaces.ICommand command = (Lockstep.Core.Logic.Interfaces.ICommand)Activator.CreateInstance(_commandFactories[uShort]);
-                                command.Deserialize(deserializer);
-                                array[i] = command;
-                            }
+                            Lockstep.Core.Logic.Interfaces.ICommand command =
+                                (Lockstep.Core.Logic.Interfaces.ICommand)
+                                    Activator.CreateInstance(_commandFactories[uShort]);
+                            command.Deserialize(deserializer);
+                            array[i] = command;
                         }
-                        base.Enqueue(new Input(tick, @byte, array));
-                        break;
                     }
+
+                    if (array.Length > 0)
+                        LogMaster.L($"客户端收到网络包指令    tick:{tick}   actorId:{@byte} ");
+
+                    base.Enqueue(new Input(tick, @byte, array));
+                    break;
+                }
             }
         }
     }
