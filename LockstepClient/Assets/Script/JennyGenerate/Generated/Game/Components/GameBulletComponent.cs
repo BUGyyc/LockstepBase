@@ -11,17 +11,19 @@ public partial class GameEntity {
     public BulletComponent bullet { get { return (BulletComponent)GetComponent(GameComponentsLookup.Bullet); } }
     public bool hasBullet { get { return HasComponent(GameComponentsLookup.Bullet); } }
 
-    public void AddBullet(Lockstep.LFloat newDamage) {
+    public void AddBullet(Lockstep.LFloat newDamage, uint newFrameIndexOnStart) {
         var index = GameComponentsLookup.Bullet;
         var component = (BulletComponent)CreateComponent(index, typeof(BulletComponent));
         component.damage = newDamage;
+        component.frameIndexOnStart = newFrameIndexOnStart;
         AddComponent(index, component);
     }
 
-    public void ReplaceBullet(Lockstep.LFloat newDamage) {
+    public void ReplaceBullet(Lockstep.LFloat newDamage, uint newFrameIndexOnStart) {
         var index = GameComponentsLookup.Bullet;
         var component = (BulletComponent)CreateComponent(index, typeof(BulletComponent));
         component.damage = newDamage;
+        component.frameIndexOnStart = newFrameIndexOnStart;
         ReplaceComponent(index, component);
     }
 

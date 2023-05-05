@@ -25,7 +25,7 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
         //throw new System.NotImplementedException();
         if (context.performed)
         {
-            Debug.Log($"<color=yellow>  键盘输入  Click  </color>");
+            // Debug.Log($"<color=yellow>  键盘输入  Click  </color>");
 
             ActionWorld.Instance.Execute(new SkillInputCommand
             {
@@ -76,7 +76,7 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
         var viewDir = Camera.main.transform.forward;
         var lv3 = GetTargetDir(moveDir, viewDir);
         var lv2 = new LVector2(lv3.x, lv3.z);
-        Debug.Log($"<color=yellow>  键盘输入   key {lv2}   target {lv3}   </color>");
+        // Debug.Log($"<color=yellow>  键盘输入   key {lv2}   target {lv3}   </color>");
 
         //这里应当传入本地EntityID
         ActionWorld.Instance.Execute(new CharacterInputCommand

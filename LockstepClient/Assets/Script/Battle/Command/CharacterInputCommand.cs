@@ -30,7 +30,7 @@ public class CharacterInputCommand : ICommand, ISerializable
 
     public void Execute(InputEntity e)
     {
-        UnityEngine.Debug.Log($" System 响应键盘输入 {moveDir}");
+        // UnityEngine.Debug.Log($" System 响应键盘输入 {moveDir}");
         e.AddCharacterInput(entityId, moveDir, viewDir);
 
     }

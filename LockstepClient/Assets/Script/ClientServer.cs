@@ -74,6 +74,30 @@ public class ClientServer : MonoBehaviour
     {
         string scenePath = "Assets/Scenes/Debug/1.battle/Battle.unity";
         string sceneName = "Battle";
+#if UNITY_EDITOR
+        if (AssetComponentConfig.AssetLoadMode == AssetLoadMode.Develop)
+        {
+            LoadSceneParameters parameters = new LoadSceneParameters()
+            {
+                loadSceneMode = LoadSceneMode.Single,
+                localPhysicsMode = LocalPhysicsMode.None
+            };
+            LoadSceneHandler _loadHandler = await AssetComponent.LoadSceneAsync(scenePath);
+            AsyncOperation _operation =
+                UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(
+                    scenePath,
+                    parameters
+                );
+            _operation.completed += asyncOperation =>
+            {
+                Debug.Log("场景加载完成  " + scenePath);
+            };
+            return;
+        }
+
+#endif
+
+
         LoadSceneHandler loadHandler = await AssetComponent.LoadSceneAsync(scenePath);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
         operation.completed += asyncOperation =>

@@ -6,11 +6,19 @@ using BM;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 // using ABCore;
 //namespace ET.Client
 //{
 public class AssetBundleExample : MonoBehaviour
 {
+    const string AtlasPath = "Assets/Bundles/Atlas/icon.spriteatlas";
+    const string SuccessBtnPath = "Assets/Bundles/Prefabs/SuccessBtn.prefab";
+    const string SubScene0 = "Assets/Scenes/Test/AB_0.unity";
+    const string SubScene1 = "Assets/Scenes/Test/AB_1.unity";
+    const string SubScene2 = "Assets/Scenes/Test/AB_2.unity";
+
+    const string ClientRoomScene = "Assets/Scenes/Debug/0.launch/LaunchClient.unity";
 
     public Scrollbar loadPbr;
     public Text loadTip;
@@ -42,8 +50,8 @@ public class AssetBundleExample : MonoBehaviour
         //点名要分包文件
         Dictionary<string, bool> updatePackageBundle = new Dictionary<string, bool>()
         {
-            {"AllBundle",false },
-            {"SubBundle", false}
+            { "AllBundle", false },
+            { "SubBundle", false }
         };
 
         var updateInfo = await AssetComponent.CheckAllBundlePackageUpdate(updatePackageBundle);
@@ -63,7 +71,6 @@ public class AssetBundleExample : MonoBehaviour
             return;
         }
 
-
         Debug.LogError("需要更新, 大小: " + updateInfo.NeedUpdateSize);
 
         updateInfo.DownLoadFinishCallback += () =>
@@ -75,7 +82,8 @@ public class AssetBundleExample : MonoBehaviour
 
         updateInfo.ProgressCallback += (p) =>
         {
-            if (loadPbr != null) loadPbr.size = p / 100f;
+            if (loadPbr != null)
+                loadPbr.size = p / 100f;
             //LogMaster.L($"加载中 {p / 100f}");
             loadTip.text = string.Format($"加载中（{p / 100f}）...");
         };
@@ -87,8 +95,6 @@ public class AssetBundleExample : MonoBehaviour
         };
 
         AssetComponent.DownLoadUpdate(updateInfo).Coroutine();
-
-
     }
 
     private async ETTask InitializePackage()
@@ -98,13 +104,6 @@ public class AssetBundleExample : MonoBehaviour
         await InitUI();
     }
 
-    const string AtlasPath = "Assets/Bundles/Atlas/icon.spriteatlas";
-    const string SuccessBtnPath = "Assets/Bundles/Prefabs/SuccessBtn.prefab";
-    const string SubScene0 = "Assets/Scenes/Test/AB_0.unity";
-    const string SubScene1 = "Assets/Scenes/Test/AB_1.unity";
-    const string SubScene2 = "Assets/Scenes/Test/AB_2.unity";
-
-    const string ClientRoomScene = "Assets/Scenes/Debug/0.launch/LaunchClient.unity";
     /// <summary>
     /// 初始化 UI
     /// </summary>
@@ -115,23 +114,56 @@ public class AssetBundleExample : MonoBehaviour
         loadStepTip.text = "步骤1：加载图集";
         await AssetComponent.LoadAsync(out LoadHandler atlasHandler, AtlasPath);
 
-        var loginBtn = await AssetComponent.LoadAsync<GameObject>(out LoadHandler loginUIHandler, SuccessBtnPath);
+        if (GlobalSetting.QuickStartAPP)
+        {
+            LoadClientRoomScene().Coroutine();
+            return;
+        }
+
+        var loginBtn = await AssetComponent.LoadAsync<GameObject>(
+            out LoadHandler loginUIHandler,
+            SuccessBtnPath
+        );
         GameObject loginUIObj = UnityEngine.Object.Instantiate(loginBtn);
         loginUIObj.transform.parent = loadStepTip.transform.parent;
         loginUIObj.transform.localPosition = Vector3.zero;
-        loginUIObj.GetComponent<Button>().onClick.AddListener(() =>
-        {
-            loadStepTip.text = "点击了按钮";
-            //atlasHandler.UnLoad();
-            //loginUIHandler.UnLoad();
+        loginUIObj
+            .GetComponent<Button>()
+            .onClick.AddListener(() =>
+            {
+                loadStepTip.text = "点击了按钮";
+                //atlasHandler.UnLoad();
+                //loginUIHandler.UnLoad();
 
-            LoadClientRoomScene().Coroutine();
-        });
-
+                LoadClientRoomScene().Coroutine();
+            });
     }
 
     private async ETTask LoadClientRoomScene()
     {
+#if UNITY_EDITOR
+        if (AssetComponentConfig.AssetLoadMode == AssetLoadMode.Develop)
+        {
+            LoadSceneParameters parameters = new LoadSceneParameters()
+            {
+                loadSceneMode = LoadSceneMode.Single,
+                localPhysicsMode = LocalPhysicsMode.None
+            };
+            LoadSceneHandler _loadHandler = await AssetComponent.LoadSceneAsync(ClientRoomScene);
+            AsyncOperation _operation =
+                UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(
+                    "Assets/Scenes/Debug/0.launch/LaunchClient.unity",
+                    parameters
+                );
+            _operation.completed += asyncOperation =>
+            {
+                Debug.Log("场景加载完成  " + ClientRoomScene);
+            };
+            return;
+        }
+
+#endif
+
         LoadSceneHandler loadHandler = await AssetComponent.LoadSceneAsync(ClientRoomScene);
         AsyncOperation operation = SceneManager.LoadSceneAsync("LaunchClient");
         operation.completed += asyncOperation =>
@@ -139,7 +171,6 @@ public class AssetBundleExample : MonoBehaviour
             Debug.Log("场景加载完成  " + ClientRoomScene);
         };
     }
-
 
     private async ETTask LoadABScene()
     {
@@ -159,7 +190,6 @@ public class AssetBundleExample : MonoBehaviour
             //};
             //LoadGroupTest().Coroutine();
         };
-
     }
 
     void Update()
@@ -177,6 +207,5 @@ public class AssetBundleExample : MonoBehaviour
         updateInfo?.CancelUpdate();
         LMTD.ThreadFactory.Destroy();
     }
-
 }
 //}

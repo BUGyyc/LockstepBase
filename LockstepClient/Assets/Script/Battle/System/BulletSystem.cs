@@ -26,6 +26,13 @@ public class BulletSystem : IExecuteSystem, ISystem
             byte camp = entity.actorId.value;
             var pos = entity.position.value;
 
+            if (Contexts.sharedInstance.gameState.tick.value - entity.bullet.frameIndexOnStart >= 200)
+            {
+                EntityUtil.DestroyGameEntity(entity);
+                entity.InternalDestroy();
+                continue;
+            }
+
             foreach (var character in _characterGroup.GetEntities())
             {
                 if (camp == character.actorId.value)
@@ -39,7 +46,6 @@ public class BulletSystem : IExecuteSystem, ISystem
                     UnityEngine.Debug.Log("扣血 5");
                 }
             }
-
         }
     }
 }

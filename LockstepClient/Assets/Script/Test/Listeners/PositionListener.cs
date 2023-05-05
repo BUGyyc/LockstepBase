@@ -12,6 +12,7 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
     private LVector3 target;
 
     private LQuaternion targetRotate;
+
     public void RegisterListeners(GameEntity entity)
     {
         _entity = entity;
@@ -23,10 +24,19 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
             transform.rotation = _entity.position.rotate.ToQuaternion();
         }
 
+        //_entity.OnDestroyEntity += GameEntityDestroy();
+
         //lv3 = this.transform.position.ToLVector3();
 
-        //transform.position = 
+        //transform.position =
     }
+
+    //private Entitas.EntityEvent GameEntityDestroy()
+    //{
+    //    _entity.RemovePositionListener(this);
+
+    //    return default;
+    //}
 
     public void UnregisterListeners()
     {
@@ -98,7 +108,6 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
 
         //LQuaternion q = transform.rotation.ToLQuaternion();
         //transform.rotation = LQuaternion.Lerp(q, targetRotate, FrameStep * 30).ToQuaternion();
-
     }
 
     public void SetLocationRightNow(GameEntity entity, LVector3 value, LQuaternion rotate)
@@ -107,4 +116,3 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
         transform.rotation = rotate.ToQuaternion();
     }
 }
-
