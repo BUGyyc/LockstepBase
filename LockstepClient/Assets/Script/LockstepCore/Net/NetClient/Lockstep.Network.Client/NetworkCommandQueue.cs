@@ -73,6 +73,7 @@ namespace Lockstep.Network.Client
             Serializer serializer = new Serializer();
             serializer.Put(NetProtocolDefine.Input);
             serializer.Put(input.Tick);
+            //塞入了 延迟补偿
             serializer.Put(LagCompensation);
             serializer.Put(input.Commands.Count());
             serializer.Put(input.ActorId);

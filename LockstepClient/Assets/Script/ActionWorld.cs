@@ -1,5 +1,4 @@
-﻿
-using Lockstep.Common.Logging;
+﻿using Lockstep.Common.Logging;
 using Lockstep.Core.Logic.Interfaces;
 using Lockstep.Game;
 using Lockstep.Network.Client;
@@ -43,16 +42,16 @@ public class ActionWorld : MonoBehaviour
 
         Debug.Log($"客户端发起链接请求    服务端IP：{ServerIp}   Port {ServerPort}  ");
 
-
         Log.OnMessage += (sender, args) => Debug.Log(args.Message);
 
-        _commandQueue = new NetworkCommandQueue(_client)
-        {
-            LagCompensation = 8
-        };
+        _commandQueue = new NetworkCommandQueue(_client) { LagCompensation = 8 };
         _commandQueue.InitReceived += OnInitReceived;
 
-        Simulation = new Simulation(Contexts.sharedInstance, _commandQueue, new UnityGameService(EntityDatabase));
+        Simulation = new Simulation(
+            Contexts.sharedInstance,
+            _commandQueue,
+            new UnityGameService(EntityDatabase)
+        );
 
         GameWorldManager.Instance.Awake();
 
@@ -61,7 +60,6 @@ public class ActionWorld : MonoBehaviour
             // RecordManager.Instance = new RecordManager();
         }
     }
-
 
     /// <summary>
     /// 服务器下发到客户端，发起初始化
@@ -73,14 +71,15 @@ public class ActionWorld : MonoBehaviour
         Debug.Log("接收到服务器，启动通知，客户端启动");
         //全部玩家数据
         AllActorIds = msg.AllActors;
-        Debug.Log($"Starting simulation. Total actors: {msg.AllActors.Length}. Local ActorID: {msg.ActorID}  msg.SimulationSpeed {msg.SimulationSpeed} ");
+        Debug.Log(
+            $"Starting simulation. Total actors: {msg.AllActors.Length}. Local ActorID: {msg.ActorID}  msg.SimulationSpeed {msg.SimulationSpeed} "
+        );
         Simulation.Start(30, msg.ActorID, msg.AllActors);
 
         LocalCharacterEntityId = msg.ActorID;
 
         GameWorldManager.Instance.Init(msg.AllActors);
     }
-
 
     public void DumpGameLog()
     {
@@ -91,13 +90,10 @@ public class ActionWorld : MonoBehaviour
             Directory.CreateDirectory(path + "/Log/");
         }
 
-        var fullPath = path + "/Log/" + Math.Abs(Contexts.sharedInstance.gameState.hashCode.value) + ".bin";
+        var fullPath =
+            path + "/Log/" + Math.Abs(Contexts.sharedInstance.gameState.hashCode.value) + ".bin";
 
         Simulation.DumpGameLog(new FileStream(fullPath, FileMode.Create, FileAccess.Write));
-
-
-
-
 
         //FileStream fs = new FileStream(fullPath, FileMode.Open);
 
@@ -116,14 +112,12 @@ public class ActionWorld : MonoBehaviour
 
         //    }
         //}
-
-
-
-
     }
 
     public void Execute(ICommand command)
     {
+        
+
         Simulation.Execute(command);
     }
 
@@ -158,10 +152,7 @@ public class ActionWorld : MonoBehaviour
 #endif
     }
 
-    private void FixedUpdate()
-    {
-
-    }
+    private void FixedUpdate() { }
 
     public IEnumerator AutoConnect()
     {

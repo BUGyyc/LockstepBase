@@ -93,10 +93,10 @@ namespace Lockstep.Game
                 {
                     if (_localCommandBuffer.Count > 0)
                     {
-                        UnityEngine.Debug.Log($" 本地输入命令 tick : {_world.Tick}  ");
+                        LogMaster.L($" [Client]  逻辑帧收集到 输入命令 tick : {_world.Tick}  ");
                     }
 
-                    //NOTE: 本地命令立即如队
+                    //NOTE: 本地命令立即入队，并且发送给服务器
                     _commandQueue.Enqueue(
                         new Input(_world.Tick, LocalActorId, _localCommandBuffer.ToArray())
                     );
@@ -120,6 +120,9 @@ namespace Lockstep.Game
             {
                 return;
             }
+
+            LogMaster.L($"[Client]  按键输入    tick:{_world.Tick} ");
+
             lock (_localCommandBuffer)
             {
                 if (RecordSetting.HasRecord)
