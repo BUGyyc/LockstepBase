@@ -36,10 +36,19 @@ public class BaseMoveSystem : IExecuteSystem, ISystem
 
         foreach (var entity in _characterGroup.GetEntities())
 
-            //foreach (var entity in from entity in _characterGroup.GetEntities()
-            //                   where entity.tick.value == _gameStateContext.tick.value
-            //                   select entity)
+        //foreach (var entity in from entity in _characterGroup.GetEntities()
+        //                   where entity.tick.value == _gameStateContext.tick.value
+        //                   select entity)
         {
+
+            if (entity.hasLife)
+            {
+                if (entity.life.Dead)
+                {
+                    continue;
+                }
+            }
+
             var currForward = entity.entityForwardLv3;
             var currForward2d = currForward.ToLVector2();
             var currForward2dNor = currForward2d.normalized;
@@ -73,7 +82,7 @@ public class BaseMoveSystem : IExecuteSystem, ISystem
 
             entity.position.value += (new LVector3(true, speed2d._x, 0, speed2d._y) * GameSetting.Key_Time);
 
-            
+
             //TODO: 先旋转，再位移
             //LFloat angleLf = LMath.AngleInt(currForward2dNor, speed2dNor);
             //var crossV3 = LVector3.Cross(currForward2dNor, speed2dNor);

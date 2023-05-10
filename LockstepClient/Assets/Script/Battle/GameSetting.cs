@@ -21,7 +21,7 @@ public static class GameSetting
 
     public const int ARC_ROTATE_SPEED = 560 * LFloat.Precision;//每秒旋转的角度范围
 
-    public static readonly LFloat BULLET_SPEED = new LFloat(true, 30000);
+    public static readonly LFloat BULLET_SPEED = new LFloat(true, 20000);
 
     public static readonly LFloat HERO_BASE_SPEED = new LFloat(true, 10000);
 

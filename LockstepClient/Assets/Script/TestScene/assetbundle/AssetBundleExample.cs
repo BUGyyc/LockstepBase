@@ -135,8 +135,10 @@ public class AssetBundleExample : MonoBehaviour
                 //atlasHandler.UnLoad();
                 //loginUIHandler.UnLoad();
 
-                LoadClientRoomScene().Coroutine();
+                //LoadClientRoomScene().Coroutine();
             });
+
+        await LoadClientRoomScene();
     }
 
     private async ETTask LoadClientRoomScene()

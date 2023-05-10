@@ -137,6 +137,13 @@ public class Launch : MonoBehaviour
                 this.ipIF.gameObject.SetActive(false);
                 this.playerText.gameObject.SetActive(true);
                 this.playerIF.gameObject.SetActive(true);
+
+                if (GlobalSetting.DebugLockTwoPlayer) 
+                {
+                    playerIF.text = "2";
+                }
+
+
                 break;
             case DebugLockStepMode.Client:
                 this.ipIF.gameObject.SetActive(true);

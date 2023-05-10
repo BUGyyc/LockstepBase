@@ -3,48 +3,80 @@ using Lockstep;
 
 public class BulletSystem : IExecuteSystem, ISystem
 {
-    private readonly IGroup<GameEntity> _gravityGroup;
+    private readonly IGroup<GameEntity> _bulletGroup;
 
     private readonly IGroup<GameEntity> _characterGroup;
 
-    private readonly LFloat minDistance = new LFloat(false, 100);
+    //private readonly LFloat minDistance = new LFloat(false, 100);
 
     public BulletSystem(Contexts contexts)
     {
-        _gravityGroup = contexts.game.GetGroup(
+        _bulletGroup = contexts.game.GetGroup(
             GameMatcher.AllOf(GameMatcher.Bullet, GameMatcher.LocalId)
         );
 
-        _characterGroup = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Skill));
+        _characterGroup = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Skill, GameMatcher.LocalId));
     }
 
     public void Execute()
     {
-        var entities = _gravityGroup.GetEntities();
-        foreach (var entity in entities)
+        foreach (var bullet in _bulletGroup.GetEntities())
         {
-            byte camp = entity.actorId.value;
-            var pos = entity.position.value;
 
-            if (Contexts.sharedInstance.gameState.tick.value - entity.bullet.frameIndexOnStart >= 100)
+
+            if (Contexts.sharedInstance.gameState.tick.value - bullet.bullet.frameIndexOnStart >= 300)
             {
-                EntityUtil.DestroyGameEntity(entity);
-                entity.InternalDestroy();
+                bullet.Destroy();
                 continue;
             }
+        }
 
-            foreach (var character in _characterGroup.GetEntities())
+        foreach (var character in _characterGroup.GetEntities())
+        {
+
+            foreach (var bullet in _bulletGroup.GetEntities())
             {
+                byte camp = bullet.actorId.value;
                 if (camp == character.actorId.value)
                 {
                     continue;
                 }
-                var distance = LMath.Distance(entity.position.value, pos);
-                if (distance < minDistance)
+                if (character.life.Dead)
                 {
-                    character.life.value -= new LFloat(false, 5);
-                    //UnityEngine.Debug.Log("扣血 5");
+                    continue;
                 }
+
+
+
+                if (bullet == null || bullet.isDestroyed || bullet.isEnabled == false)
+                {
+                    continue;
+                }
+
+
+                var distance = LMath.Distance(bullet.position.value, character.position.value);
+
+                //UnityEngine.Debug.Log($"扣血 5  distance {distance} ");
+                if (distance < 3)
+                {
+
+                    //character.life.value = character.life.value - 5;
+                    //UnityEngine.Debug.Log($"扣血 5  distance {distance} ");
+
+
+
+                    //if (character.life.value <= 0)
+                    //{
+                    //    character.life.Dead = true;
+
+                    //    LogMaster.E("GameEntity 被击杀");
+                    //}
+
+                    //bullet.InternalDestroy();
+
+                    //continue;
+                }
+
             }
         }
     }

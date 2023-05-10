@@ -8,7 +8,7 @@ using BM;
 
 public static class EntityUtil
 {
-    private static Dictionary<uint, GameObject> linkedEntities = new Dictionary<uint, GameObject>();
+    //private static Dictionary<uint, GameObject> linkedEntities = new Dictionary<uint, GameObject>();
 
     // public const byte BaseCharacterEntityID = 0;
 
@@ -70,9 +70,9 @@ public static class EntityUtil
         gameEntity.AddCharacterInput(0, LVector2.zero, LVector3.zero);
         gameEntity.AddMove(GameSetting.HERO_BASE_SPEED, MoveState.Idle, LVector3.zero);
         gameEntity.AddCharacterAttr(LFloat.one * 100, LFloat.one * 100);
-        gameEntity.AddSkill(0, false);
+        gameEntity.AddSkill(0, false, LVector3.zero);
 
-        gameEntity.AddLife(100);
+        gameEntity.AddLife(100, false);
 
         int index = actorId;
         gameEntity.AddPosition(
@@ -104,7 +104,7 @@ public static class EntityUtil
 
         gameEntity.AddCharacterAttr(LFloat.one * 100, LFloat.one * 100);
 
-        gameEntity.AddSkill(0, false);
+        gameEntity.AddSkill(0, false, LVector3.zero);
 
         int index = actorId;
 
@@ -137,16 +137,35 @@ public static class EntityUtil
     public static GameEntity CreateBulletEntity(
         byte actorId,
         GameEntity shooter,
+        LVector3 shootTargetPos,
         bool initSetPosition = true
     )
     {
+
+        var pos = shooter.position.value.ToVector3();
+
+        Debug.DrawRay(pos, Vector3.up * 10, Color.red, 4);
+
+        var forward = shootTargetPos - shooter.position.value;
+
+        LogMaster.L($"  shootTargetPos {shootTargetPos}  shooter {shooter.position.value}  dir {forward}   ");
+
+        forward.y = 0;
+        forward = forward.normalized;
+
+
         GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
         AddBaseComponent(gameEntity, actorId, EntityType.Bullet);
 
         gameEntity.AddPosition(shooter.position.value + LVector3.up, shooter.position.rotate);
         gameEntity.AddBullet(LFloat.one, Contexts.sharedInstance.gameState.tick.value);
 
-        var forward = shooter.position.rotate * LVector3.forward;
+        //var forward = shooter.position.rotate * LVector3.forward;
+
+
+
+
+
 
         Debug.DrawRay(shooter.position.value.ToVector3(), forward.ToVector3(), Color.yellow, 0.2f);
 
@@ -169,10 +188,10 @@ public static class EntityUtil
 
     public static GameObject GetEntityGameObject(uint entityId)
     {
-        if (linkedEntities.ContainsKey(entityId))
-        {
-            return linkedEntities[entityId];
-        }
+        //if (linkedEntities.ContainsKey(entityId))
+        //{
+        //    return linkedEntities[entityId];
+        //}
         return null;
     }
 
@@ -186,12 +205,12 @@ public static class EntityUtil
         //destroy Model
         //if (gameEntity.hasModel)
         //{
-        if (linkedEntities.TryGetValue(gameEntity.localId.value, out GameObject obj))
-        {
-            //TODO: 这里可以用对象池，后续优化
-            //obj.SetActive(false);
-            GameObject.Destroy(obj);
-        }
+        //if (linkedEntities.TryGetValue(gameEntity.localId.value, out GameObject obj))
+        //{
+        //    //TODO: 这里可以用对象池，后续优化
+        //    obj.SetActive(false);
+        //    //GameObject.Destroy(obj);
+        //}
         //}
 
         return false;
@@ -228,7 +247,7 @@ public static class EntityUtil
                 listener.RegisterListeners(entity);
             }
 
-            linkedEntities.Add(entity.localId.value, viewGo);
+            //linkedEntities.Add(entity.localId.value, viewGo);
 
             if (isLocalMaster)
             {
@@ -264,7 +283,7 @@ public static class EntityUtil
                 listener.RegisterListeners(entity);
             }
 
-            linkedEntities.Add(entity.localId.value, viewGo);
+            //linkedEntities.Add(entity.localId.value, viewGo);
 
             if (isLocalMaster)
             {

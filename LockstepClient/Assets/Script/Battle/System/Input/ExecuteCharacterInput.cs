@@ -57,7 +57,7 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
 
             // UnityEngine.Debug.Log($"<color=yellow>玩家输入 actor {actor}  speed {speed}  entityId {entityId}  </color>");
 
-            LogMaster.L($"[Client] 处理玩家输入 actor {actor}  ");
+            //LogMaster.L($"[Client] 处理玩家输入 actor {actor}  ");
 
             var gameEntity = _gameContext.GetEntityWithLocalId(
                 entityId + EntityUtil.BaseCharacterEntityID

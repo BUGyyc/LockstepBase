@@ -11,6 +11,12 @@ public class SkillInputCommand : ICommand, ISerializable
     public uint entityId;
     // public uint moveDir;
 
+    //public LVector3 shootDir;
+
+    public int shootX;
+    public int shootY;
+    public int shootZ;
+
 
     public bool leftMousePressed;
     public bool rightMousePressed;
@@ -21,14 +27,19 @@ public class SkillInputCommand : ICommand, ISerializable
     {
         // UnityEngine.Debug.Log($" System 响应键盘输入 {moveSpeed}");
         // e.AddCharacterInputSpeed(moveSpeed, inputOriginData);
-        e.AddSkillInput(skillId, entityId, leftMousePressed, rightMousePressed);
+
+        var lv3 = new UnityEngine.Vector3(shootX, shootY, shootZ).ToLVector3();  //new Lockstep.LVector3(false, shootX, shootY, shootZ);
+
+        e.AddSkillInput(skillId, entityId, lv3, leftMousePressed, rightMousePressed);
     }
 
     public void Serialize(Serializer writer)
     {
         writer.Put(skillId);
         writer.Put(entityId);
-
+        writer.Put(shootX);
+        writer.Put(shootY);
+        writer.Put(shootZ);
         writer.Put(leftMousePressed);
         writer.Put(rightMousePressed);
     }
@@ -37,6 +48,11 @@ public class SkillInputCommand : ICommand, ISerializable
     {
         skillId = reader.GetUInt();
         entityId = reader.GetUInt();
+
+        shootX = reader.GetInt();
+        shootY = reader.GetInt();
+        shootZ = reader.GetInt();
+
 
         leftMousePressed = reader.GetBool();
         rightMousePressed = reader.GetBool();

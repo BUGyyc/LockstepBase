@@ -14,6 +14,8 @@ public class SkillInputComponent : IComponent
     public uint skillId;
     public uint entityId;
 
+    public LVector3 shootDir;
+
     public bool leftMousePressed;
     public bool rightMousePressed;
 

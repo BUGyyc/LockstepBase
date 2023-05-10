@@ -13,7 +13,7 @@ using Entitas;
 using Lockstep.Common.Logging;
 using Lockstep.Game.Interfaces;
 using Lockstep.Game;
-
+using Lockstep;
 
 /// <summary>
 /// 处理玩家输入
@@ -25,7 +25,7 @@ public class SkillSystem : IExecuteSystem, ISystem
 
     public SkillSystem(Contexts contexts)
     {
-        _skill = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Skill));
+        _skill = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Skill, GameMatcher.LocalId));
     }
 
     public void Execute()
@@ -33,6 +33,14 @@ public class SkillSystem : IExecuteSystem, ISystem
         var tick = Contexts.sharedInstance.gameState.tick.value;
         foreach (var entity in _skill.GetEntities())
         {
+            if (entity.hasLife)
+            {
+                if (entity.life.Dead)
+                {
+                    continue;
+                }
+            }
+
             uint skillId = entity.skill.skillId;
 
             if (skillId == 0) continue;
@@ -40,7 +48,7 @@ public class SkillSystem : IExecuteSystem, ISystem
             if (entity.skill.shootSkill)
             {
                 entity.skill.shootSkill = false;
-                TickFire(entity);
+                TickFire(entity, entity.skill.shootDir);
             }
 
             //uint lastTick = entity.skill.lastStartTick;
@@ -55,13 +63,13 @@ public class SkillSystem : IExecuteSystem, ISystem
         }
     }
 
-    private void TickFire(GameEntity entity)
+    private void TickFire(GameEntity entity, LVector3 shootPos)
     {
         var entityId = entity.actorId.value;
 
         //TODO:这里的创建可能需要挪到Command,因为子弹也是Entity
 
-        EntityUtil.CreateBulletEntity(entityId, entity);
+        EntityUtil.CreateBulletEntity(entityId, entity, shootPos);
 
     }
 }

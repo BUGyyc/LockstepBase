@@ -2,6 +2,8 @@
 using UnityEngine.InputSystem;
 using Entitas;
 using Lockstep;
+using UnityEngine.InputSystem.HID;
+
 public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInput.IUIActions
 {
     private PlayerInput playerInput;
@@ -22,32 +24,52 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        return;
+        //return;
 
         //throw new System.NotImplementedException();
         if (context.performed)
         {
             // Debug.Log($"<color=yellow>  键盘输入  Click  </color>");
 
-            ActionWorld.Instance.Execute(new SkillInputCommand
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
             {
-                skillId = 1,
-                entityId = ActionWorld.Instance.LocalCharacterEntityId,
-                leftMousePressed = true
-            });
-            lastFireState = true;
+              
+
+                //ActionWorld.Instance.Simulation.GetWorld().
+
+                var lf3 = hit.point.ToLVector3();
+
+                //Debug.Log(" 当前鼠标点击————" + lf3);
+
+                ActionWorld.Instance.Execute(new SkillInputCommand
+                {
+                    skillId = 1,
+                    entityId = ActionWorld.Instance.LocalCharacterEntityId,
+                    shootX = lf3.x,
+                    shootY = lf3.y,
+                    shootZ = lf3.z,
+                    leftMousePressed = true
+                });
+                lastFireState = true;
+            }
+
+
+
+
         }
 
-        if (context.canceled && lastFireState)
-        {
-            lastFireState = false;
-            ActionWorld.Instance.Execute(new SkillInputCommand
-            {
-                skillId = 1,
-                entityId = ActionWorld.Instance.LocalCharacterEntityId,
-                leftMousePressed = false
-            });
-        }
+        //if (context.canceled && lastFireState)
+        //{
+        //    lastFireState = false;
+        //    ActionWorld.Instance.Execute(new SkillInputCommand
+        //    {
+        //        skillId = 1,
+        //        entityId = ActionWorld.Instance.LocalCharacterEntityId,
+        //        leftMousePressed = false
+        //    });
+        //}
 
 
 

@@ -91,10 +91,10 @@ namespace Lockstep.Game
             {
                 lock (_localCommandBuffer)
                 {
-                    if (_localCommandBuffer.Count > 0)
-                    {
-                        LogMaster.L($" [Client]  逻辑帧收集到 输入命令 tick : {_world.Tick}  ");
-                    }
+                    //if (_localCommandBuffer.Count > 0)
+                    //{
+                    //    LogMaster.L($" [Client]  逻辑帧收集到 输入命令 tick : {_world.Tick}  ");
+                    //}
 
                     var cmdArr = _localCommandBuffer.ToArray();
 
@@ -128,7 +128,7 @@ namespace Lockstep.Game
                 return;
             }
 
-            LogMaster.L($"[Client]  按键输入    tick:{_world.Tick} ");
+            //LogMaster.L($"[Client]  按键输入    tick:{_world.Tick} ");
 
             lock (_localCommandBuffer)
             {
@@ -166,15 +166,15 @@ namespace Lockstep.Game
                 GameLog.Add(_world.Tick, item);
                 foreach (ICommand command in item.Commands)
                 {
-                    LogMaster.L(
-                        "[Client]   构建输入指令  actorID: "
-                            + item.ActorId
-                            + " >>  input.Tick:  "
-                            + item.Tick
+                    //LogMaster.L(
+                    //    "[Client]   构建输入指令  actorID: "
+                    //        + item.ActorId
+                    //        + " >>  input.Tick:  "
+                    //        + item.Tick
 
-                            + "  commandCount : "
-                            + item.Commands.Count()
-                    );
+                    //        + "  commandCount : "
+                    //        + item.Commands.Count()
+                    //);
 
                     //把Command 创建为 InputEntity
 

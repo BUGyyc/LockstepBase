@@ -61,6 +61,8 @@ public class ExecuteCharacterSkillInput : IExecuteSystem, ISystem
 
             gameEntity.skill.shootSkill = true;
 
+            gameEntity.skill.shootDir = item.skillInput.shootDir;
+
             // var speed = item.characterInput.moveDir;
 
             // var entityId = item.characterInput.entityId;

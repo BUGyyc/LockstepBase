@@ -1,4 +1,5 @@
 ﻿using Entitas;
+using System.Collections.Generic;
 
 namespace Lockstep.Core.Logic.Systems.GameState
 {
@@ -8,6 +9,10 @@ namespace Lockstep.Core.Logic.Systems.GameState
         private readonly IGroup<GameEntity> _hashableEntities;
 
         private readonly GameStateContext _gameStateContext;
+
+        private Dictionary<uint, List<long>> hashCodeDic = new Dictionary<uint, List<long>>();
+
+        private uint lastCheckTick;
 
         /// <summary>
         /// 通过位置、速度、目标点来计算HashCode。这个可以作为同步的判断标准之一
@@ -45,6 +50,43 @@ namespace Lockstep.Core.Logic.Systems.GameState
             {
                 //间隔输出，防止刷屏
                 //UnityEngine.Debug.Log($"[HashCode]  tick: {tick}   hashCode:{num}"); //frame:{ActionWorld.Instance.Simulation.GetWorld().Tick}   {tick} 
+
+                if (hashCodeDic.TryGetValue(tick - (uint)GlobalSetting.LagCompensation, out var hashList))
+                {
+                    var hash = hashList[0];
+                    bool desynced = false;
+                    for (int i = 1; i < hashList.Count; i++)
+                    {
+                        if (hash != hashList[i])
+                        {
+                            desynced = true;
+                            break;
+                        }
+                    }
+
+                    if (desynced)
+                    {
+                        LogMaster.E("异常 HashCode 不一样");
+                    }
+                    else
+                    {
+                        //LogMaster.L(" 数据正常，HashCode 未发现异常，同步正常  ");
+                    }
+                }
+
+                if (tick > lastCheckTick)
+                {
+                    if (hashCodeDic.ContainsKey(tick))
+                    {
+                        hashCodeDic[tick].AddRange(new List<long>() { num });
+                    }
+                    else
+                    {
+                        hashCodeDic.Add(tick, new List<long>() { num });
+                    }
+                    lastCheckTick = tick;
+                }
+
             }
 #endif
 

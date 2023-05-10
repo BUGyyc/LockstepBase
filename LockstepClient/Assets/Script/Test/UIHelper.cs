@@ -20,6 +20,9 @@ public class UIHelper : MonoBehaviour
             HashCodeText.text = "HashCode: " + Contexts.sharedInstance.gameState.hashCode.value;
             CurrentTickText.text = "CurrentTick: " + Contexts.sharedInstance.gameState.tick.value;
             AgentCountText.text = "Agents: " + Contexts.sharedInstance.game.GetEntities(GameMatcher.LocalId).Length;
+
+
+
         }
 
 

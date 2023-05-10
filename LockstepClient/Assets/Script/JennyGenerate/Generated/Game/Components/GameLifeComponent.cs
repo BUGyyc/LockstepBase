@@ -11,17 +11,19 @@ public partial class GameEntity {
     public LifeComponent life { get { return (LifeComponent)GetComponent(GameComponentsLookup.Life); } }
     public bool hasLife { get { return HasComponent(GameComponentsLookup.Life); } }
 
-    public void AddLife(Lockstep.LFloat newValue) {
+    public void AddLife(Lockstep.LFloat newValue, bool newDead) {
         var index = GameComponentsLookup.Life;
         var component = (LifeComponent)CreateComponent(index, typeof(LifeComponent));
         component.value = newValue;
+        component.Dead = newDead;
         AddComponent(index, component);
     }
 
-    public void ReplaceLife(Lockstep.LFloat newValue) {
+    public void ReplaceLife(Lockstep.LFloat newValue, bool newDead) {
         var index = GameComponentsLookup.Life;
         var component = (LifeComponent)CreateComponent(index, typeof(LifeComponent));
         component.value = newValue;
+        component.Dead = newDead;
         ReplaceComponent(index, component);
     }
 

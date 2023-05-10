@@ -7,9 +7,9 @@ public class TransformSystem : IExecuteSystem, ISystem
     public TransformSystem(Contexts contexts)
     {
 
-        //_gameEntities = contexts.game.GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.PositionListener, GameMatcher.Position));
+        _gameEntities = contexts.game.GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.PositionListener, GameMatcher.Position, GameMatcher.LocalId));
 
-        _gameEntities = ((Context<GameEntity>)contexts.game).GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.Position, GameMatcher.PositionListener));
+        //_gameEntities = ((Context<GameEntity>)contexts.game).GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.Position, GameMatcher.PositionListener));
     }
 
 

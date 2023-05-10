@@ -83,7 +83,7 @@ namespace Lockstep.Network.Server
                         {
                             if ((@int > 0))
                             {
-                                LogMaster.L($"[Server]  接收到输入指令  NetPackage.Tick: {uInt}  NetPackage.Leg:{leg}   ");
+                                //LogMaster.L($"[Server]  接收到输入指令  NetPackage.Tick: {uInt}  NetPackage.Leg:{leg}   ");
                             }
                             _server.Distribute(clientId, data);
                         }

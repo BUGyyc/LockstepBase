@@ -14,4 +14,12 @@ public static class GlobalSetting
     public readonly static Quaternion CameraInitQ = Quaternion.Euler(new Vector3(45, 0, 0));
 
     public readonly static bool QuickStartAPP = false;
+
+
+    public readonly static bool DebugLockTwoPlayer = true;
+
+    /// <summary>
+    /// 延迟补偿
+    /// </summary>
+    public readonly static byte LagCompensation = 10;
 }

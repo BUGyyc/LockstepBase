@@ -85,3 +85,5 @@ LockstepClient/Assets/Bundles/
 LockstepCopyClient/HotfixBundles/
 LockstepCopyClient/IngameDebugConsole.Editor.csproj
 LockstepCopyClient/IngameDebugConsole.Runtime.csproj
+LockstepClient/sfloat.csproj
+LockstepClient/smath.csproj

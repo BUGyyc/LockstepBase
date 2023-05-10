@@ -1,5 +1,6 @@
-﻿- [] ET Task
-- [] AssetBundle
+﻿- [x] ET Task
+- [x] AssetBundle
+- [ ] HashCode 检验List，要考虑延迟补偿
 
 
 

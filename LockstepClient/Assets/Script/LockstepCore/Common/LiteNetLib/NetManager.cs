@@ -213,7 +213,7 @@ namespace LiteNetLib
         /// <summary>
         /// Simulate packet loss by dropping random amount of packets. (Works only in DEBUG mode)
         /// </summary>
-        public bool SimulatePacketLoss = true;
+        public bool SimulatePacketLoss = false;
 
         /// <summary>
         /// Simulate latency by holding packets for random time. (Works only in DEBUG mode)

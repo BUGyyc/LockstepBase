@@ -24,6 +24,14 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
             transform.rotation = _entity.position.rotate.ToQuaternion();
         }
 
+
+        _entity.OnDestroyEntity += (eve) =>
+        {
+            //Debug.Log("GameEntity 销毁");
+
+            GameObject.Destroy(gameObject);
+        };
+
         //_entity.OnDestroyEntity += GameEntityDestroy();
 
         //lv3 = this.transform.position.ToLVector3();
@@ -65,15 +73,16 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
         if (distance < 1)
         {
             transform.position = Vector3.Lerp(transform.position, nowViewPos, 0.4f);
+            //Debug.Log($"显示层 插值位置  {nowViewPos} ");
         }
         else if (distance < 2)
         {
             transform.position = Vector3.Lerp(transform.position, nowViewPos, 0.8f);
-            Debug.Log("网络波动很大，纠正位置");
+            //Debug.Log("网络波动很大，纠正位置");
         }
         else
         {
-            Debug.Log("网络波动巨大，直接设定位置");
+            //Debug.Log("网络波动巨大，直接设定位置");
             transform.position = nowViewPos;
         }
     }
