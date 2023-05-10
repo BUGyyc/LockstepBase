@@ -39,12 +39,12 @@ namespace Lockstep.Game
 
         public event EventHandler Started;
 
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
         public World GetWorld()
         {
             return _world;
         }
-#endif
+// #endif
 
 
         public Simulation(Contexts contexts, ICommandQueue commandQueue, params IService[] services)

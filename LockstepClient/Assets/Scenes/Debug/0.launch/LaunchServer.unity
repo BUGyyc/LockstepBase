@@ -1143,7 +1143,7 @@ MonoBehaviour:
   uiParent: {fileID: 1204905282784351464}
   mode: 0
   port: 8888
-  PlayerNumber: 1
+  PlayerNumber: 2
 --- !u!114 &1204905283793295472
 MonoBehaviour:
   m_ObjectHideFlags: 0

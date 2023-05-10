@@ -40,6 +40,9 @@ namespace Lockstep.Core.Logic.Systems.GameState
                 }
             }
             _gameStateContext.ReplaceHashCode(num);
+
+            UnityEngine.Debug.Log($"  HashCode: {num}  ");
+
         }
     }
 }
