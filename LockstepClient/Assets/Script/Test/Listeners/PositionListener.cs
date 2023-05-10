@@ -58,21 +58,22 @@ public class PositionListener : MonoBehaviour, IEventListener, IPositionListener
     private void Update()
     {
         var lastViewPos = transform.position;
-        var lastViewRot = transform.rotation;
-
+        //var lastViewRot = transform.rotation;
         var nowViewPos = target.ToVector3();
 
-        var distance = Vector3.Distance(lastViewPos, target.ToVector3());
+        var distance = Vector3.Distance(lastViewPos, nowViewPos);
         if (distance < 1)
-        {
-            transform.position = Vector3.Lerp(transform.position, nowViewPos, 0.3f);
-        }
-        else if (distance < 2)
         {
             transform.position = Vector3.Lerp(transform.position, nowViewPos, 0.4f);
         }
+        else if (distance < 2)
+        {
+            transform.position = Vector3.Lerp(transform.position, nowViewPos, 0.8f);
+            Debug.Log("网络波动很大，纠正位置");
+        }
         else
         {
+            Debug.Log("网络波动巨大，直接设定位置");
             transform.position = nowViewPos;
         }
     }

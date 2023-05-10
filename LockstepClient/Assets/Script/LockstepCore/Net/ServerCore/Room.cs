@@ -74,46 +74,49 @@ namespace Lockstep.Network.Server
             switch (deserializer.GetByte())
             {
                 case NetProtocolDefine.Input:
-                {
-                    inputMessageCounter++;
-                    uint uInt = deserializer.GetUInt();
-                    deserializer.GetByte();
-                    int @int = deserializer.GetInt();
-                    if (@int > 0 || inputMessageCounter % 8u == 0)
                     {
-                        LogMaster.L($"[Server]  接收到输入指令  frame: {uInt}  ");
-                        _server.Distribute(clientId, data);
-                    }
-                    this.InputReceived?.Invoke(
-                        this,
-                        new InputReceivedEventArgs(_actorIds[clientId], uInt)
-                    );
-                    break;
-                }
-                case NetProtocolDefine.CheckSync:
-                {
-                    // HashCode 验证是否同步
-                    Lockstep.Network.Messages.HashCode hashCode =
-                        new Lockstep.Network.Messages.HashCode();
-                    hashCode.Deserialize(deserializer);
-                    if (!_hashCodes.ContainsKey(hashCode.FrameNumber))
-                    {
-                        _hashCodes[hashCode.FrameNumber] = hashCode.Value;
-                    }
-                    else
-                    {
-                        Debug.Log(
-                            (
-                                (_hashCodes[hashCode.FrameNumber] == hashCode.Value)
-                                    ? "HashCode valid"
-                                    : "Desync"
-                            )
-                                + ": "
-                                + hashCode.Value
+                        inputMessageCounter++;
+                        uint uInt = deserializer.GetUInt();
+                        byte leg = deserializer.GetByte();
+                        int @int = deserializer.GetInt();
+                        if (@int > 0 || inputMessageCounter % 8u == 0)
+                        {
+                            if ((@int > 0))
+                            {
+                                LogMaster.L($"[Server]  接收到输入指令  NetPackage.Tick: {uInt}  NetPackage.Leg:{leg}   ");
+                            }
+                            _server.Distribute(clientId, data);
+                        }
+                        this.InputReceived?.Invoke(
+                            this,
+                            new InputReceivedEventArgs(_actorIds[clientId], uInt)
                         );
+                        break;
                     }
-                    break;
-                }
+                case NetProtocolDefine.CheckSync:
+                    {
+                        // HashCode 验证是否同步
+                        Lockstep.Network.Messages.HashCode hashCode =
+                            new Lockstep.Network.Messages.HashCode();
+                        hashCode.Deserialize(deserializer);
+                        if (!_hashCodes.ContainsKey(hashCode.FrameNumber))
+                        {
+                            _hashCodes[hashCode.FrameNumber] = hashCode.Value;
+                        }
+                        else
+                        {
+                            Debug.Log(
+                                (
+                                    (_hashCodes[hashCode.FrameNumber] == hashCode.Value)
+                                        ? "HashCode valid"
+                                        : "Desync"
+                                )
+                                    + ": "
+                                    + hashCode.Value
+                            );
+                        }
+                        break;
+                    }
                 default:
                     _server.Distribute(data);
                     break;

@@ -44,7 +44,7 @@ public class ActionWorld : MonoBehaviour
 
         Log.OnMessage += (sender, args) => Debug.Log(args.Message);
 
-        _commandQueue = new NetworkCommandQueue(_client) { LagCompensation = 8 };
+        _commandQueue = new NetworkCommandQueue(_client) { LagCompensation = 10 };
         _commandQueue.InitReceived += OnInitReceived;
 
         Simulation = new Simulation(

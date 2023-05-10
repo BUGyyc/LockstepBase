@@ -213,7 +213,7 @@ namespace LiteNetLib
         /// <summary>
         /// Simulate packet loss by dropping random amount of packets. (Works only in DEBUG mode)
         /// </summary>
-        public bool SimulatePacketLoss = false;
+        public bool SimulatePacketLoss = true;
 
         /// <summary>
         /// Simulate latency by holding packets for random time. (Works only in DEBUG mode)
@@ -223,7 +223,7 @@ namespace LiteNetLib
         /// <summary>
         /// Chance of packet loss when simulation enabled. value in percents (1 - 100).
         /// </summary>
-        public int SimulationPacketLossChance = 10;
+        public int SimulationPacketLossChance = 5;
 
         /// <summary>
         /// Minimum simulated latency (in milliseconds)
@@ -233,7 +233,7 @@ namespace LiteNetLib
         /// <summary>
         /// Maximum simulated latency (in milliseconds)
         /// </summary>
-        public int SimulationMaxLatency = 100;
+        public int SimulationMaxLatency = 40;
         #endregion
         /// <summary>
         /// Events automatically will be called without PollEvents method from another thread

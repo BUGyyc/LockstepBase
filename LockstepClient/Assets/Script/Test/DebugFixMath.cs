@@ -22,14 +22,130 @@ public class DebugFixMath : MonoBehaviour
     void Start()
     {
 
-        int a = 45 * 45;
+        //int a = 45 * 45;
 
 
-        LFloat ab = new LFloat(false, a * 1000);
+        //LFloat ab = new LFloat(false, a * 1000);
 
-        var val = LMath.Sqrt(ab);
+        //var val = LMath.Sqrt(ab);
 
-        Debug.Log($"{val}  {val._val}  {Mathf.Sqrt(a)} ");
+        //Debug.Log($"{val}  {val._val}  {Mathf.Sqrt(a)} ");
+
+
+        //long lg = 1;
+
+        //float fv1 = 0.021f;
+        //float fv2 = 0.019f;
+
+        //float currFv = lg * (fv1 + fv2);
+
+        //Debug.Log(currFv);
+
+
+        //LFloat lFloat = new LFloat(fv1) + new LFloat(fv2);
+        //LFloat rF = lFloat * lg;
+
+        //Debug.Log("rF   " + rF + "   " + rF._val);
+
+
+        //float a = 2;
+
+        //long b = 10;
+
+        //long c = 2;
+        //float d = 2;
+
+        //Debug.Log($"{a * b / c * d}");
+
+
+        Debug.Log("----------------------------------------------------------");
+
+
+        float f1 = 1f;
+        LFloat lf1 = new LFloat(1f);
+
+        sfloat sf1 = (sfloat)1f;//new sfloat(1f);
+
+        int i = 0;
+        while (i < 100)
+        {
+            i++;
+            lf1 = lf1 + 0.1f;
+            f1 = f1 + 0.1f;
+            sf1 = sf1 + (sfloat)0.1f;
+        }
+
+        Debug.Log($"f1 {f1}  lf1 {lf1}  sf1 {sf1}  ");
+
+        f1 = f1 * 2.1f;
+
+        lf1 = lf1 * 2.1f;
+        sf1 = sf1 * (sfloat)2.1f;
+
+        Debug.Log($"f1 {f1}  lf1 {lf1}  sf1 {sf1} ");
+
+
+        f1 = f1 / 0.3f;
+        lf1 = lf1 / 0.3f;
+        sf1 = sf1 / (sfloat)0.3f;
+
+        Debug.Log($"f1 {f1}  lf1 {lf1}  sf1 {sf1} ");
+
+        f1 = f1 + 0.1f + 0.3f + 1.1f;
+        lf1 = lf1 + 0.1f + 0.3f + 1.1f;
+        sf1 = sf1 + (sfloat)0.1f + (sfloat)0.3f + (sfloat)1.1f;
+
+        Debug.Log($"f1 {f1}  lf1 {lf1}  sf1 {sf1} ");
+
+        f1 = f1 - 3.11f;
+        lf1 = lf1 - 3.11f;
+        sf1 = sf1 - (sfloat)3.11f;
+
+        Debug.Log($"f1 {f1}  lf1 {lf1}  sf1 {sf1} ");
+
+        f1 = f1 + 0.77f;
+        lf1 = lf1 + 0.77f;
+        sf1 = sf1 + (sfloat)0.77f;
+
+        Debug.Log($"f1 {f1}  lf1 {lf1}  sf1 {sf1} ");
+
+        f1 = f1 * 100f;
+        lf1 = lf1 * 100f;
+        sf1 = sf1 * (sfloat)100f;
+
+        Debug.Log($"f1 {f1}  lf1 {lf1}  sf1 {sf1} ");
+
+        f1 = f1 * 0.0001f;
+        lf1 = lf1 * 0.0001f;
+        sf1 = sf1 * (sfloat)0.0001f;
+
+        Debug.Log($"f1 {f1}  lf1 {lf1}  sf1 {sf1} ");
+
+        long lg = 10000;
+
+        f1 = f1 + lg;
+        sf1 = sf1 + (sfloat)lg;
+
+        lg = 1234556;
+        f1 = f1 + lg;
+        sf1 = sf1 + (sfloat)lg;
+
+        lg = 632823;
+        f1 = f1 + lg;
+        sf1 = sf1 + (sfloat)lg;
+
+        lg = 123;
+        f1 = f1 / lg;
+        sf1 = sf1 / (sfloat)lg;
+
+        Debug.Log($"f1 {f1}   sf1 {sf1} ");
+
+        double db = 2.7776f;
+
+        f1 = f1 + (float)db;
+        sf1 = sf1 + (sfloat)db;
+
+        Debug.Log($"f1 {f1}   sf1 {sf1} ");
 
         return;
         #region 常用加减乘除

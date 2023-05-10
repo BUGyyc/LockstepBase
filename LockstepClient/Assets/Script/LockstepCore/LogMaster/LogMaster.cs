@@ -12,13 +12,22 @@ public static class LogMaster
 {
     public static void L(params string[] str)
     {
-        Debug.LogFormat($"<color=yellow>  info:  {string.Join(",", str)}   </color>");
+        uint tickValue = 0;
+        //#if UNITY_EDITOR
+        if (ActionWorld.Instance != null) tickValue = ActionWorld.Instance.Simulation.GetWorld().Contexts.gameState.tick.value;
+        //#endif
+
+        Debug.LogFormat($"<color=yellow> [Tick:{tickValue}]  info:  {string.Join(",", str)}   </color>");
     }
 
 
     public static void E(params string[] str)
     {
-        Debug.LogErrorFormat($"<color=red>  err:    {string.Join(",", str)}   </color>");
+        uint tickValue = 0;
+#if UNITY_EDITOR
+        if (ActionWorld.Instance != null) tickValue = ActionWorld.Instance.Simulation.GetWorld().Contexts.gameState.tick.value;
+#endif
+        Debug.LogErrorFormat($"<color=red> tick:{tickValue}  err:    {string.Join(",", str)}   </color>");
     }
 
 

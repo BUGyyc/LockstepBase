@@ -21,13 +21,17 @@ namespace Server.LiteNetLib
             _listener = new EventBasedNetListener();
             _server = new NetManager(_listener)
             {
-                DisconnectTimeout = 30000
+#if UNITY_EDITOR
+                DisconnectTimeout = 3000
+#else
+                 DisconnectTimeout = 30000
+#endif
             };
         }
 
         public void OnDestroy()
         {
-            UnityEngine.Debug.Log("关闭服务器");
+            LogMaster.E("关闭服务器");
             _server.CloseSocket(false);
         }
 
@@ -38,7 +42,8 @@ namespace Server.LiteNetLib
 
         public void Distribute(int clientId, byte[] data)
         {
-            _server.SendToAll(data, DeliveryMethod.ReliableOrdered, _server.ConnectedPeerList.First(peer => peer.Id == clientId));
+            _server.SendToAll(data, DeliveryMethod.ReliableOrdered,
+                _server.ConnectedPeerList.First(peer => peer.Id == clientId));
         }
 
         public void Send(int clientId, byte[] data)

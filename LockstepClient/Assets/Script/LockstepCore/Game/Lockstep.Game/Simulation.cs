@@ -38,12 +38,12 @@ namespace Lockstep.Game
 
         public event EventHandler Started;
 
-#if UNITY_EDITOR
+        //#if UNITY_EDITOR
         public World GetWorld()
         {
             return _world;
         }
-#endif
+        //#endif
 
         public Simulation(Contexts contexts, ICommandQueue commandQueue, params IService[] services)
         {
@@ -96,9 +96,16 @@ namespace Lockstep.Game
                         LogMaster.L($" [Client]  逻辑帧收集到 输入命令 tick : {_world.Tick}  ");
                     }
 
+                    var cmdArr = _localCommandBuffer.ToArray();
+
+                    //if (cmdArr.Length > 0) { }
+                    //{
+                    //    LogMaster.L($"[Client]  cmdArr  {cmdArr.GetType().FullName} ");
+                    //}
+
                     //NOTE: 本地命令立即入队，并且发送给服务器
                     _commandQueue.Enqueue(
-                        new Input(_world.Tick, LocalActorId, _localCommandBuffer.ToArray())
+                        new Input(_world.Tick, LocalActorId, cmdArr)
                     );
                     _localCommandBuffer.Clear();
                     //NOTE: 处理队列中的输入，只处理非本地输入
@@ -160,12 +167,11 @@ namespace Lockstep.Game
                 foreach (ICommand command in item.Commands)
                 {
                     LogMaster.L(
-                        "构建输入指令  actorID: "
+                        "[Client]   构建输入指令  actorID: "
                             + item.ActorId
                             + " >>  input.Tick:  "
                             + item.Tick
-                            + "#  nowTick:  "
-                            + _world.Tick
+
                             + "  commandCount : "
                             + item.Commands.Count()
                     );

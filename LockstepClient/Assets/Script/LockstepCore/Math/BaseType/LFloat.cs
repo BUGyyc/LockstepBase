@@ -73,6 +73,8 @@ namespace Lockstep
         }
 #endif
 
+
+
         #region override operator 
 
         public static bool operator <(LFloat a, LFloat b)
@@ -159,6 +161,19 @@ namespace Lockstep
         }
 
 
+        public static LFloat operator *(LFloat a, long b)
+        {
+            var result = new LFloat(true, (a._val * b));
+            return result;
+        }
+
+        public static LFloat operator /(LFloat a, long b)
+        {
+            var result = new LFloat(true, (a._val) / b);
+            return result;
+        }
+
+
         public static LFloat operator +(int a, LFloat b)
         {
             LFloat result = new LFloat(true, b._val + a * Precision);
@@ -168,6 +183,59 @@ namespace Lockstep
         public static LFloat operator -(int a, LFloat b)
         {
             return new LFloat(true, a * Precision - b._val);
+        }
+
+        /// <summary>
+        /// 慎重使用
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static LFloat operator +(LFloat a, float b)
+        {
+            int ib = (int)(b * MAX_BASE);
+            ib = ib / LOCK_NUMBER_MUL;
+            return new LFloat(true, a._val + ib);
+        }
+
+        /// <summary>
+        /// 慎重使用
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static LFloat operator -(LFloat a, float b)
+        {
+            int ib = (int)(b * MAX_BASE);
+            ib = ib / LOCK_NUMBER_MUL;
+            return new LFloat(true, a._val - ib);
+        }
+
+        /// <summary>
+        /// 慎重使用
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static LFloat operator *(LFloat a, float b)
+        {
+            int ib = (int)(b * MAX_BASE);
+            ib = ib / LOCK_NUMBER_MUL;
+            var result = new LFloat(true, (a._val * ib));
+            return result;
+        }
+        /// <summary>
+        /// 慎重使用
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static LFloat operator /(LFloat a, float b)
+        {
+            int ib = (int)(b * MAX_BASE);
+            ib = ib / LOCK_NUMBER_MUL;
+            var result = new LFloat(true, (a._val) / ib);
+            return result;
         }
 
         public static LFloat operator *(int a, LFloat b)

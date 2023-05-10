@@ -78,7 +78,7 @@ namespace Lockstep.Core.Logic
             //把快照中的最大帧号取出来，其实就是找最近一次的帧号
             uint resultTick = source.Any() ? source.Max() : 0u;
 
-            LogMaster.E("Rolling back from " + resultTick + " to " + Contexts.gameState.tick.value);
+            LogMaster.E("[Client] 回滚  Rolling back from " + resultTick + " to " + Contexts.gameState.tick.value);
 
             //通过本地的备份数据，找目标帧号的 ActorEntity 数据
             IEnumerable<ActorEntity> enumerable = from e in ContextExtension.GetEntities((IContext<ActorEntity>)(object)Contexts.actor, ActorMatcher.Backup)

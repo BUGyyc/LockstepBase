@@ -1,10 +1,5 @@
 ﻿using Entitas;
-using System.Collections.Generic;
-using System.Linq;
-using Lockstep.Common.Logging;
-using Lockstep.Game.Interfaces;
-using Lockstep.Game;
-using UnityEngine;
+
 
 public class TransformSystem : IExecuteSystem, ISystem
 {
@@ -12,7 +7,9 @@ public class TransformSystem : IExecuteSystem, ISystem
     public TransformSystem(Contexts contexts)
     {
 
-        _gameEntities = contexts.game.GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.Position, GameMatcher.LocalId));
+        //_gameEntities = contexts.game.GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.PositionListener, GameMatcher.Position));
+
+        _gameEntities = ((Context<GameEntity>)contexts.game).GetGroup((IMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.Position, GameMatcher.PositionListener));
     }
 
 
@@ -22,10 +19,10 @@ public class TransformSystem : IExecuteSystem, ISystem
         {
             var position = entity.position;
 
-            if (entity.hasPositionListener == false) continue;
+            //if (entity.hasPositionListener == false) continue;
 
             var positionListener = entity.positionListener;
-           
+
             foreach (var listener in positionListener.value)
             {
                 listener.OnPosition(entity, position.value, position.rotate);

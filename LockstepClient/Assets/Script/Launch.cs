@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using BM;
 using ET;
+using System.Security.Cryptography;
 
 public class Launch : MonoBehaviour
 {
@@ -75,6 +76,25 @@ public class Launch : MonoBehaviour
         this.clientAndServerTg.isOn = DebugLockStepMode.ClientAndServer == this.mode;
         this.pureServerTag.isOn = DebugLockStepMode.PureServer == this.mode;
 
+#if UNITY_EDITOR
+        if (GUIUtility.systemCopyBuffer.Contains("Lockstep.Random.Port") == false)
+        {
+            port = (int)Random.Range(5000, 20000);
+
+            GUIUtility.systemCopyBuffer = "Lockstep.Random.Port#" + port;
+        }
+        else
+        {
+            var str = GUIUtility.systemCopyBuffer;
+            string[] strs = str.Split("#");
+            if (strs.Length > 1)
+            {
+                port = int.Parse(strs[1]);
+            }
+        }
+
+#endif
+
         this.portIF.text = port.ToString();
 
         this.playerIF.text = PlayerNumber.ToString();
@@ -140,7 +160,7 @@ public class Launch : MonoBehaviour
         {
             case DebugLockStepMode.Client:
 
-                StartClient();
+                StartClient().Coroutine();
                 break;
 
             case DebugLockStepMode.ClientAndServer:
@@ -149,7 +169,7 @@ public class Launch : MonoBehaviour
                 break;
 
             case DebugLockStepMode.PureServer:
-                StartPureServer();
+                StartPureServer().Coroutine();
                 break;
 
             default:
@@ -157,9 +177,55 @@ public class Launch : MonoBehaviour
         }
     }
 
-    private void StartPureServer()
+    private async ETTask StartPureServer()
     {
-        SceneManager.LoadScene("PureServer", LoadSceneMode.Single);
+        string scenePath = "Assets/Scenes/Server/PureServer.unity";
+        string sceneName = "PureServer";
+
+#if UNITY_EDITOR
+        if (AssetComponentConfig.AssetLoadMode == AssetLoadMode.Develop)
+        {
+            LoadSceneParameters parameters = new LoadSceneParameters()
+            {
+                loadSceneMode = LoadSceneMode.Single,
+                localPhysicsMode = LocalPhysicsMode.None
+            };
+            LoadSceneHandler _loadHandler = await AssetComponent.LoadSceneAsync(scenePath);
+            AsyncOperation _operation =
+                UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(
+                    scenePath,
+                    parameters
+                );
+            _operation.completed += asyncOperation =>
+            {
+                Debug.Log("场景加载完成  " + sceneName);
+            };
+            return;
+        }
+        else
+        {
+            LoadSceneParameters _parameters = new LoadSceneParameters()
+            {
+                loadSceneMode = LoadSceneMode.Single,
+                localPhysicsMode = LocalPhysicsMode.None
+            };
+            AsyncOperation operation =
+               UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(
+                   scenePath,
+                   _parameters
+               );
+            operation.completed += asyncOperation =>
+            {
+                Debug.Log("场景加载完成  " + scenePath);
+            };
+            return;
+        }
+
+#endif
+
+
+        SceneManager.LoadScene(sceneName);
+
     }
 
     private void StartClientAndServer()
@@ -173,7 +239,7 @@ public class Launch : MonoBehaviour
 
         //SceneManager.LoadScene("ClientAndServer");
 
-        LoadAsyncScene().Coroutine();
+        AsyncLoadClientAndServerScene().Coroutine();
 
         NetSetting.ServerIp = SetGet_str_ipAddress;
         NetSetting.ServerPort = (uint)port;
@@ -183,7 +249,24 @@ public class Launch : MonoBehaviour
         //Debug.Log($"启动Server  IP {SetGet_str_ipAddress} Port {port}  PlayerNumber {PlayerNumber}  ");
     }
 
-    private async ETTask LoadAsyncScene()
+    private async ETTask StartClient()
+    {
+        port = int.Parse(portIF.text);
+        var ip = ipIF.text;
+
+        NetSetting.ServerIp = ip;
+        NetSetting.ServerPort = (uint)port;
+
+        //Debug.Log($"开始连接Server IP {NetSetting.ServerIp} Port {NetSetting.ServerPort}  ");
+
+        //SceneManager.LoadScene(GameSceneSetting.BattleTestScene);
+        await AsyncLoadClientScene();
+
+
+        await AsyncLoadBattleScene();
+    }
+
+    private async ETTask AsyncLoadClientAndServerScene()
     {
         string scenePath = "Assets/Scenes/Debug/0.launch/ClientAndServer.unity";
         string sceneName = "ClientAndServer";
@@ -219,19 +302,79 @@ public class Launch : MonoBehaviour
         };
     }
 
-    private void StartClient()
+    private async ETTask AsyncLoadClientScene()
     {
-        port = int.Parse(portIF.text);
-        var ip = ipIF.text;
+        string scenePath = "Assets/Scenes/Debug/0.launch/LaunchClient.unity";
+        string sceneName = "LaunchClient";
 
-        NetSetting.ServerIp = ip;
-        NetSetting.ServerPort = (uint)port;
+#if UNITY_EDITOR
+        if (AssetComponentConfig.AssetLoadMode == AssetLoadMode.Develop)
+        {
+            LoadSceneParameters parameters = new LoadSceneParameters()
+            {
+                loadSceneMode = LoadSceneMode.Single,
+                localPhysicsMode = LocalPhysicsMode.None
+            };
+            LoadSceneHandler _loadHandler = await AssetComponent.LoadSceneAsync(scenePath);
+            AsyncOperation _operation =
+                UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(
+                    scenePath,
+                    parameters
+                );
+            _operation.completed += asyncOperation =>
+            {
+                Debug.Log("场景加载完成  " + sceneName);
+            };
+            return;
+        }
 
-        //Debug.Log($"开始连接Server IP {NetSetting.ServerIp} Port {NetSetting.ServerPort}  ");
+#endif
 
-        //SceneManager.LoadScene(GameSceneSetting.BattleTestScene);
-        LoadAsyncScene().Coroutine();
+        LoadSceneHandler loadHandler = await AssetComponent.LoadSceneAsync(scenePath);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.completed += asyncOperation =>
+        {
+            Debug.Log("场景加载完成  " + scenePath);
+        };
     }
+
+    private async ETTask AsyncLoadBattleScene()
+    {
+        string scenePath = "Assets/Scenes/Debug/1.battle/Battle.unity";
+        string sceneName = "Battle";
+#if UNITY_EDITOR
+        if (AssetComponentConfig.AssetLoadMode == AssetLoadMode.Develop)
+        {
+            LoadSceneParameters parameters = new LoadSceneParameters()
+            {
+                loadSceneMode = LoadSceneMode.Single,
+                localPhysicsMode = LocalPhysicsMode.None
+            };
+            LoadSceneHandler _loadHandler = await AssetComponent.LoadSceneAsync(scenePath);
+            AsyncOperation _operation =
+                UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(
+                    scenePath,
+                    parameters
+                );
+            _operation.completed += asyncOperation =>
+            {
+                Debug.Log("场景加载完成  " + scenePath);
+            };
+            return;
+        }
+
+#endif
+
+
+        LoadSceneHandler loadHandler = await AssetComponent.LoadSceneAsync(scenePath);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.completed += asyncOperation =>
+        {
+            Debug.Log("场景加载完成  " + scenePath);
+        };
+    }
+
+
 
     public enum DebugLockStepMode
     {

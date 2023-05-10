@@ -35,16 +35,16 @@ namespace Lockstep.Network.Client
             {
                 foreach (
                     Type item in from type in assembly.GetTypes()
-                    where
-                        type.GetInterfaces()
-                            .Any(
-                                (Type intf) =>
-                                    intf.FullName != null
-                                    && intf.FullName!.Equals(
-                                        typeof(Lockstep.Core.Logic.Interfaces.ICommand).FullName
-                                    )
-                            )
-                    select type
+                                 where
+                                     type.GetInterfaces()
+                                         .Any(
+                                             (Type intf) =>
+                                                 intf.FullName != null
+                                                 && intf.FullName!.Equals(
+                                                     typeof(Lockstep.Core.Logic.Interfaces.ICommand).FullName
+                                                 )
+                                         )
+                                 select type
                 )
                 {
                     ushort tag = (
@@ -96,48 +96,48 @@ namespace Lockstep.Network.Client
             switch (deserializer.GetByte())
             {
                 case NetProtocolDefine.Init:
-                {
-                    Init init = new Init();
-                    init.Deserialize(deserializer);
-                    this.InitReceived?.Invoke(this, init);
-                    break;
-                }
-                case NetProtocolDefine.Input:
-                {
-                    //TODO: 这里的TICK是加上延迟补偿后的
-                    // uint tick = deserializer.GetUInt() + deserializer.GetByte();
-
-                    uint u1 = deserializer.GetUInt();
-                    uint u2 = deserializer.GetByte();
-
-                    uint tick = u1 + u2;
-
-                    int @int = deserializer.GetInt();
-                    byte @byte = deserializer.GetByte();
-
-                    LogMaster.L($"网络包  tick:{tick}   t1: {u1}  t2: {u2}     actorId:{@byte} ");
-
-                    Lockstep.Core.Logic.Interfaces.ICommand[] array =
-                        new Lockstep.Core.Logic.Interfaces.ICommand[@int];
-                    for (int i = 0; i < @int; i++)
                     {
-                        ushort uShort = deserializer.GetUShort();
-                        if (_commandFactories.ContainsKey(uShort))
-                        {
-                            Lockstep.Core.Logic.Interfaces.ICommand command =
-                                (Lockstep.Core.Logic.Interfaces.ICommand)
-                                    Activator.CreateInstance(_commandFactories[uShort]);
-                            command.Deserialize(deserializer);
-                            array[i] = command;
-                        }
+                        Init init = new Init();
+                        init.Deserialize(deserializer);
+                        this.InitReceived?.Invoke(this, init);
+                        break;
                     }
+                case NetProtocolDefine.Input:
+                    {
+                        //TODO: 这里的TICK是加上延迟补偿后的
+                        // uint tick = deserializer.GetUInt() + deserializer.GetByte();
 
-                    if (array.Length > 0)
-                        LogMaster.L($"客户端收到网络包指令    tick:{tick}   actorId:{@byte} ");
+                        uint u1 = deserializer.GetUInt();
+                        uint u2 = deserializer.GetByte();
 
-                    base.Enqueue(new Input(tick, @byte, array));
-                    break;
-                }
+                        uint tick = u1 + u2;
+
+                        int @int = deserializer.GetInt();
+                        byte @byte = deserializer.GetByte();
+
+                        //LogMaster.L($"[Client] 接收网络包     NetPackage.InputCommand.Tick:{tick}    actorId:{@byte} ");
+
+                        Lockstep.Core.Logic.Interfaces.ICommand[] array =
+                            new Lockstep.Core.Logic.Interfaces.ICommand[@int];
+                        for (int i = 0; i < @int; i++)
+                        {
+                            ushort uShort = deserializer.GetUShort();
+                            if (_commandFactories.ContainsKey(uShort))
+                            {
+                                Lockstep.Core.Logic.Interfaces.ICommand command =
+                                    (Lockstep.Core.Logic.Interfaces.ICommand)
+                                        Activator.CreateInstance(_commandFactories[uShort]);
+                                command.Deserialize(deserializer);
+                                array[i] = command;
+                            }
+                        }
+
+                        if (array.Length > 0)
+                            LogMaster.L($"客户端收到网络包指令    tick:{tick}   actorId:{@byte} ");
+
+                        base.Enqueue(new Input(tick, @byte, array));
+                        break;
+                    }
             }
         }
     }

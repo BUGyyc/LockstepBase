@@ -1992,7 +1992,7 @@ MonoBehaviour:
   portText: {fileID: 2988320808064898380}
   mode: 0
   port: 10007
-  PlayerNumber: 1
+  PlayerNumber: 2
 --- !u!222 &2988320809109292422
 CanvasRenderer:
   m_ObjectHideFlags: 0

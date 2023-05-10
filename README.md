@@ -10,6 +10,7 @@
 - [关于Debug](#关于debug)
   - [LiteLibNet 网络环境设置](#litelibnet-网络环境设置)
   - [Link.bat 生成同源代码工程](#linkbat-生成同源代码工程)
+- [Core Review](#core-review)
 - [TODO](#todo)
 - [参考](#参考)
 
@@ -185,6 +186,13 @@ LiteNetLib 可靠 UDP 的实现.
 
 ![](Doc/pic.res/20221027170004.png)  
 
+---
+
+# Core Review
+
+
+
+
 
 
 ---
@@ -223,6 +231,10 @@ The project includes an implementation example using LiteNetLib:
 
 Initial commit was targeting the following protocol: https://www.reddit.com/r/Unity3D/comments/aewepu/rts_networking_simulate_on_serverbeat/.  The project has shifted to an architecture you see above.
 
+
+<https://www.kisence.com/2017/11/12/guan-yu-zheng-tong-bu-de-xie-xin-de/>
+
+<https://mp.weixin.qq.com/s/cOGn8-rHWLIxdDz-R3pXDg>
 
 
 

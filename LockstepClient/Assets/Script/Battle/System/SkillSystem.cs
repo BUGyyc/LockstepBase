@@ -20,14 +20,6 @@ using Lockstep.Game;
 /// </summary>
 public class SkillSystem : IExecuteSystem, ISystem
 {
-
-
-    private readonly GameContext _gameContext;
-
-    private readonly GameStateContext _gameStateContext;
-
-
-
     private readonly IGroup<GameEntity> _skill;
 
 
