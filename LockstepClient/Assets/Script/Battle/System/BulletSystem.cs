@@ -22,7 +22,7 @@ public class BulletSystem : IExecuteSystem, ISystem
     {
         foreach (var bullet in _bulletGroup.GetEntities())
         {
-
+            return;
 
             if (Contexts.sharedInstance.gameState.tick.value - bullet.bullet.frameIndexOnStart >= 300)
             {

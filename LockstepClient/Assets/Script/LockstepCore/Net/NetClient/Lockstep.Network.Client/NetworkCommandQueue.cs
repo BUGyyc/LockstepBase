@@ -7,8 +7,11 @@ using Lockstep.Core.Logic;
 using Lockstep.Core.Logic.Interfaces;
 using Lockstep.Core.Logic.Serialization;
 using Lockstep.Core.Logic.Serialization.Utils;
+using Lockstep.Core.Logic.Systems.GameState;
 using Lockstep.Game;
 using Lockstep.Network.Messages;
+using Protocol;
+using Unity.VisualScripting;
 
 namespace Lockstep.Network.Client
 {
@@ -18,6 +21,8 @@ namespace Lockstep.Network.Client
 
         private readonly Dictionary<ushort, Type> _commandFactories =
             new Dictionary<ushort, Type>();
+
+        //private Dictionary<uint, List<long>> hashCodeDic = new Dictionary<uint, List<long>>();
 
         /// <summary>
         /// 延迟补偿，允许有一定帧数的延迟
@@ -79,10 +84,26 @@ namespace Lockstep.Network.Client
             serializer.Put(input.ActorId);
             foreach (Lockstep.Core.Logic.Interfaces.ICommand command in input.Commands)
             {
+                //UnityEngine.Debug.Log($" net Queue cmd:  {command}  ");
                 serializer.Put(command.Tag);
                 command.Serialize(serializer);
             }
+
+            //foreach(var cmd in input.Commands)
+
+
             _network.Send(Compressor.Compress(serializer));
+        }
+
+        public void SendHashCode(uint tick, long hashCode)
+        {
+            Serializer serializer = new Serializer();
+            serializer.Put(NetProtocolDefine.CheckSync);
+            serializer.Put(tick);
+            serializer.Put(LagCompensation);
+            serializer.Put(hashCode);
+            _network.Send(Compressor.Compress(serializer));
+
         }
 
         /// <summary>
@@ -133,11 +154,64 @@ namespace Lockstep.Network.Client
                         }
 
                         if (array.Length > 0)
-                            LogMaster.L($"客户端收到网络包指令    tick:{tick}   actorId:{@byte} ");
+                            //LogMaster.L($"客户端收到网络包指令    tick:{tick}   actorId:{@byte} ");
 
-                        base.Enqueue(new Input(tick, @byte, array));
+                            base.Enqueue(new Input(tick, @byte, array));
                         break;
                     }
+                case NetProtocolDefine.CheckSync:
+                    uint tickVal = deserializer.GetUInt();
+                    var lag = deserializer.GetByte();
+                    long hashCode = deserializer.GetLong();
+
+                    var compareTick = tickVal + lag;
+
+                    //LogMaster.L($"客户端收到 校验 HashCode  compareTick {compareTick}   tick:{tickVal}   lag:{lag}   hashCode:{hashCode} ");
+
+
+                    if (CalculateHashCode.hashCodeDic.ContainsKey(compareTick))
+                    {
+                        //LogMaster.E("异常，包含了未来帧的HashCode");
+                        if (CalculateHashCode.hashCodeDic[compareTick] != hashCode)
+                        {
+                            //LogMaster.E($" 校验 HashCode   异常  tick:{compareTick}   hashCode:{hashCode}   CompareHashCode：{CalculateHashCode.hashCodeDic[compareTick]}   ");
+                        }
+                    }
+                    else
+                    {
+                        CalculateHashCode.hashCodeDic.Add(compareTick, hashCode);
+                        //LogMaster.L($"网络包  存入  compareTick {compareTick}    hashCode:{hashCode}      tick:{tickVal}   lag:{lag}   ");
+                    }
+
+
+                    //if (CalculateHashCode.hashCodeDic.TryGetValue(tickVal/* - (uint)GlobalSetting.LagCompensation*/, out var hashList))
+                    //{
+                    //    var hash = hashList[0];
+                    //    bool desynced = false;
+                    //    for (int i = 1; i < hashList.Count; i++)
+                    //    {
+                    //        if (hash != hashList[i])
+                    //        {
+                    //            desynced = true;
+                    //            break;
+                    //        }
+                    //    }
+
+                    //    if (desynced)
+                    //    {
+                    //        LogMaster.E("异常 HashCode 不一样");
+                    //        return;
+                    //    }
+                    //    else
+                    //    {
+                    //        //LogMaster.L($" 数据正常，HashCode 未发现异常，同步正常  {hashList.Count}  ");
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    LogMaster.E("HashCode 未包含");
+                    //}
+                    break;
             }
         }
     }

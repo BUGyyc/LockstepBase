@@ -191,4 +191,47 @@ namespace Protocol
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
   }
   
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CheckHashCodeMsg")]
+  public partial class CheckHashCodeMsg : global::ProtoBuf.IExtensible
+  {
+    public CheckHashCodeMsg() {}
+    
+    private readonly global::System.Collections.Generic.List<Protocol.HashCodeMsg> _hash_dic = new global::System.Collections.Generic.List<Protocol.HashCodeMsg>();
+    [global::ProtoBuf.ProtoMember(1, Name=@"hash_dic", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    public global::System.Collections.Generic.List<Protocol.HashCodeMsg> hash_dic
+    {
+      get { return _hash_dic; }
+    }
+  
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"HashCodeMsg")]
+  public partial class HashCodeMsg : global::ProtoBuf.IExtensible
+  {
+    public HashCodeMsg() {}
+    
+
+    private uint _tick = default(uint);
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"tick", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint tick
+    {
+      get { return _tick; }
+      set { _tick = value; }
+    }
+    private readonly global::System.Collections.Generic.List<int> _hash_value = new global::System.Collections.Generic.List<int>();
+    [global::ProtoBuf.ProtoMember(2, Name=@"hash_value", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public global::System.Collections.Generic.List<int> hash_value
+    {
+      get { return _hash_value; }
+    }
+  
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
 }

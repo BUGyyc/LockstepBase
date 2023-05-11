@@ -8,6 +8,7 @@ using Lockstep.Core.Logic;
 using Lockstep.Core.Logic.Interfaces;
 using Lockstep.Core.Logic.Serialization.Utils;
 using Lockstep.Game.Features;
+using Lockstep.Network.Client;
 
 namespace Lockstep.Game
 {
@@ -103,10 +104,17 @@ namespace Lockstep.Game
                     //    LogMaster.L($"[Client]  cmdArr  {cmdArr.GetType().FullName} ");
                     //}
 
+                    //即使是空的 Cmd , 依然会发送
                     //NOTE: 本地命令立即入队，并且发送给服务器
                     _commandQueue.Enqueue(
                         new Input(_world.Tick, LocalActorId, cmdArr)
                     );
+
+                    var hashCode = Contexts.sharedInstance.gameState.hashCode.value;
+
+                    (_commandQueue as NetworkCommandQueue).SendHashCode(_world.Tick, hashCode);
+
+
                     _localCommandBuffer.Clear();
                     //NOTE: 处理队列中的输入，只处理非本地输入
                     ProcessInputQueue();

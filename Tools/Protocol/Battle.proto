@@ -38,5 +38,21 @@ message NavigateCommandData
 	optional uint32 tag = 1;
 	optional Int3 destination = 2;
 	repeated uint32 selection = 3;
+};
+
+
+
+message CheckHashCodeMsg
+{
+	repeated HashCodeMsg hash_dic                        = 1;
+};
+
+message HashCodeMsg
+{
+	optional uint32  tick			=1;
+	repeated int32 hash_value = 2;
 }
+
+
+
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lockstep.Common.Logging;
 using Lockstep.Core.Logic.Serialization;
 using Lockstep.Core.Logic.Serialization.Utils;
 using Lockstep.Network.Messages;
@@ -95,29 +96,39 @@ namespace Lockstep.Network.Server
                     }
                 case NetProtocolDefine.CheckSync:
                     {
-                        // HashCode 验证是否同步
-                        Lockstep.Network.Messages.HashCode hashCode =
-                            new Lockstep.Network.Messages.HashCode();
-                        hashCode.Deserialize(deserializer);
-                        if (!_hashCodes.ContainsKey(hashCode.FrameNumber))
-                        {
-                            _hashCodes[hashCode.FrameNumber] = hashCode.Value;
-                        }
-                        else
-                        {
-                            Debug.Log(
-                                (
-                                    (_hashCodes[hashCode.FrameNumber] == hashCode.Value)
-                                        ? "HashCode valid"
-                                        : "Desync"
-                                )
-                                    + ": "
-                                    + hashCode.Value
-                            );
-                        }
+                        //HashCode 验证是否同步
+
+                        var tick = deserializer.GetUInt();
+                        var lag = deserializer.GetByte();
+                        var hashCode = deserializer.GetLong();
+
+                        //LogMaster.L($"[Server]  Hash 校验  tick {tick} lag {lag} hashCode: {hashCode} ");
+
+                        _server.Distribute(clientId, data);
+
+                        //Lockstep.Network.Messages.HashCode hashCode =
+                        //    new Lockstep.Network.Messages.HashCode();
+                        //hashCode.Deserialize(deserializer);
+                        //if (!_hashCodes.ContainsKey(hashCode.FrameNumber))
+                        //{
+                        //    _hashCodes[hashCode.FrameNumber] = hashCode.Value;
+                        //}
+                        //else
+                        //{
+                        //    Debug.Log(
+                        //        (
+                        //            (_hashCodes[hashCode.FrameNumber] == hashCode.Value)
+                        //                ? "HashCode valid"
+                        //                : "Desync"
+                        //        )
+                        //            + ": "
+                        //            + hashCode.Value
+                        //    );
+                        //}
                         break;
                     }
                 default:
+                    //LogMaster.L($"[Server]  默认广播 ");
                     _server.Distribute(data);
                     break;
             }

@@ -1,5 +1,7 @@
 ﻿using Entitas;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Lockstep.Core.Logic.Systems.GameState
 {
@@ -10,7 +12,9 @@ namespace Lockstep.Core.Logic.Systems.GameState
 
         private readonly GameStateContext _gameStateContext;
 
-        private Dictionary<uint, List<long>> hashCodeDic = new Dictionary<uint, List<long>>();
+        public static Dictionary<uint, long> hashCodeDic = new Dictionary<uint, long>();
+
+        //private HashCode hashCodeData = new HashCode();
 
         private uint lastCheckTick;
 
@@ -29,6 +33,8 @@ namespace Lockstep.Core.Logic.Systems.GameState
             _gameStateContext.ReplaceHashCode(0L);
         }
 
+        StringBuilder strBuilder = new StringBuilder();
+
         public void Execute()
         {
             long num = 0L;
@@ -41,51 +47,109 @@ namespace Lockstep.Core.Logic.Systems.GameState
                 num ^= hashableEntity.position.value._z;
             }
             _gameStateContext.ReplaceHashCode(num);
-
-
+            var tick = Contexts.sharedInstance.gameState.tick.value;
+            UnityEngine.Debug.Log($"[HashCode]  tick: {tick}   hashCode:{num}"); //frame:{ActionWorld.Instance.Simulation.GetWorld().Tick}   {tick} 
 
 #if UNITY_EDITOR
-            var tick = Contexts.sharedInstance.gameState.tick.value;
-            if (DebugSetting.HashCodePrintStepTick > 0 && tick % DebugSetting.HashCodePrintStepTick == 0)
+
+            var compareTick = tick;// + GlobalSetting.LagCompensation;
+
+            if (hashCodeDic.ContainsKey(compareTick))
+            {
+                //strBuilder.Clear();
+                //byte i = 0;
+                //while (i < GlobalSetting.LagCompensation)
+                //{
+                //    var newTick = compareTick + i;
+                //    if (hashCodeDic.ContainsKey(newTick))
+                //    {
+                //        strBuilder.Append(hashCodeDic[newTick]);
+                //        strBuilder.Append("#");
+                //    }
+                //    else
+                //    {
+                //        break;
+                //    }
+                //    i++;
+                //}
+
+
+                if (hashCodeDic[compareTick] != num)
+                {
+                    //LogMaster.E($"错误，HashCode 不一样  numHashCode: {num}  CacheHashCode:{hashCodeDic[compareTick]}  compareTick ：{compareTick}   ");
+                }
+            }
+            //else
+            //{
+            //    hashCodeDic.Add(compareTick, num);
+            //    LogMaster.L($"Calculate 本地存入  tick:{tick} hash:{num}  ");
+            //}
+
+
+            //if (hashCodeDic.ContainsKey(tick))
+            //{
+            //    hashCodeDic[tick].AddRange( num );
+            //}
+            //else
+            //{
+            //    hashCodeDic.Add(tick, new List<long>() { num });
+            //}
+
+
+
+            if (DebugSetting.HashCodePrintStepTick > 0)
             {
                 //间隔输出，防止刷屏
-                //UnityEngine.Debug.Log($"[HashCode]  tick: {tick}   hashCode:{num}"); //frame:{ActionWorld.Instance.Simulation.GetWorld().Tick}   {tick} 
-
-                if (hashCodeDic.TryGetValue(tick - (uint)GlobalSetting.LagCompensation, out var hashList))
+                if (tick % DebugSetting.HashCodePrintStepTick == 0)
                 {
-                    var hash = hashList[0];
-                    bool desynced = false;
-                    for (int i = 1; i < hashList.Count; i++)
-                    {
-                        if (hash != hashList[i])
-                        {
-                            desynced = true;
-                            break;
-                        }
-                    }
+                    //ActionWorld.Instance.GetCommandQueue().SendHashCode()
 
-                    if (desynced)
-                    {
-                        LogMaster.E("异常 HashCode 不一样");
-                    }
-                    else
-                    {
-                        //LogMaster.L(" 数据正常，HashCode 未发现异常，同步正常  ");
-                    }
+                }
+                else
+                {
+
+                    //hashCodeData.t
+
+
+                    //if (checkSyncData.hashCodeDic.ContainsKey(tick))
+                    //{
+                    //    checkSyncData.hashCodeDic[tick].AddRange(new List<long>() { num });
+                    //}
+                    //else
+                    //{
+                    //    checkSyncData.hashCodeDic.Add(tick, new List<long>() { num });
+                    //}
                 }
 
-                if (tick > lastCheckTick)
-                {
-                    if (hashCodeDic.ContainsKey(tick))
-                    {
-                        hashCodeDic[tick].AddRange(new List<long>() { num });
-                    }
-                    else
-                    {
-                        hashCodeDic.Add(tick, new List<long>() { num });
-                    }
-                    lastCheckTick = tick;
-                }
+
+
+                //if (hashCodeDic.TryGetValue(tick - (uint)GlobalSetting.LagCompensation, out var hashList))
+                //{
+                //    var hash = hashList[0];
+                //    bool desynced = false;
+                //    for (int i = 1; i < hashList.Count; i++)
+                //    {
+                //        if (hash != hashList[i])
+                //        {
+                //            desynced = true;
+                //            break;
+                //        }
+                //    }
+
+                //    if (desynced)
+                //    {
+                //        LogMaster.E("异常 HashCode 不一样");
+                //    }
+                //    else
+                //    {
+                //        //LogMaster.L(" 数据正常，HashCode 未发现异常，同步正常  ");
+                //    }
+                //}
+
+                //if (tick > lastCheckTick)
+                //{
+
+                //}
 
             }
 #endif
@@ -94,3 +158,11 @@ namespace Lockstep.Core.Logic.Systems.GameState
         }
     }
 }
+
+
+//[Serializable]
+//public class CheckHashCodeData
+//{
+//    //public uint tick;
+//    public Dictionary<uint, List<long>> hashCodeDic;
+//}

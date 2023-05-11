@@ -31,7 +31,14 @@ public class ActionWorld : MonoBehaviour
     public byte LocalCharacterEntityId;
 
     private NetworkCommandQueue _commandQueue;
+
+
+    public NetworkCommandQueue GetCommandQueue() => _commandQueue;
+
+
     private readonly LiteNetLibClient _client = new LiteNetLibClient();
+
+
 
     private void Awake()
     {

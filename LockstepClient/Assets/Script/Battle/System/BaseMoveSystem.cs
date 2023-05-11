@@ -1,6 +1,6 @@
 ﻿/*
- * @Author: delevin.ying 
- * @Date: 2022-11-17 11:16:09 
+ * @Author: delevin.ying
+ * @Date: 2022-11-17 11:16:09
  * @Last Modified by: delevin.ying
  * @Last Modified time: 2022-11-17 19:06:56
  */
@@ -9,7 +9,6 @@ using UnityEngine;
 using Lockstep;
 using System.Collections.Generic;
 using System.Linq;
-
 
 //NOTE: ReactiveSystem 很特别，只有通过过滤条件的Entity 才具备执行的条件，这意味着可以在某种情况下减少无效的执行
 // IExecuteSystem 的情况就不一样，是每次都是全部Entity. 所以在某些灵敏的检查需求下，才需要每次执行所有Entity
@@ -23,9 +22,12 @@ public class BaseMoveSystem : IExecuteSystem, ISystem
 
     private readonly IGroup<GameEntity> _characterGroup;
     private readonly GameStateContext _gameStateContext;
+
     public BaseMoveSystem(Contexts contexts)
     {
-        _characterGroup = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Move, GameMatcher.LocalId, GameMatcher.CharacterInput));
+        _characterGroup = contexts.game.GetGroup(
+            GameMatcher.AllOf(GameMatcher.Move, GameMatcher.LocalId, GameMatcher.CharacterInput)
+        );
 
         _gameStateContext = contexts.gameState;
     }
@@ -35,11 +37,11 @@ public class BaseMoveSystem : IExecuteSystem, ISystem
         //return;
 
         foreach (var entity in _characterGroup.GetEntities())
-
         //foreach (var entity in from entity in _characterGroup.GetEntities()
         //                   where entity.tick.value == _gameStateContext.tick.value
         //                   select entity)
         {
+            return;
 
             if (entity.hasLife)
             {
@@ -79,9 +81,9 @@ public class BaseMoveSystem : IExecuteSystem, ISystem
                 entity.move.moveState = MoveState.Run;
             }
 
-
-            entity.position.value += (new LVector3(true, speed2d._x, 0, speed2d._y) * GameSetting.Key_Time);
-
+            entity.position.value += (
+                new LVector3(true, speed2d._x, 0, speed2d._y) * GameSetting.Key_Time
+            );
 
             //TODO: 先旋转，再位移
             //LFloat angleLf = LMath.AngleInt(currForward2dNor, speed2dNor);
@@ -109,7 +111,8 @@ public class BaseMoveSystem : IExecuteSystem, ISystem
     {
         LFloat rotateAngleSpeedLf = new LFloat(true, GameSetting.ARC_ROTATE_SPEED);
         LFloat deltaAngleLf = rotateAngleSpeedLf * GameSetting.Key_Time;
-        if (isLeftRotate) deltaAngleLf *= -1;
+        if (isLeftRotate)
+            deltaAngleLf *= -1;
         var lq = entity.position.rotate;
         entity.position.rotate = LQuaternion.Euler(lq.eulerAngles + (LVector3.up * deltaAngleLf));
 

@@ -45,7 +45,7 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
         //晒选指定帧号，生成对应的Entity
         foreach (
             InputEntity item in from entity in _characterInputs.GetEntities()
-            where entity.tick.value == _gameStateContext.tick.value
+            where entity.tick.value <= _gameStateContext.tick.value
             select entity
         )
         {
@@ -71,7 +71,49 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
                 continue;
             }
 
-            gameEntity.ReplaceCharacterInput(entityId, speed, item.characterInput.viewDir);
+            // gameEntity.position.value += 
+           if (gameEntity.hasLife)
+            {
+                if (gameEntity.life.Dead)
+                {
+                    continue;
+                }
+            }
+
+            var currForward = gameEntity.entityForwardLv3;
+            var currForward2d = currForward.ToLVector2();
+            var currForward2dNor = currForward2d.normalized;
+
+            // var speed = gameEntity.move.speed;
+            var speed2d =  speed;
+            var speed2dNor = speed2d.normalized;
+// #if UNITY_EDITOR
+//             var tempV3 = entity.characterInput.moveDir.ToLVector3().ToVector3();
+//             tempV3 = tempV3.normalized;
+
+//             Debug.DrawRay(entity.position.value.ToVector3(), tempV3 * 3f, Color.blue, 1f);
+// #endif
+            var state = gameEntity.move.moveState;
+
+            if (speed2d.magnitude._val < 100)
+            {
+                gameEntity.move.moveState = MoveState.Idle;
+                continue;
+            }
+
+            // if (speed._val == 1000)
+            // {
+            //     entity.move.moveState = MoveState.Walk;
+            // }
+            // else if (speed._val > 1000)
+            // {
+            //     entity.move.moveState = MoveState.Run;
+            // }
+
+
+            gameEntity.position.value += (new LVector3(true, speed2d._x, 0, speed2d._y) * GameSetting.Key_Time);
+
+            // gameEntity.ReplaceCharacterInput(entityId, speed, item.characterInput.viewDir);
 
             //var currForward = gameEntity.entityForwardLv3;
             //var currForward2d = currForward.ToLVector2();

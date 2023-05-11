@@ -27,6 +27,8 @@ public class MoveMotionSystem : IExecuteSystem, ISystem
 
     void IExecuteSystem.Execute()
     {
+        return;
+        
         foreach (var entity in _moveGroup.GetEntities())
         {
             var speed = entity.move.speed;

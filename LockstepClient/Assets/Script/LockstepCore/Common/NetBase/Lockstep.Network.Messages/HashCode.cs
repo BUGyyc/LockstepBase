@@ -6,20 +6,25 @@ namespace Lockstep.Network.Messages
 
     public class HashCode : ISerializable
     {
-        public ulong FrameNumber { get; set; }
+        public uint FrameNumber { get; set; }
 
-        public long Value { get; set; }
+        public long hashCode { get; set; }
+
+
+        //public string hashCodeStr;
 
         public void Serialize(Serializer writer)
         {
             writer.Put(FrameNumber);
-            writer.Put(Value);
+            writer.Put(hashCode);
+            ////writer.PutArray(hashList);
+            //writer.FromString(hashCodeStr);
         }
 
         public void Deserialize(Deserializer reader)
         {
-            FrameNumber = reader.GetULong();
-            Value = reader.GetLong();
+            FrameNumber = reader.GetUInt();
+            hashCode = reader.GetLong();
         }
     }
 }

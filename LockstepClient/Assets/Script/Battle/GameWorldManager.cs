@@ -59,7 +59,7 @@ public class GameWorldManager
 
         foreach (var actor in actors)
         {
-            EntityUtil.CreateSimpleHero(actor);
+            //EntityUtil.CreateSimpleHero(actor);
         }
         Debug.LogFormat("创建玩家");
 

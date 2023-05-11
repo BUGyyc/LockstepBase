@@ -3,10 +3,32 @@ using UnityEngine.InputSystem;
 using Entitas;
 using Lockstep;
 using UnityEngine.InputSystem.HID;
+using Lockstep.Game.Commands;
+using UnityEngine.UIElements;
 
 public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInput.IUIActions
 {
     private PlayerInput playerInput;
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                var lf3 = hit.point.ToLVector3();
+                ActionWorld.Instance.Execute(new SpawnCommand
+                {
+                    Position = lf3
+                });
+            }
+        }
+    }
+
+
 
     public void OnCancel(InputAction.CallbackContext context)
     {
@@ -24,7 +46,7 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        //return;
+        return;
 
         //throw new System.NotImplementedException();
         if (context.performed)
@@ -35,7 +57,7 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-              
+
 
                 //ActionWorld.Instance.Simulation.GetWorld().
 
