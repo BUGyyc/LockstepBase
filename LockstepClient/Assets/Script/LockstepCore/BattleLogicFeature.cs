@@ -54,11 +54,11 @@ namespace Lockstep.Game.Features
         /// <param name="contexts"></param>
         private void OnLogicLayer(Contexts contexts)
         {
-            Add(new SkillSystem(contexts));
-            Add(new BaseMoveSystem(contexts));
-            Add(new MoveMotionSystem(contexts));
+            //Add(new SkillSystem(contexts));
+            //Add(new BaseMoveSystem(contexts));
+            //Add(new MoveMotionSystem(contexts));
 
-            Add(new BulletSystem(contexts));
+            //Add(new BulletSystem(contexts));
         }
 
         /// <summary>

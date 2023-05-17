@@ -5,10 +5,10 @@ using Entitas;
 // using FixMath.NET;
 using Lockstep.Common.Logging;
 using Lockstep.Game.Interfaces;
+using Protocol;
 
 namespace Lockstep.Game.Features.Input
 {
-
     public class ExecuteSpawnInput : IExecuteSystem, ISystem
     {
         private readonly IViewService _viewService;
@@ -29,53 +29,84 @@ namespace Lockstep.Game.Features.Input
             _gameContext = contexts.game;
             _gameStateContext = contexts.gameState;
             _actorContext = contexts.actor;
-            _spawnInputs = ((Context<InputEntity>)contexts.input).GetGroup((IMatcher<InputEntity>)(object)InputMatcher.AllOf(InputMatcher.EntityConfigId, InputMatcher.ActorId, InputMatcher.Coordinate, InputMatcher.Tick));
+            _spawnInputs = ((Context<InputEntity>)contexts.input).GetGroup(
+                (IMatcher<InputEntity>)
+                    (object)
+                        InputMatcher.AllOf(
+                            InputMatcher.EntityConfigId,
+                            InputMatcher.ActorId,
+                            InputMatcher.Coordinate,
+                            InputMatcher.Tick
+                        )
+            );
         }
 
         public void Execute()
         {
             //晒选指定帧号，生成对应的Entity
-            foreach (InputEntity item in from entity in _spawnInputs.GetEntities()
-                                         where entity.tick.value == _gameStateContext.tick.value
-                                         select entity)
+            foreach (
+                InputEntity item in from entity in _spawnInputs.GetEntities()
+                                    where entity.tick.value == _gameStateContext.tick.value
+                                    select entity
+            )
             {
-                //本地 Actor 
-                ActorEntity entityWithId = _actorContext.GetEntityWithId(item.actorId.value);
-                //本地 Actor 所关联的 Entity 数量
-                uint value = entityWithId.entityCount.value;
-                GameEntity gameEntity = _gameContext.CreateEntity();
+                //LogMaster.L(
+                //    $"[ExecuteSpawnInput]   Input ActorId {item.actorId.value}  _localIdCounter {_localIdCounter}     "
+                //);
 
-                UnityEngine.Debug.Log($"<color=yellow> [ExecuteSpawnInput]   Input ActorId {item.actorId.value}  _localIdCounter {_localIdCounter}     </color> ");
+                // var bs = item.extraEntityData.dataBs;
 
+                // EntityData data = ProtocolHelper.Instance.Deserialize<EntityData>(bs) as EntityData;
 
-                //UnityEngine.Debug.Log("[ExecuteSpawnInput]    " + entityWithId.id.value + " -> " + value);
-                gameEntity.AddId((byte)value);
-                gameEntity.AddActorId(item.actorId.value);
-                gameEntity.AddLocalId(_localIdCounter);
-                // gameEntity.AddVelocity(Vector2.Zero);
-                gameEntity.AddPosition(item.coordinate.value, LQuaternion.identity);
+            //     LogMaster.L(
+            //        $"[ExecuteSpawnInput]   data.type: {data.entity_type}  _localIdCounter {_localIdCounter}     "
+            //    );
 
-                //初始动画
-                AnimationComponent animation = new AnimationComponent()
-                {
-                    readyPlay = true,
-                    animationName = "Idle_Wait_C"
-                };
-
-                gameEntity.AddComponent(GameComponentsLookup.Animation, animation);
-
-
+                var gameEntity = EntityUtil.CreateEntity(
+                    item.coordinate.value,
+                    LQuaternion.identity,
+                    item.actorId.value
+                );
+                //gameEntity.AddId((byte)value);
                 _viewService.LoadView(gameEntity, item.entityConfigId.value);
-                if (gameEntity.isNavigable)
-                {
-                    // gameEntity.AddRadius(F64.C1);
-                    // gameEntity.AddMaxSpeed(F64.C2);
-                    // gameEntity.AddRvoAgentSettings(Vector2.Zero, 5, new List<KeyValuePair<Fix64, uint>>());
-                }
-                //记录Entity数量
-                entityWithId.ReplaceEntityCount(value + 1);
 
-                _localIdCounter++;
+                //本地 Actor
+                //ActorEntity entityWithId = _actorContext.GetEntityWithId(item.actorId.value);
+                ////本地 Actor 所关联的 Entity 数量
+                //uint value = entityWithId.entityCount.value;
+                //GameEntity gameEntity = _gameContext.CreateEntity();
+
+                //LogMaster.L($"[ExecuteSpawnInput]   Input ActorId {item.actorId.value}  _localIdCounter {_localIdCounter}     ");
+
+
+                ////UnityEngine.Debug.Log("[ExecuteSpawnInput]    " + entityWithId.id.value + " -> " + value);
+                //gameEntity.AddId((byte)value);
+                //gameEntity.AddActorId(item.actorId.value);
+                //gameEntity.AddLocalId(_localIdCounter);
+                //// gameEntity.AddVelocity(Vector2.Zero);
+                //gameEntity.AddPosition(item.coordinate.value, LQuaternion.identity);
+
+                ////初始动画
+                //AnimationComponent animation = new AnimationComponent()
+                //{
+                //    readyPlay = true,
+                //    animationName = "Idle_Wait_C"
+                //};
+
+                //gameEntity.AddComponent(GameComponentsLookup.Animation, animation);
+
+
+                //_viewService.LoadView(gameEntity, item.entityConfigId.value);
+                //if (gameEntity.isNavigable)
+                //{
+                //    // gameEntity.AddRadius(F64.C1);
+                //    // gameEntity.AddMaxSpeed(F64.C2);
+                //    // gameEntity.AddRvoAgentSettings(Vector2.Zero, 5, new List<KeyValuePair<Fix64, uint>>());
+                //}
+                ////记录Entity数量
+                //entityWithId.ReplaceEntityCount(value + 1);
+
+                //_localIdCounter++;
             }
         }
     }

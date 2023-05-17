@@ -26,9 +26,9 @@ namespace Lockstep.Game.Commands
         public void Serialize(Serializer writer)
         {
             writer.PutArray(Selection);
-            writer.Put(Destination.x);
-            writer.Put(Destination.y);
-            writer.Put(Destination.z);
+            writer.Put(Destination._x);
+            writer.Put(Destination._y);
+            writer.Put(Destination._z);
 
             //writer.Put(Destination.X.RawValue);
             //writer.Put(Destination.Y.RawValue);
@@ -39,9 +39,9 @@ namespace Lockstep.Game.Commands
             Selection = reader.GetUIntArray();
             //Destination.X.RawValue = reader.GetLong();
             //Destination.Y.RawValue = reader.GetLong();
-            Destination.x = reader.GetInt();
-            Destination.y = reader.GetInt();
-            Destination.z = reader.GetInt();
+            Destination._x = reader.GetInt();
+            Destination._y = reader.GetInt();
+            Destination._z = reader.GetInt();
         }
     }
 }

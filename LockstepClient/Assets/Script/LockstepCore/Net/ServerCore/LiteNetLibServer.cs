@@ -22,11 +22,14 @@ namespace Server.LiteNetLib
             _server = new NetManager(_listener)
             {
 #if UNITY_EDITOR
-                DisconnectTimeout = 3000
+                DisconnectTimeout = 300000
 #else
-                 DisconnectTimeout = 30000
+                 DisconnectTimeout = 300000
 #endif
             };
+
+            //_server.SimulatePacketLoss = true;
+            //_server.SimulateLatency = true;
         }
 
         public void OnDestroy()

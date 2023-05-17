@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using Lockstep.Core.State.Game;
 using Lockstep.Game.Commands;
+using UnityEngine.InputSystem.HID;
+using Protocol;
+
 public class GameWorldManager
 {
     private static GameWorldManager _instance;
@@ -52,6 +55,25 @@ public class GameWorldManager
         //        });
         //    }
         //}
+
+
+        EntityData data = new EntityData();
+
+        data.bullet = new BulletData();
+
+        data.bullet.speed = Vector3.up.ToInt3();
+
+        byte[] bs = ProtocolHelper.Instance.SerializableData(data);
+
+
+
+        var entityData = ProtocolHelper.Instance.Deserialize<EntityData>(bs) as EntityData;
+
+        var speed = entityData.bullet.speed;
+
+        LogMaster.L("entityData---------->" + speed.x + speed.y + speed.z);
+
+
     }
 
     void CreateCharacter(byte[] actors)
@@ -59,7 +81,14 @@ public class GameWorldManager
 
         foreach (var actor in actors)
         {
-            //EntityUtil.CreateSimpleHero(actor);
+            //EntityUtil.CreateHeroEntity(actor);
+            var lf3 = Lockstep.LVector3.zero + actor * Lockstep.LVector3.forward * 3;
+            ActionWorld.Instance.Execute(new SpawnCommand
+            {
+                Position = lf3
+            });
+
+
         }
         Debug.LogFormat("创建玩家");
 

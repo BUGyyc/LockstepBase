@@ -234,4 +234,51 @@ namespace Protocol
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
   }
   
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"EntityData")]
+  public partial class EntityData : global::ProtoBuf.IExtensible
+  {
+    public EntityData() {}
+    
+
+    private uint _entity_type = default(uint);
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"entity_type", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint entity_type
+    {
+      get { return _entity_type; }
+      set { _entity_type = value; }
+    }
+
+    private Protocol.BulletData _bullet = null;
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"bullet", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public Protocol.BulletData bullet
+    {
+      get { return _bullet; }
+      set { _bullet = value; }
+    }
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"BulletData")]
+  public partial class BulletData : global::ProtoBuf.IExtensible
+  {
+    public BulletData() {}
+    
+
+    private Protocol.Int3 _speed = null;
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"speed", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public Protocol.Int3 speed
+    {
+      get { return _speed; }
+      set { _speed = value; }
+    }
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
 }

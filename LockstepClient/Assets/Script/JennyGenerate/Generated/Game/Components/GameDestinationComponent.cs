@@ -6,6 +6,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Lockstep;
+
 public partial class GameEntity {
 
     static readonly Lockstep.Core.State.Game.DestinationComponent destinationComponent = new Lockstep.Core.State.Game.DestinationComponent();
@@ -27,6 +29,14 @@ public partial class GameEntity {
                 }
             }
         }
+    }
+
+    public void ReplaceDestination(LVector3 val)
+    {
+        var index = GameComponentsLookup.Destination;
+        var component = (Lockstep.Core.State.Game.DestinationComponent)CreateComponent(index, typeof(Lockstep.Core.State.Game.DestinationComponent));
+        component.value = val;
+        ReplaceComponent(index, component);
     }
 }
 

@@ -3,6 +3,7 @@ using System.Linq;
 using Entitas;
 using Lockstep.Common.Logging;
 using Lockstep.Core.Logic.Systems;
+using UnityEngine;
 
 namespace Lockstep.Core.Logic
 {
@@ -33,10 +34,11 @@ namespace Lockstep.Core.Logic
             if (!Contexts.gameState.isPredicting)
             {
                 Contexts.gameState.isPredicting = true;
+                LogMaster.L(" isPredicting  true  " + Time.realtimeSinceStartup);
             }
             Log.Trace(this, "Predict " + Contexts.gameState.tick.value);
 
-            // LogMaster.L("Predict: " + Contexts.gameState.tick.value);
+            LogMaster.L("Predict: " + Contexts.gameState.tick.value);
 
             (_systems).Execute();
             (_systems).Cleanup();
@@ -51,6 +53,7 @@ namespace Lockstep.Core.Logic
             if (Contexts.gameState.isPredicting)
             {
                 Contexts.gameState.isPredicting = false;
+                LogMaster.L(" isPredicting  false  " + Time.realtimeSinceStartup);
             }
             //Log.Trace(this, "Simulate " + Contexts.gameState.tick.value);
             (_systems).Execute();
@@ -62,7 +65,7 @@ namespace Lockstep.Core.Logic
             debugEntity.AddTick(Tick);
             debugEntity.AddHashCode(Contexts.gameState.hashCode.value);
 
-            //LogMaster.L($" [Simulate]   tick:{Tick}   HashCode:{Contexts.gameState.hashCode.value}  ");
+            LogMaster.L($" [Simulate]   tick:{Tick}   HashCode:{Contexts.gameState.hashCode.value}  ");
         }
 
         /// <summary>
@@ -78,7 +81,7 @@ namespace Lockstep.Core.Logic
             //把快照中的最大帧号取出来，其实就是找最近一次的帧号
             uint resultTick = source.Any() ? source.Max() : 0u;
 
-            LogMaster.E("[Client] 回滚  Rolling back from " + resultTick + " to " + Contexts.gameState.tick.value);
+            LogMaster.E("[Client] 回滚  Rolling back from " + Contexts.gameState.tick.value + " to " + resultTick);
 
             //通过本地的备份数据，找目标帧号的 ActorEntity 数据
             IEnumerable<ActorEntity> enumerable = from e in ContextExtension.GetEntities((IContext<ActorEntity>)(object)Contexts.actor, ActorMatcher.Backup)
@@ -162,6 +165,7 @@ namespace Lockstep.Core.Logic
             //追到目标帧号
             while (Tick <= tick)
             {
+                LogMaster.L($" Quick Exe Tick  {Tick}  ->  {tick}   ");
                 Simulate();
             }
         }

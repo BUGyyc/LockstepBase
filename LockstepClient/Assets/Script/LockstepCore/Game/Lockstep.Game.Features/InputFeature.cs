@@ -12,9 +12,9 @@ namespace Lockstep.Game.Features
             Add(new ExecuteNavigationInput(contexts, services));
 
 
-            Add(new ExecuteCharacterInput(contexts, services));
+            // Add(new ExecuteCharacterInput(contexts, services));
             // Add(new ExecuteSkillInput(contexts, services));
-            Add(new ExecuteCharacterSkillInput(contexts, services));
+            // Add(new ExecuteCharacterSkillInput(contexts, services));
         }
     }
 }

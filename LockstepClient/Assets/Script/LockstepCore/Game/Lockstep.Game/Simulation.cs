@@ -92,17 +92,7 @@ namespace Lockstep.Game
             {
                 lock (_localCommandBuffer)
                 {
-                    //if (_localCommandBuffer.Count > 0)
-                    //{
-                    //    LogMaster.L($" [Client]  逻辑帧收集到 输入命令 tick : {_world.Tick}  ");
-                    //}
-
                     var cmdArr = _localCommandBuffer.ToArray();
-
-                    //if (cmdArr.Length > 0) { }
-                    //{
-                    //    LogMaster.L($"[Client]  cmdArr  {cmdArr.GetType().FullName} ");
-                    //}
 
                     //即使是空的 Cmd , 依然会发送
                     //NOTE: 本地命令立即入队，并且发送给服务器
@@ -135,8 +125,6 @@ namespace Lockstep.Game
             {
                 return;
             }
-
-            //LogMaster.L($"[Client]  按键输入    tick:{_world.Tick} ");
 
             lock (_localCommandBuffer)
             {
@@ -174,16 +162,6 @@ namespace Lockstep.Game
                 GameLog.Add(_world.Tick, item);
                 foreach (ICommand command in item.Commands)
                 {
-                    //LogMaster.L(
-                    //    "[Client]   构建输入指令  actorID: "
-                    //        + item.ActorId
-                    //        + " >>  input.Tick:  "
-                    //        + item.Tick
-
-                    //        + "  commandCount : "
-                    //        + item.Commands.Count()
-                    //);
-
                     //把Command 创建为 InputEntity
 
                     InputEntity inputEntity = ((Context<InputEntity>)Contexts.input).CreateEntity();

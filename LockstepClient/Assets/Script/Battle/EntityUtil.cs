@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Lockstep;
 using ET;
 using BM;
+using System;
+using Protocol;
 
 public static class EntityUtil
 {
@@ -44,6 +46,53 @@ public static class EntityUtil
         return com;
     }
 
+    public static byte[] CreateEntityDataByteData(EntityType type)
+    {
+        byte[] data = null;
+        //switch (type)
+        //{
+        //    case EntityType.Bullet:
+        //        data = CreateBulletData();
+        //        break;
+        //}
+        return data;
+    }
+
+    public static byte[] CreateBulletData(LVector3 speed)
+    {
+        EntityData data = new EntityData();
+
+        data.entity_type = (uint)EntityType.Bullet;
+
+        data.bullet = new BulletData();
+
+        data.bullet.speed = speed.ToInt3();
+
+        var bs = ProtocolHelper.Instance.SerializableData(data);
+        return bs;
+    }
+
+    public static GameEntity CreateHeroEntity(byte actorId)
+    {
+        var pos = Lockstep.LVector3.zero + 3 * actorId * Lockstep.LVector3.forward;
+        var rot = Lockstep.LQuaternion.identity;
+        return CreateEntity(pos, rot, actorId);
+    }
+
+    public static GameEntity CreateEntity(LVector3 pos, LQuaternion rot, byte actorId)
+    {
+        GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
+        gameEntity.AddPosition(pos, rot);
+        AddBaseComponent(gameEntity, actorId, EntityType.Hero);
+        gameEntity.AddCharacterInput(0, LVector2.zero, LVector3.zero);
+        gameEntity.AddMove(GameSetting.HERO_BASE_SPEED, MoveState.Idle, LVector3.zero);
+        gameEntity.AddCharacterAttr(LFloat.one * 100, LFloat.one * 100);
+        gameEntity.AddSkill(0, false, LVector3.zero);
+
+        gameEntity.AddLife(100, false);
+        return gameEntity;
+    }
+
     public static GameEntity CreateAI(int index)
     {
         GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
@@ -80,7 +129,9 @@ public static class EntityUtil
             Lockstep.LQuaternion.identity
         );
 
-        LogMaster.L($" gameEntity.actorId {gameEntity.actorId.value}    {ActionWorld.Instance.Simulation.LocalActorId}  ");
+        LogMaster.L(
+            $" gameEntity.actorId {gameEntity.actorId.value}    {ActionWorld.Instance.Simulation.LocalActorId}  "
+        );
 
         bool value = gameEntity.actorId.value == ActionWorld.Instance.Simulation.LocalActorId;
 
@@ -141,18 +192,18 @@ public static class EntityUtil
         bool initSetPosition = true
     )
     {
-
         var pos = shooter.position.value.ToVector3();
 
         Debug.DrawRay(pos, Vector3.up * 10, Color.red, 4);
 
         var forward = shootTargetPos - shooter.position.value;
 
-        LogMaster.L($"  shootTargetPos {shootTargetPos}  shooter {shooter.position.value}  dir {forward}   ");
+        LogMaster.L(
+            $"  shootTargetPos {shootTargetPos}  shooter {shooter.position.value}  dir {forward}   "
+        );
 
         forward.y = 0;
         forward = forward.normalized;
-
 
         GameEntity gameEntity = Contexts.sharedInstance.game.CreateEntity();
         AddBaseComponent(gameEntity, actorId, EntityType.Bullet);
@@ -195,12 +246,13 @@ public static class EntityUtil
         return null;
     }
 
-
     public static bool DestroyGameEntity(GameEntity gameEntity)
     {
-        if (gameEntity == null) return false;
+        if (gameEntity == null)
+            return false;
 
-        if (gameEntity.isEnabled == false) return false;
+        if (gameEntity.isEnabled == false)
+            return false;
 
         //destroy Model
         //if (gameEntity.hasModel)
@@ -215,7 +267,6 @@ public static class EntityUtil
 
         return false;
     }
-
 
     private static async ETTask LoadAsyncEntityView(
         GameEntity entity,

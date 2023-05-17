@@ -45,10 +45,14 @@ namespace Lockstep.Core.Logic.Systems.GameState
                 num ^= hashableEntity.position.value._x;//X.RawValue;
                 num ^= hashableEntity.position.value._y;// Y.RawValue;
                 num ^= hashableEntity.position.value._z;
+
+                var val = hashableEntity.position.value;
+
+                //LogMaster.L($"Calculate {hashableEntity.localId}  x:{val._x} y:{val._y} z:{val._z}  ");
             }
             _gameStateContext.ReplaceHashCode(num);
             var tick = Contexts.sharedInstance.gameState.tick.value;
-            UnityEngine.Debug.Log($"[HashCode]  tick: {tick}   hashCode:{num}"); //frame:{ActionWorld.Instance.Simulation.GetWorld().Tick}   {tick} 
+            //UnityEngine.Debug.Log($"[HashCode]  tick: {tick}   hashCode:{num}"); //frame:{ActionWorld.Instance.Simulation.GetWorld().Tick}   {tick} 
 
 #if UNITY_EDITOR
 

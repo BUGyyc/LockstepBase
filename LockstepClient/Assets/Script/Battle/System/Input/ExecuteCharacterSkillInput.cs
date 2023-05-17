@@ -14,6 +14,12 @@ using Entitas;
 using Lockstep.Common.Logging;
 using Lockstep.Game.Interfaces;
 using Lockstep.Game;
+//using static UnityEngine.EventSystems.EventTrigger;
+using Lockstep.Game.Commands;
+
+using Protocol;
+using Unity.VisualScripting;
+using System;
 
 public class ExecuteCharacterSkillInput : IExecuteSystem, ISystem
 {
@@ -40,8 +46,8 @@ public class ExecuteCharacterSkillInput : IExecuteSystem, ISystem
         //晒选指定帧号，生成对应的Entity
         foreach (
             InputEntity item in from entity in _skillInputs.GetEntities()
-            where entity.tick.value == _gameStateContext.tick.value
-            select entity
+                                where entity.tick.value == _gameStateContext.tick.value
+                                select entity
         )
         {
             var leftMousePressed = item.skillInput.leftMousePressed;
@@ -57,11 +63,75 @@ public class ExecuteCharacterSkillInput : IExecuteSystem, ISystem
                 );
                 continue;
             }
-            gameEntity.skill.skillId = item.skillInput.skillId;
 
-            gameEntity.skill.shootSkill = true;
+            if (gameEntity.hasLife)
+            {
+                if (gameEntity.life.Dead)
+                {
+                    continue;
+                }
+            }
 
-            gameEntity.skill.shootDir = item.skillInput.shootDir;
+            uint skillId = item.skillInput.skillId;
+
+            var dir = item.skillInput.shootDir;
+
+            var pos = gameEntity.position.value + dir;
+
+            if (skillId == 0) continue;
+
+
+
+            LogMaster.L($"Shoot pos: {pos} dir: {dir}");
+
+
+            //var entityData = 
+
+            //EntityData data = new EntityData();
+
+            //byte[] bs = ProtocolHelper.Instance.SerializableData(data);
+
+            var bs = EntityUtil.CreateBulletData(dir);
+
+
+
+            //ProtoBufSerializer.Serialize(msSend, tmp);
+
+            //Serializer serializer = new Serializer();
+
+            //var d = data.Serialize();
+            //d.
+
+            //data.
+
+            //ProtoWrite
+
+
+            //Serialization.Serialize
+
+
+
+            ActionWorld.Instance.Execute(new SpawnCommand
+            {
+                Position = pos,
+                // entityData = bs
+            });
+
+
+            //var entityId = item.actorId.value;
+
+            //TickFire(entity, entity.skill.shootDir);
+
+
+
+
+            //gameEntity.skill.skillId = item.skillInput.skillId;
+
+            //gameEntity.skill.shootSkill = true;
+
+            //gameEntity.skill.shootDir = item.skillInput.shootDir;
+
+
 
             // var speed = item.characterInput.moveDir;
 

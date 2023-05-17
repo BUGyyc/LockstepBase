@@ -31,6 +31,10 @@ public class LiteNetLibClient : INetwork
         };
         // _client.UnconnectedMessagesEnabled = true;
         // _client.UpdateTime = 15;
+
+        _client.SimulatePacketLoss = true;
+        _client.SimulationPacketLossChance = 50;
+
         _client.Start();
     }
     public void Connect(string serverIp, int port)

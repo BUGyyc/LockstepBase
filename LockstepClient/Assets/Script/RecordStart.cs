@@ -47,7 +47,7 @@ public class RecordStart : MonoBehaviour
         //     Debug.Log($"[GameLog]  {gameLog.LocalActorId}   {gameLog.InputLog.Count} ");
         // }
 
-        // 
+        
     }
 
     // Update is called once per frame

@@ -86,7 +86,7 @@ public class ExecuteCharacterInput : IExecuteSystem, ISystem
 
             // var speed = gameEntity.move.speed;
             var speed2d =  speed;
-            var speed2dNor = speed2d.normalized;
+            //speed2d = speed2d.normalized;
 // #if UNITY_EDITOR
 //             var tempV3 = entity.characterInput.moveDir.ToLVector3().ToVector3();
 //             tempV3 = tempV3.normalized;

@@ -16,7 +16,7 @@ public static class GlobalSetting
     public readonly static bool QuickStartAPP = false;
 
 
-    public readonly static bool DebugLockTwoPlayer = true;
+    public readonly static bool DebugLockTwoPlayer = false;
 
     /// <summary>
     /// 延迟补偿

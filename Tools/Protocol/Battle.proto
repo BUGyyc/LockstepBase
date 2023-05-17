@@ -51,7 +51,23 @@ message HashCodeMsg
 {
 	optional uint32  tick			=1;
 	repeated int32 hash_value = 2;
-}
+};
+
+
+message EntityData
+{
+	optional uint32 entity_type = 1;
+	optional BulletData  bullet = 2;
+};
+
+
+message BulletData
+{
+	optional Int3	speed = 1;
+};
+
+
+
 
 
 

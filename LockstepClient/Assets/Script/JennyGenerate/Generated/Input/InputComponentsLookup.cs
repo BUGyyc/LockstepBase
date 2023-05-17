@@ -17,8 +17,9 @@ public static class InputComponentsLookup {
     public const int TargetActorId = 6;
     public const int Tick = 7;
     public const int SkillInput = 8;
+    public const int ExtraEntityData = 9;
 
-    public const int TotalComponents = 9;
+    public const int TotalComponents = 10;
 
     public static readonly string[] componentNames = {
         "CharacterInput",
@@ -29,7 +30,8 @@ public static class InputComponentsLookup {
         "Selection",
         "TargetActorId",
         "Tick",
-        "SkillInput"
+        "SkillInput",
+        "ExtraEntityData"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -41,6 +43,7 @@ public static class InputComponentsLookup {
         typeof(Lockstep.Core.State.Input.SelectionComponent),
         typeof(Lockstep.Core.State.Input.TargetActorIdComponent),
         typeof(Lockstep.Core.State.Input.TickComponent),
-        typeof(SkillInputComponent)
+        typeof(SkillInputComponent),
+        typeof(Lockstep.Core.State.Input.ExtraEntityDataComponent)
     };
 }

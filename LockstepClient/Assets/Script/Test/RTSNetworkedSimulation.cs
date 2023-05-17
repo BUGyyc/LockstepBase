@@ -41,6 +41,8 @@ public class RTSNetworkedSimulation : MonoBehaviour
 
         Log.OnMessage += (sender, args) => Debug.Log(args.Message);
 
+       
+
         _commandQueue = new NetworkCommandQueue(_client)
         {
             LagCompensation = 10
@@ -85,12 +87,12 @@ public class RTSNetworkedSimulation : MonoBehaviour
         _client.Update();
         Simulation.Update(Time.deltaTime * 1000);
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            //AllActorIds = init.AllActors;
-            Debug.Log($"Starting simulation. Total actors:-------------------------------------");
-            Simulation.Start(30, 1, new byte[] { 1 });
-        }
+        // if (Input.GetKeyDown(KeyCode.P))
+        // {
+        //     //AllActorIds = init.AllActors;
+        //     Debug.Log($"Starting simulation. Total actors:-------------------------------------");
+        //     Simulation.Start(30, 1, new byte[] { 1 });
+        // }
     }
 
     public IEnumerator AutoConnect()

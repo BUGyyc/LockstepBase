@@ -88,6 +88,8 @@ namespace Lockstep.Core.Logic.Systems.GameState
                 actorEntity.AddBackup(activeActor.id.value, value);
             }
             Log.Trace(this, "New snapshot for " + value + "(" + _activeActors.count + " actors, " + _activeEntities.count + " entities)");
+
+            LogMaster.L("New snapshot for " + value + "(" + _activeActors.count + " actors, " + _activeEntities.count + " entities)");
         }
     }
 }

@@ -87,3 +87,4 @@ LockstepCopyClient/IngameDebugConsole.Editor.csproj
 LockstepCopyClient/IngameDebugConsole.Runtime.csproj
 LockstepClient/sfloat.csproj
 LockstepClient/smath.csproj
+.vscode/settings.json
