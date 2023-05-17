@@ -29,6 +29,7 @@ namespace Server.LiteNetLib
             };
 
             //_server.SimulatePacketLoss = true;
+            //_server.SimulationPacketLossChance = 50;
             //_server.SimulateLatency = true;
         }
 

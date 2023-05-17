@@ -41,9 +41,9 @@ public class RTSNetworkedSimulation : MonoBehaviour
 
         Log.OnMessage += (sender, args) => Debug.Log(args.Message);
 
-       
+        //_client.
 
-        _commandQueue = new NetworkCommandQueue(_client)
+         _commandQueue = new NetworkCommandQueue(_client)
         {
             LagCompensation = 10
         };

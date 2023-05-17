@@ -9,6 +9,7 @@ using Lockstep.Core.Logic.Interfaces;
 using Lockstep.Core.Logic.Serialization.Utils;
 using Lockstep.Game.Features;
 using Lockstep.Network.Client;
+//using UnityEngine;
 
 namespace Lockstep.Game
 {
@@ -104,6 +105,7 @@ namespace Lockstep.Game
 
                     (_commandQueue as NetworkCommandQueue).SendHashCode(_world.Tick, hashCode);
 
+                    LogMaster.L($"Update {_world.Tick}   {UnityEngine.Time.realtimeSinceStartup} ");
 
                     _localCommandBuffer.Clear();
                     //NOTE: 处理队列中的输入，只处理非本地输入
@@ -197,6 +199,7 @@ namespace Lockstep.Game
                 _world.RevertToTick(num);
                 while (_world.Tick <= num2 && _world.Tick < tick)
                 {
+                    LogMaster.L("加速追----》" + _world.Tick);
                     _world.Simulate();
                 }
                 while (_world.Tick < tick)

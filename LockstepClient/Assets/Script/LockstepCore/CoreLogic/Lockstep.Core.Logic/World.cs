@@ -38,7 +38,7 @@ namespace Lockstep.Core.Logic
             }
             Log.Trace(this, "Predict " + Contexts.gameState.tick.value);
 
-            LogMaster.L("Predict: " + Contexts.gameState.tick.value);
+            //LogMaster.L("Predict: " + Contexts.gameState.tick.value);
 
             (_systems).Execute();
             (_systems).Cleanup();

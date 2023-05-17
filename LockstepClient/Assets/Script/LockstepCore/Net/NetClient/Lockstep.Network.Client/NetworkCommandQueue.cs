@@ -65,6 +65,7 @@ namespace Lockstep.Network.Client
                 }
             }
             _network = network;
+            
             _network.DataReceived += NetworkOnDataReceived;
         }
 

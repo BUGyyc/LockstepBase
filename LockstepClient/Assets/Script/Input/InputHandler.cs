@@ -35,7 +35,9 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
 
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("state : " + Contexts.sharedInstance.gameState.isPredicting);
+
+
+            //Debug.Log("state : " + Contexts.sharedInstance.gameState.isPredicting);
             // return;
 
             var lf3 = GetWorldPos(Input.mousePosition, out bool flag);
