@@ -46,8 +46,8 @@ namespace Lockstep.Game.Features.Input
             //晒选指定帧号，生成对应的Entity
             foreach (
                 InputEntity item in from entity in _spawnInputs.GetEntities()
-                                    where entity.tick.value == _gameStateContext.tick.value
-                                    select entity
+                where entity.tick.value == _gameStateContext.tick.value
+                select entity
             )
             {
                 //LogMaster.L(
@@ -58,9 +58,7 @@ namespace Lockstep.Game.Features.Input
 
                 // EntityData data = ProtocolHelper.Instance.Deserialize<EntityData>(bs) as EntityData;
 
-            //     LogMaster.L(
-            //        $"[ExecuteSpawnInput]   data.type: {data.entity_type}  _localIdCounter {_localIdCounter}     "
-            //    );
+                LogMaster.L($"[ExecuteSpawnInput]    _localIdCounter {_localIdCounter}     ");
 
                 var gameEntity = EntityUtil.CreateEntity(
                     item.coordinate.value,

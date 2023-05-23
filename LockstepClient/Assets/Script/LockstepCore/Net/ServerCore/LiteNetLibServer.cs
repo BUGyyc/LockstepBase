@@ -28,9 +28,9 @@ namespace Server.LiteNetLib
 #endif
             };
 
-            //_server.SimulatePacketLoss = true;
-            //_server.SimulationPacketLossChance = 50;
-            //_server.SimulateLatency = true;
+            _server.SimulatePacketLoss = true;
+            _server.SimulationPacketLossChance = 50;
+            _server.SimulateLatency = true;
         }
 
         public void OnDestroy()

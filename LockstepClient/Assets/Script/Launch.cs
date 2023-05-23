@@ -141,7 +141,12 @@ public class Launch : MonoBehaviour
                 if (GlobalSetting.DebugLockTwoPlayer) 
                 {
                     playerIF.text = "2";
+
+                    //port = (int)Random.Range(5000, 20000);
+                    //GUIUtility.systemCopyBuffer = "Lockstep.Random.Port#" + port;
+                    //this.portIF.text = port.ToString();
                 }
+
 
 
                 break;

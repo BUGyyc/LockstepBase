@@ -101,11 +101,11 @@ namespace Lockstep.Game
                         new Input(_world.Tick, LocalActorId, cmdArr)
                     );
 
-                    var hashCode = Contexts.sharedInstance.gameState.hashCode.value;
+                    //NOTE: 待验证的 CheckHashCode
+                    //var hashCode = Contexts.sharedInstance.gameState.hashCode.value;
+                    //(_commandQueue as NetworkCommandQueue).SendHashCode(_world.Tick, hashCode);
 
-                    (_commandQueue as NetworkCommandQueue).SendHashCode(_world.Tick, hashCode);
-
-                    LogMaster.L($"Update {_world.Tick}   {UnityEngine.Time.realtimeSinceStartup} ");
+                    //LogMaster.L($"Update {_world.Tick}   {UnityEngine.Time.realtimeSinceStartup} ");
 
                     _localCommandBuffer.Clear();
                     //NOTE: 处理队列中的输入，只处理非本地输入
