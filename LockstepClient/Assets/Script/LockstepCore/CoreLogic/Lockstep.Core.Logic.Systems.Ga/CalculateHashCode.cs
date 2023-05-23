@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Lockstep.Client;
 
 namespace Lockstep.Core.Logic.Systems.GameState
 {
-
     public class CalculateHashCode : IInitializeSystem, ISystem, IExecuteSystem
     {
         private readonly IGroup<GameEntity> _hashableEntities;
@@ -25,7 +25,14 @@ namespace Lockstep.Core.Logic.Systems.GameState
         public CalculateHashCode(Contexts contexts)
         {
             _gameStateContext = contexts.gameState;
-            _hashableEntities = (contexts.game).GetGroup((IMatcher<GameEntity>)(object)((IAnyOfMatcher<GameEntity>)(object)GameMatcher.AllOf(GameMatcher.LocalId, GameMatcher.Position)).NoneOf(new IMatcher<GameEntity>[1] { GameMatcher.Backup }));
+            _hashableEntities = (contexts.game).GetGroup(
+                (IMatcher<GameEntity>)
+                    (object)
+                        (
+                            (IAnyOfMatcher<GameEntity>)
+                                (object)GameMatcher.AllOf(GameMatcher.LocalId, GameMatcher.Position)
+                        ).NoneOf(new IMatcher<GameEntity>[1] { GameMatcher.Backup })
+            );
         }
 
         public void Initialize()
@@ -42,8 +49,8 @@ namespace Lockstep.Core.Logic.Systems.GameState
             foreach (GameEntity hashableEntity in _hashableEntities)
             {
                 //先用左右作为参考，后续可以补充其他模块进来运算
-                num ^= hashableEntity.position.value._x;//X.RawValue;
-                num ^= hashableEntity.position.value._y;// Y.RawValue;
+                num ^= hashableEntity.position.value._x; //X.RawValue;
+                num ^= hashableEntity.position.value._y; // Y.RawValue;
                 num ^= hashableEntity.position.value._z;
 
                 var val = hashableEntity.position.value;
@@ -52,11 +59,13 @@ namespace Lockstep.Core.Logic.Systems.GameState
             }
             _gameStateContext.ReplaceHashCode(num);
             var tick = Contexts.sharedInstance.gameState.tick.value;
-            //UnityEngine.Debug.Log($"[HashCode]  tick: {tick}   hashCode:{num}"); //frame:{ActionWorld.Instance.Simulation.GetWorld().Tick}   {tick} 
+            //UnityEngine.Debug.Log($"[HashCode]  tick: {tick}   hashCode:{num}"); //frame:{ActionWorld.Instance.Simulation.GetWorld().Tick}   {tick}
+
+            HashHelper.Instance.AddHashCode(tick, num);
 
 #if UNITY_EDITOR
 
-            var compareTick = tick;// + GlobalSetting.LagCompensation;
+            var compareTick = tick; // + GlobalSetting.LagCompensation;
 
             if (hashCodeDic.ContainsKey(compareTick))
             {
@@ -107,11 +116,9 @@ namespace Lockstep.Core.Logic.Systems.GameState
                 if (tick % DebugSetting.HashCodePrintStepTick == 0)
                 {
                     //ActionWorld.Instance.GetCommandQueue().SendHashCode()
-
                 }
                 else
                 {
-
                     //hashCodeData.t
 
 
@@ -124,8 +131,6 @@ namespace Lockstep.Core.Logic.Systems.GameState
                     //    checkSyncData.hashCodeDic.Add(tick, new List<long>() { num });
                     //}
                 }
-
-
 
                 //if (hashCodeDic.TryGetValue(tick - (uint)GlobalSetting.LagCompensation, out var hashList))
                 //{
@@ -154,11 +159,8 @@ namespace Lockstep.Core.Logic.Systems.GameState
                 //{
 
                 //}
-
             }
 #endif
-
-
         }
     }
 }

@@ -465,7 +465,7 @@ public static class BundleMaster
 
     private static string GetAtlasNameFromPath(string path)
     {
-        string[] strs = path.Split("/");
+        string[] strs = path.Split('/');
         var name = strs[strs.Length - 2];
         Debug.Log("path name " + name);
         return name;//path.Replace("/", "_");

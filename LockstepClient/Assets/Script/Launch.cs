@@ -86,7 +86,7 @@ public class Launch : MonoBehaviour
         else
         {
             var str = GUIUtility.systemCopyBuffer;
-            string[] strs = str.Split("#");
+            string[] strs = str.Split('#');
             if (strs.Length > 1)
             {
                 port = int.Parse(strs[1]);
