@@ -30,21 +30,46 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
 
     private void Update()
     {
+        // if (Input.GetMouseButton(1))
+        // {
+        //     var pos = GetWorldPos(Input.mousePosition);
+        //     //FindObjectOfType<RTSEntitySpawner>()?.Spawn(pos);
+
+        //     FindObjectOfType<EntitySpawner>()
+        //         ?.Spawn(pos);
+        // }
+
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    var e = Contexts.sharedInstance.game
+        //        .GetEntities(GameMatcher.LocalId)
+        //        .Where(entity => entity.actorId.value == TPSWorld.Instance?.Simulation.LocalActorId)
+        //        .Select(entity => entity.id.value).ToArray();
+
+        //    TPSWorld.Instance?.Execute(new NavigateCommand
+        //    {
+        //        Destination = GetWorldPos(Input.mousePosition),
+        //        Selection = e
+        //    });
+        //}
 
 
 
         if (Input.GetMouseButtonDown(1))
         {
-
-
             //Debug.Log("state : " + Contexts.sharedInstance.gameState.isPredicting);
             // return;
 
             var lf3 = GetWorldPos(Input.mousePosition, out bool flag);
             if (flag)
             {
-                ActionWorld.Instance.Execute(new SpawnCommand { Position = lf3 });
+                // ActionWorld.Instance.Execute(new SpawnCommand { Position = lf3 });
+
+
+                FindObjectOfType<EntitySpawner>()
+                    ?.Spawn(lf3);
             }
+
             //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             //RaycastHit hit;
             //if (Physics.Raycast(ray, out hit))
@@ -56,28 +81,23 @@ public class InputHandler : MonoBehaviour, PlayerInput.IPlayerActions, PlayerInp
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-
             var lf3 = GetWorldPos(Input.mousePosition, out bool flag);
 
             if (flag)
             {
                 var e = Contexts.sharedInstance.game
-               .GetEntities(GameMatcher.LocalId)
-               .Where(entity => entity.actorId.value == ActionWorld.Instance?.Simulation.LocalActorId)
-               .Select(entity => entity.id.value)
-               .ToArray();
+                    .GetEntities(GameMatcher.LocalId)
+                    .Where(
+                        entity =>
+                            entity.actorId.value == ActionWorld.Instance?.Simulation.LocalActorId
+                    )
+                    .Select(entity => entity.id.value)
+                    .ToArray();
 
                 ActionWorld.Instance?.Execute(
-                    new NavigateCommand
-                    {
-                        Destination = lf3,
-                        Selection = e
-                    }
+                    new NavigateCommand { Destination = lf3, Selection = e }
                 );
-
             }
-
-
         }
 
 #if UNITY_EDITOR

@@ -110,7 +110,7 @@ namespace Lockstep.Game
                     _localCommandBuffer.Clear();
                     //NOTE: 处理队列中的输入，只处理非本地输入
                     ProcessInputQueue();
-                    //NOTE: 预测？？ 只执行本地输入
+                    //NOTE: 预测？？ 只执行本地输入  预测本地输入
                     _world.Predict();
                 }
                 _accumulatedTime -= _tickDt;

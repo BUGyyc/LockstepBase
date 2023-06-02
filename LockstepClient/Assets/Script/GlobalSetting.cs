@@ -22,4 +22,7 @@ public static class GlobalSetting
     /// 延迟补偿
     /// </summary>
     public readonly static byte LagCompensation = 10;
+
+
+    // public static uint tickOnServer;
 }

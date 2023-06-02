@@ -23,7 +23,7 @@ public class EntitySpawner : MonoBehaviour
     {
         for (int j = 0; j < Count; j++)
         {
-            TPSWorld.Instance.Execute(new SpawnCommand
+            ActionWorld.Instance.Execute(new SpawnCommand
             {
                 EntityConfigId = EntityDatabase.Entities.IndexOf(Prefab),
                 Position = position
